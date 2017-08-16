@@ -7,7 +7,7 @@
  * For full statements of the license see LICENSE files.
  */
 
-namespace Aurora\Modules\ContactsMobileWebclient;
+namespace Aurora\Modules\CoreMobileWebclient;
 
 /**
  * @package Modules
