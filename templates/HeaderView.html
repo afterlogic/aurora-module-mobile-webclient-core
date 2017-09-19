@@ -1,31 +1,33 @@
-<div id="apps-list" class="panel panel-right panel-cover">
-	<div class="content-block">
-		<div class="list-block">
-			<ul>
+<aside id="apps-list" class="mdc-temporary-drawer mdc-typography">
+	<nav class="mdc-temporary-drawer__drawer">
+		<header class="mdc-temporary-drawer__header">
+			<div class="mdc-temporary-drawer__header-content">
+				Apps
+			</div>
+		</header>
+		<nav id="icon-with-text-demo" class="mdc-temporary-drawer__content">
+			<ul class="mdc-list">
 				<!-- ko foreach: tabs -->
-					<!-- ko template: {name: ViewTemplate, data: $data} --><!-- /ko -->
+				<!-- ko template: {name: ViewTemplate, data: $data} --><!-- /ko -->
 				<!-- /ko -->
-				<li>
+				
+				<li class="mdc-list-item">
 					<div class="item-content" data-bind="click: switchToFullVersion">
-<!--						<div class="item-media aurora-icons email full_version">
-							<i class="icon"></i>
-						</div>-->
+						<!-- <div class="item-media aurora-icons email full_version"><i class="icon"></i></div>-->
 						<div class="item-inner">
 							<div class="item-title" data-bind="i18n: {'key': '%MODULENAME%/ACTION_SHOW_FULL_VERSION'}"></div>
 						</div>
 					</div>
 				</li>
-				<li>
+				<li class="mdc-list-item">
 					<div class="item-content" data-bind="click: logout">
-<!--						<div class="item-media aurora-icons logout">
-							<i class="icon"></i>
-						</div>-->
+						<!-- <div class="item-media aurora-icons logout"><i class="icon"></i></div>-->
 						<div class="item-inner">
 							<div class="item-title" data-bind="i18n: {'key': '%MODULENAME%/ACTION_LOGOUT'}"></div>
 						</div>
 					</div>
 				</li>
 			</ul>
-		</div>
-	</div>
-</div>
+		</nav>
+	</nav>
+</aside>
