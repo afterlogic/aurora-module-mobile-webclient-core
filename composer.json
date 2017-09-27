@@ -7,9 +7,6 @@
 		"afterlogic/aurora-module-webclient-core": "~0.6 || dev-master"
 	},
 	"extra": {
-		"installer-name": "CoreMobileWebclient",
-		"include-in-mobile": true,
-		"include-in-desktop": false,
-		"require": ["CoreWebclient"]
+		"installer-name": "CoreMobileWebclient"
 	}
 }
