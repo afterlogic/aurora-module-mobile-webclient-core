@@ -87,8 +87,22 @@
 	font-size: 14pt;
 	padding: 0px 10px;
 	
-	.pages .item {
+	.item {
 		margin: 0px 3px;
+		padding: 2px 7px;
+
+		&.current {
+			background: #6bb3ed;
+			border-radius: 4px;
+		}
+
+		.icon {
+			display: inline-block;
+		}
+
+		&.last .icon::before {
+			//content: "\e64d";
+		}
 	}
 }
 
