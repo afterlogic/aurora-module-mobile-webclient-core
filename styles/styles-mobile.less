@@ -84,12 +84,14 @@
 }
 
 .pagination {
-	font-size: 14pt;
-	padding: 0px 10px;
+	font-size: 12pt;
+	padding: 0px 90px 0px 10px;
+	white-space: nowrap;
 	
 	.item {
 		margin: 0px 3px;
-		padding: 2px 7px;
+		padding: 2px 2px;
+		vertical-align: middle;
 
 		&.current {
 			background: #6bb3ed;
@@ -100,8 +102,25 @@
 			display: inline-block;
 		}
 
+		&.next, &.last, &.first, &.prev 
+		{
+			padding: 0px;
+			width: 28px;
+			display: inline-block;
+			
+		}
+
+		&.first .icon::before {
+			content: "\e64e";
+		}
+		&.prev .icon::before {
+			content: "\e64b";
+		}
+		&.next .icon::before {
+			content: "\e64c";
+		}
 		&.last .icon::before {
-			//content: "\e64d";
+			content: "\e64d";
 		}
 	}
 }
