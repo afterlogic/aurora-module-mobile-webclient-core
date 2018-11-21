@@ -12,4 +12,7 @@ namespace Aurora\Modules\CoreMobileWebclient;
  *
  * @package Modules
  */
-class Module extends \Aurora\System\Module\AbstractLicensedModule { }
+class Module extends \Aurora\System\Module\AbstractLicensedModule 
+{ 
+    public function init() {}
+}
