@@ -7,6 +7,8 @@
 namespace Aurora\Modules\CoreMobileWebclient;
 
 /**
+ * Mobile webclient for core view models.
+ * 
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2019, Afterlogic Corp.
  *
