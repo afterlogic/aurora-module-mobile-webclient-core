@@ -16,7 +16,7 @@ module.exports = function (oAppData) {
 				HeaderView.ViewTemplate = '%ModuleName%_HeaderView';
 				CHeaderItemView.prototype.ViewTemplate = '%ModuleName%_HeaderItemView';
 				
-				if (App.getUserRole() === Enums.UserRole.NormalUser || App.getUserRole() === Enums.UserRole.SuperAdmin)
+				if (App.isUserNormalOrTenant() || App.getUserRole() === Enums.UserRole.SuperAdmin)
 				{
 					var CommonSettingsFormView = require('%PathToCoreWebclientModule%/js/views/CommonSettingsFormView.js');
 					CommonSettingsFormView.ViewTemplate = '%ModuleName%_CommonSettingsFormView';
