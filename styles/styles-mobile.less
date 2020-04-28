@@ -112,4 +112,47 @@
 	padding: 10px;
 }
 
+.sharing_panel {
+	border: 1px solid #473d48;
+    border-radius: 5px;
+	padding-top: 80px !important;
+	margin-top: 20px !important;
+	
+	.item .size {
+		color: #bbb;
+		margin-top: 6px;
+	}
+	
+	.fields {
+	    border-top: 1px solid #473d48;
+		padding-top: 14px;
+		
+		.row {
+			display: flex;
+			align-items: center;
+			.label {
+			    display: block;
+				flex-shrink: 0;
+			}
+			input {
+				width: 100%;
+			}
+		}
+	}
+	
+	.buttons {
+	    display: block;
+		text-align: center;
+	}
+	
+	.video-player-dimensions {
+		width: auto;
+	}
+}
+
+.sharing_panel.media .fields {
+	width: 280px;
+	margin: 0px auto;
+}
+
 @import "./overrides.less";
