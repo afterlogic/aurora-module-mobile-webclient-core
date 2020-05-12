@@ -3,6 +3,7 @@
 @import "../../CoreWebclient/styles/common/fonts.less";
 
 @import "../../CoreWebclient/styles/common/files.less";
+@import "../../CoreWebclient/styles/common/notifications.less";
 
 @import "./animations.less";
 @import "./icons.less";
@@ -130,9 +131,11 @@
 		.row {
 			display: flex;
 			align-items: center;
+			margin-bottom: 10px;
 			.label {
 			    display: block;
 				flex-shrink: 0;
+				margin-right: 10px;
 			}
 			input {
 				width: 100%;
@@ -143,6 +146,10 @@
 	.buttons {
 	    display: block;
 		text-align: center;
+		
+		.button {
+			margin-right: 10px;
+		}
 	}
 	
 	.video-player-dimensions {
@@ -150,9 +157,11 @@
 	}
 }
 
-.sharing_panel.media .fields {
-	width: 280px;
-	margin: 0px auto;
+.sharing_panel.media {
+	.fields {
+		width: 280px;
+		margin: 0px auto;
+	}
 }
 
 @import "./overrides.less";
