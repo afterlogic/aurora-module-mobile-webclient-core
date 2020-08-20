@@ -1,21 +1,17 @@
 <div class="notifications list-block media-list">
     <ul>
-		<li class="notification-item report_panel loading" data-bind="css: {'hide': loadingHidden()}">
+		<li class="notification-item loading" data-bind="css: {'hide': loadingHidden()}">
 			<div class="item-content">
-				<!--<div class="item-media"></div>-->
 				<div class="item-inner">
 					<div class="item-title-row">
 						<div class="item-title" data-bind="text: loadingMessage"></div>
 					</div>
-					<!--<div class="item-subtitle"></div>-->
-					<!--<div class="item-text"></div>-->
 				</div>
 			</div>
 		</li>
 		
-		<li class="notification-item report_panel report" data-bind="css: {'hide': reportHidden()}">
+		<li class="notification-item report" data-bind="css: {'hide': reportHidden()}">
 			<div class="item-content">
-				<!--<div class="item-media"></div>-->
 				<div class="item-inner">
 					<div class="item-title-row">
 						<div class="item-title" data-bind="html: reportMessage"></div>
@@ -23,15 +19,12 @@
 							<a href="#" class="close-notification" data-bind="visible: closeReportButtonVisible, click: hideReport">Close</a>
 						</div>
 					</div>
-					<!--<div class="item-subtitle"></div>-->
-					<!--<div class="item-text"></div>-->
 				</div>
 			</div>
 		</li>
 		
-		<li class="notification-item report_panel error" data-bind="css: {'hide': errorHidden(), 'gray': gray()}">
+		<li class="notification-item error" data-bind="css: {'hide': errorHidden(), 'gray': gray()}">
 			<div class="item-content">
-				<!--<div class="item-media"></div>-->
 				<div class="item-inner">
 					<div class="item-title-row">
 						<div class="item-title" data-bind="html: errorMessage"></div>
@@ -39,8 +32,6 @@
 							<a href="#" class="close-notification" data-bind="click: selfHideError">Close</a>
 						</div>
 					</div>
-					<!--<div class="item-subtitle"></div>-->
-					<!--<div class="item-text"></div>-->
 				</div>
 			</div>
 		</li>
