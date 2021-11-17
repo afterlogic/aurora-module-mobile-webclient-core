@@ -1,6 +1,7 @@
 <template>
   <main-layout title="Settings">
     <div>
+      <h4 @click="logout">logout</h4>
       <div>Setting 1</div>
       <div>Setting 2</div>
       <div>Setting 3</div>
@@ -19,6 +20,11 @@ export default {
   name: "Settings",
   components: {
     MainLayout
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('user/logout')
+    }
   }
 }
 </script>
