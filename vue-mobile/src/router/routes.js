@@ -2,7 +2,7 @@
 const routes = [
   {
     path: '/',
-    component: () => import('src/views/layouts/MainLayout.vue'),
+    component: () => import('src/views/pages/LoginMobile'),
   },
   {
     path: '/files',

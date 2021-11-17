@@ -1,0 +1,20 @@
+<template>
+    <q-btn
+      class="q-py-xs"
+      unelevated no-caps bg-color="primary" rounded color="primary"
+      :label="label"
+    />
+</template>
+
+<script>
+export default {
+  name: 'AppButton',
+  props: {
+    label: { type: String, default: '' }
+  },
+}
+</script>
+
+<style scoped>
+
+</style>

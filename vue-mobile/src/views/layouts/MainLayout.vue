@@ -1,9 +1,11 @@
 <template>
   <header-component :title="title" :description="description" @openDrawer="leftDrawerOpen = !leftDrawerOpen"/>
   <drawer-component :value="leftDrawerOpen" @closeDrawer="closeDrawer" />
-  <q-page-container>
-    <slot />
-  </q-page-container>
+    <q-page-container>
+      <q-page>
+        <slot />
+      </q-page>
+    </q-page-container>
 </template>
 
 <script>
