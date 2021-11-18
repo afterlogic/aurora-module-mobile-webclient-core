@@ -13,13 +13,8 @@ export default defineComponent({
   components: {
     FooterComponent,
   },
-  mounted() {
-    this.init()
-    if (this.hasAuthToken) {
-      this.$router.replace('/mail')
-    } else {
-      this.$router.replace('/')
-    }
+  async mounted() {
+    await this.populate()
   },
   computed: {
     hasAuthToken() {
@@ -28,16 +23,27 @@ export default defineComponent({
   },
   watch: {
     hasAuthToken(hasAuthToken) {
+      this.selectPath(hasAuthToken)
+    }
+  },
+  methods: {
+    async populate() {
+      this.checkToken()
+      this.selectPath(this.hasAuthToken)
+      await this.init()
+    },
+    selectPath(hasAuthToken) {
       if (hasAuthToken) {
         this.$router.replace('/mail')
       } else {
         this.$router.replace('/')
       }
-    }
-  },
-  methods: {
-    init() {
+    },
+    checkToken() {
       this.$store.dispatch('user/init')
+    },
+    async init() {
+      await this.$store.dispatch('core/init')
     }
   }
 })

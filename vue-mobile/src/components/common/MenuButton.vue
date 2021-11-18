@@ -1,5 +1,5 @@
 <template>
-    <q-btn size="20px" flat round :icon="icon" @click="$router.replace(url)"/>
+    <q-btn size="20px" color="grey" flat round :icon="icon" @click="$router.replace(url)"/>
 </template>
 
 <script>

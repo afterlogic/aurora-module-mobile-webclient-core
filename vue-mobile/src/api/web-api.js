@@ -43,7 +43,6 @@ export default {
         headers,
       })
         .then((response) => {
-          console.log(response, 'resporesponseresponsense')
           resolve(response.data.Result)
         })
         .catch((error) => {

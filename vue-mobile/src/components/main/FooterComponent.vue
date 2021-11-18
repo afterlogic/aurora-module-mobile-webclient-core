@@ -1,5 +1,5 @@
 <template>
-  <q-footer elevated>
+  <q-footer elevated class="bg-white">
     <q-toolbar class="flex justify-between" style="height: 60px">
       <menu-button icon="message" url="/mail"/>
       <menu-button icon="folder" url="/files"/>

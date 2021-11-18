@@ -1,8 +1,9 @@
 <template>
-  <q-header reveal class="bg-black" style="transform: none">
-    <q-toolbar>
-      <q-btn flat @click="$emit('openDrawer')" round dense icon="menu" />
-      <q-toolbar-title>{{ title }}</q-toolbar-title>
+  <q-header elevated reveal class="bg-white" style="transform: none">
+    <q-toolbar style="height: 55px">
+      <q-btn flat size="15px" @click="$emit('openDrawer')" color="black" round dense icon="menu" />
+      <q-toolbar-title class="text-black text-center">{{ title }}</q-toolbar-title>
+      <q-btn flat size="15px" @click="$emit('openDrawer')" color="black" round dense icon="search" />
     </q-toolbar>
   </q-header>
 </template>

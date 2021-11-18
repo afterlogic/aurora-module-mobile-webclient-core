@@ -1,9 +1,14 @@
 <template>
   <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated>
-      <div class="q-pa-sm">
-        <div v-for="n in 10" :key="n">Drawer {{ n }} / 50</div>
-      </div>
-    <slot />
+    <q-item>
+      <q-item-section class="text-subtitle1 q-mt-lg">
+        {{ userName }}
+      </q-item-section>
+    </q-item>
+    <q-separator />
+    <div>
+      <slot />
+    </div>
   </q-drawer>
 </template>
 
@@ -12,6 +17,12 @@ export default {
   name: "DrawerComponent",
   props: {
     value: { type: Boolean, default: false },
+  },
+  computed: {
+    userName() {
+      const user = this.$store.getters['core/getCurrentUser']
+      return user?.PublicId ? user.PublicId : ''
+    }
   },
   data() {
     return {
@@ -28,6 +39,11 @@ export default {
       }
     }
   },
+  methods: {
+    test() {
+      console.log(this.$store.getters['core/getCurrentUser'], 'user')
+    }
+  }
 }
 </script>
 
