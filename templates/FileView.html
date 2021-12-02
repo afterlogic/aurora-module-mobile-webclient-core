@@ -1,6 +1,6 @@
 <div class="card" data-bind="css: cssClasses">
 	<div class="card-header" data-bind="text: sHeaderText, visible: sHeaderText.length > 0"></div>
-	<div class="card-header" data-bind="customTooltip: fileName(), text: displayName"></div>
+	<div class="card-header" data-bind="customTooltip: displayName, text: displayName"></div>
 	<div class="card-content">
 		<div class="card-content-inner">
 			<span class="color-gray size" data-bind="text: friendlySize()"></span>
