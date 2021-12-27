@@ -1,20 +1,40 @@
 <template>
-  <div class="q-gutter-y-md column q-px-md" style="width: 100%">
-    <div>
+  <div class="q-gutter-y-md q-px-md full-height flex wrap content-between">
+    <div class="full-width">
       <h4 class="q-my-sm">Aurora Mail</h4>
       <p>Log in to continue</p>
     </div>
-   <div style="margin-top: 100px">
-     <AppInput v-model="login" placeholder="Email"></AppInput>
-     <AppInput v-model="password" placeholder="Password"></AppInput>
+   <div class="full-width">
+     <q-form>
+       <AppInput
+         v-model="form.login.value"
+         placeholder="Email"
+         :rules-props="form.login.rules"
+         type="email"
+       />
+       <AppInput
+         v-model="form.password.value"
+         placeholder="Password"
+         :rules-props="form.password.rules"
+         type="password"
+       />
+     </q-form>
    </div>
-    <AppButton style="margin-top: 100px" @click="proceedLogin" label="Login"></AppButton>
+   <div class="full-width q-pb-xl">
+     <AppButton @click="proceedLogin" label="Login"></AppButton>
+   </div>
   </div>
 </template>
 
 <script>
 import AppInput from 'components/common/AppInput'
 import AppButton from 'components/common/AppButton'
+import { validators } from "src/utils/validation";
+import {useForm} from "src/hooks/form";
+import { useStore } from 'vuex'
+
+const required = val => !!val
+const minLength = num => val => val.length >= num
 
 export default {
   name: 'LoginMobile',
@@ -22,25 +42,28 @@ export default {
     AppInput,
     AppButton
   },
-  data() {
-    return {
-      login: '',
-      password: '',
-      loading: false,
-    }
-  },
-  methods: {
-    test(test) {
-      console.log(test, 'test')
-    },
-    proceedLogin () {
-      const parameters = {
-        Login: this.login,
-        Password: this.password,
+  setup() {
+    const store = useStore()
+    const form = useForm({
+      login: {
+        value: '',
+        validators: { required: validators.required }
+      },
+      password: {
+        value: '',
+        validators: { required: validators.required, minLength: validators.minLength(8) }
       }
-      this.$store.dispatch('user/login', parameters)
-    },
-  }
+    })
+
+    const proceedLogin =  () => {
+          const parameters = {
+            Login: form.login.value,
+            Password: form.password.value,
+          }
+      store.dispatch('user/login', parameters)
+    }
+    return {form, proceedLogin}
+  },
 }
 </script>
 

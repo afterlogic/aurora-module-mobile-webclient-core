@@ -1,9 +1,9 @@
 <template>
-  <header-component :title="title" :description="description" @openDrawer="leftDrawerOpen = !leftDrawerOpen"/>
+  <header-component @openDrawer="leftDrawerOpen = !leftDrawerOpen"/>
   <drawer-component :value="leftDrawerOpen" @closeDrawer="closeDrawer" >
     <slot name="drawer"/>
   </drawer-component>
-    <q-page-container>
+    <q-page-container class="full-height">
       <q-page>
         <slot />
       </q-page>

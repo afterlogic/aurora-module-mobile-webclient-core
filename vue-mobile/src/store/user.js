@@ -1,4 +1,3 @@
-import typesUtils from 'src/utils/types.js'
 import VueCookies from 'vue-cookies'
 import AppApi from '/src/api/index'
 
@@ -20,7 +19,6 @@ export default {
         commit('changeAuthTokenStatus', true)
       } else {
         commit('changeAuthTokenStatus', false)
-        console.log('login error')
       }
     },
     init({ commit }) {

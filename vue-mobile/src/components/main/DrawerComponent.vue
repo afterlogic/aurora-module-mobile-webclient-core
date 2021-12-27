@@ -6,7 +6,7 @@
       </q-item-section>
     </q-item>
     <q-separator />
-    <div>
+    <div @click="test">
       <slot />
     </div>
   </q-drawer>
@@ -35,13 +35,18 @@ export default {
     },
     leftDrawerOpen(value) {
       if (!value) {
-        this.$emit('closeDrawer', value)
+        this.closeDrawer(value)
       }
     }
   },
   methods: {
+    closeDrawer(value) {
+      this.$emit('closeDrawer', value)
+    },
     test() {
-      console.log(this.$store.getters['core/getCurrentUser'], 'user')
+      setTimeout(() => {
+        this.leftDrawerOpen = false
+      }, 300)
     }
   }
 }

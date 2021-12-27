@@ -22,7 +22,19 @@ export default {
   },
   methods: {
     selectStorage() {
-      console.log('selectStorage')
+      this.$store.dispatch('files/changeCurrentStorage', this.storage)
+      const path = {
+        path: '',
+        name: this.storage.DisplayName,
+      }
+      this.$store.dispatch('files/changeCurrentPaths', {
+        path,
+        lastStorage: true
+      })
+      this.getFiles()
+    },
+    async getFiles() {
+      await this.$store.dispatch('files/asyncGetFiles', { path: '' })
     }
   }
 }

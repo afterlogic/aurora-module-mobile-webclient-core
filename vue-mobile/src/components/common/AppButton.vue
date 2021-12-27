@@ -1,6 +1,7 @@
 <template>
     <q-btn
-      class="q-py-xs"
+      class="q-py-xs full-width"
+      size="lg"
       unelevated no-caps bg-color="primary" rounded color="primary"
       :label="label"
     />

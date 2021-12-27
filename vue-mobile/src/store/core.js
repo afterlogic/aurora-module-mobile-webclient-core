@@ -17,15 +17,12 @@ export default {
   },
   actions: {
     async asyncGetAppData ({ commit }) {
-      console.log('asyncGetAppData')
       const appData = await AppApi.Core.getAppData()
-      console.log(appData, 'appData')
       if (typesUtils.pObject(appData)) {
         commit('setAppData', appData)
       }
     },
     async init({ dispatch, commit, state }) {
-      console.log('init')
       await dispatch('asyncGetAppData')
 
       const appData = state.appData
