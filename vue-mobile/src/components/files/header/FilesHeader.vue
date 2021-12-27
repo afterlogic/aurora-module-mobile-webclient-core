@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getShortName } from "src/services/files/utils";
+import { getShortName } from "src/utils/files/utils";
 
 export default {
   name: "FilesHeader",

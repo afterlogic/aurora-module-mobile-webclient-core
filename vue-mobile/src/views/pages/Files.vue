@@ -7,7 +7,13 @@
       <folder-item v-for="file in folderList" :key="file" :folder="file" @showDialog="showDialog"/>
       <file-item v-for="file in filesList" :key="file" :file="file" @showDialog="showDialog"/>
     </q-list>
-    <dialogs-list v-model="dialog" :file="currentFile" :component="dialogComponent" @dialogAction="dialogAction"/>
+    <dialogs-list
+      v-model="dialog"
+      :file="currentFile"
+      :component="dialogComponent"
+      @dialogAction="dialogAction"
+      @closeDialog="closeDialog"
+    />
   </main-layout>
 </template>
 
@@ -42,7 +48,7 @@ export default {
       return this.$store.getters['files/getFilesList']
     },
     folderList() {
-      return this.$store.getters['files/getFoldersList']
+     return this.$store.getters['files/getFoldersList']
     },
     storageList() {
       return this.$store.getters['files/getStorageList']
@@ -53,13 +59,23 @@ export default {
       await this.$store.dispatch('files/asyncGetStorages')
       await this.$store.dispatch('files/asyncGetFiles', { path: '' })
     },
-    showDialog(file) {
+    showDialog({ file, component }) {
       this.dialog = true
-      this.dialogComponent = 'FileMenuDialog'
+      this.dialogComponent = component
       this.currentFile = file
+      this.$store.dispatch('files/selectFile', file)
+    },
+    closeDialog() {
+      console.log(this.folderList, 'folders')
+      this.dialog = false
     },
     dialogAction(action) {
-      this.dialog = false
+      console.log(action, 'action')
+      this.closeDialog()
+      if (action.component) {
+        this.dialogComponent = action.component
+        this.dialog = true
+      }
     }
   }
 }

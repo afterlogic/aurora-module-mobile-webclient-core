@@ -3,7 +3,7 @@
     <q-card v-if="file" style="height: 300px">
       <q-card-section class="row items-center no-wrap" style="height: 50px">
         <div>
-          <div class="text-weight-bold">{{file.Name}}</div>
+          <div class="text-weight-bold">{{file.name}}</div>
         </div>
       </q-card-section>
       <q-separator />
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getFileActions } from "src/services/files/file-actions";
+import { getFileActions } from "src/utils/files/file-actions";
 
 export default {
   name: "FileMenuDialog",

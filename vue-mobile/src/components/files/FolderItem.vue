@@ -4,18 +4,25 @@
       <file-icon></file-icon>
     </q-item-section>
     <q-item-section>
-      <q-item-label>{{ getShortName(folder.Name, 30) }}</q-item-label>
+      <q-item-label>{{ folderName }}</q-item-label>
       <q-item-label></q-item-label>
     </q-item-section>
     <q-item-section avatar side>
-      <q-btn size="14px" color="grey" flat round icon="more_vert" @click.stop="$emit('showDialog', folder)"/>
+      <q-btn
+        size="14px"
+        color="grey"
+        flat
+        round
+        icon="more_vert"
+        @click.stop="$emit('showDialog', { file: folder, component: 'FileMenuDialog' })"
+      />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
 import FileIcon from "components/files/icons/FileIcon";
-import { getShortName } from "src/services/files/utils";
+import { getShortName } from "src/utils/files/utils";
 
 export default {
   name: "FolderItem",
@@ -29,17 +36,22 @@ export default {
     currentStorage() {
       return this.$store.getters['files/getCurrentStorage']
     },
+    folderName() {
+      if (this.folder) {
+        return getShortName(this.folder.name, 30)
+      }
+      return ''
+    }
   },
   methods: {
-    getShortName,
     async openFolder() {
       const path = {
-        path: this.folder.FullPath,
-        name: this.folder.Name
+        path: this.folder.fullPath,
+        name: this.folder.name
       }
       await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
       await this.$store.dispatch('files/asyncGetFiles', {
-        path: this.folder.FullPath
+        path: this.folder.fullPath
       })
     },
   }

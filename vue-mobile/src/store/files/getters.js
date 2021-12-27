@@ -19,3 +19,6 @@ export function getLoadingStatus(state) {
 export function getCurrentPaths (state) {
   return state.currentPaths
 }
+export function getCurrentFile (state) {
+  return state.currentFile
+}

@@ -1,6 +1,6 @@
 import AppApi from '/src/api/index'
 import types from "src/utils/types";
-import { getFiles, getFolders } from "src/services/files/utils";
+import { getFiles, getFolders } from "src/utils/files/utils";
 
 export async function asyncGetStorages ({ commit, dispatch }) {
   const storages = await AppApi.Files.getStorages()
@@ -31,8 +31,8 @@ export async function asyncGetFiles ({ commit, getters }, { path = '' }) {
   if (types.pArray(data?.Items)) {
     const files = getFiles(data.Items)
     const folders = getFolders(data.Items)
-    commit('setFilesList', files)
     commit('setFoldersList', folders)
+    commit('setFilesList', files)
   }
   if (types.pObject(data?.Quata)) {
     commit('setFilesQuota', data.Quata)
@@ -51,4 +51,21 @@ export function changeCurrentPaths ({ state, commit, getters, dispatch }, { path
   })
   commit('setCurrentPath', { path: path?.path })
   commit('changeCurrentPath', { index, path, lastStorage })
+}
+export async function asyncRenameItem ({ state }, { file, itemName }) {
+  const parameters = {
+    Type: state.currentStorage.Type,
+    Path: file.path,
+    Name: file.name,
+    NewName: itemName,
+    IsLink: 0,
+    IsFolder: file.isFolder
+  }
+  return await AppApi.Files.renameItem(parameters)
+}
+export function changeFileName({ commit }, fileName) {
+  commit('setFileName', fileName)
+}
+export function selectFile({ commit }, file) {
+  commit('setCurrentFile', file)
 }

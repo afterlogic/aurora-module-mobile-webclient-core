@@ -19,6 +19,12 @@ export function setLoadingStatus (state, status) {
 export function setCurrentPath (state, { path }) {
   state.currentPath = path
 }
+export function setCurrentFile (state, file) {
+  state.currentFile = file
+}
+export function setFileName (state, fileName) {
+  state.currentFile.name = fileName
+}
 export function changeCurrentPath (state, { path, index, lastStorage }) {
   if (!lastStorage) {
     if (index === -1) {

@@ -25,6 +25,18 @@ export default () => {
         }
         return false
       })
+    },
+    renameItem: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'Files',
+        methodName: 'Rename',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
     }
   };
 };

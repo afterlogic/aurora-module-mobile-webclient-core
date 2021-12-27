@@ -25,8 +25,9 @@ const fileActions = {
     displayName: 'Download'
   },
   rename: {
-    method: () => console.log('rename'),
+    method: null,
     name: 'rename',
+    component: 'RenameItemDialog',
     displayName: 'Rename'
   },
   delete: {

@@ -7,6 +7,8 @@ export default function () {
     currentStorage: '',
     isLoading: false,
 
+    currentFile: null,
+
     currentPath: '',
     currentPaths: [],
   }

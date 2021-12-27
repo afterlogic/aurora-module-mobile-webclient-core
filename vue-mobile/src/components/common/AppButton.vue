@@ -1,7 +1,8 @@
 <template>
     <q-btn
       class="q-py-xs full-width"
-      size="lg"
+      :size="size"
+      :disable="disable"
       unelevated no-caps bg-color="primary" rounded color="primary"
       :label="label"
     />
@@ -11,7 +12,9 @@
 export default {
   name: 'AppButton',
   props: {
-    label: { type: String, default: '' }
+    label: { type: String, default: '' },
+    size: { type: String, default: 'lg' },
+    disable: { type: Boolean, default: false }
   },
 }
 </script>

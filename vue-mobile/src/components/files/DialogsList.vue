@@ -4,6 +4,7 @@
 
 <script>
 import FileMenuDialog from "components/files/dialogs/FileMenuDialog";
+import RenameItemDialog from "components/files/dialogs/RenameItemDialog";
 export default {
   name: "DialogsList",
   props: {
@@ -12,7 +13,8 @@ export default {
     dialog: { type: Boolean, default: false }
   },
   components: {
-    FileMenuDialog
+    FileMenuDialog,
+    RenameItemDialog
   },
 }
 </script>
