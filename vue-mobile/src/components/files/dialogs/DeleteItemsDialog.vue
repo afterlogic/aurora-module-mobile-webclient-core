@@ -39,13 +39,16 @@ export default {
     }
   },
   computed: {
+    selectedFiles() {
+      return this.$store.getters['files/getSelectedFiles']
+    },
     title () {
-      // if (this.items.length > 1) {
-      //   return 'Delete selected items permanently?'
-      // }
-      // if (this.currentFile?.IsFolder) {
-      //   return 'Delete selected folder permanently?'
-      // }
+      if (this.selectedFiles.length > 1) {
+        return 'Delete selected items permanently?'
+      }
+      if (this.file?.isFolder) {
+        return 'Delete selected folder permanently?'
+      }
       return 'Delete selected file permanently?'
     },
   },
@@ -54,14 +57,27 @@ export default {
       this.$emit('closeDialog')
     },
     async deleteItems() {
-      const items = [{
-        Path: this.file.path,
-        Name: this.file.name,
-        IsFolder: this.file.isFolder
-      }]
+      const items = []
+      if (this.selectedFiles.length) {
+        this.selectedFiles.forEach( file => {
+          items.push({
+            Path: file.path,
+            Name: file.name,
+            IsFolder: file.isFolder
+          })
+        } )
+      } else {
+        items.push({
+          Path: this.file.path,
+          Name: this.file.name,
+          IsFolder: this.file.isFolder
+        })
+      }
       const result = await this.$store.dispatch('files/deleteItems', { items })
       if (result) {
-        await this.$store.dispatch('files/changeItemsLists', { items: [this.file] })
+        await this.$store.dispatch('files/changeItemsLists', {
+          items: this.selectedFiles.length ? this.selectedFiles : [this.file]
+        })
         this.$emit('closeDialog')
       }
     }

@@ -102,3 +102,6 @@ export function changeItemsLists({ commit }, { items }) {
 export function removeSelectedItems({ commit }, { items }) {
   commit('removeSelectedItems', items)
 }
+export function changeDialogComponent({ commit }, dialogComponent) {
+  commit('setDialogComponent', dialogComponent)
+}

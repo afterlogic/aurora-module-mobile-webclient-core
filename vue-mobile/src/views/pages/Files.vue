@@ -23,13 +23,7 @@
         @showDialog="showDialog"
       />
     </q-list>
-    <dialogs-list
-      v-model="dialog"
-      :file="currentFile"
-      :component="dialogComponent"
-      @dialogAction="dialogAction"
-      @closeDialog="closeDialog"
-    />
+    <dialogs-list />
   </main-layout>
 </template>
 
@@ -54,9 +48,9 @@ export default {
   },
   data() {
     return {
-      dialog: false,
-      currentFile: null,
-      dialogComponent: '',
+      // dialog: false,
+      // currentFile: null,
+      // dialogComponent: '',
       touchTimer: null,
       isSelected: false,
     }
@@ -90,21 +84,22 @@ export default {
       await this.$store.dispatch('files/asyncGetFiles', { path: '' })
     },
     showDialog({ file, component }) {
-      this.dialog = true
-      this.dialogComponent = component
-      this.currentFile = file
+      // this.dialog = true
+      // this.dialogComponent = component
+      // this.currentFile = file
       this.$store.dispatch('files/selectFile', file)
+      this.$store.dispatch('files/changeDialogComponent', { component })
     },
-    closeDialog() {
-      this.dialog = false
-    },
-    dialogAction(action) {
-      this.closeDialog()
-      if (action.component) {
-        this.dialogComponent = action.component
-        this.dialog = true
-      }
-    },
+    // closeDialog() {
+    //   this.dialog = false
+    // },
+    // dialogAction(action) {
+    //   this.closeDialog()
+    //   if (action.component) {
+    //     this.dialogComponent = action.component
+    //     this.dialog = true
+    //   }
+    // },
     selectItem() {
       this.isSelected = true
       this.$store.dispatch('files/changeSelectStatus')

@@ -32,3 +32,7 @@ export function getSelectedFiles(state) {
   const folders = getSelectedItems(state.foldersList)
   return folders.concat(files)
 }
+
+export function getDialogComponent(state) {
+  return state.dialogComponent ? state.dialogComponent : { component: '' }
+}

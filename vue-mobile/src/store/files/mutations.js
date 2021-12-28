@@ -63,3 +63,6 @@ export function removeSelectedItems(state, items) {
     })
   }
 }
+export function setDialogComponent(state, dialogComponent) {
+  state.dialogComponent = dialogComponent
+}

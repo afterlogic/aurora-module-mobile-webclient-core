@@ -7,6 +7,8 @@ export default function () {
     currentStorage: '',
     isLoading: false,
 
+    dialogComponent: null,
+
     currentFile: null,
 
     currentPath: '',

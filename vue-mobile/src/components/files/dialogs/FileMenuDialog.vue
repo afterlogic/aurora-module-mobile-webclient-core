@@ -29,21 +29,18 @@ import { getFileActions } from "src/utils/files/file-actions";
 export default {
   name: "FileMenuDialog",
   props: {
-    file: {
-      type: Object,
-      default: null,
-    },
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
+    file: { type: Object, default: null }
   },
   computed: {
     actions() {
       return getFileActions(this.file)
-    }
+    },
   },
   watch: {
     dialog(val) {
       this.openDialog = val
-    }
+    },
   },
   data () {
     return {
@@ -53,7 +50,7 @@ export default {
   methods: {
     performAction(fileAction) {
       this.$emit('dialogAction', fileAction)
-    }
+    },
   }
 }
 </script>

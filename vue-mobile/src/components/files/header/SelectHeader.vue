@@ -10,12 +10,18 @@
       <q-btn flat size="15px" color="black" round dense icon="drive_file_move" />
       <q-btn flat size="15px" color="black" round dense icon="delete_outline" />
     </q-card-actions>
+    <dialogs-list />
   </q-toolbar>
 </template>
 
 <script>
+import DialogsList from "components/files/DialogsList";
+
 export default {
   name: "SelectHeader",
+  components: {
+    DialogsList
+  },
   props: {
     items: {
       type: Array,
