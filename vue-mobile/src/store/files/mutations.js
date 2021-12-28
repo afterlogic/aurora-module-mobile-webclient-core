@@ -36,3 +36,30 @@ export function changeCurrentPath (state, { path, index, lastStorage }) {
     state.currentPaths = [path]
   }
 }
+
+export function removeFolders (state, folders) {
+  folders.forEach( folder => {
+    const itemIndex = state.foldersList.findIndex( item => item.hash === folder.hash )
+    if (itemIndex !== -1) {
+      state.folderList.splice(itemIndex, 1)
+    }
+  })
+}
+export function removeFiles (state, files) {
+  files.forEach( file => {
+    const itemIndex = state.filesList.findIndex( item => item.hash === file.hash )
+    if (itemIndex !== -1) {
+      state.filesList.splice(itemIndex, 1)
+    }
+  })
+}
+export function setSelectStatus(state) {
+  state.currentFile.isSelected = !state.currentFile.isSelected
+}
+export function removeSelectedItems(state, items) {
+  if (items.length) {
+    items.forEach( item => {
+      item.isSelected = false
+    })
+  }
+}

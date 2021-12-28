@@ -1,5 +1,12 @@
 <template>
-  <q-item v-if="folder" clickable v-ripple @click.prevent="openFolder">
+  <q-item
+    v-if="folder"
+    v-ripple="!isSelected"
+    :active="folder.isSelected"
+    clickable
+    @touchstart="touchstart(folder)"
+    @touchend="openFolder"
+  >
     <q-item-section avatar>
       <file-icon></file-icon>
     </q-item-section>
@@ -9,13 +16,18 @@
     </q-item-section>
     <q-item-section avatar side>
       <q-btn
+        v-if="!folder.isSelected"
         size="14px"
         color="grey"
+        :disable="isSelected"
+        v-ripple="!isSelected"
         flat
         round
         icon="more_vert"
-        @click.stop="$emit('showDialog', { file: folder, component: 'FileMenuDialog' })"
+        @touchstart.stop
+        @touchend.stop="showDialog"
       />
+      <q-btn v-ripple="false" v-if="folder.isSelected" size="14px" color="grey" flat round icon="done" />
     </q-item-section>
   </q-item>
 </template>
@@ -30,7 +42,10 @@ export default {
     FileIcon
   },
   props: {
-    folder: {type: Object, default: null}
+    folder: {type: Object, default: null},
+    isSelected: { type: Boolean, default: false },
+    touchstart: { type: Function, default: null, require: true },
+    touchend: { type: Function, default: null, require: true },
   },
   computed: {
     currentStorage() {
@@ -45,15 +60,24 @@ export default {
   },
   methods: {
     async openFolder() {
-      const path = {
-        path: this.folder.fullPath,
-        name: this.folder.name
+      if (!this.isSelected) {
+        this.touchend()
+        const path = {
+          path: this.folder.fullPath,
+          name: this.folder.name
+        }
+        await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
+        await this.$store.dispatch('files/asyncGetFiles', {
+          path: this.folder.fullPath
+        })
+      } else {
       }
-      await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
-      await this.$store.dispatch('files/asyncGetFiles', {
-        path: this.folder.fullPath
-      })
     },
+    showDialog() {
+      if (!this.isSelected) {
+        this.$emit('showDialog', { file: this.folder, component: 'FileMenuDialog' })
+      }
+    }
   }
 }
 </script>

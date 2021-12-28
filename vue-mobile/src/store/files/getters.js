@@ -1,3 +1,5 @@
+import { getSelectedItems } from "src/utils/files/utils";
+
 export function getStorageList (state) {
   return state.storageList
 }
@@ -19,6 +21,14 @@ export function getLoadingStatus(state) {
 export function getCurrentPaths (state) {
   return state.currentPaths
 }
+export function getCurrentPath (state) {
+  return state.currentPath
+}
 export function getCurrentFile (state) {
   return state.currentFile
+}
+export function getSelectedFiles(state) {
+  const files = getSelectedItems(state.filesList)
+  const folders = getSelectedItems(state.foldersList)
+  return folders.concat(files)
 }

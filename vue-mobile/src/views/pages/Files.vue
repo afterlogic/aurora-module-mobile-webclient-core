@@ -4,8 +4,24 @@
       <storage-item v-for="storage in storageList" :key="storage" :storage="storage" />
     </template>
     <q-list>
-      <folder-item v-for="file in folderList" :key="file" :folder="file" @showDialog="showDialog"/>
-      <file-item v-for="file in filesList" :key="file" :file="file" @showDialog="showDialog"/>
+      <folder-item
+        v-for="file in folderList"
+        :key="file"
+        :folder="file"
+        :isSelected="isSelected"
+        :touchstart="touchstart"
+        :touchend="touchend"
+        @showDialog="showDialog"
+      />
+      <file-item
+        v-for="file in filesList"
+        :key="file"
+        :file="file"
+        :isSelected="isSelected"
+        :touchstart="touchstart"
+        :touchend="touchend"
+        @showDialog="showDialog"
+      />
     </q-list>
     <dialogs-list
       v-model="dialog"
@@ -40,7 +56,9 @@ export default {
     return {
       dialog: false,
       currentFile: null,
-      dialogComponent: ''
+      dialogComponent: '',
+      touchTimer: null,
+      isSelected: false,
     }
   },
   computed: {
@@ -52,6 +70,18 @@ export default {
     },
     storageList() {
       return this.$store.getters['files/getStorageList']
+    },
+    selectedFiles() {
+      return this.$store.getters['files/getSelectedFiles']
+    }
+  },
+  watch: {
+    selectedFiles(items) {
+      if (!items.length) {
+        setTimeout(() => {
+          this.isSelected = false
+        }, 300)
+      }
     }
   },
   methods: {
@@ -66,16 +96,30 @@ export default {
       this.$store.dispatch('files/selectFile', file)
     },
     closeDialog() {
-      console.log(this.folderList, 'folders')
       this.dialog = false
     },
     dialogAction(action) {
-      console.log(action, 'action')
       this.closeDialog()
       if (action.component) {
         this.dialogComponent = action.component
         this.dialog = true
       }
+    },
+    selectItem() {
+      this.isSelected = true
+      this.$store.dispatch('files/changeSelectStatus')
+    },
+    touchstart(file) {
+      this.$store.dispatch('files/selectFile', file)
+      if (!this.isSelected) {
+        this.touchTimer = setTimeout(this.selectItem, 1000);
+      } else {
+        this.$store.dispatch('files/changeSelectStatus')
+      }
+    },
+    touchend() {
+      if (this.touchTimer)
+        clearTimeout(this.touchTimer);
     }
   }
 }

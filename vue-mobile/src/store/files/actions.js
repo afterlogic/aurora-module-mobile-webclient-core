@@ -1,6 +1,11 @@
 import AppApi from '/src/api/index'
 import types from "src/utils/types";
-import { getFiles, getFolders } from "src/utils/files/utils";
+import {
+  getParseFiles,
+  getParseFolders,
+  getFiles,
+  getFolders
+} from "src/utils/files/utils";
 
 export async function asyncGetStorages ({ commit, dispatch }) {
   const storages = await AppApi.Files.getStorages()
@@ -29,8 +34,8 @@ export async function asyncGetFiles ({ commit, getters }, { path = '' }) {
   }
   const data = await AppApi.Files.getFiles(parameters)
   if (types.pArray(data?.Items)) {
-    const files = getFiles(data.Items)
-    const folders = getFolders(data.Items)
+    const files = getParseFiles(data.Items)
+    const folders = getParseFolders(data.Items)
     commit('setFoldersList', folders)
     commit('setFilesList', files)
   }
@@ -68,4 +73,32 @@ export function changeFileName({ commit }, fileName) {
 }
 export function selectFile({ commit }, file) {
   commit('setCurrentFile', file)
+}
+export function changeSelectStatus({ commit }) {
+  commit('setSelectStatus')
+}
+export async function deleteItems ({ state, commit, getters, dispatch }, { items }) {
+  const currentStorage = getters['getCurrentStorage']
+  const currentPath = getters['getCurrentPath']
+  const parameters = {
+    Type: currentStorage?.Type,
+    Path: currentPath,
+    Items: items
+  }
+  return await AppApi.Files.deleteItems(parameters)
+}
+
+export function changeItemsLists({ commit }, { items }) {
+  const files = getFiles(items)
+  const folders = getFolders(items)
+
+  if (folders.length) {
+    commit('removeFolders', folders)
+  }
+  if (files.length) {
+    commit('removeFiles', files)
+  }
+}
+export function removeSelectedItems({ commit }, { items }) {
+  commit('removeSelectedItems', items)
 }

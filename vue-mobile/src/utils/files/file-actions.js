@@ -33,6 +33,7 @@ const fileActions = {
   delete: {
     method: () => console.log('delete'),
     name: 'delete',
+    component: 'DeleteItemsDialog',
     displayName: 'Delete'
   }
 }

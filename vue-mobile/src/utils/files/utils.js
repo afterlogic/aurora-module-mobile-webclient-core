@@ -25,10 +25,11 @@ const parseFile = file => {
     thumbnailUrl: typesUtils.pString(file?.ThumbnailUrl),
     contentType: typesUtils.pString(file.ContentType),
     cancelToken: null,
+    isSelected: false,
   }
 }
 
-export const getFiles = (items) => {
+export const getParseFiles = (items) => {
   const files = []
   items.forEach( file => {
     if (!file.IsFolder) {
@@ -37,11 +38,29 @@ export const getFiles = (items) => {
   })
   return files
 }
-export const getFolders = (items) => {
+export const getParseFolders = (items) => {
   const folders = []
   items.forEach( file => {
     if (file.IsFolder) {
       folders.push(parseFile(file))
+    }
+  })
+  return folders
+}
+export const getFiles = (items) => {
+  const files = []
+  items.forEach( file => {
+    if (!file.IsFolder) {
+      files.push(file)
+    }
+  })
+  return files
+}
+export const getFolders = (items) => {
+  const folders = []
+  items.forEach( file => {
+    if (file.IsFolder) {
+      folders.push(file)
     }
   })
   return folders
@@ -51,4 +70,11 @@ export const getShortName = (name, length) => {
       return name.substr(0, length - 2)
     }
     return name
+}
+export const getSelectedItems = (items) => {
+  return items.filter(item => {
+    if (item.isSelected) {
+      return item
+    }
+  })
 }

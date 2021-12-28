@@ -37,6 +37,18 @@ export default () => {
         }
         return false
       })
+    },
+    deleteItems: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'Files',
+        methodName: 'Delete',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
     }
   };
 };
