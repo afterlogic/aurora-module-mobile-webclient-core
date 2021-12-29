@@ -34,7 +34,7 @@ export default {
       this.getFiles()
     },
     async getFiles() {
-      await this.$store.dispatch('files/asyncGetFiles', { path: '' })
+      await this.$store.dispatch('files/asyncGetFiles')
     }
   }
 }

@@ -1,6 +1,8 @@
 <template>
   <q-item v-if="file"
-          v-ripple="!isSelected"
+          :disable="file.isCopied"
+          :clickable="!isCopied"
+          v-ripple="!isSelected && !isCopied"
           :active="file.isSelected"
           @touchstart.stop="touchstart(file)"
           @touchend.stop="selectFile"
@@ -13,9 +15,9 @@
       <q-item-label></q-item-label>
     </q-item-section>
     <q-item-section avatar side>
-      <q-btn v-if="!file.isSelected" :disable="isSelected" size="14px" color="grey" flat round icon="more_vert"
+      <q-btn v-if="!file.isSelected" v-ripple="!isCopied && !isSelected" :disable="isSelected" size="14px" color="grey" flat round icon="more_vert"
              @touchstart.stop @touchend.stop="showDialog"/>
-      <q-btn v-if="file.isSelected" size="14px" color="grey" flat round icon="done"/>
+      <q-btn v-ripple="!isCopied" v-if="file.isSelected" size="14px" color="grey" flat round icon="done"/>
     </q-item-section>
   </q-item>
 </template>
@@ -32,6 +34,7 @@ export default {
   props: {
     file: {type: Object, default: null},
     isSelected: { type: Boolean, default: false },
+    isCopied: { type: Boolean, default: false },
     touchstart: { type: Function, default: null, require: true },
     touchend: { type: Function, default: null, require: true },
   },
@@ -51,7 +54,7 @@ export default {
       }
     },
     showDialog() {
-      if (!this.isSelected) {
+      if (!this.isSelected && !this.isCopied) {
         this.$emit('showDialog', { file: this.file, component: 'FileMenuDialog' })
       }
     }

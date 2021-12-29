@@ -26,6 +26,7 @@ const parseFile = file => {
     contentType: typesUtils.pString(file.ContentType),
     cancelToken: null,
     isSelected: false,
+    isCopied: false,
   }
 }
 
@@ -71,9 +72,9 @@ export const getShortName = (name, length) => {
     }
     return name
 }
-export const getSelectedItems = (items) => {
+export const getFilteredItems = (items, key) => {
   return items.filter(item => {
-    if (item.isSelected) {
+    if (item[key]) {
       return item
     }
   })

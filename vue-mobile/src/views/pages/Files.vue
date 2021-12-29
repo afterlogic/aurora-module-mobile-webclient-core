@@ -9,6 +9,7 @@
         :key="file"
         :folder="file"
         :isSelected="isSelected"
+        :isCopied="isCopied"
         :touchstart="touchstart"
         :touchend="touchend"
         @showDialog="showDialog"
@@ -18,6 +19,7 @@
         :key="file"
         :file="file"
         :isSelected="isSelected"
+        :isCopied="isCopied"
         :touchstart="touchstart"
         :touchend="touchend"
         @showDialog="showDialog"
@@ -67,6 +69,10 @@ export default {
     },
     selectedFiles() {
       return this.$store.getters['files/getSelectedFiles']
+    },
+    isCopied() {
+      const copiedItems = this.$store.getters['files/getCopiedFiles']
+      return !!copiedItems.length
     }
   },
   watch: {
@@ -81,7 +87,7 @@ export default {
   methods: {
     async init() {
       await this.$store.dispatch('files/asyncGetStorages')
-      await this.$store.dispatch('files/asyncGetFiles', { path: '' })
+      await this.$store.dispatch('files/asyncGetFiles')
     },
     showDialog({ file, component }) {
       // this.dialog = true
@@ -106,9 +112,9 @@ export default {
     },
     touchstart(file) {
       this.$store.dispatch('files/selectFile', file)
-      if (!this.isSelected) {
+      if (!this.isSelected && !this.isCopied) {
         this.touchTimer = setTimeout(this.selectItem, 1000);
-      } else {
+      } else if (!this.isCopied) {
         this.$store.dispatch('files/changeSelectStatus')
       }
     },

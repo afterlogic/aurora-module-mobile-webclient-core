@@ -24,11 +24,12 @@ export async function asyncGetStorages ({ commit, dispatch }) {
     }
   }
 }
-export async function asyncGetFiles ({ commit, getters }, { path = '' }) {
+export async function asyncGetFiles ({ commit, getters }) {
   const currentStorage = getters['getCurrentStorage']
+  const currentPath = getters['getCurrentPath']
   const parameters = {
     Type: currentStorage?.Type,
-    Path: path,
+    Path: currentPath,
     Pattern: '',
     PathRequired: false
   }
@@ -104,4 +105,28 @@ export function removeSelectedItems({ commit }, { items }) {
 }
 export function changeDialogComponent({ commit }, dialogComponent) {
   commit('setDialogComponent', dialogComponent)
+}
+export function addCopyItems({ commit }, { items }) {
+  commit('setCopyItems', items)
+  commit('setItemsCopyStatus', { items, status: true })
+}
+export function removeCopiedFiles({ commit }) {
+  commit('setCopyItemsStatus', { status: false })
+  commit('removeCopiedFiles')
+}
+export async function copyItems({ dispatch, getters }) {
+  const parameters = getters['getCopyMoveParameters']
+  const result = await AppApi.Files.copyMoveItems(parameters, 'Copy')
+  if (result) {
+    dispatch('removeCopiedFiles')
+    dispatch('asyncGetFiles')
+  }
+}
+export async function moveItems({ dispatch, getters }) {
+  const parameters = getters['getCopyMoveParameters']
+  const result = await AppApi.Files.copyMoveItems(parameters, 'Move')
+  if (result) {
+    dispatch('removeCopiedFiles')
+    dispatch('asyncGetFiles')
+  }
 }

@@ -65,9 +65,7 @@ export default {
     async openPath(path) {
       this.isOpen = false
       await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
-      await this.$store.dispatch('files/asyncGetFiles', {
-        path: path.path
-      })
+      await this.$store.dispatch('files/asyncGetFiles')
     }
   }
 }

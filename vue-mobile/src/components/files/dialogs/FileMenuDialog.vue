@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getFileActions } from "src/utils/files/file-actions";
+import { getFileActionsList } from "src/utils/files/file-actions";
 
 export default {
   name: "FileMenuDialog",
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     actions() {
-      return getFileActions(this.file)
+      return getFileActionsList(this.file)
     },
   },
   watch: {

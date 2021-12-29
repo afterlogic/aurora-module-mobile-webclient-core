@@ -66,3 +66,26 @@ export function removeSelectedItems(state, items) {
 export function setDialogComponent(state, dialogComponent) {
   state.dialogComponent = dialogComponent
 }
+export function setCopyItems(state, items) {
+  state.copyItems = items
+}
+export function setItemsCopyStatus(state, { items, status }) {
+  items.forEach( item => {
+    item.isCopied = status
+  })
+}
+export function setCopyItemsStatus(state, { status }) {
+  state.filesList.forEach(item => {
+    if (item.isCopied) {
+      item.isCopied = status
+    }
+  })
+  state.foldersList.forEach(item => {
+    if (item.isCopied) {
+      item.isCopied = status
+    }
+  })
+}
+export function removeCopiedFiles(state) {
+  state.copyItems = []
+}

@@ -1,27 +1,23 @@
 <template>
   <q-toolbar style="height: 55px; font-size: 16px; padding: 0" class="bg-primary">
-    <q-card-actions align="left" class="col-4">
+    <q-card-actions align="left" class="col-3">
       <q-btn flat size="15px" @click="removeSelectedItems" color="black" round dense icon="close" />
     </q-card-actions>
-    <div class="text-center text-black text-bold col-4">
+    <div class="text-center text-black text-bold col-6">
       <span>{{`Selected: ${items.length}`}}</span>
     </div>
-    <q-card-actions align="right" class="col-4">
-      <q-btn flat size="15px" color="black" round dense icon="drive_file_move" />
-      <q-btn flat size="15px" color="black" round dense icon="delete_outline" />
-    </q-card-actions>
-    <dialogs-list />
+    <div class="col-3 flex justify-end q-pr-sm">
+      <q-btn flat size="15px" color="black" round dense icon="drive_file_move" @click="copyItems"/>
+      <q-btn flat size="15px" color="black" round dense icon="delete_outline" @click="deleteItems"/>
+    </div>
   </q-toolbar>
 </template>
 
 <script>
-import DialogsList from "components/files/DialogsList";
+import { fileActions } from "src/utils/files/file-actions";
 
 export default {
   name: "SelectHeader",
-  components: {
-    DialogsList
-  },
   props: {
     items: {
       type: Array,
@@ -30,6 +26,16 @@ export default {
   },
   methods: {
     removeSelectedItems() {
+      this.$store.dispatch('files/removeSelectedItems', { items: this.items })
+    },
+    deleteItems() {
+      const deleteAction = fileActions.delete
+      if (deleteAction.component) {
+        this.$store.dispatch('files/changeDialogComponent', { component: deleteAction.component })
+      }
+    },
+    copyItems() {
+      this.$store.dispatch('files/addCopyItems', { items: this.items })
       this.$store.dispatch('files/removeSelectedItems', { items: this.items })
     }
   }

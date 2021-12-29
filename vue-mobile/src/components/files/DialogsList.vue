@@ -44,6 +44,8 @@ export default {
       this.closeDialog()
       if (action.component) {
         this.$store.dispatch('files/changeDialogComponent', { component: action.component })
+      } else if (action.method) {
+        action.method(this.$store)
       }
     },
     closeDialog() {

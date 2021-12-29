@@ -1,6 +1,7 @@
 <template>
   <q-item
     v-if="folder"
+    :disable="folder.isCopied"
     v-ripple="!isSelected"
     :active="folder.isSelected"
     clickable
@@ -44,6 +45,7 @@ export default {
   props: {
     folder: {type: Object, default: null},
     isSelected: { type: Boolean, default: false },
+    isCopied: { type: Boolean, default: false },
     touchstart: { type: Function, default: null, require: true },
     touchend: { type: Function, default: null, require: true },
   },

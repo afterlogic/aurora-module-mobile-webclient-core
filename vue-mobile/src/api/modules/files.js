@@ -49,6 +49,18 @@ export default () => {
         }
         return false
       })
+    },
+    copyMoveItems: async (parameters, method) => {
+      return WebApi.sendRequest({
+        moduleName: 'Files',
+        methodName: method,
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
     }
   };
 };

@@ -1,26 +1,30 @@
-const fileActions = {
+
+export const fileActions = {
   copy: {
-    method: () => console.log('copy'),
+    method: async (store) => {
+      const currentFile = store.getters['files/getCurrentFile']
+      await store.dispatch('files/addCopyItems', { items: [currentFile] })
+    },
     name: 'copy',
     displayName: 'Copy/Move'
   },
   createShareableLink: {
-    method: () => console.log('createShareableLink'),
+    method: null,
     name: 'createShareableLink',
     displayName: 'Create shareable link'
   },
   shareWithTeammates: {
-    method: () => console.log('shareWithTeammates'),
+    method: null,
     name: 'shareWithTeammates',
     displayName: 'Share with teammates'
   },
   share: {
-    method: () => console.log('share'),
+    method: null,
     name: 'share',
     displayName: 'Share'
   },
   download: {
-    method: () => console.log('download'),
+    method: null,
     name: 'download',
     displayName: 'Download'
   },
@@ -31,14 +35,14 @@ const fileActions = {
     displayName: 'Rename'
   },
   delete: {
-    method: () => console.log('delete'),
+    method: null,
     name: 'delete',
     component: 'DeleteItemsDialog',
     displayName: 'Delete'
   }
 }
 
-export const getFileActions = file => {
+export const getFileActionsList = file => {
   const actions = []
   if (file) {
     Object.keys(fileActions).forEach(key => {
