@@ -1,17 +1,15 @@
 <template>
   <q-layout view="hhh LpR fFf" style="height: 100vh">
     <router-view />
-    <footer-component v-if="hasAuthToken" />
   </q-layout>
 </template>
 <script>
 import { defineComponent } from 'vue';
-import FooterComponent from "components/main/FooterComponent";
 
 export default defineComponent({
   name: 'App',
   components: {
-    FooterComponent,
+
   },
   async mounted() {
     await this.populate()

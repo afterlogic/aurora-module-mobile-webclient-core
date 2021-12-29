@@ -61,6 +61,18 @@ export default () => {
         }
         return false
       })
+    },
+    createFolder: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'Files',
+        methodName: 'CreateFolder',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
     }
   };
 };

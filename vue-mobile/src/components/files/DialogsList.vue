@@ -12,12 +12,14 @@
 import FileMenuDialog from "components/files/dialogs/FileMenuDialog";
 import RenameItemDialog from "components/files/dialogs/RenameItemDialog";
 import DeleteItemsDialog from "components/files/dialogs/DeleteItemsDialog";
+import CreateFolderDialog from "components/files/dialogs/CreateFolderDialog";
 export default {
   name: "DialogsList",
   components: {
     FileMenuDialog,
     RenameItemDialog,
-    DeleteItemsDialog
+    DeleteItemsDialog,
+    CreateFolderDialog
   },
   data() {
     return {

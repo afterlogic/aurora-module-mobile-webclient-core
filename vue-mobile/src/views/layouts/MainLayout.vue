@@ -8,17 +8,20 @@
         <slot />
       </q-page>
     </q-page-container>
+  <footer-component v-if="hasAuthToken" />
 </template>
 
 <script>
 import HeaderComponent from "components/main/HeaderComponent";
 import DrawerComponent from "components/main/DrawerComponent";
+import FooterComponent from "components/main/FooterComponent";
 
 export default {
   name: 'MainLayout',
   components: {
     HeaderComponent,
-    DrawerComponent
+    DrawerComponent,
+    FooterComponent,
   },
   props: {
     title: { type: String, required: true },
@@ -27,6 +30,11 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
+    }
+  },
+  computed: {
+    hasAuthToken() {
+      return this.$store.getters['user/getAuthTokenStatus']
     }
   },
   methods: {

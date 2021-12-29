@@ -130,3 +130,12 @@ export async function moveItems({ dispatch, getters }) {
     dispatch('asyncGetFiles')
   }
 }
+export async function createFolder({ dispatch, getters }, { name }) {
+  const currentStorage = getters['getCurrentStorage']
+  const parameters = {
+    Type: currentStorage.Type,
+    Path: getters['getCurrentPath'],
+    FolderName: name
+  }
+  return await AppApi.Files.createFolder(parameters)
+}
