@@ -9,19 +9,19 @@ export function filesList (state) {
 export function foldersList (state) {
   return state.foldersList
 }
-export function getFilesQuota (state) {
+export function filesQuota (state) {
   return state.filesQuota
 }
 export function currentStorage (state) {
   return state.currentStorage
 }
-export function getLoadingStatus(state) {
+export function loadingStatus(state) {
   return state.isLoading
 }
 export function currentPaths (state) {
   return state.currentPaths
 }
-export function getCurrentPath (state) {
+export function currentPath (state) {
   return state.currentPath
 }
 export function currentFile (state) {

@@ -10,8 +10,8 @@ import {
 export async function asyncGetStorages ({ commit, dispatch }) {
   const storages = await AppApi.Files.getStorages()
   if (types.pArray(storages)) {
-    commit('setStorageList', storages)
-    commit('setCurrentStorage', storages.length ? storages[0] : {})
+    commit('SET_STORAGE_LIST', storages)
+    commit('SET_CURRENT_STORAGE', storages.length ? storages[0] : {})
     if (storages.length) {
       const path = {
         path: '',
@@ -26,7 +26,7 @@ export async function asyncGetStorages ({ commit, dispatch }) {
 }
 export async function asyncGetFiles ({ commit, getters }) {
   const currentStorage = getters['currentStorage']
-  const currentPath = getters['getCurrentPath']
+  const currentPath = getters['currentPath']
   const parameters = {
     Type: currentStorage?.Type,
     Path: currentPath,
@@ -37,26 +37,26 @@ export async function asyncGetFiles ({ commit, getters }) {
   if (types.pArray(data?.Items)) {
     const files = getParseFiles(data.Items)
     const folders = getParseFolders(data.Items)
-    commit('setFoldersList', folders)
-    commit('setFilesList', files)
+    commit('SET_FOLDERS_LIST', folders)
+    commit('SET_FILES_LIST', files)
   }
   if (types.pObject(data?.Quata)) {
-    commit('setFilesQuota', data.Quata)
+    commit('SET_FILES_QUOTA', data.Quata)
   }
 }
 export function changeCurrentStorage({ commit }, storage) {
-  commit('setCurrentStorage', storage)
+  commit('SET_CURRENT_STORAGE', storage)
 }
 export function changeLoadingStatus({ commit }, status) {
-  commit('setLoadingStatus', status)
+  commit('SET_LOADING_STATUS', status)
 }
 export function changeCurrentPaths ({ state, commit, getters, dispatch }, { path, lastStorage = false }) {
   const currentPaths = getters['currentPaths']
   let index = currentPaths.findIndex( elem => {
     return  elem?.path === path?.path
   })
-  commit('setCurrentPath', { path: path?.path })
-  commit('changeCurrentPath', { index, path, lastStorage })
+  commit('SET_CURRENT_PATH', { path: path?.path })
+  commit('CHANGE_CURRENT_PATH', { index, path, lastStorage })
 }
 export async function asyncRenameItem ({ state }, { file, itemName }) {
   const parameters = {
@@ -70,17 +70,17 @@ export async function asyncRenameItem ({ state }, { file, itemName }) {
   return await AppApi.Files.renameItem(parameters)
 }
 export function changeFileName({ commit }, fileName) {
-  commit('setFileName', fileName)
+  commit('SET_FILE_NAME', fileName)
 }
 export function selectFile({ commit }, file) {
-  commit('setCurrentFile', file)
+  commit('SET_CURRENT_FILE', file)
 }
 export function changeSelectStatus({ commit }) {
-  commit('setSelectStatus')
+  commit('SET_SELECT_STATUS')
 }
 export async function deleteItems ({ state, commit, getters, dispatch }, { items }) {
   const currentStorage = getters['currentStorage']
-  const currentPath = getters['getCurrentPath']
+  const currentPath = getters['currentPath']
   const parameters = {
     Type: currentStorage?.Type,
     Path: currentPath,
@@ -94,26 +94,26 @@ export function changeItemsLists({ commit }, { items }) {
   const folders = getFolders(items)
 
   if (folders.length) {
-    commit('removeFolders', folders)
+    commit('REMOVE_FOLDERS', folders)
   }
   if (files.length) {
-    commit('removeFiles', files)
+    commit('REMOVE_FILES', files)
   }
 }
 export function removeSelectedItems({ commit }, { items }) {
-  commit('removeSelectedItems', items)
+  commit('REMOVE_SELECTED_ITEMS', items)
 }
 export function changeDialogComponent({ commit }, dialogComponent) {
   console.log(dialogComponent, 'dialogComponent')
-  commit('setDialogComponent', dialogComponent)
+  commit('SET_DIALOG_COMPONENT', dialogComponent)
 }
 export function addCopyItems({ commit }, { items }) {
-  commit('setCopyItems', items)
-  commit('setItemsCopyStatus', { items, status: true })
+  commit('SET_COPY_ITEMS', items)
+  commit('SET_ITEMS_COPY_STATUS', { items, status: true })
 }
 export function removeCopiedFiles({ commit }) {
-  commit('setCopyItemsStatus', { status: false })
-  commit('removeCopiedFiles')
+  commit('SET_COPY_ITEMS_STATUS', { status: false })
+  commit('REMOVE_COPIED_FILES')
 }
 export async function copyItems({ dispatch, getters }) {
   const parameters = getters['getCopyMoveParameters']
@@ -135,7 +135,7 @@ export async function createFolder({ dispatch, getters }, { name }) {
   const currentStorage = getters['currentStorage']
   const parameters = {
     Type: currentStorage.Type,
-    Path: getters['getCurrentPath'],
+    Path: getters['currentPath'],
     FolderName: name
   }
   return await AppApi.Files.createFolder(parameters)
