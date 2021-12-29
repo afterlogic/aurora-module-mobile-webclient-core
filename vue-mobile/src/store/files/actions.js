@@ -25,7 +25,7 @@ export async function asyncGetStorages ({ commit, dispatch }) {
   }
 }
 export async function asyncGetFiles ({ commit, getters }) {
-  const currentStorage = getters['getCurrentStorage']
+  const currentStorage = getters['currentStorage']
   const currentPath = getters['getCurrentPath']
   const parameters = {
     Type: currentStorage?.Type,
@@ -51,7 +51,7 @@ export function changeLoadingStatus({ commit }, status) {
   commit('setLoadingStatus', status)
 }
 export function changeCurrentPaths ({ state, commit, getters, dispatch }, { path, lastStorage = false }) {
-  const currentPaths = getters['getCurrentPaths']
+  const currentPaths = getters['currentPaths']
   let index = currentPaths.findIndex( elem => {
     return  elem?.path === path?.path
   })
@@ -79,7 +79,7 @@ export function changeSelectStatus({ commit }) {
   commit('setSelectStatus')
 }
 export async function deleteItems ({ state, commit, getters, dispatch }, { items }) {
-  const currentStorage = getters['getCurrentStorage']
+  const currentStorage = getters['currentStorage']
   const currentPath = getters['getCurrentPath']
   const parameters = {
     Type: currentStorage?.Type,
@@ -104,6 +104,7 @@ export function removeSelectedItems({ commit }, { items }) {
   commit('removeSelectedItems', items)
 }
 export function changeDialogComponent({ commit }, dialogComponent) {
+  console.log(dialogComponent, 'dialogComponent')
   commit('setDialogComponent', dialogComponent)
 }
 export function addCopyItems({ commit }, { items }) {
@@ -131,7 +132,7 @@ export async function moveItems({ dispatch, getters }) {
   }
 }
 export async function createFolder({ dispatch, getters }, { name }) {
-  const currentStorage = getters['getCurrentStorage']
+  const currentStorage = getters['currentStorage']
   const parameters = {
     Type: currentStorage.Type,
     Path: getters['getCurrentPath'],

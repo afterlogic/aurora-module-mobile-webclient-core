@@ -36,7 +36,7 @@ export default {
     getAppData(state) {
       return state.appData
     },
-    getCurrentUser(state) {
+    currentUser(state) {
       return state.user
     }
   },

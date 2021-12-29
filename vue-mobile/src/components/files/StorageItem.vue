@@ -11,6 +11,7 @@
 
 <script>
 import StorageIcon from "components/files/icons/StorageIcon";
+import { mapActions } from "vuex";
 
 export default {
   name: "StorageItem",
@@ -21,20 +22,18 @@ export default {
     storage: { type: Object, default: null }
   },
   methods: {
+    ...mapActions('files', ['changeCurrentStorage', 'asyncGetFiles', 'changeCurrentPaths']),
     selectStorage() {
-      this.$store.dispatch('files/changeCurrentStorage', this.storage)
+      this.changeCurrentStorage(this.storage)
       const path = {
         path: '',
         name: this.storage.DisplayName,
       }
-      this.$store.dispatch('files/changeCurrentPaths', {
-        path,
-        lastStorage: true
-      })
+      this.changeCurrentPaths({path, lastStorage: true })
       this.getFiles()
     },
     async getFiles() {
-      await this.$store.dispatch('files/asyncGetFiles')
+      await this.asyncGetFiles()
     }
   }
 }

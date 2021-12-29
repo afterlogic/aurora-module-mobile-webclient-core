@@ -5,6 +5,7 @@
 <script>
 import DefaultFooter from "components/common/footer/DefaultFooter";
 import CopiedFooter from "components/files/footer/CopiedFooter";
+import { mapGetters } from "vuex";
 export default {
   name: "FileFooter",
   components: {
@@ -12,11 +13,12 @@ export default {
     CopiedFooter
   },
   computed: {
+    ...mapGetters('files', ['copiedFiles']),
     component() {
       return this.isCopied ?  'CopiedFooter' : 'DefaultFooter'
     },
     isCopied() {
-      return !!this.$store.getters['files/getCopiedFiles'].length
+      return !!this.copiedFiles.length
     }
   }
 }

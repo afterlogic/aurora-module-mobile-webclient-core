@@ -23,6 +23,7 @@
 import notification from "src/utils/notification";
 import AppInput from "components/common/AppInput";
 import AppButton from "components/common/AppButton";
+import { mapActions } from "vuex";
 export default {
   name: 'RenameItemDialog',
   components: { AppInput, AppButton },
@@ -43,15 +44,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('files', ['asyncRenameItem', 'changeFileName']),
     async renameItem () {
       if (this.itemName.length) {
         this.saving = true
-        const result = await this.$store.dispatch('files/asyncRenameItem', {
+        const result = await this.asyncRenameItem({
           file: this.file,
           itemName: this.itemName
         })
         if (result) {
-          await this.$store.dispatch('files/changeFileName', this.itemName)
+          await this.changeFileName(this.itemName)
           this.openDialog = false
           this.saving = false
           this.$emit('closeDialog')

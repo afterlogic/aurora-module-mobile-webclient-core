@@ -1,7 +1,7 @@
 <template>
   <component
     :is="component"
-    :file="file"
+    :file="currentFile"
     v-model="dialog"
     @closeDialog="closeDialog"
     @dialogAction="dialogAction"
@@ -13,6 +13,8 @@ import FileMenuDialog from "components/files/dialogs/FileMenuDialog";
 import RenameItemDialog from "components/files/dialogs/RenameItemDialog";
 import DeleteItemsDialog from "components/files/dialogs/DeleteItemsDialog";
 import CreateFolderDialog from "components/files/dialogs/CreateFolderDialog";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "DialogsList",
   components: {
@@ -28,24 +30,21 @@ export default {
     }
   },
   computed: {
-    dialogComponent() {
-      return this.$store.getters['files/getDialogComponent']
-    },
-    file() {
-      return this.$store.getters['files/getCurrentFile']
-    }
+    ...mapGetters('files', ['dialogComponent', 'currentFile']),
   },
   watch: {
     dialogComponent(val) {
+      console.log(val, 'val')
       this.component = val.component
       this.dialog = true
     },
   },
   methods: {
+    ...mapActions('files', ['changeDialogComponent']),
     dialogAction(action) {
       this.closeDialog()
       if (action.component) {
-        this.$store.dispatch('files/changeDialogComponent', { component: action.component })
+        this.changeDialogComponent({ component: action.component })
       } else if (action.method) {
         action.method(this.$store)
       }

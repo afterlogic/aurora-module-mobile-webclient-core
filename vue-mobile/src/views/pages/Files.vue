@@ -5,7 +5,7 @@
     </template>
     <q-list>
       <folder-item
-        v-for="file in folderList"
+        v-for="file in foldersList"
         :key="file"
         :folder="file"
         :isSelected="isSelected"
@@ -35,7 +35,7 @@ import FileItem from "components/files/FileItem";
 import FolderItem from "components/files/FolderItem";
 import StorageItem from "components/files/StorageItem";
 import DialogsList from "components/files/DialogsList";
-
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Files",
   components: {
@@ -50,29 +50,16 @@ export default {
   },
   data() {
     return {
-      // dialog: false,
-      // currentFile: null,
-      // dialogComponent: '',
       touchTimer: null,
       isSelected: false,
     }
   },
   computed: {
-    filesList() {
-      return this.$store.getters['files/getFilesList']
-    },
-    folderList() {
-     return this.$store.getters['files/getFoldersList']
-    },
-    storageList() {
-      return this.$store.getters['files/getStorageList']
-    },
-    selectedFiles() {
-      return this.$store.getters['files/getSelectedFiles']
-    },
+    ...mapGetters('files',
+      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles']
+    ),
     isCopied() {
-      const copiedItems = this.$store.getters['files/getCopiedFiles']
-      return !!copiedItems.length
+      return !!this.copiedFiles.length
     }
   },
   watch: {
@@ -85,37 +72,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions('files',
+      ['asyncGetStorages', 'asyncGetFiles', 'selectFile', 'changeDialogComponent', 'changeSelectStatus']
+    ),
     async init() {
-      await this.$store.dispatch('files/asyncGetStorages')
-      await this.$store.dispatch('files/asyncGetFiles')
+      await this.asyncGetStorages()
+      await this.asyncGetFiles()
     },
     showDialog({ file, component }) {
-      // this.dialog = true
-      // this.dialogComponent = component
-      // this.currentFile = file
-      this.$store.dispatch('files/selectFile', file)
-      this.$store.dispatch('files/changeDialogComponent', { component })
+      this.selectFile(file)
+      this.changeDialogComponent({ component })
     },
-    // closeDialog() {
-    //   this.dialog = false
-    // },
-    // dialogAction(action) {
-    //   this.closeDialog()
-    //   if (action.component) {
-    //     this.dialogComponent = action.component
-    //     this.dialog = true
-    //   }
-    // },
     selectItem() {
       this.isSelected = true
-      this.$store.dispatch('files/changeSelectStatus')
+      this.changeSelectStatus()
     },
     touchstart(file) {
-      this.$store.dispatch('files/selectFile', file)
+      this.selectFile(file)
       if (!this.isSelected && !this.isCopied) {
         this.touchTimer = setTimeout(this.selectItem, 1000);
       } else if (!this.isCopied) {
-        this.$store.dispatch('files/changeSelectStatus')
+        this.changeSelectStatus()
       }
     },
     touchend() {

@@ -25,6 +25,7 @@
 <script>
 import AppInput from "components/common/AppInput";
 import AppButton from "components/common/AppButton";
+import { mapActions } from "vuex";
 
 export default {
   name: "CreateFolderDialog",
@@ -46,11 +47,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions('files', ['createFolder', 'asyncGetFiles']),
     async createFolder () {
-      const result = await this.$store.dispatch('files/createFolder', { name: this.folderName })
+      const result = await this.createFolder({ name: this.folderName })
       if (result) {
         this.$emit('closeDialog')
-        await this.$store.dispatch('files/asyncGetFiles')
+        await this.asyncGetFiles()
       }
     },
     cancelDialog () {

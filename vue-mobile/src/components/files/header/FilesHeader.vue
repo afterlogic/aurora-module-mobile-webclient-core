@@ -19,10 +19,10 @@ export default {
   },
   computed: {
     selectedItems() {
-      return this.$store.getters['files/getSelectedFiles']
+      return this.$store.getters['files/selectedFiles']
     },
     copiedItems() {
-      return this.$store.getters['files/getCopiedFiles']
+      return this.$store.getters['files/copiedFiles']
     }
   },
 }

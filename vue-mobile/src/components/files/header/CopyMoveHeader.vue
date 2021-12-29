@@ -25,27 +25,26 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "CopyMoveHeader",
   computed: {
-    copiedItems() {
-      return this.$store.getters['files/getCopiedFiles']
-    },
-    currentPaths() {
-      return this.$store.getters['files/getCurrentPaths']
-    }
+    ...mapGetters('files', ['copiedFiles', 'currentPaths']),
   },
   methods: {
+    ...mapActions('files', ['removeCopiedFiles', 'changeDialogComponent', 'changeCurrentPaths', 'asyncGetFiles']),
     removeCopiedItems() {
-      this.$store.dispatch('files/removeCopiedFiles', { items: this.copiedItems, status: false })
+      this.removeCopiedFiles()
     },
     createFolder() {
-      this.$store.dispatch('files/changeDialogComponent', { component: 'CreateFolderDialog' })
+      this.changeDialogComponent({ component: 'CreateFolderDialog' })
     },
     async onPreviousPath() {
-      const paths = this.$store.getters['files/getCurrentPaths']
-      await this.$store.dispatch('files/changeCurrentPaths', { path: paths[paths.length - 2], lastStorage: false })
-      await this.$store.dispatch('files/asyncGetFiles')
+      await this.changeCurrentPaths({
+        path: this.currentPaths[this.currentPaths.length - 2], lastStorage: false
+      })
+      await this.asyncGetFiles()
     }
   }
 }

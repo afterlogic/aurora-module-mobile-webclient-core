@@ -1,8 +1,7 @@
-
 export const fileActions = {
   copy: {
     method: async (store) => {
-      const currentFile = store.getters['files/getCurrentFile']
+      const currentFile = store.getters['files/currentFile']
       await store.dispatch('files/addCopyItems', { items: [currentFile] })
     },
     name: 'copy',

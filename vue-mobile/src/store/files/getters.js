@@ -1,41 +1,41 @@
 import { getFilteredItems } from "src/utils/files/utils";
 
-export function getStorageList (state) {
+export function storageList (state) {
   return state.storageList
 }
-export function getFilesList (state) {
+export function filesList (state) {
   return state.filesList
 }
-export function getFoldersList (state) {
+export function foldersList (state) {
   return state.foldersList
 }
 export function getFilesQuota (state) {
   return state.filesQuota
 }
-export function getCurrentStorage (state) {
+export function currentStorage (state) {
   return state.currentStorage
 }
 export function getLoadingStatus(state) {
   return state.isLoading
 }
-export function getCurrentPaths (state) {
+export function currentPaths (state) {
   return state.currentPaths
 }
 export function getCurrentPath (state) {
   return state.currentPath
 }
-export function getCurrentFile (state) {
+export function currentFile (state) {
   return state.currentFile
 }
-export function getSelectedFiles(state) {
+export function selectedFiles(state) {
   const files = getFilteredItems(state.filesList, 'isSelected')
   const folders = getFilteredItems(state.foldersList, 'isSelected')
   return folders.concat(files)
 }
-export function getDialogComponent(state) {
+export function dialogComponent(state) {
   return state.dialogComponent ? state.dialogComponent : { component: '' }
 }
-export function getCopiedFiles(state) {
+export function copiedFiles(state) {
   return state.copyItems
 }
 export function getCopyMoveParameters(state) {

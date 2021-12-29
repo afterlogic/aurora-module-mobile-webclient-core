@@ -13,20 +13,22 @@
 
 <script>
 import AppButton from "components/common/AppButton";
+import { mapActions } from "vuex";
 export default {
   name: "CopiedFooter",
   components: {
     AppButton
   },
   methods: {
+    ...mapActions('files', ['removeCopiedFiles', 'copyItems', 'moveItems']),
     cancel() {
-      this.$store.dispatch('files/removeCopiedFiles')
+      this.removeCopiedFiles()
     },
     copy() {
-      this.$store.dispatch('files/copyItems')
+      this.copyItems()
     },
     move() {
-      this.$store.dispatch('files/moveItems')
+      this.moveItems()
     }
   }
 }

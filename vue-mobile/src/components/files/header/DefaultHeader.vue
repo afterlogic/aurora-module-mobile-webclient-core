@@ -6,9 +6,9 @@
         model-value
         v-model="isOpen"
         :ripple="false"
-        :dropdown-icon="paths.length > 1 ? 'arrow_drop_down' : 'none'"
+        :dropdown-icon="currentPaths.length > 1 ? 'arrow_drop_down' : 'none'"
         dense
-        :disable="paths.length <= 1"
+        :disable="currentPaths.length <= 1"
         :style="{
           'padding-left': '36px',
            'font-size': '17px',
@@ -17,16 +17,18 @@
         class="text-bold text-black"
         no-caps
         flat
-        :label="paths.length <= 1 ? 'Aurora files' : getShortName(paths[paths.length - 1].name, 20)"
+        :label="currentPaths.length <= 1 ?
+        'Aurora files' :
+        getShortName(currentPaths[currentPaths.length - 1].name, 20)"
       >
         <q-list>
-          <div v-for="(path, index) in paths"
+          <div v-for="(path, index) in currentPaths"
                :key="path.path"
           >
             <q-item clickable
                     v-close-popup
                     @click="openPath(path)"
-                    v-if="paths.length - 1 !== index"
+                    v-if="currentPaths.length - 1 !== index"
             >
               <q-item-section>
                 <q-item-label>{{ getShortName(path.name, 20) }}</q-item-label>
@@ -43,6 +45,7 @@
 
 <script>
 import {getShortName} from "src/utils/files/utils";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "DefaultHeader",
@@ -52,20 +55,18 @@ export default {
     }
   },
   computed: {
-    paths() {
-      return this.$store.getters['files/getCurrentPaths']
-    },
+    ...mapGetters('files', ['currentPaths', 'currentStorage']),
     storageName() {
-      const currentStorage = this.$store.getters['files/getCurrentStorage']
-      return currentStorage.Type
+      return this.currentStorage.Type
     }
   },
   methods: {
+    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
     getShortName,
     async openPath(path) {
       this.isOpen = false
-      await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
-      await this.$store.dispatch('files/asyncGetFiles')
+      await this.changeCurrentPaths({ path, lastStorage: false })
+      await this.asyncGetFiles()
     }
   }
 }

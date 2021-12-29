@@ -16,6 +16,7 @@
 
 <script>
 import AppButton from "components/common/AppButton";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'DeleteItemsDialog',
   components: {
@@ -39,9 +40,7 @@ export default {
     }
   },
   computed: {
-    selectedFiles() {
-      return this.$store.getters['files/getSelectedFiles']
-    },
+    ...mapGetters('files', ['selectedFiles']),
     title () {
       if (this.selectedFiles.length > 1) {
         return 'Delete selected items permanently?'
@@ -53,6 +52,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('files', ['deleteItems', 'changeItemsLists']),
     closeDialog() {
       this.$emit('closeDialog')
     },
@@ -73,9 +73,9 @@ export default {
           IsFolder: this.file.isFolder
         })
       }
-      const result = await this.$store.dispatch('files/deleteItems', { items })
+      const result = await this.deleteItems({ items })
       if (result) {
-        await this.$store.dispatch('files/changeItemsLists', {
+        await this.changeItemsLists({
           items: this.selectedFiles.length ? this.selectedFiles : [this.file]
         })
         this.$emit('closeDialog')

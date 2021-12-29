@@ -2,7 +2,7 @@
   <q-item
     v-if="folder"
     :disable="folder.isCopied"
-    v-ripple="!isSelected"
+    v-ripple="!isSelected && !folder.isCopied"
     :active="folder.isSelected"
     clickable
     @touchstart="touchstart(folder)"
@@ -36,6 +36,7 @@
 <script>
 import FileIcon from "components/files/icons/FileIcon";
 import { getShortName } from "src/utils/files/utils";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "FolderItem",
@@ -50,9 +51,7 @@ export default {
     touchend: { type: Function, default: null, require: true },
   },
   computed: {
-    currentStorage() {
-      return this.$store.getters['files/getCurrentStorage']
-    },
+    ...mapGetters('files', ['currentStorage']),
     folderName() {
       if (this.folder) {
         return getShortName(this.folder.name, 30)
@@ -61,22 +60,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
     async openFolder() {
-      if (!this.isSelected) {
+      if (!this.isSelected && !this.folder.isCopied) {
         this.touchend()
         const path = {
           path: this.folder.fullPath,
           name: this.folder.name
         }
-        await this.$store.dispatch('files/changeCurrentPaths', { path, lastStorage: false })
-        await this.$store.dispatch('files/asyncGetFiles', {
-          path: this.folder.fullPath
-        })
+        await this.changeCurrentPaths({ path, lastStorage: false })
+        await this.asyncGetFiles()
       } else {
       }
     },
     showDialog() {
-      if (!this.isSelected) {
+      if (!this.isSelected && !this.isCopied) {
         this.$emit('showDialog', { file: this.folder, component: 'FileMenuDialog' })
       }
     }

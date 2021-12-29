@@ -13,15 +13,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "DrawerComponent",
   props: {
     value: { type: Boolean, default: false },
   },
   computed: {
+    ...mapGetters('core', ['currentUser']),
     userName() {
-      const user = this.$store.getters['core/getCurrentUser']
-      return user?.PublicId ? user.PublicId : ''
+      return this.currentUser?.PublicId ? this.currentUser.PublicId : ''
     }
   },
   data() {
