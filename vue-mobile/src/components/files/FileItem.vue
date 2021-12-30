@@ -8,9 +8,9 @@
           @touchend.stop="selectFile"
   >
     <q-item-section avatar>
-      <file-icon></file-icon>
+      <file-icon color="primary" class="text-primary"></file-icon>
     </q-item-section>
-    <q-item-section>
+    <q-item-section class="text-info">
       <q-item-label>{{ fileName }}</q-item-label>
       <q-item-label></q-item-label>
     </q-item-section>
@@ -50,6 +50,7 @@ export default {
     selectFile() {
       if (!this.isSelected) {
         this.touchend()
+        this.$router.push({ path: `/file/${this.file.id}` })
       } else {
       }
     },

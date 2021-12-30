@@ -6,7 +6,11 @@ const routes = [
   },
   {
     path: '/files',
-    component: () => import('src/views/pages/Files'),
+    component: () => import('src/views/pages/files/Files'),
+  },
+  {
+    path: '/file/:id',
+    component: () => import('src/views/pages/files/FileInfo'),
   },
   {
     path: '/mail',

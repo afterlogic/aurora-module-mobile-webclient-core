@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       dialog: false,
-      component: ''
+      component: 'FileMenuDialog'
     }
   },
   computed: {

@@ -25,6 +25,7 @@ const parseFile = file => {
     initializationVector: typesUtils.pString(file?.ExtendedProps?.InitializationVector),
     thumbnailUrl: typesUtils.pString(file?.ThumbnailUrl),
     contentType: typesUtils.pString(file.ContentType),
+    id: typesUtils.pString(file?.Id),
     cancelToken: null,
     isSelected: false,
     isCopied: false,

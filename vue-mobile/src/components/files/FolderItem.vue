@@ -9,9 +9,9 @@
     @touchend="openFolder"
   >
     <q-item-section avatar>
-      <file-icon></file-icon>
+      <folder-icon color="primary"></folder-icon>
     </q-item-section>
-    <q-item-section>
+    <q-item-section class="text-info">
       <q-item-label>{{ folderName }}</q-item-label>
       <q-item-label></q-item-label>
     </q-item-section>
@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import FileIcon from "components/files/icons/FileIcon";
+import FolderIcon from "components/files/icons/FolderIcon";
 import { getShortName } from "src/utils/files/utils";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "FolderItem",
   components: {
-    FileIcon
+    FolderIcon
   },
   props: {
     folder: {type: Object, default: null},

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <default-header v-if="!selectedItems.length && !copiedItems.length" @openDrawer="$emit('openDrawer')"/>
-    <select-header v-if="selectedItems.length && !copiedItems.length" :items="selectedItems"/>
-    <copy-move-header v-if="copiedItems.length"/>
+    <default-header v-if="!selectedFiles.length && !copiedFiles.length" @openDrawer="$emit('openDrawer')"/>
+    <select-header v-if="selectedFiles.length && !copiedFiles.length" :items="selectedFiles"/>
+    <copy-move-header v-if="copiedFiles.length"/>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import DefaultHeader from "components/files/header/DefaultHeader";
 import SelectHeader from "components/files/header/SelectHeader";
 import CopyMoveHeader from "components/files/header/CopyMoveHeader";
+import { mapGetters } from "vuex";
 export default {
   name: "FilesHeader",
   components: {
@@ -18,12 +19,7 @@ export default {
     CopyMoveHeader
   },
   computed: {
-    selectedItems() {
-      return this.$store.getters['files/selectedFiles']
-    },
-    copiedItems() {
-      return this.$store.getters['files/copiedFiles']
-    }
+    ...mapGetters('files', ['selectedFiles', 'copiedFiles']),
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <q-toolbar style="height: 55px; font-size: 16px; padding: 0" class="bg-primary">
     <q-card-actions align="left" class="col-3">
-      <q-btn flat size="15px" @click="removeSelectedItems" color="black" round dense icon="close" />
+      <q-btn flat size="15px" @click="remove" color="black" round dense icon="close" />
     </q-card-actions>
     <div class="text-center text-black text-bold col-6">
       <span>{{`Selected: ${items.length}`}}</span>
@@ -15,6 +15,7 @@
 
 <script>
 import { fileActions } from "src/utils/files/file-actions";
+import { mapActions } from "vuex";
 
 export default {
   name: "SelectHeader",
@@ -25,18 +26,19 @@ export default {
     }
   },
   methods: {
-    removeSelectedItems() {
-      this.$store.dispatch('files/removeSelectedItems', { items: this.items })
+    ...mapActions('files', ['removeSelectedItems', 'changeDialogComponent', 'addCopyItems']),
+    remove() {
+      this.removeSelectedItems({ items: this.items })
     },
     deleteItems() {
       const deleteAction = fileActions.delete
       if (deleteAction.component) {
-        this.$store.dispatch('files/changeDialogComponent', { component: deleteAction.component })
+        this.changeDialogComponent({ component: deleteAction.component })
       }
     },
     copyItems() {
-      this.$store.dispatch('files/addCopyItems', { items: this.items })
-      this.$store.dispatch('files/removeSelectedItems', { items: this.items })
+      this.addCopyItems({ items: this.items })
+      this.removeSelectedItems({ items: this.items })
     }
   }
 }
