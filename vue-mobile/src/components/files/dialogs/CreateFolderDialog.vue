@@ -47,9 +47,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('files', ['createFolder', 'asyncGetFiles']),
+    ...mapActions('files', ['asyncCreateFolder', 'asyncGetFiles']),
     async createFolder () {
-      const result = await this.createFolder({ name: this.folderName })
+      const result = await this.asyncCreateFolder({ name: this.folderName })
       if (result) {
         this.$emit('closeDialog')
         await this.asyncGetFiles()

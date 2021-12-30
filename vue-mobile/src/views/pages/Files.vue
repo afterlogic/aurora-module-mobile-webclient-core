@@ -24,7 +24,12 @@
         :touchend="touchend"
         @showDialog="showDialog"
       />
+      <div style="height: 130px" class="full-width"/>
     </q-list>
+    <app-create-button
+      icon="add"
+      @click="showDialog({file: null, component: 'CreateButtonsDialogs' })"
+    />
     <dialogs-list />
   </main-layout>
 </template>
@@ -35,6 +40,7 @@ import FileItem from "components/files/FileItem";
 import FolderItem from "components/files/FolderItem";
 import StorageItem from "components/files/StorageItem";
 import DialogsList from "components/files/DialogsList";
+import AppCreateButton from "components/common/AppCreateButton";
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Files",
@@ -43,7 +49,8 @@ export default {
     FolderItem,
     FileItem,
     StorageItem,
-    DialogsList
+    DialogsList,
+    AppCreateButton
   },
   async mounted() {
     await this.init()
@@ -98,7 +105,7 @@ export default {
     touchend() {
       if (this.touchTimer)
         clearTimeout(this.touchTimer);
-    }
+    },
   }
 }
 </script>

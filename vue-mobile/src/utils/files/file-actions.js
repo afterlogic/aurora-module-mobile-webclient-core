@@ -10,6 +10,7 @@ export const fileActions = {
   createShareableLink: {
     method: null,
     name: 'createShareableLink',
+    component: 'CreateShareableLinkDialog',
     displayName: 'Create shareable link'
   },
   shareWithTeammates: {

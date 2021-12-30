@@ -73,6 +73,18 @@ export default () => {
         }
         return false
       })
+    },
+    createShareableLink: async (parameters, module) => {
+      return WebApi.sendRequest({
+        moduleName: module,
+        methodName: 'CreatePublicLink',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
     }
   };
 };

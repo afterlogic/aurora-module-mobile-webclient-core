@@ -13,6 +13,9 @@ import FileMenuDialog from "components/files/dialogs/FileMenuDialog";
 import RenameItemDialog from "components/files/dialogs/RenameItemDialog";
 import DeleteItemsDialog from "components/files/dialogs/DeleteItemsDialog";
 import CreateFolderDialog from "components/files/dialogs/CreateFolderDialog";
+import CreateButtonsDialogs from "components/files/dialogs/CreateButtonsDialogs";
+import CreateShareableLinkDialog from "components/files/dialogs/CreateShareableLinkDialog";
+
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -21,12 +24,14 @@ export default {
     FileMenuDialog,
     RenameItemDialog,
     DeleteItemsDialog,
-    CreateFolderDialog
+    CreateFolderDialog,
+    CreateButtonsDialogs,
+    CreateShareableLinkDialog
   },
   data() {
     return {
       dialog: false,
-      component: 'FileMenuDialog'
+      component: ''
     }
   },
   computed: {
@@ -34,7 +39,6 @@ export default {
   },
   watch: {
     dialogComponent(val) {
-      console.log(val, 'val')
       this.component = val.component
       this.dialog = true
     },
