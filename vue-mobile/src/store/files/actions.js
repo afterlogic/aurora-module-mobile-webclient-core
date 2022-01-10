@@ -79,7 +79,7 @@ export default {
   changeSelectStatus: ({ commit }) => {
     commit('SET_SELECT_STATUS')
   },
-  deleteItems:  async ({ state, commit, getters, dispatch }, { items }) => {
+  asyncDeleteItems:  async ({ state, commit, getters, dispatch }, { items }) => {
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {

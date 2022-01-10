@@ -6,9 +6,9 @@
       </q-card-section>
       <div class="flex no-wrap">
         <AppButton size="18px" flat color="primary"
-               label="Delete" @click="deleteItems"/>
+               label="Delete" @click.stop="deleteItems"/>
         <AppButton size="18px" flat class="q-px-sm"  color="grey-6"
-               label="Cancel" @click="closeDialog"/>
+               label="Cancel" @click.stop="closeDialog"/>
       </div>
     </q-card>
   </q-dialog>
@@ -52,7 +52,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('files', ['deleteItems', 'changeItemsLists']),
+    ...mapActions('files', ['asyncDeleteItems', 'changeItemsLists']),
     closeDialog() {
       this.$emit('closeDialog')
     },
@@ -73,7 +73,7 @@ export default {
           IsFolder: this.file.isFolder
         })
       }
-      const result = await this.deleteItems({ items })
+      const result = await this.asyncDeleteItems({ items })
       if (result) {
         await this.changeItemsLists({
           items: this.selectedFiles.length ? this.selectedFiles : [this.file]
