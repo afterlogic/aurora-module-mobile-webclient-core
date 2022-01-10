@@ -157,7 +157,11 @@ export default {
     if (result) {
       commit(
         'SET_ITEM_PROPERTY',
-        { item: currentFile, property: 'publicLink', value: 'https://aurora.afterlogic.com/' + result.link }
+        {
+          item: currentFile,
+          property: 'publicLink',
+          value: `https://aurora.afterlogic.com/${result}`
+        }
       )
       if (parameters.Password) {
         commit(
@@ -168,6 +172,25 @@ export default {
       return result
     }
     return result
-
+  },
+  asyncDeletePublicLink: async ({ commit, getters }) => {
+    const currentFile = getters['currentFile']
+    const parameters = {
+      Type: currentFile.type,
+      Path: currentFile.path,
+      Name: currentFile.name,
+    }
+    const result = await AppApi.Files.deletePublicLink(parameters)
+    if (result) {
+      commit(
+        'SET_ITEM_PROPERTY',
+        { item: currentFile, property: 'publicLink', value: '' }
+      )
+      commit(
+        'SET_ITEM_PROPERTY',
+        { item: currentFile, property: 'linkPassword', value: '' }
+      )
+    }
+    return result
   }
 }

@@ -53,7 +53,7 @@
         <q-btn
           size="14px" flat color="primary"
           no-caps
-          :disable="saving" @click="cancelDialog"
+          :disable="saving" @click="removeLink"
           label="Remove link"
         />
         <q-btn
@@ -90,9 +90,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions('files', ['asyncCreateShareableLink']),
+    ...mapActions('files', ['asyncCreateShareableLink', 'asyncDeletePublicLink']),
     async createShareableLink() {
       await this.asyncCreateShareableLink({ withPassword: this.withPassword })
+    },
+    async removeLink() {
+      this.saving = true
+      const result = await this.asyncDeletePublicLink()
+      this.saving = false
+      if (result) this.$emit('closeDialog')
     },
     cancelDialog () {
       this.$emit('closeDialog')

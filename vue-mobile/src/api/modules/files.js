@@ -1,4 +1,5 @@
 import WebApi from 'src/api/web-api'
+import _ from 'lodash'
 
 export default () => {
   return {
@@ -78,6 +79,17 @@ export default () => {
       return WebApi.sendRequest({
         moduleName: module,
         methodName: 'CreatePublicLink',
+        parameters: parameters,
+      }).then(result => {
+        if (_.isString(result?.link)) return result.link
+        if (result) return result
+        return false
+      })
+    },
+    deletePublicLink: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'Files',
+        methodName: 'DeletePublicLink',
         parameters: parameters,
       }).then(result => {
         if (result) {
