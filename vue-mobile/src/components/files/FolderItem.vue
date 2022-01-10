@@ -7,6 +7,7 @@
     clickable
     @touchstart="touchstart(folder)"
     @touchend="openFolder"
+    @touchmove.stop="touchMove"
   >
     <q-item-section avatar>
       <folder-icon color="primary"></folder-icon>
@@ -59,10 +60,15 @@ export default {
       return ''
     }
   },
+  data() {
+    return {
+      isMoved: false
+    }
+  },
   methods: {
     ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
     async openFolder() {
-      if (!this.isSelected && !this.folder.isCopied) {
+      if (!this.isSelected && !this.folder.isCopied && !this.isMoved) {
         this.touchend()
         const path = {
           path: this.folder.fullPath,
@@ -71,7 +77,12 @@ export default {
         await this.changeCurrentPaths({ path, lastStorage: false })
         await this.asyncGetFiles()
       } else {
+        this.isMoved = false
       }
+    },
+    touchMove() {
+      this.isMoved = true
+      this.$emit('touchmove')
     },
     showDialog() {
       if (!this.isSelected && !this.isCopied) {

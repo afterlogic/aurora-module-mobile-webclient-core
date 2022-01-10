@@ -12,6 +12,7 @@
         :isCopied="isCopied"
         :touchstart="touchstart"
         :touchend="touchend"
+        @touchmove="touchend"
         @showDialog="showDialog"
       />
       <file-item
@@ -22,6 +23,7 @@
         :isCopied="isCopied"
         :touchstart="touchstart"
         :touchend="touchend"
+        @touchmove="touchend"
         @showDialog="showDialog"
       />
       <div style="height: 130px" class="full-width"/>

@@ -5,6 +5,7 @@
           v-ripple="!isSelected && !isCopied"
           :active="file.isSelected"
           @touchstart.stop="touchstart(file)"
+          @touchmove.stop="touchMove"
           @touchend.stop="selectFile"
   >
     <q-item-section avatar>
@@ -38,6 +39,11 @@ export default {
     touchstart: { type: Function, default: null, require: true },
     touchend: { type: Function, default: null, require: true },
   },
+  data() {
+    return {
+      isMoved: false
+    }
+  },
   computed: {
     fileName() {
       if (this.file) {
@@ -48,11 +54,16 @@ export default {
   },
   methods: {
     selectFile() {
-      if (!this.isSelected) {
+      if (!this.isSelected && !this.isMoved) {
         this.touchend()
         this.$router.push({ path: `/file/${this.file.id}` })
       } else {
+        this.isMoved = false
       }
+    },
+    touchMove() {
+      this.isMoved = true
+      this.$emit('touchmove')
     },
     showDialog() {
       if (!this.isSelected && !this.isCopied) {
