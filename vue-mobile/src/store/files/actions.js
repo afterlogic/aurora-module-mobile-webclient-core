@@ -192,5 +192,5 @@ export default {
       )
     }
     return result
-  }
+  },
 }

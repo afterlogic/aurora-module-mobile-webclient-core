@@ -97,6 +97,6 @@ export default () => {
         }
         return false
       })
-    }
+    },
   };
 };

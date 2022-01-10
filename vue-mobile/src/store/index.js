@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 import files from './files'
 import user from './user'
 import core from './core'
+import contacts from "./contacts";
 
 // import example from './module-example'
 
@@ -20,7 +21,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       user,
       files,
-      core
+      core,
+      contacts
     },
 
     // enable strict mode (adds overhead!)

@@ -6,17 +6,12 @@
       </div>
       <q-checkbox v-model="withPassword" class="q-ma-sm" label="Protect public link with password" color="primary" />
       <q-card-actions align="right" >
-        <q-btn
-          class="text-no-wrap"
-          no-caps
-          size="14px" flat color="primary"
-          :disable="saving" @click="createShareableLink"
+        <button-dialog
+          :saving="saving" :action="createShareableLink"
           label="Create shareable link"
         />
-        <q-btn
-          size="14px" flat color="primary"
-          no-caps
-          :disable="saving" @click="cancelDialog"
+        <button-dialog
+          :saving="saving" :action="cancelDialog"
           label="Cancel"
         />
       </q-card-actions>
@@ -43,23 +38,16 @@
         </div>
       </div>
       <q-card-actions align="right" >
-        <q-btn
-          class="text-no-wrap"
-          no-caps
-          size="14px" flat color="primary"
-          :disable="saving" @click="createShareableLink"
+        <button-dialog
+          :saving="saving" :action="createShareableLink"
           label="Send to..."
         />
-        <q-btn
-          size="14px" flat color="primary"
-          no-caps
-          :disable="saving" @click="removeLink"
+        <button-dialog
+          :saving="saving" :action="removeLink"
           label="Remove link"
         />
-        <q-btn
-          size="14px" flat color="primary"
-          no-caps
-          :disable="saving" @click="cancelDialog"
+        <button-dialog
+          :saving="saving" :action="cancelDialog"
           label="Close"
         />
       </q-card-actions>
@@ -68,11 +56,12 @@
 </template>
 
 <script>
+import ButtonDialog from "components/files/common/ButtonDialog";
 import { mapActions } from "vuex";
 
 export default {
   name: "CreateShareableLinkDialog",
-  // components: { AppButton },
+  components: { ButtonDialog },
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false }

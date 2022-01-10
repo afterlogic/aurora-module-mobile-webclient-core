@@ -15,6 +15,7 @@ import DeleteItemsDialog from "components/files/dialogs/DeleteItemsDialog";
 import CreateFolderDialog from "components/files/dialogs/CreateFolderDialog";
 import CreateButtonsDialogs from "components/files/dialogs/CreateButtonsDialogs";
 import CreateShareableLinkDialog from "components/files/dialogs/CreateShareableLinkDialog";
+import ShareWithTeammatesDialog from "components/files/dialogs/ShareWithTeammatesDialog";
 
 import { mapGetters, mapActions } from "vuex";
 
@@ -26,7 +27,8 @@ export default {
     DeleteItemsDialog,
     CreateFolderDialog,
     CreateButtonsDialogs,
-    CreateShareableLinkDialog
+    CreateShareableLinkDialog,
+    ShareWithTeammatesDialog
   },
   data() {
     return {
@@ -39,6 +41,7 @@ export default {
   },
   watch: {
     dialogComponent(val) {
+      console.log(val, 'val')
       this.component = val.component
       this.dialog = true
     },

@@ -16,6 +16,7 @@ export const fileActions = {
   shareWithTeammates: {
     method: null,
     name: 'shareWithTeammates',
+    component: 'ShareWithTeammatesDialog',
     displayName: 'Share with teammates'
   },
   share: {
