@@ -2,7 +2,7 @@
   <q-dialog v-model="openDialog">
     <q-card class="q-dialog-size q-pt-md q-px-sm" style="min-width: 300px">
       <div style="font-size: 15px" class="q-px-md text-bold text-primary text">
-        <span>Add new folder</span>
+        <span>{{ $t('MAILWEBCLIENT.ACTION_ADD_NEW_FOLDER') }}</span>
       </div>
       <q-item>
         <app-input

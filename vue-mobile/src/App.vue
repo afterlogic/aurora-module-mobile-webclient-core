@@ -12,6 +12,7 @@ export default defineComponent({
 
   },
   async mounted() {
+    console.log(this, 'this')
     await this.populate()
   },
   computed: {

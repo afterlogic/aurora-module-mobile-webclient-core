@@ -1,14 +1,14 @@
 <template>
   <div class="q-gutter-y-md q-px-md full-height flex wrap content-between">
     <div class="full-width">
-      <h4 class="q-my-sm">Aurora Mail</h4>
+      <h4 class="q-my-sm">{{ $t('MOBILEAPPSWEBCLIENT.HEADING_MAIL_APP') }}</h4>
       <p>Log in to continue</p>
     </div>
    <div class="full-width">
      <q-form>
        <AppInput
          v-model="form.login.value"
-         placeholder="Email"
+         :placeholder="$t('COREWEBCLIENT.LABEL_EMAIL')"
          :rules-props="form.login.rules"
          type="email"
        />

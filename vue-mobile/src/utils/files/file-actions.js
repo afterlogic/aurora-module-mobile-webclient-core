@@ -1,3 +1,22 @@
+const i18n = {
+  '$t': {
+    OPENPGPFILESWEBCLIENT: {
+      "HEADING_CREATE_PUBLIC_LINK": "Create shareable link",
+    },
+    SHAREDFILES: {
+      "ACTION_SHARE": "Share with teammates",
+    },
+    COREWEBCLIENT: {
+      "ACTION_SHARE": "Share",
+      "ACTION_DOWNLOAD_FILE": "Download",
+      "ACTION_REMOVE": "Remove",
+    },
+    FILESWEBCLIENT: {
+      "ACTION_RENAME": "Rename",
+    }
+  }
+}
+
 export const fileActions = {
   copy: {
     method: async (store) => {
@@ -11,35 +30,35 @@ export const fileActions = {
     method: null,
     name: 'createShareableLink',
     component: 'CreateShareableLinkDialog',
-    displayName: 'Create shareable link'
+    displayName: i18n.$t.OPENPGPFILESWEBCLIENT.HEADING_CREATE_PUBLIC_LINK
   },
   shareWithTeammates: {
     method: null,
     name: 'shareWithTeammates',
     component: 'ShareWithTeammatesDialog',
-    displayName: 'Share with teammates'
+    displayName: i18n.$t.SHAREDFILES.ACTION_SHARE
   },
   share: {
     method: null,
     name: 'share',
-    displayName: 'Share'
+    displayName: i18n.$t.COREWEBCLIENT.ACTION_SHARE
   },
   download: {
     method: null,
     name: 'download',
-    displayName: 'Download'
+    displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE
   },
   rename: {
     method: null,
     name: 'rename',
     component: 'RenameItemDialog',
-    displayName: 'Rename'
+    displayName: i18n.$t.FILESWEBCLIENT.ACTION_RENAME
   },
   delete: {
     method: null,
     name: 'delete',
     component: 'DeleteItemsDialog',
-    displayName: 'Delete'
+    displayName: i18n.$t.COREWEBCLIENT.ACTION_REMOVE
   }
 }
 

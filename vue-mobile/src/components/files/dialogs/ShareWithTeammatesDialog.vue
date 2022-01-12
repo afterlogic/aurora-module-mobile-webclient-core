@@ -2,7 +2,7 @@
   <q-dialog v-model="openDialog">
     <div class="q-dialog-size bg-white q-pt-md q-px-sm" style="min-width: 320px">
       <div style="font-size: 15px" class="q-px-md text-bold text-black text">
-        <span>Share with teammates</span>
+        <span>{{ $t('SHAREDFILES.ACTION_SHARE') }}</span>
       </div>
       <div class="q-pl-md q-mt-md flex full-width row">
         <div class="col-8">
@@ -27,9 +27,9 @@
         </div>
       </div>
       <q-card-actions class="q-my-sm" align="right">
-        <button-dialog :saving="saving" :action="showHistory" label="Show history" />
-        <button-dialog :saving="saving" :action="save" label="Save" />
-        <button-dialog :saving="saving" :action="cancel" label="Cancel" />
+        <button-dialog :saving="saving" :action="showHistory" label="$t('SHAREDFILES.ACTION_SHOW_HISTORY')" />
+        <button-dialog :saving="saving" :action="save" label="$t('COREWEBCLIENT.ACTION_SAVE')" />
+        <button-dialog :saving="saving" :action="cancel" label="$t('COREWEBCLIENT.ACTION_CLOSE')" />
       </q-card-actions>
     </div>
   </q-dialog>

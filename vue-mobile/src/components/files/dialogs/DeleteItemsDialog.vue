@@ -6,9 +6,9 @@
       </q-card-section>
       <div class="flex no-wrap">
         <AppButton size="18px" flat color="primary"
-               label="Delete" @click.stop="deleteItems"/>
+               :label="$t('COREWEBCLIENT.ACTION_DELETE')" @click.stop="deleteItems"/>
         <AppButton size="18px" flat class="q-px-sm"  color="grey-6"
-               label="Cancel" @click.stop="closeDialog"/>
+               :label="$t('COREWEBCLIENT.ACTION_CANCEL')" @click.stop="closeDialog"/>
       </div>
     </q-card>
   </q-dialog>
@@ -43,12 +43,12 @@ export default {
     ...mapGetters('files', ['selectedFiles']),
     title () {
       if (this.selectedFiles.length > 1) {
-        return 'Delete selected items permanently?'
+        return this.$tc('FILESWEBCLIENT.CONFIRM_DELETE_ITEMS_PLURAL', this.selectedFiles.length)
       }
       if (this.file?.isFolder) {
-        return 'Delete selected folder permanently?'
+        return this.$t('FILESWEBCLIENT.CONFIRM_DELETE_FOLDERS_PLURAL')
       }
-      return 'Delete selected file permanently?'
+      return this.$t('FILESWEBCLIENT.CONFIRM_DELETE_FILES_PLURAL')
     },
   },
   methods: {

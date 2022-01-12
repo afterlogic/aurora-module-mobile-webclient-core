@@ -2,7 +2,7 @@
   <q-dialog v-model="openDialog">
     <q-card v-if="!file.publicLink" class="q-dialog-size q-pt-md q-px-sm" style="min-width: 350px">
       <div style="font-size: 15px" class="q-px-md text-bold text-black text">
-        <span>Create shareable link</span>
+        <span>{{ $t('OPENPGPFILESWEBCLIENT.HEADING_CREATE_PUBLIC_LINK') }}</span>
       </div>
       <q-checkbox v-model="withPassword" class="q-ma-sm" label="Protect public link with password" color="primary" />
       <q-card-actions align="right" >
@@ -20,7 +20,7 @@
       <div class="q-pa-sm">
         <div>
           <div>
-            <span>Public Link</span>
+            <span>{{ $t('FILESWEBCLIENT.LABEL_PUBLIC_LINK') }}</span>
           </div>
           <div class="q-mt-xs">
             <q-icon class="q-mr-sm" size="sm" name="content_copy"/>
@@ -29,7 +29,7 @@
         </div>
         <div v-if="file.linkPassword" class="q-mt-md">
           <div>
-            <span>Public Link</span>
+            <span>{{ $t('FILESWEBCLIENT.LABEL_PUBLIC_LINK') }}</span>
           </div>
           <div>
             <q-icon class="q-mr-sm" size="sm" name="content_copy"/>
@@ -40,15 +40,15 @@
       <q-card-actions align="right" >
         <button-dialog
           :saving="saving" :action="createShareableLink"
-          label="Send to..."
+          :label="$t('OPENPGPFILESWEBCLIENT.ACTION_SEND_EMAIL')"
         />
         <button-dialog
           :saving="saving" :action="removeLink"
-          label="Remove link"
+          :label="$t('FILESWEBCLIENT.ACTION_REMOVE_PUBLIC_LINK')"
         />
         <button-dialog
           :saving="saving" :action="cancelDialog"
-          label="Close"
+          :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
         />
       </q-card-actions>
     </q-card>

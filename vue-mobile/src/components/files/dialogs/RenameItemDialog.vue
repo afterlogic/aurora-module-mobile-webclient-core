@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import notification from "src/utils/notification";
 import AppInput from "components/common/AppInput";
 import AppButton from "components/common/AppButton";
 import { mapActions } from "vuex";
@@ -58,8 +57,6 @@ export default {
           this.saving = false
           this.$emit('closeDialog')
         }
-      } else {
-        notification.showError('Invalid folder name')
       }
     },
     cancelDialog () {

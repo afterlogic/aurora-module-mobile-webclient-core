@@ -29,6 +29,9 @@ export default {
       VueCookies.set('AuthToken', '')
       commit('changeAuthTokenStatus', false)
     },
+    test () {
+      console.log('test dispatch')
+    }
   },
   getters: {
     getAuthTokenStatus(state) {

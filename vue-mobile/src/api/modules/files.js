@@ -1,6 +1,20 @@
 import WebApi from 'src/api/web-api'
 import _ from 'lodash'
-
+// "ERROR_FILES_MOVE_PLURAL": "File moving has failed.|Files moving has failed.",
+const i18n = {
+  '$t': {
+    OPENPGPFILESWEBCLIENT: {
+    },
+    SHAREDFILES: {
+    },
+    COREWEBCLIENT: {
+    },
+    FILESWEBCLIENT: {
+      "ERROR_FILES_MOVE_PLURAL": "File moving has failed.|Files moving has failed.",
+      "ERROR_INVALID_FOLDER_NAME": "Invalid folder name",
+    }
+  }
+}
 export default () => {
   return {
     getFiles: async (parameters) => {
@@ -56,6 +70,7 @@ export default () => {
         moduleName: 'Files',
         methodName: method,
         parameters: parameters,
+        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_FILES_MOVE_PLURAL
       }).then(result => {
         if (result) {
           return result
@@ -68,6 +83,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'CreateFolder',
         parameters: parameters,
+        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_INVALID_FOLDER_NAME
       }).then(result => {
         if (result) {
           return result
