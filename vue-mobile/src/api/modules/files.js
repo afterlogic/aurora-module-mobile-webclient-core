@@ -114,5 +114,41 @@ export default () => {
         return false
       })
     },
+    updateShare: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'SharedFiles',
+        methodName: 'UpdateShare',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
+    },
+    getHistory: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'ActivityHistory',
+        methodName: 'GetList',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
+    },
+    clearHistory: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'ActivityHistory',
+        methodName: 'Delete',
+        parameters: parameters,
+      }).then(result => {
+        if (result) {
+          return result
+        }
+        return false
+      })
+    }
   };
 };

@@ -4,6 +4,7 @@ export const getContactsSelectOptions = (contacts) => {
       email: contact.ViewEmail,
       label: contact.ViewEmail,
       value: contact.ViewEmail,
+      status: ''
     }
   } )
 }

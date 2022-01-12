@@ -81,3 +81,18 @@ export const getFilteredItems = (items, key) => {
     }
   })
 }
+export const getParametersForShare = (items, file) => {
+  const shares = items.map( item => {
+    return {
+      PublicId: item.email,
+      Access: item.status,
+    }
+  })
+  return {
+    Storage: file.type,
+    Path: file.path,
+    Id: file.name,
+    Shares: shares,
+    IsDir: file.isFolder
+  }
+}

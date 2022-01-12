@@ -193,4 +193,34 @@ export default {
     }
     return result
   },
+  asyncUpdateShare: async ({ commit, getters }, parameters) => {
+    const result = await AppApi.Files.updateShare(parameters)
+    if (result) {
+      const currentFile = getters['currentFile']
+      console.log(parameters, 'parameters.shares')
+      console.log(currentFile, 'currentFile')
+      commit(
+        'SET_ITEM_PROPERTY',
+        { item: currentFile, property: 'shares', value: parameters.Shares }
+      )
+      return true
+    }
+    return false
+  },
+  asyncGetHistory: async ({ state, commit, getters, dispatch }, { resourceType, resourceId, offset, limit }) => {
+    const parameters = {
+      ResourceType: resourceType,
+      ResourceId: resourceId,
+      Offset: offset,
+      Limit: limit
+    }
+    return AppApi.Files.getHistory(parameters)
+  },
+  asyncClearHistory: async ({ state, commit, getters, dispatch }, { resourceType, resourceId }) => {
+    const parameters = {
+      ResourceType: resourceType,
+      ResourceId: resourceId,
+    }
+    return AppApi.Files.clearHistory(parameters)
+  }
 }
