@@ -9,8 +9,8 @@
         <input-form readonly :value="currentFile.name" label="File name"/>
       </div>
       <div class="flex justify-between q-ma-md">
-        <input-form readonly :value="currentFile.size" label="Size"/>
-        <input-form readonly :value="currentFile.lastModified" label="Created"/>
+        <input-form readonly :value="fileSize" label="Size"/>
+        <input-form readonly :value="fileDate" label="Created"/>
       </div>
       <div class="q-ma-md">
         <input-form readonly :value="currentFile.path" label="Location"/>
@@ -20,23 +20,34 @@
       </div>
     </div>
   </div>
+  <dialogs-list />
 </main-layout>
 </template>
 
 <script>
+import DialogsList from "components/files/DialogsList";
 import MainLayout from "src/views/layouts/MainLayout";
 import FileIcon from "components/files/icons/FileIcon";
 import InputForm from "components/files/common/InputForm";
 import { mapGetters } from "vuex";
+import date from "src/utils/date";
+import text from "src/utils/text";
 export default {
   name: "FileInfo",
   components: {
     MainLayout,
     FileIcon,
-    InputForm
+    InputForm,
+    DialogsList
   },
   computed: {
-    ...mapGetters('files', ['currentFile'])
+    ...mapGetters('files', ['currentFile']),
+    fileDate() {
+      return date.getDate(this.currentFile.lastModified)
+    },
+    fileSize() {
+      return text.getFriendlySize(this.currentFile.size)
+    },
   }
 }
 </script>

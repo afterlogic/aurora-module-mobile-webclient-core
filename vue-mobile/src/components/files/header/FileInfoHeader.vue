@@ -8,7 +8,7 @@
       />
     </q-card-actions>
     <div class="col-6 flex justify-end q-pr-sm">
-      <q-btn flat size="15px" color="black" round dense icon="share" @click="deleteFile"/>
+      <q-btn flat size="15px" color="black" round dense icon="share" @click="shareFile"/>
       <q-btn class="q-ml-sm" flat size="15px" color="black" round dense icon="file_download" @click="deleteFile"/>
       <q-btn class="q-ml-sm" flat size="15px" color="black" round dense icon="delete_outline" @click="deleteFile"/>
       <q-btn class="q-ml-sm" flat size="15px" color="black" round dense icon="list"/>
@@ -17,14 +17,28 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "FileInfoHeader",
+  computed: {
+    ...mapGetters('files', ['filesList'])
+  },
+  watch: {
+    'filesList.length'() {
+      this.onPreviousPath()
+    }
+  },
   methods: {
+    ...mapActions('files', ['changeDialogComponent']),
     onPreviousPath() {
-      console.log('hey')
+      this.$router.back()
+    },
+    shareFile() {
+      this.changeDialogComponent({ component: 'ShareWithTeammatesDialog' })
     },
     deleteFile() {
-      console.log('delete')
+      this.changeDialogComponent({ component: 'DeleteItemsDialog' })
     }
   }
 }

@@ -12,14 +12,14 @@
       <file-icon color="primary" class="text-primary"></file-icon>
     </q-item-section>
     <q-item-section class="text-info">
-      <q-item-label>{{ fileName }}</q-item-label>
+      <q-item-label class="text-subtitle1">{{ fileName }}</q-item-label>
       <q-item-label>
        <div class="flex">
          <div class="q-mr-xs" v-if="isShared">
            <q-icon style="margin-bottom: 2px" size="11px" name="share"/>
          </div>
          <div class="q-mr-xs" v-if="file.publicLink">
-           <q-icon name="link"/>
+           <q-icon style="margin-bottom: 2px" name="link"/>
          </div>
          <div>{{ fileSize }}</div>
          <div class="q-mx-xs">|</div>

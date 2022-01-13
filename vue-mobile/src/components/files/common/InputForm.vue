@@ -7,7 +7,7 @@ export default {
   name: "InputForm",
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     label: {
