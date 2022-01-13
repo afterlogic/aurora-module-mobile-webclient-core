@@ -1,6 +1,17 @@
-import i18n from "boot/i18n";
+//import i18n from "boot/i18n";
 
 import typesUtils from './types'
+
+const i18n = {
+  tc: {
+    COREWEBCLIENT: {
+      LABEL_GIGABYTES: 'GB',
+      LABEL_MEGABYTES: 'MB',
+      LABEL_KILOBYTES: 'KB',
+      LABEL_BYTES: 'B'
+    }
+  }
+}
 
 export default {
   getFriendlySize: function (sizeInBytes) {
@@ -11,14 +22,14 @@ export default {
     sizeInBytes = typesUtils.pInt(sizeInBytes)
 
     if (sizeInBytes >= bytesInGb) {
-      return typesUtils.roundNumber(sizeInBytes / bytesInGb, 1) + i18n.tc('COREWEBCLIENT.LABEL_GIGABYTES')
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInGb, 1)} ${i18n.tc.COREWEBCLIENT.LABEL_GIGABYTES}`
     } else if (sizeInBytes >= bytesInMb) {
-      return typesUtils.roundNumber(sizeInBytes / bytesInMb, 1) + i18n.tc('COREWEBCLIENT.LABEL_MEGABYTES')
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInMb, 1)} ${i18n.tc.COREWEBCLIENT.LABEL_MEGABYTES}`
     } else if (sizeInBytes >= bytesInKb) {
-      return typesUtils.roundNumber(sizeInBytes / bytesInKb, 0) + i18n.tc('COREWEBCLIENT.LABEL_KILOBYTES')
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInKb, 0)} ${i18n.tc.COREWEBCLIENT.LABEL_KILOBYTES}`
     }
 
-    return sizeInBytes + i18n.tc('COREWEBCLIENT.LABEL_BYTES')
+    return `${sizeInBytes} ${i18n.tc.COREWEBCLIENT.LABEL_BYTES}`
   },
 
   encodeHtml: function (text) {

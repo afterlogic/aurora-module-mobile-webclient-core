@@ -13,7 +13,19 @@
     </q-item-section>
     <q-item-section class="text-info">
       <q-item-label>{{ fileName }}</q-item-label>
-      <q-item-label></q-item-label>
+      <q-item-label>
+       <div class="flex">
+         <div class="q-mr-xs" v-if="isShared">
+           <q-icon style="margin-bottom: 2px" size="11px" name="share"/>
+         </div>
+         <div class="q-mr-xs" v-if="file.publicLink">
+           <q-icon name="link"/>
+         </div>
+         <div>{{ fileSize }}</div>
+         <div class="q-mx-xs">|</div>
+         <div>{{ fileDate }}</div>
+       </div>
+      </q-item-label>
     </q-item-section>
     <q-item-section avatar side>
       <q-btn v-if="!file.isSelected" v-ripple="!isCopied && !isSelected" :disable="isSelected" size="14px" color="grey" flat round icon="more_vert"
@@ -26,6 +38,8 @@
 <script>
 import FileIcon from "components/files/icons/FileIcon";
 import { getShortName } from "src/utils/files/utils";
+import text from "src/utils/text";
+import date from "src/utils/date"
 
 export default {
   name: "FileItem",
@@ -50,7 +64,16 @@ export default {
         return getShortName(this.file.name, 30)
       }
       return ''
-    }
+    },
+    fileSize() {
+      return text.getFriendlySize(this.file.size)
+    },
+    fileDate() {
+      return date.getDate(this.file.lastModified)
+    },
+    isShared() {
+      return !!this.file.shares.length
+    },
   },
   methods: {
     selectFile() {
