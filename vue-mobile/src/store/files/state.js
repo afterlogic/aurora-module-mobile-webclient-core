@@ -4,6 +4,7 @@ export default function () {
     filesList: [],
     foldersList: [],
     copyItems: [],
+    downloadFiles: [],
     filesQuota: {},
     currentStorage: '',
     isLoading: false,

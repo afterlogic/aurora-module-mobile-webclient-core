@@ -1,18 +1,28 @@
 <template>
   <q-layout view="hhh LpR fFf" style="height: 100vh">
+    <uploader-component ref="uploader"/>
     <router-view />
   </q-layout>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
+const mixins = {
+  methods: {
+    uploadFiles(methods) {
+      this.$refs.uploader.open(methods)
+    },
+  }
+}
+
+import UploaderComponent from "components/files/common/UploaderComponent";
 export default defineComponent({
+  mixins: [mixins],
   name: 'App',
   components: {
-
+    UploaderComponent
   },
   async mounted() {
-    console.log(this, 'this')
     await this.populate()
   },
   computed: {

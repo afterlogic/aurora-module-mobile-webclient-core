@@ -40,10 +40,8 @@
         </div>
         <app-paginator :currentPage="currentPage" :itemsPerPage="10" :itemsCount="itemsCount" :changePage="changePage" :border="false"></app-paginator>
         <q-card-actions align="right">
-          <q-btn :disable="!historyList.length" flat :ripple="false" color="primary"
-                 label="Clear" @click="openClearDialog"/>
-          <q-btn flat class="q-px-sm" :ripple="false" color="grey-6"
-                 label="Cancel" @click="cancel"/>
+          <button-dialog :disable="!historyList.length" label="Clear" :action="openClearDialog"/>
+          <button-dialog label="Cancel" :action="cancel"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -55,10 +53,8 @@
           </q-item-section>
         </q-item>
         <q-card-actions align="right">
-          <q-btn flat class="q-px-sm" :ripple="false" color="primary" @click="clearHistory"
-                 label="Ok" />
-          <q-btn flat class="q-px-sm" :ripple="false" color="grey-6" v-close-popup
-                 label="Cancel" />
+          <button-dialog :action="clearHistory" label="Ok" />
+          <button-dialog :action="() => this.confirmClearDialog = false" label="Cancel" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -69,11 +65,13 @@
 import date from 'src/utils/date'
 import AppPaginator from "components/common/AppPaginator";
 import {mapActions} from "vuex";
+import ButtonDialog from "components/files/common/ButtonDialog";
 
 export default {
   name: 'ShowHistoryDialog',
   components: {
-    AppPaginator
+    AppPaginator,
+    ButtonDialog
   },
   data () {
     return {

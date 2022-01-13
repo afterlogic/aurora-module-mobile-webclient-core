@@ -65,5 +65,24 @@ export default {
   },
   SET_ITEM_PROPERTY: (state, { item, property, value }) => item[property] = value,
   REMOVE_COPIED_FILES: (state) => state.copyItems = [],
-
+  SET_DOWNLOADS_FILES: (state, files) => state.downloadFiles = state.downloadFiles.concat(files),
+  REMOVE_UPLOADED_FILES: (state) => {
+    const downloadableFiles = []
+    state.downloadFiles.forEach(file => {
+      if (file.file.__progress !== 1) {
+        downloadableFiles.push(file)
+      }
+    })
+    state.downloadFiles = downloadableFiles
+  }
 }
+// files.forEach(file => {
+//   const index = state.downloadFiles.findIndex(currentFile => {
+//     return currentFile.name === file.name && currentFile.size === file.size
+//   })
+//   if (index + 1) {
+//     state.downloadFiles[index] = file
+//   } else {
+//     state.downloadFiles.push(file)
+//   }
+// })

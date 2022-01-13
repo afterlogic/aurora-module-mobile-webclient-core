@@ -41,11 +41,16 @@
       </div>
       <div style="height: 150px; overflow: hidden; overflow-y: scroll;" class="flex q-ma-md users-list">
         <div v-if="!contactsList.length" class="users-list__title q-ma-md text-center full-width">No shares yet</div>
-        <div v-if="contactsList.length">
-          <div class="q-ma-sm flex justify-between full-width" v-for="contact in contactsList" :key="contact.value">
-            <div class="q-mx-sm">{{ contact.email }}</div>
-            <div class="q-mx-sm">
+        <div style="width: 250px" v-if="contactsList.length">
+          <div class="q-ma-sm flex full-width no-wrap justify-between row" v-for="contact in contactsList" :key="contact.value">
+            <div class="q-mx-sm col-8">
+              <p style="overflow: hidden" class="full-width">{{ contact.email }}</p>
+            </div>
+            <div class="q-mx-sm col-2">
               <span class="contact-status text-primary">{{ statuses[contact.status] }}</span>
+            </div>
+            <div class="col-2 text-center" @click="removeContact(contact)">
+              <q-icon class="q-pl-xs" color="grey-5" name="close" />
             </div>
           </div>
         </div>
@@ -97,7 +102,7 @@ export default {
       statuses: {
         1: 'read',
         2: 'read/write',
-        3: 'read/write/reshare',
+        3: 'r/w/r',
       }
     }
   },
@@ -152,6 +157,10 @@ export default {
       update(async () => {
         this.selectOptions = this.defaultSelectOptions.filter(option => option.email.indexOf(search) + 1)
       })
+    },
+    removeContact(contact) {
+      const userIndex = this.contactsList.findIndex( user => user.email === contact.email )
+      if (userIndex !== -1) this.contactsList.splice(userIndex, 1)
     },
     showHistory() {
       this.$refs.showHistoryDialog.openDialog(this.file, this.$t('SHAREDFILES.HEADING_HISTORY_POPUP'))

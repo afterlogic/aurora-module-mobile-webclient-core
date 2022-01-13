@@ -9,6 +9,7 @@ export default {
     currentPaths: (state) => state.currentPaths,
     currentPath: (state) => state.currentPath,
     currentFile: (state) => state.currentFile,
+    downloadFiles: (state) => state.downloadFiles,
     selectedFiles:(state) => {
       const files = getFilteredItems(state.filesList, 'isSelected')
       const folders = getFilteredItems(state.foldersList, 'isSelected')
@@ -34,5 +35,5 @@ export default {
         FromPath: copiedFile.path,
         Files: items
       }
-    }
+    },
 }

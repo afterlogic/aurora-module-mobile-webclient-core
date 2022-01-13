@@ -32,6 +32,17 @@ const parseFile = file => {
   }
 }
 
+export const parseUploadedFile = (file, path, storage) => {
+  return {
+    path: path,
+    storage: storage,
+    file: file,
+    name: getShortName(file.name, 40),
+    size: file.size,
+    isUploading: true,
+  }
+}
+
 export const getParseFiles = (items) => {
   const files = []
   items.forEach( file => {

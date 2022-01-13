@@ -15,6 +15,11 @@
         @touchmove="touchend"
         @showDialog="showDialog"
       />
+      <download-file-item
+        v-for="file in downloadFiles"
+        :key="file.name"
+        :file="file"
+      />
       <file-item
         v-for="file in filesList"
         :key="file"
@@ -43,6 +48,7 @@ import FolderItem from "components/files/FolderItem";
 import StorageItem from "components/files/StorageItem";
 import DialogsList from "components/files/DialogsList";
 import AppCreateButton from "components/common/AppCreateButton";
+import DownloadFileItem from "components/files/DownloadFileItem";
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Files",
@@ -52,7 +58,8 @@ export default {
     FileItem,
     StorageItem,
     DialogsList,
-    AppCreateButton
+    AppCreateButton,
+    DownloadFileItem
   },
   async mounted() {
     await this.init()
@@ -65,7 +72,7 @@ export default {
   },
   computed: {
     ...mapGetters('files',
-      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles']
+      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles', 'downloadFiles']
     ),
     isCopied() {
       return !!this.copiedFiles.length

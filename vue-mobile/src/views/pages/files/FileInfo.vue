@@ -30,9 +30,6 @@ import InputForm from "components/files/common/InputForm";
 import { mapGetters } from "vuex";
 export default {
   name: "FileInfo",
-  mounted() {
-    console.log(this.$route, 'rout')
-  },
   components: {
     MainLayout,
     FileIcon,

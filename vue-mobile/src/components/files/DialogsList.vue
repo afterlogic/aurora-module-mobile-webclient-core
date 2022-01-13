@@ -6,6 +6,7 @@
     @closeDialog="closeDialog"
     @dialogAction="dialogAction"
   />
+  <file-uploader />
 </template>
 
 <script>
@@ -16,6 +17,7 @@ import CreateFolderDialog from "components/files/dialogs/CreateFolderDialog";
 import CreateButtonsDialogs from "components/files/dialogs/CreateButtonsDialogs";
 import CreateShareableLinkDialog from "components/files/dialogs/CreateShareableLinkDialog";
 import ShareWithTeammatesDialog from "components/files/dialogs/ShareWithTeammatesDialog";
+import FileUploader from "components/files/dialogs/FileUploader";
 
 import { mapGetters, mapActions } from "vuex";
 
@@ -28,7 +30,8 @@ export default {
     CreateFolderDialog,
     CreateButtonsDialogs,
     CreateShareableLinkDialog,
-    ShareWithTeammatesDialog
+    ShareWithTeammatesDialog,
+    FileUploader
   },
   data() {
     return {
@@ -41,9 +44,10 @@ export default {
   },
   watch: {
     dialogComponent(val) {
-      console.log(val, 'val')
-      this.component = val.component
-      this.dialog = true
+      if (val.component !== 'FileUploader') {
+        this.component = val.component
+        this.dialog = true
+      }
     },
   },
   methods: {

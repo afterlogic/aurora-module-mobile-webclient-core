@@ -197,8 +197,6 @@ export default {
     const result = await AppApi.Files.updateShare(parameters)
     if (result) {
       const currentFile = getters['currentFile']
-      console.log(parameters, 'parameters.shares')
-      console.log(currentFile, 'currentFile')
       commit(
         'SET_ITEM_PROPERTY',
         { item: currentFile, property: 'shares', value: parameters.Shares }
@@ -222,5 +220,17 @@ export default {
       ResourceId: resourceId,
     }
     return AppApi.Files.clearHistory(parameters)
+  },
+  addDownloadsFiles: ({ state, commit, getters, dispatch }, files) => {
+    commit('SET_DOWNLOADS_FILES', files)
+  },
+  removeUploadedFiles: ({ commit }) => {
+    commit('REMOVE_UPLOADED_FILES')
+  },
+  changeUploadingStatus: ({ commit }, { file, status }) => {
+    commit(
+      'SET_ITEM_PROPERTY',
+      { item: file, property: 'isUploading', value: status }
+    )
   }
 }

@@ -35,7 +35,8 @@ export default {
       this.changeDialogComponent({ component: 'CreateFolderDialog' })
     },
     uploadFile() {
-      console.log('click')
+      this.changeDialogComponent({ component: 'FileUploader' })
+      this.$emit('closeDialog')
     },
   }
 }
