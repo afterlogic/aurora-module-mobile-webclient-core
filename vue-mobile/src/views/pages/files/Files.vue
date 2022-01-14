@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     ...mapGetters('files',
-      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles', 'downloadFiles']
+      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles', 'downloadFiles', 'currentFile']
     ),
     isCopied() {
       return !!this.copiedFiles.length
@@ -93,7 +93,9 @@ export default {
     ),
     async init() {
       if (!this.copiedFiles.length) {
-        await this.asyncGetStorages()
+        if (!this.currentFile) {
+          await this.asyncGetStorages()
+        }
         await this.asyncGetFiles()
       }
     },

@@ -25,13 +25,13 @@ export default {
       }
     }
   },
-  asyncGetFiles:  async ({ commit, getters }) => {
+  asyncGetFiles:  async ({ commit, getters }, pattern = '') => {
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {
       Type: currentStorage?.Type,
       Path: currentPath,
-      Pattern: '',
+      Pattern: pattern,
       PathRequired: false
     }
     const data = await AppApi.Files.getFiles(parameters)
@@ -242,5 +242,8 @@ export default {
   asyncDownloadFile: async ({ getters }) => {
     const file = getters['currentFile']
     await AppApi.Files.downloadFile(file)
+  },
+  changeCurrentHeader: ({ commit }, headerName) => {
+    commit('SET_CURRENT_HEADER_NAME', headerName)
   }
 }

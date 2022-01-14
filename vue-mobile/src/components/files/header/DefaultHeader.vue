@@ -39,7 +39,7 @@
       </q-btn-dropdown>
       <span :style="{'margin-top': '-10px'}" class="text-black text-center text-blue-grey-12">{{storageName}}</span>
     </div>
-    <q-btn flat size="15px" color="black" round dense icon="search" />
+    <q-btn flat size="15px" color="black" round dense icon="search" @click="showSearchHeader"/>
   </q-toolbar>
 </template>
 
@@ -61,12 +61,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
+    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles', 'changeCurrentHeader']),
     getShortName,
     async openPath(path) {
       this.isOpen = false
       await this.changeCurrentPaths({ path, lastStorage: false })
       await this.asyncGetFiles()
+    },
+    showSearchHeader() {
+      this.changeCurrentHeader('SearchHeader')
     }
   }
 }

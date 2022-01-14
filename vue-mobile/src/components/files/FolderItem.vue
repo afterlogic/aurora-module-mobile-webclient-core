@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
+    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles', 'changeCurrentHeader']),
     async openFolder() {
       if (!this.isSelected && !this.folder.isCopied && !this.isMoved) {
         this.touchend()
@@ -74,6 +74,7 @@ export default {
           path: this.folder.fullPath,
           name: this.folder.name
         }
+        this.changeCurrentHeader('')
         await this.changeCurrentPaths({ path, lastStorage: false })
         await this.asyncGetFiles()
       } else {

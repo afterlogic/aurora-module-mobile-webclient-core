@@ -17,7 +17,6 @@
       <q-btn class="q-ml-sm" flat size="15px" color="grey-7" round dense icon="delete_outline"
              @click="onPerformAction(actions.delete)"
       />
-<!--      <q-btn class="q-ml-sm" flat size="15px" color="black" round dense icon="more_vert"/>-->
       <div class="dropdown-more flex justify-center items-center">
         <q-btn-dropdown :menu-offset="[8, -45]" flat unelevated dense >
           <template v-slot:label>

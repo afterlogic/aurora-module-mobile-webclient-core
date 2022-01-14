@@ -10,6 +10,7 @@ export default {
     currentPath: (state) => state.currentPath,
     currentFile: (state) => state.currentFile,
     downloadFiles: (state) => state.downloadFiles,
+    currentHeader: (state) => state.currentHeader,
     selectedFiles:(state) => {
       const files = getFilteredItems(state.filesList, 'isSelected')
       const folders = getFilteredItems(state.foldersList, 'isSelected')
