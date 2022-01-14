@@ -20,19 +20,7 @@
 				<!-- /ko -->
 			</span>
 
-			<!-- ko if: (allowPublicLink()) -->
-			<span class="published_icon" data-bind="css: {'with_thumb': thumbnailSrc() !== ''}, click: function (oItem) { $root.onShareIconClick(oItem); }"></span>
-			<!-- /ko -->
-			<!-- ko if: (bIsSecure()) -->
-			<span class="secure-image"></span>
-			<!-- /ko -->
-			<!-- ko if: (sharedWithOthers()) -->
-			<span class="shared-icon"></span>
-			<!-- /ko -->
-
-			
 			<div data-bind="visible: uploaded() && !uploadError() && statusText().length === 0 && !downloading()">
-				
 				<span class="progress" data-bind="visible: visibleProgress()">
 					<span data-bind="style: {'width': progressPercent() + '%'}"></span>
 					<span class="progress-percent" data-bind="text: progressPercent() + '%'"></span>
