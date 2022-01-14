@@ -44,7 +44,15 @@ export const fileActions = {
     displayName: i18n.$t.COREWEBCLIENT.ACTION_SHARE
   },
   download: {
-    method: null,
+    method: (store) => {
+      const file = store.getters['files/currentFile']
+      store.dispatch('files/changeItemProperty', {
+        item: file,
+        property: 'downloading',
+        value: true
+      })
+      store.dispatch('files/asyncDownloadFile')
+    },
     name: 'download',
     displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE
   },

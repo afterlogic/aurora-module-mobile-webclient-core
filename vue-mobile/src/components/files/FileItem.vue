@@ -13,7 +13,7 @@
     </q-item-section>
     <q-item-section class="text-info">
       <q-item-label class="text-subtitle1">{{ fileName }}</q-item-label>
-      <q-item-label>
+      <q-item-label v-if="!file.downloading">
        <div class="flex">
          <div class="q-mr-xs" v-if="isShared">
            <q-icon style="margin-bottom: 2px" size="11px" name="share"/>
@@ -26,6 +26,9 @@
          <div>{{ fileDate }}</div>
        </div>
       </q-item-label>
+      <q-item-label v-if="file.downloading">
+        <downloading-progress :file="file"/>
+      </q-item-label>
     </q-item-section>
     <q-item-section avatar side>
       <q-btn v-if="!file.isSelected" v-ripple="!isCopied && !isSelected" :disable="isSelected" size="14px" color="grey" flat round icon="more_vert"
@@ -37,6 +40,7 @@
 
 <script>
 import FileIcon from "components/files/icons/FileIcon";
+import DownloadingProgress from "components/files/common/DownloadingProgress";
 import { getShortName } from "src/utils/files/utils";
 import text from "src/utils/text";
 import date from "src/utils/date"
@@ -44,7 +48,8 @@ import date from "src/utils/date"
 export default {
   name: "FileItem",
   components: {
-    FileIcon
+    FileIcon,
+    DownloadingProgress
   },
   props: {
     file: {type: Object, default: null},
@@ -77,7 +82,7 @@ export default {
   },
   methods: {
     selectFile() {
-      if (!this.isSelected && !this.isMoved) {
+      if (!this.isSelected && !this.isMoved && !this.file.downloading) {
         this.touchend()
         this.$router.push({ path: `/file/${this.file.id}` })
       } else {

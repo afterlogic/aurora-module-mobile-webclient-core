@@ -27,6 +27,8 @@ const parseFile = file => {
     contentType: typesUtils.pString(file.ContentType),
     id: typesUtils.pString(file?.Id),
     cancelToken: null,
+    downloading: false,
+    percentDownloading: 0,
     isSelected: false,
     isCopied: false,
   }

@@ -232,5 +232,15 @@ export default {
       'SET_ITEM_PROPERTY',
       { item: file, property: 'isUploading', value: status }
     )
+  },
+  changeItemProperty: ({ commit }, { item, property, value }) => {
+    commit(
+      'SET_ITEM_PROPERTY',
+      { item, property, value }
+    )
+  },
+  asyncDownloadFile: async ({ getters }) => {
+    const file = getters['currentFile']
+    const result = await AppApi.Files.downloadFile(file)
   }
 }

@@ -5,8 +5,10 @@ import querystring from 'querystring'
 import errors from 'src/utils/errors'
 import AppApi from 'src/api/index'
 import { getApiHost } from 'src/api/helpers'
+import { saveAs } from 'file-saver'
 import _ from 'lodash';
 import notification from "src/utils/notification";
+import store from 'src/store'
 //import eventBus from 'src/event-bus'
 
 export default {
@@ -80,6 +82,54 @@ export default {
             notification.showError(errors.getTextFromResponse(errorResponse, defaultText))
           }
           reject(errorResponse)
+        })
+    })
+  },
+  downloadByUrl: async function ({ downloadUrl, fileName, file = null }) {
+    return new Promise((resolve, reject) => {
+      const CancelToken = axios.CancelToken
+      let url = getApiHost() + '/' + downloadUrl
+      let authToken = VueCookies.get('AuthToken')
+      let headers = {
+        'Content-Type': 'multipart/form-data',
+      }
+      if (authToken) {
+        headers['Authorization'] = 'Bearer ' + authToken
+      }
+      axios({
+        method: 'get',
+        url: url,
+        headers: headers,
+        responseType: 'blob',
+        cancelToken : new CancelToken( function (c) {
+          store.dispatch('files/changeItemProperty', {
+            item: file, property: 'cancelToken', value: c
+          })
+        }),
+        onDownloadProgress: function (progressEvent) {
+          if (file) {
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / file.size)
+            store.dispatch('files/changeItemProperty', {
+              item: file, property: 'percentDownloading', value: percentCompleted
+            })
+          }
+        }
+      })
+        .then((response) => {
+          saveAs(new Blob([response.data], {type: response.data.type}), fileName);
+          store.dispatch('files/changeItemProperty', {
+            item: file, property: 'downloading', value: false
+          })
+          resolve(response)
+        })
+        .catch(response => {
+          store.dispatch('files/changeItemProperty', {
+            item: file, property: 'percentDownloading', value: 0
+          })
+          store.dispatch('files/changeItemProperty', {
+            item: file, property: 'downloading', value: false
+          })
+          reject(response)
         })
     })
   },

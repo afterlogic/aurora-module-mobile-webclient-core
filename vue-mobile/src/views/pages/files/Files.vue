@@ -104,11 +104,13 @@ export default {
       this.changeSelectStatus()
     },
     touchstart(file) {
-      this.selectFile(file)
-      if (!this.isSelected && !this.isCopied) {
-        this.touchTimer = setTimeout(this.selectItem, 1000);
-      } else if (!this.isCopied) {
-        this.changeSelectStatus()
+      if (!file.downloading) {
+        this.selectFile(file)
+        if (!this.isSelected && !this.isCopied) {
+          this.touchTimer = setTimeout(this.selectItem, 1000);
+        } else if (!this.isCopied) {
+          this.changeSelectStatus()
+        }
       }
     },
     touchend() {

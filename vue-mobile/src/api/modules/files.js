@@ -149,6 +149,19 @@ export default () => {
         }
         return false
       })
+    },
+    downloadFile: async (file) => {
+      const parameters = {
+        downloadUrl: file.downloadUrl,
+        fileName: file.name,
+        file
+      }
+      return WebApi.downloadByUrl(parameters).then(result => {
+        if (result) return result
+        return false
+      }).catch(err => {
+        console.log(err)
+      })
     }
   };
 };
