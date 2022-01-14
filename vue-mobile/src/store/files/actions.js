@@ -241,6 +241,6 @@ export default {
   },
   asyncDownloadFile: async ({ getters }) => {
     const file = getters['currentFile']
-    const result = await AppApi.Files.downloadFile(file)
+    await AppApi.Files.downloadFile(file)
   }
 }

@@ -92,8 +92,10 @@ export default {
       ['asyncGetStorages', 'asyncGetFiles', 'selectFile', 'changeDialogComponent', 'changeSelectStatus']
     ),
     async init() {
-      await this.asyncGetStorages()
-      await this.asyncGetFiles()
+      if (!this.copiedFiles.length) {
+        await this.asyncGetStorages()
+        await this.asyncGetFiles()
+      }
     },
     showDialog({ file, component }) {
       this.selectFile(file)
