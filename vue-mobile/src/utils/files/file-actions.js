@@ -17,6 +17,38 @@ const i18n = {
   }
 }
 
+const isShowAction = (action, file) => {
+  let result = true
+  if (file){
+    switch (action) {
+      case 'copy':
+
+        break
+      case 'createShareableLink':
+
+        break
+      case 'shareWithTeammates':
+
+        break
+      case 'share':
+
+        break
+      case 'download':
+        if (file.isFolder) result = false
+        break
+      case 'rename':
+
+        break
+      case 'delete':
+
+        break
+      default:
+        break
+    }
+  }
+  return result
+}
+
 export const fileActions = {
   copy: {
     method: async (store) => {
@@ -24,24 +56,32 @@ export const fileActions = {
       await store.dispatch('files/addCopyItems', { items: [currentFile] })
     },
     name: 'copy',
-    displayName: 'Copy/Move'
+    displayName: 'Copy/Move',
+    icon: 'content_copy',
+    isShowAction: isShowAction,
   },
   createShareableLink: {
     method: null,
     name: 'createShareableLink',
     component: 'CreateShareableLinkDialog',
-    displayName: i18n.$t.OPENPGPFILESWEBCLIENT.HEADING_CREATE_PUBLIC_LINK
+    displayName: i18n.$t.OPENPGPFILESWEBCLIENT.HEADING_CREATE_PUBLIC_LINK,
+    icon: 'link',
+    isShowAction: isShowAction,
   },
   shareWithTeammates: {
     method: null,
     name: 'shareWithTeammates',
     component: 'ShareWithTeammatesDialog',
-    displayName: i18n.$t.SHAREDFILES.ACTION_SHARE
+    displayName: i18n.$t.SHAREDFILES.ACTION_SHARE,
+    icon: 'share',
+    isShowAction: isShowAction,
   },
   share: {
     method: null,
     name: 'share',
-    displayName: i18n.$t.COREWEBCLIENT.ACTION_SHARE
+    displayName: i18n.$t.COREWEBCLIENT.ACTION_SHARE,
+    icon: 'share',
+    isShowAction: isShowAction,
   },
   download: {
     method: (store) => {
@@ -54,19 +94,25 @@ export const fileActions = {
       store.dispatch('files/asyncDownloadFile')
     },
     name: 'download',
-    displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE
+    displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE,
+    icon: 'download',
+    isShowAction: isShowAction,
   },
   rename: {
     method: null,
     name: 'rename',
     component: 'RenameItemDialog',
-    displayName: i18n.$t.FILESWEBCLIENT.ACTION_RENAME
+    displayName: i18n.$t.FILESWEBCLIENT.ACTION_RENAME,
+    icon: 'edit',
+    isShowAction: isShowAction,
   },
   delete: {
     method: null,
     name: 'delete',
     component: 'DeleteItemsDialog',
-    displayName: i18n.$t.COREWEBCLIENT.ACTION_REMOVE
+    displayName: 'Delete',
+    icon: 'delete',
+    isShowAction: isShowAction,
   }
 }
 

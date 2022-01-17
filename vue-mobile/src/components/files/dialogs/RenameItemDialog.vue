@@ -12,8 +12,15 @@
             @keyup.enter="renameItem"
           />
       </q-item>
-      <q-card-actions class="q-my-sm" align="center">
-          <app-button :disable="saving" @click="renameItem" size="md" label="Confirm"></app-button>
+      <q-card-actions class="q-my-sm" align="right">
+        <button-dialog
+          :saving="saving" :action="renameItem"
+          :label="$t('COREWEBCLIENT.ACTION_SAVE')"
+        />
+        <button-dialog
+          :saving="saving" :action="cancelDialog"
+          :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -21,11 +28,11 @@
 
 <script>
 import AppInput from "components/common/AppInput";
-import AppButton from "components/common/AppButton";
+import ButtonDialog from "components/files/common/ButtonDialog";
 import { mapActions } from "vuex";
 export default {
   name: 'RenameItemDialog',
-  components: { AppInput, AppButton },
+  components: { AppInput, ButtonDialog },
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false }
@@ -60,7 +67,7 @@ export default {
       }
     },
     cancelDialog () {
-      this.openDialog = false
+      this.$emit('closeDialog')
     }
   }
 }

@@ -1,6 +1,6 @@
 import WebApi from 'src/api/web-api'
 import _ from 'lodash'
-// "ERROR_FILES_MOVE_PLURAL": "File moving has failed.|Files moving has failed.",
+
 const i18n = {
   '$t': {
     OPENPGPFILESWEBCLIENT: {

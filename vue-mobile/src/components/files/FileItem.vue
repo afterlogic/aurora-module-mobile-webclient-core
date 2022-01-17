@@ -44,6 +44,7 @@ import DownloadingProgress from "components/files/common/DownloadingProgress";
 import { getShortName } from "src/utils/files/utils";
 import text from "src/utils/text";
 import date from "src/utils/date"
+import {mapGetters} from "vuex";
 
 export default {
   name: "FileItem",
@@ -64,6 +65,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('files', ['copiedFiles']),
     fileName() {
       if (this.file) {
         return getShortName(this.file.name, 30)
@@ -82,7 +84,7 @@ export default {
   },
   methods: {
     selectFile() {
-      if (!this.isSelected && !this.isMoved && !this.file.downloading) {
+      if (!this.isSelected && !this.isMoved && !this.file.downloading && !this.copiedFiles.length) {
         this.touchend()
         this.$router.push({ path: `/file/${this.file.id}` })
       } else {

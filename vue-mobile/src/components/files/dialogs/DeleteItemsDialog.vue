@@ -4,23 +4,27 @@
       <q-card-section>
         <span>{{ title }}</span>
       </q-card-section>
-      <div class="flex no-wrap">
-        <AppButton size="18px" flat color="primary"
-               :label="$t('COREWEBCLIENT.ACTION_DELETE')" @click.stop="deleteItems"/>
-        <AppButton size="18px" flat class="q-px-sm"  color="grey-6"
-               :label="$t('COREWEBCLIENT.ACTION_CANCEL')" @click.stop="closeDialog"/>
-      </div>
+      <q-card-actions align="right">
+        <button-dialog
+          :saving="saving" :action="deleteItems"
+          :label="$t('COREWEBCLIENT.ACTION_DELETE')"
+        />
+        <button-dialog
+          :saving="saving" :action="closeDialog"
+          :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
+        />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import AppButton from "components/common/AppButton";
+import ButtonDialog from "components/files/common/ButtonDialog";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'DeleteItemsDialog',
   components: {
-    AppButton
+    ButtonDialog
   },
   props: {
     file: {
@@ -31,7 +35,8 @@ export default {
   },
   data () {
     return {
-      openDialog: false
+      openDialog: false,
+      saving: false,
     }
   },
   watch: {
@@ -57,6 +62,7 @@ export default {
       this.$emit('closeDialog')
     },
     async deleteItems() {
+      this.saving = true
       const items = []
       if (this.selectedFiles.length) {
         this.selectedFiles.forEach( file => {
@@ -80,6 +86,7 @@ export default {
         })
         this.$emit('closeDialog')
       }
+      this.saving = false
     }
   }
 }

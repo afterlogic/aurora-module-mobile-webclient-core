@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <q-card-actions align="right" >
+      <q-card-actions align="right">
         <button-dialog
           :saving="saving" :action="createShareableLink"
           :label="$t('OPENPGPFILESWEBCLIENT.ACTION_SEND_EMAIL')"
