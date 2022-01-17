@@ -11,6 +11,9 @@ export default {
     currentFile: (state) => state.currentFile,
     downloadFiles: (state) => state.downloadFiles,
     currentHeader: (state) => state.currentHeader,
+    isArchive: (state) => {
+      return state.currentPath.split('.')[state.currentPath.split('.').length - 1] === 'zip'
+    },
     selectedFiles:(state) => {
       const files = getFilteredItems(state.filesList, 'isSelected')
       const folders = getFilteredItems(state.foldersList, 'isSelected')

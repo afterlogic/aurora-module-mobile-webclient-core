@@ -3,7 +3,7 @@
     <template v-slot:drawer>
       <storage-item v-for="storage in storageList" :key="storage" :storage="storage" />
     </template>
-    <q-list>
+    <q-list v-if="!loadingStatus">
       <folder-item
         v-for="file in foldersList"
         :key="file"
@@ -33,6 +33,14 @@
       />
       <div style="height: 130px" class="full-width"/>
     </q-list>
+    <div class="q-mt-xl flex items-center justify-center" v-if="loadingStatus">
+      <q-circular-progress
+        indeterminate
+        size="40px"
+        color="primary"
+        class="q-ma-md"
+      />
+    </div>
     <app-create-button
       icon="add"
       @click="showDialog({file: null, component: 'CreateButtonsDialogs' })"
@@ -72,7 +80,17 @@ export default {
   },
   computed: {
     ...mapGetters('files',
-      ['filesList', 'foldersList', 'storageList', 'selectedFiles', 'copiedFiles', 'downloadFiles', 'currentFile']
+      [
+        'filesList',
+        'foldersList',
+        'storageList',
+        'selectedFiles',
+        'copiedFiles',
+        'downloadFiles',
+        'currentFile',
+        'isArchive',
+        'loadingStatus'
+      ]
     ),
     isCopied() {
       return !!this.copiedFiles.length
@@ -110,10 +128,12 @@ export default {
     touchstart(file) {
       if (!file.downloading) {
         this.selectFile(file)
-        if (!this.isSelected && !this.isCopied) {
-          this.touchTimer = setTimeout(this.selectItem, 1000);
-        } else if (!this.isCopied) {
-          this.changeSelectStatus()
+        if (!this.isArchive) {
+          if (!this.isSelected && !this.isCopied) {
+            this.touchTimer = setTimeout(this.selectItem, 1000);
+          } else if (!this.isCopied) {
+            this.changeSelectStatus()
+          }
         }
       }
     },

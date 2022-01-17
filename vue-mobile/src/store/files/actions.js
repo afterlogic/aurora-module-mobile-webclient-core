@@ -25,7 +25,8 @@ export default {
       }
     }
   },
-  asyncGetFiles:  async ({ commit, getters }, pattern = '') => {
+  asyncGetFiles:  async ({ commit, getters, dispatch }, pattern = '') => {
+    dispatch('changeLoadingStatus', true)
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {
@@ -44,6 +45,7 @@ export default {
     if (types.pObject(data?.Quata)) {
       commit('SET_FILES_QUOTA', data.Quata)
     }
+    dispatch('changeLoadingStatus', false)
   },
   changeCurrentStorage: ({ commit }, storage) => {
     commit('SET_CURRENT_STORAGE', storage)

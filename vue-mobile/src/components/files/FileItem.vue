@@ -70,7 +70,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('files', ['copiedFiles', 'currentPath']),
+    ...mapGetters('files', ['copiedFiles', 'isArchive']),
     fileName() {
       if (this.file) {
         return getShortName(this.file.name, 30)
@@ -111,15 +111,12 @@ export default {
           !this.isMoved &&
           !this.file.downloading &&
           !this.copiedFiles.length &&
-          !this.isArchive()
+          !this.isArchive
       ) {
         await this.$router.push({ path: `/file/${this.file.id}` })
       } else {
         this.isMoved = false
       }
-    },
-    isArchive () {
-      return this.currentPath.split('.')[this.currentPath.split('.').length - 1] === 'zip'
     },
     touchMove() {
       this.isMoved = true
