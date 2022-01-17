@@ -5,21 +5,19 @@
 </template>
 
 <script>
-import FileFooter from "components/files/footer/FileFooter";
+import FileFooter from 'components/files/footer/FileFooter'
 
 export default {
-  name: "FooterComponent",
+  name: 'FooterComponent',
   components: {
-    FileFooter
+    FileFooter,
   },
   computed: {
     component() {
       return 'FileFooter'
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,14 +1,14 @@
 import AppApi from '/src/api/index'
-import types from "src/utils/types";
+import types from 'src/utils/types'
 import {
   getParseFiles,
   getParseFolders,
   getFiles,
-  getFolders
-} from "src/utils/files/utils";
+  getFolders,
+} from 'src/utils/files/utils'
 
 export default {
-  asyncGetStorages:  async ({ commit, dispatch }) => {
+  asyncGetStorages: async ({ commit, dispatch }) => {
     const storages = await AppApi.Files.getStorages()
     if (types.pArray(storages)) {
       commit('SET_STORAGE_LIST', storages)
@@ -20,19 +20,19 @@ export default {
         }
         dispatch('changeCurrentPaths', {
           path,
-          lastStorage: true
+          lastStorage: true,
         })
       }
     }
   },
-  asyncGetFiles:  async ({ commit, getters }, pattern = '') => {
+  asyncGetFiles: async ({ commit, getters }, pattern = '') => {
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {
       Type: currentStorage?.Type,
       Path: currentPath,
       Pattern: pattern,
-      PathRequired: false
+      PathRequired: false,
     }
     const data = await AppApi.Files.getFiles(parameters)
     if (types.pArray(data?.Items)) {
@@ -51,22 +51,25 @@ export default {
   changeLoadingStatus: ({ commit }, status) => {
     commit('SET_LOADING_STATUS', status)
   },
-  changeCurrentPaths:  ({ state, commit, getters, dispatch }, { path, lastStorage = false }) => {
+  changeCurrentPaths: (
+    { state, commit, getters, dispatch },
+    { path, lastStorage = false }
+  ) => {
     const currentPaths = getters['currentPaths']
-    let index = currentPaths.findIndex( elem => {
-      return  elem?.path === path?.path
+    let index = currentPaths.findIndex((elem) => {
+      return elem?.path === path?.path
     })
     commit('SET_CURRENT_PATH', { path: path?.path })
     commit('CHANGE_CURRENT_PATH', { index, path, lastStorage })
   },
-  asyncRenameItem:  async ({ state }, { file, itemName }) => {
+  asyncRenameItem: async ({ state }, { file, itemName }) => {
     const parameters = {
       Type: state.currentStorage.Type,
       Path: file.path,
       Name: file.name,
       NewName: itemName,
       IsLink: 0,
-      IsFolder: file.isFolder
+      IsFolder: file.isFolder,
     }
     return await AppApi.Files.renameItem(parameters)
   },
@@ -79,13 +82,13 @@ export default {
   changeSelectStatus: ({ commit }) => {
     commit('SET_SELECT_STATUS')
   },
-  asyncDeleteItems:  async ({ state, commit, getters, dispatch }, { items }) => {
+  asyncDeleteItems: async ({ state, commit, getters, dispatch }, { items }) => {
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {
       Type: currentStorage?.Type,
       Path: currentPath,
-      Items: items
+      Items: items,
     }
     return await AppApi.Files.deleteItems(parameters)
   },
@@ -136,7 +139,7 @@ export default {
     const parameters = {
       Type: currentStorage.Type,
       Path: getters['currentPath'],
-      FolderName: name
+      FolderName: name,
     }
     return await AppApi.Files.createFolder(parameters)
   },
@@ -155,19 +158,17 @@ export default {
     const module = withPassword ? 'OpenPgpFilesWebclient' : 'Files'
     const result = await AppApi.Files.createShareableLink(parameters, module)
     if (result) {
-      commit(
-        'SET_ITEM_PROPERTY',
-        {
-          item: currentFile,
-          property: 'publicLink',
-          value: `https://aurora.afterlogic.com/${result}`
-        }
-      )
+      commit('SET_ITEM_PROPERTY', {
+        item: currentFile,
+        property: 'publicLink',
+        value: `https://aurora.afterlogic.com/${result}`,
+      })
       if (parameters.Password) {
-        commit(
-          'SET_ITEM_PROPERTY',
-          { item: currentFile, property: 'linkPassword', value: parameters.Password }
-        )
+        commit('SET_ITEM_PROPERTY', {
+          item: currentFile,
+          property: 'linkPassword',
+          value: parameters.Password,
+        })
       }
       return result
     }
@@ -182,14 +183,16 @@ export default {
     }
     const result = await AppApi.Files.deletePublicLink(parameters)
     if (result) {
-      commit(
-        'SET_ITEM_PROPERTY',
-        { item: currentFile, property: 'publicLink', value: '' }
-      )
-      commit(
-        'SET_ITEM_PROPERTY',
-        { item: currentFile, property: 'linkPassword', value: '' }
-      )
+      commit('SET_ITEM_PROPERTY', {
+        item: currentFile,
+        property: 'publicLink',
+        value: '',
+      })
+      commit('SET_ITEM_PROPERTY', {
+        item: currentFile,
+        property: 'linkPassword',
+        value: '',
+      })
     }
     return result
   },
@@ -197,24 +200,31 @@ export default {
     const result = await AppApi.Files.updateShare(parameters)
     if (result) {
       const currentFile = getters['currentFile']
-      commit(
-        'SET_ITEM_PROPERTY',
-        { item: currentFile, property: 'shares', value: parameters.Shares }
-      )
+      commit('SET_ITEM_PROPERTY', {
+        item: currentFile,
+        property: 'shares',
+        value: parameters.Shares,
+      })
       return true
     }
     return false
   },
-  asyncGetHistory: async ({ state, commit, getters, dispatch }, { resourceType, resourceId, offset, limit }) => {
+  asyncGetHistory: async (
+    { state, commit, getters, dispatch },
+    { resourceType, resourceId, offset, limit }
+  ) => {
     const parameters = {
       ResourceType: resourceType,
       ResourceId: resourceId,
       Offset: offset,
-      Limit: limit
+      Limit: limit,
     }
     return AppApi.Files.getHistory(parameters)
   },
-  asyncClearHistory: async ({ state, commit, getters, dispatch }, { resourceType, resourceId }) => {
+  asyncClearHistory: async (
+    { state, commit, getters, dispatch },
+    { resourceType, resourceId }
+  ) => {
     const parameters = {
       ResourceType: resourceType,
       ResourceId: resourceId,
@@ -228,16 +238,14 @@ export default {
     commit('REMOVE_UPLOADED_FILES')
   },
   changeUploadingStatus: ({ commit }, { file, status }) => {
-    commit(
-      'SET_ITEM_PROPERTY',
-      { item: file, property: 'isUploading', value: status }
-    )
+    commit('SET_ITEM_PROPERTY', {
+      item: file,
+      property: 'isUploading',
+      value: status,
+    })
   },
   changeItemProperty: ({ commit }, { item, property, value }) => {
-    commit(
-      'SET_ITEM_PROPERTY',
-      { item, property, value }
-    )
+    commit('SET_ITEM_PROPERTY', { item, property, value })
   },
   asyncDownloadFile: async ({ getters }) => {
     const file = getters['currentFile']
@@ -245,5 +253,5 @@ export default {
   },
   changeCurrentHeader: ({ commit }, headerName) => {
     commit('SET_CURRENT_HEADER_NAME', headerName)
-  }
+  },
 }

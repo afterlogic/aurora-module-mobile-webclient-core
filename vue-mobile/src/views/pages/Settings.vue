@@ -14,21 +14,19 @@
 </template>
 
 <script>
-import MainLayout from "src/views/layouts/MainLayout";
+import MainLayout from 'src/views/layouts/MainLayout'
 
 export default {
-  name: "Settings",
+  name: 'Settings',
   components: {
-    MainLayout
+    MainLayout,
   },
   methods: {
     logout() {
       this.$store.dispatch('user/logout')
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

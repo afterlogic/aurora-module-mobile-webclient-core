@@ -1,46 +1,40 @@
 const i18n = {
-  '$t': {
+  $t: {
     OPENPGPFILESWEBCLIENT: {
-      "HEADING_CREATE_PUBLIC_LINK": "Create shareable link",
+      HEADING_CREATE_PUBLIC_LINK: 'Create shareable link',
     },
     SHAREDFILES: {
-      "ACTION_SHARE": "Share with teammates",
+      ACTION_SHARE: 'Share with teammates',
     },
     COREWEBCLIENT: {
-      "ACTION_SHARE": "Share",
-      "ACTION_DOWNLOAD_FILE": "Download",
-      "ACTION_REMOVE": "Remove",
+      ACTION_SHARE: 'Share',
+      ACTION_DOWNLOAD_FILE: 'Download',
+      ACTION_REMOVE: 'Remove',
     },
     FILESWEBCLIENT: {
-      "ACTION_RENAME": "Rename",
-    }
-  }
+      ACTION_RENAME: 'Rename',
+    },
+  },
 }
 
 const isShowAction = (action, file) => {
   let result = true
-  if (file){
+  if (file) {
     switch (action) {
       case 'copy':
-
         break
       case 'createShareableLink':
-
         break
       case 'shareWithTeammates':
-
         break
       case 'share':
-
         break
       case 'download':
         if (file.isFolder) result = false
         break
       case 'rename':
-
         break
       case 'delete':
-
         break
       default:
         break
@@ -89,7 +83,7 @@ export const fileActions = {
       store.dispatch('files/changeItemProperty', {
         item: file,
         property: 'downloading',
-        value: true
+        value: true,
       })
       store.dispatch('files/asyncDownloadFile')
     },
@@ -113,13 +107,13 @@ export const fileActions = {
     displayName: 'Delete',
     icon: 'delete',
     isShowAction: isShowAction,
-  }
+  },
 }
 
-export const getFileActionsList = file => {
+export const getFileActionsList = (file) => {
   const actions = []
   if (file) {
-    Object.keys(fileActions).forEach(key => {
+    Object.keys(fileActions).forEach((key) => {
       actions.push(fileActions[key])
     })
   }

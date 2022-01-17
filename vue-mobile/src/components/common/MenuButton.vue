@@ -5,15 +5,12 @@
 </template>
 
 <script>
-
 export default {
-  name: "MenuButton",
+  name: 'MenuButton',
   props: {
-    url: { type: String, default: '' }
+    url: { type: String, default: '' },
   },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

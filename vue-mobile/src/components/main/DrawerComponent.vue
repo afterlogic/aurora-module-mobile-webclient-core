@@ -1,5 +1,11 @@
 <template>
-  <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated>
+  <q-drawer
+    v-model="leftDrawerOpen"
+    side="left"
+    overlay
+    behavior="mobile"
+    elevated
+  >
     <q-item>
       <q-item-section class="text-subtitle1 q-mt-lg">
         {{ userName }}
@@ -13,10 +19,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "DrawerComponent",
+  name: 'DrawerComponent',
   props: {
     value: { type: Boolean, default: false },
   },
@@ -24,7 +30,7 @@ export default {
     ...mapGetters('core', ['currentUser']),
     userName() {
       return this.currentUser?.PublicId ? this.currentUser.PublicId : ''
-    }
+    },
   },
   data() {
     return {
@@ -33,13 +39,13 @@ export default {
   },
   watch: {
     value() {
-      this.leftDrawerOpen = this.value;
+      this.leftDrawerOpen = this.value
     },
     leftDrawerOpen(value) {
       if (!value) {
         this.closeDrawer(value)
       }
-    }
+    },
   },
   methods: {
     closeDrawer(value) {
@@ -49,11 +55,9 @@ export default {
       setTimeout(() => {
         this.leftDrawerOpen = false
       }, 300)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

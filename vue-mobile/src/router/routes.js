@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -24,8 +23,8 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('src/views/pages/Error404.vue')
-  }
+    component: () => import('src/views/pages/Error404.vue'),
+  },
 ]
 
 export default routes

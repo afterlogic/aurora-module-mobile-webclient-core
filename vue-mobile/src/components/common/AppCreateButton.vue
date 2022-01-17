@@ -10,13 +10,11 @@
 
 <script>
 export default {
-  name: "AppCreateButton",
+  name: 'AppCreateButton',
   props: {
     icon: { type: String, default: '' },
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

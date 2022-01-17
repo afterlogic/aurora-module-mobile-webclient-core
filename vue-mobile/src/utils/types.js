@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 export default {
-  pInt (value, defaultValue = 0) {
+  pInt(value, defaultValue = 0) {
     let intValue = parseInt(value, 10)
     if (isNaN(intValue)) {
       intValue = !isNaN(defaultValue) ? defaultValue : 0
@@ -11,7 +11,7 @@ export default {
   roundNumber(iNum, iDec) {
     return Math.round(iNum * Math.pow(10, iDec)) / Math.pow(10, iDec)
   },
-  pPositiveInt (value, defaultValue = 1) {
+  pPositiveInt(value, defaultValue = 1) {
     const intValue = window.parseInt(value, 10)
     if (!isNaN(intValue) && intValue >= 1) {
       return intValue
@@ -22,7 +22,7 @@ export default {
     return 1
   },
 
-  pNonNegativeInt (value, defaultValue = 0) {
+  pNonNegativeInt(value, defaultValue = 0) {
     const intValue = window.parseInt(value, 10)
     if (!isNaN(intValue) && intValue >= 0) {
       return intValue
@@ -33,11 +33,11 @@ export default {
     return 0
   },
 
-  isNonEmptyString (value) {
+  isNonEmptyString(value) {
     return _.isString(value) && value !== ''
   },
 
-  pString (value, defaultValue = '') {
+  pString(value, defaultValue = '') {
     if (value !== undefined && value !== null) {
       return value.toString()
     }
@@ -90,13 +90,25 @@ export default {
   },
 
   pEnum: function (value, enumObject, defaultValue) {
-    if (value === _.find(enumObject, (enumValue) => { return enumValue === value })) {
+    if (
+      value ===
+      _.find(enumObject, (enumValue) => {
+        return enumValue === value
+      })
+    ) {
       return value
     }
-    if (defaultValue === _.find(enumObject, (enumValue) => { return enumValue === defaultValue })) {
+    if (
+      defaultValue ===
+      _.find(enumObject, (enumValue) => {
+        return enumValue === defaultValue
+      })
+    ) {
       return defaultValue
     }
-    return _.find(enumObject, () => { return true })
+    return _.find(enumObject, () => {
+      return true
+    })
   },
 
   pStringToJson: function (value) {

@@ -17,11 +17,13 @@
       </q-item>
       <q-card-actions align="right">
         <button-dialog
-          :saving="saving" :action="createFolder"
+          :saving="saving"
+          :action="createFolder"
           :label="$t('COREWEBCLIENT.ACTION_SAVE')"
         />
         <button-dialog
-          :saving="saving" :action="cancelDialog"
+          :saving="saving"
+          :action="cancelDialog"
           :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
         />
       </q-card-actions>
@@ -30,32 +32,32 @@
 </template>
 
 <script>
-import AppInput from "components/common/AppInput";
-import ButtonDialog from "components/files/common/ButtonDialog";
-import { mapActions } from "vuex";
+import AppInput from 'components/common/AppInput'
+import ButtonDialog from 'components/files/common/ButtonDialog'
+import { mapActions } from 'vuex'
 
 export default {
-  name: "CreateFolderDialog",
+  name: 'CreateFolderDialog',
   components: { AppInput, ButtonDialog },
   props: {
     file: { type: Object, default: null },
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
   },
-  data () {
+  data() {
     return {
       folderName: '',
       openDialog: false,
-      saving: false
+      saving: false,
     }
   },
   watch: {
     dialog(val) {
       this.openDialog = val
-    }
+    },
   },
   methods: {
     ...mapActions('files', ['asyncCreateFolder', 'asyncGetFiles']),
-    async createFolder () {
+    async createFolder() {
       this.saving = true
       const result = await this.asyncCreateFolder({ name: this.folderName })
       if (result) {
@@ -64,13 +66,11 @@ export default {
         await this.asyncGetFiles()
       }
     },
-    cancelDialog () {
+    cancelDialog() {
       this.$emit('closeDialog')
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -8,9 +8,9 @@ const i18n = {
       LABEL_GIGABYTES: 'GB',
       LABEL_MEGABYTES: 'MB',
       LABEL_KILOBYTES: 'KB',
-      LABEL_BYTES: 'B'
-    }
-  }
+      LABEL_BYTES: 'B',
+    },
+  },
 }
 
 export default {
@@ -22,11 +22,17 @@ export default {
     sizeInBytes = typesUtils.pInt(sizeInBytes)
 
     if (sizeInBytes >= bytesInGb) {
-      return `${typesUtils.roundNumber(sizeInBytes / bytesInGb, 1)} ${i18n.tc.COREWEBCLIENT.LABEL_GIGABYTES}`
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInGb, 1)} ${
+        i18n.tc.COREWEBCLIENT.LABEL_GIGABYTES
+      }`
     } else if (sizeInBytes >= bytesInMb) {
-      return `${typesUtils.roundNumber(sizeInBytes / bytesInMb, 1)} ${i18n.tc.COREWEBCLIENT.LABEL_MEGABYTES}`
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInMb, 1)} ${
+        i18n.tc.COREWEBCLIENT.LABEL_MEGABYTES
+      }`
     } else if (sizeInBytes >= bytesInKb) {
-      return `${typesUtils.roundNumber(sizeInBytes / bytesInKb, 0)} ${i18n.tc.COREWEBCLIENT.LABEL_KILOBYTES}`
+      return `${typesUtils.roundNumber(sizeInBytes / bytesInKb, 0)} ${
+        i18n.tc.COREWEBCLIENT.LABEL_KILOBYTES
+      }`
     }
 
     return `${sizeInBytes} ${i18n.tc.COREWEBCLIENT.LABEL_BYTES}`
@@ -34,9 +40,13 @@ export default {
 
   encodeHtml: function (text) {
     if (typesUtils.isNonEmptyString(text)) {
-      return text.toString()
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;').replace(/'/g, '&#039;')
+      return text
+        .toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
     }
     return ''
   },
@@ -70,7 +80,7 @@ export default {
       .replace(/\s+/g, ' ')
   },
 
-  unescapeHTMLSymbols (text) {
+  unescapeHTMLSymbols(text) {
     const htmlEntities = {
       nbsp: ' ',
       cent: '¢',
@@ -83,7 +93,7 @@ export default {
       gt: '>',
       quot: '"',
       amp: '&',
-      apos: '\'',
+      apos: "'",
     }
 
     return text.replace(/&([^;]+);/g, function (entity, entityCode) {
@@ -92,10 +102,10 @@ export default {
       if (entityCode in htmlEntities) {
         return htmlEntities[entityCode]
         /* eslint no-cond-assign: 0 */
-      } else if (match = entityCode.match(/^#x([\da-fA-F]+)$/)) {
+      } else if ((match = entityCode.match(/^#x([\da-fA-F]+)$/))) {
         return String.fromCharCode(parseInt(match[1], 16))
         /* eslint no-cond-assign: 0 */
-      } else if (match = entityCode.match(/^#(\d+)$/)) {
+      } else if ((match = entityCode.match(/^#(\d+)$/))) {
         return String.fromCharCode(~~match[1])
       } else {
         return entity

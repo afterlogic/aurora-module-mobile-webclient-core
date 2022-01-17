@@ -1,8 +1,37 @@
 <template>
-  <div class="pagination" :class="{'hidden': pages.length <= 1, 'border': border}">
-    <q-btn icon="chevron_left" dense flat unelevated color="primary" v-if="firstPage !== null" @click="changePage(firstPage)" />
-    <q-btn unelevated flat color="primary" :disable="currentPage === page" :class="{'current-page': currentPage === page}" :label="page" v-for="page in pages" :key="page" @click="changePage(page)" />
-    <q-btn icon="chevron_right" dense flat unelevated color="primary" v-if="lastPage !== null" @click="changePage(lastPage)" />
+  <div
+    class="pagination"
+    :class="{ hidden: pages.length <= 1, border: border }"
+  >
+    <q-btn
+      icon="chevron_left"
+      dense
+      flat
+      unelevated
+      color="primary"
+      v-if="firstPage !== null"
+      @click="changePage(firstPage)"
+    />
+    <q-btn
+      unelevated
+      flat
+      color="primary"
+      :disable="currentPage === page"
+      :class="{ 'current-page': currentPage === page }"
+      :label="page"
+      v-for="page in pages"
+      :key="page"
+      @click="changePage(page)"
+    />
+    <q-btn
+      icon="chevron_right"
+      dense
+      flat
+      unelevated
+      color="primary"
+      v-if="lastPage !== null"
+      @click="changePage(lastPage)"
+    />
   </div>
 </template>
 
@@ -46,8 +75,8 @@ export default {
     changePage: Function,
     border: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   computed: {
     pagesCount: function () {
@@ -77,7 +106,10 @@ export default {
       return 1
     },
     lastPage: function () {
-      if (this.pages.length === 0 || this.pages[this.pages.length - 1] === this.pagesCount) {
+      if (
+        this.pages.length === 0 ||
+        this.pages[this.pages.length - 1] === this.pagesCount
+      ) {
         return null
       }
       return this.pagesCount

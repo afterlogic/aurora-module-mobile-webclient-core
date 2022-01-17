@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "InputForm",
+  name: 'InputForm',
   props: {
     value: {
       type: [String, Number],
@@ -13,11 +13,9 @@ export default {
     label: {
       type: String,
       default: '',
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

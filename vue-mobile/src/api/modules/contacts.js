@@ -7,12 +7,12 @@ export default () => {
         moduleName: 'Contacts',
         methodName: 'GetContactSuggestions',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
         return false
       })
-    }
+    },
   }
 }

@@ -2,18 +2,16 @@ import WebApi from 'src/api/web-api'
 import _ from 'lodash'
 
 const i18n = {
-  '$t': {
-    OPENPGPFILESWEBCLIENT: {
-    },
-    SHAREDFILES: {
-    },
-    COREWEBCLIENT: {
-    },
+  $t: {
+    OPENPGPFILESWEBCLIENT: {},
+    SHAREDFILES: {},
+    COREWEBCLIENT: {},
     FILESWEBCLIENT: {
-      "ERROR_FILES_MOVE_PLURAL": "File moving has failed.|Files moving has failed.",
-      "ERROR_INVALID_FOLDER_NAME": "Invalid folder name",
-    }
-  }
+      ERROR_FILES_MOVE_PLURAL:
+        'File moving has failed.|Files moving has failed.',
+      ERROR_INVALID_FOLDER_NAME: 'Invalid folder name',
+    },
+  },
 }
 export default () => {
   return {
@@ -22,7 +20,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'GetFiles',
         parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -34,7 +32,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'GetStorages',
         parameters: {},
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -46,7 +44,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'Rename',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -58,7 +56,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'Delete',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -70,8 +68,8 @@ export default () => {
         moduleName: 'Files',
         methodName: method,
         parameters: parameters,
-        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_FILES_MOVE_PLURAL
-      }).then(result => {
+        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_FILES_MOVE_PLURAL,
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -83,8 +81,8 @@ export default () => {
         moduleName: 'Files',
         methodName: 'CreateFolder',
         parameters: parameters,
-        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_INVALID_FOLDER_NAME
-      }).then(result => {
+        defaultText: i18n.$t.FILESWEBCLIENT.ERROR_INVALID_FOLDER_NAME,
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -96,7 +94,7 @@ export default () => {
         moduleName: module,
         methodName: 'CreatePublicLink',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (_.isString(result?.link)) return result.link
         if (result) return result
         return false
@@ -107,7 +105,7 @@ export default () => {
         moduleName: 'Files',
         methodName: 'DeletePublicLink',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -119,7 +117,7 @@ export default () => {
         moduleName: 'SharedFiles',
         methodName: 'UpdateShare',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -131,7 +129,7 @@ export default () => {
         moduleName: 'ActivityHistory',
         methodName: 'GetList',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -143,7 +141,7 @@ export default () => {
         moduleName: 'ActivityHistory',
         methodName: 'Delete',
         parameters: parameters,
-      }).then(result => {
+      }).then((result) => {
         if (result) {
           return result
         }
@@ -154,14 +152,16 @@ export default () => {
       const parameters = {
         downloadUrl: file.downloadUrl,
         fileName: file.name,
-        file
+        file,
       }
-      return WebApi.downloadByUrl(parameters).then(result => {
-        if (result) return result
-        return false
-      }).catch(err => {
-        console.log(err)
-      })
-    }
-  };
-};
+      return WebApi.downloadByUrl(parameters)
+        .then((result) => {
+          if (result) return result
+          return false
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+  }
+}

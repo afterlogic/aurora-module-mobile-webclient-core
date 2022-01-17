@@ -8,15 +8,15 @@ export default {
     user: null,
   },
   mutations: {
-    setAppData (state, appData) {
+    setAppData(state, appData) {
       state.appData = appData
     },
     setCurrentUser(state, user) {
       state.user = user
-    }
+    },
   },
   actions: {
-    async asyncGetAppData ({ commit }) {
+    async asyncGetAppData({ commit }) {
       const appData = await AppApi.Core.getAppData()
       if (typesUtils.pObject(appData)) {
         commit('setAppData', appData)
@@ -38,6 +38,6 @@ export default {
     },
     currentUser(state) {
       return state.user
-    }
+    },
   },
 }

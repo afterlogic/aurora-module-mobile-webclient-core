@@ -1,5 +1,7 @@
 <template>
   <div class="q-gutter-y-md q-px-md full-height flex wrap content-between">
+    <FolderBluredIcon class="absolute q-ml-md" />
+    <FolderFilledIcon />
     <div class="full-width">
       <h4 class="q-my-sm">{{ $t('MOBILEAPPSWEBCLIENT.HEADING_MAIL_APP') }}</h4>
       <p>Log in to continue</p>
@@ -32,6 +34,8 @@ import AppButton from 'components/common/AppButton'
 import { validators } from 'src/utils/validation'
 import { useForm } from 'src/hooks/form'
 import { useStore } from 'vuex'
+import FolderBluredIcon from 'components/files/icons/login/FolderBluredIcon'
+import FolderFilledIcon from 'components/files/icons/login/FolderFilledIcon'
 
 const required = (val) => !!val
 const minLength = (num) => (val) => val.length >= num
@@ -39,6 +43,8 @@ const minLength = (num) => (val) => val.length >= num
 export default {
   name: 'LoginMobile',
   components: {
+    FolderFilledIcon,
+    FolderBluredIcon,
     AppInput,
     AppButton,
   },

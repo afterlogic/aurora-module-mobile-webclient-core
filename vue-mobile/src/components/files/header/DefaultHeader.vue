@@ -1,6 +1,14 @@
 <template>
   <q-toolbar style="height: 55px" class="justify-between">
-    <q-btn flat size="15px" @click="$emit('openDrawer')" color="black" round dense icon="menu" />
+    <q-btn
+      flat
+      size="15px"
+      @click="$emit('openDrawer')"
+      color="black"
+      round
+      dense
+      icon="menu"
+    />
     <div class="flex column">
       <q-btn-dropdown
         model-value
@@ -11,24 +19,25 @@
         :disable="currentPaths.length <= 1"
         :style="{
           'padding-left': '36px',
-           'font-size': '17px',
-           width: '250px',
-          }"
+          'font-size': '17px',
+          width: '250px',
+        }"
         class="text-bold text-black"
         no-caps
         flat
-        :label="currentPaths.length <= 1 ?
-        'Aurora files' :
-        getShortName(currentPaths[currentPaths.length - 1].name, 20)"
+        :label="
+          currentPaths.length <= 1
+            ? 'Aurora files'
+            : getShortName(currentPaths[currentPaths.length - 1].name, 20)
+        "
       >
         <q-list>
-          <div v-for="(path, index) in currentPaths"
-               :key="path.path"
-          >
-            <q-item clickable
-                    v-close-popup
-                    @click="openPath(path)"
-                    v-if="currentPaths.length - 1 !== index"
+          <div v-for="(path, index) in currentPaths" :key="path.path">
+            <q-item
+              clickable
+              v-close-popup
+              @click="openPath(path)"
+              v-if="currentPaths.length - 1 !== index"
             >
               <q-item-section>
                 <q-item-label>{{ getShortName(path.name, 20) }}</q-item-label>
@@ -37,18 +46,30 @@
           </div>
         </q-list>
       </q-btn-dropdown>
-      <span :style="{'margin-top': '-10px'}" class="text-black text-center text-blue-grey-12">{{storageName}}</span>
+      <span
+        :style="{ 'margin-top': '-10px' }"
+        class="text-black text-center text-blue-grey-12"
+        >{{ storageName }}</span
+      >
     </div>
-    <q-btn flat size="15px" color="black" round dense icon="search" @click="showSearchHeader"/>
+    <q-btn
+      flat
+      size="15px"
+      color="black"
+      round
+      dense
+      icon="search"
+      @click="showSearchHeader"
+    />
   </q-toolbar>
 </template>
 
 <script>
-import {getShortName} from "src/utils/files/utils";
-import {mapActions, mapGetters} from "vuex";
+import { getShortName } from 'src/utils/files/utils'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: "DefaultHeader",
+  name: 'DefaultHeader',
   data() {
     return {
       isOpen: false,
@@ -58,10 +79,14 @@ export default {
     ...mapGetters('files', ['currentPaths', 'currentStorage']),
     storageName() {
       return this.currentStorage.Type
-    }
+    },
   },
   methods: {
-    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles', 'changeCurrentHeader']),
+    ...mapActions('files', [
+      'changeCurrentPaths',
+      'asyncGetFiles',
+      'changeCurrentHeader',
+    ]),
     getShortName,
     async openPath(path) {
       this.isOpen = false
@@ -70,11 +95,9 @@ export default {
     },
     showSearchHeader() {
       this.changeCurrentHeader('SearchHeader')
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
