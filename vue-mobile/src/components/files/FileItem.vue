@@ -98,7 +98,13 @@ export default {
     ...mapActions('files', ['changeCurrentPaths', 'changeCurrentHeader', 'asyncGetFiles']),
     async selectFile() {
       this.touchend()
-      if (!this.isSelected && !this.isMoved && !this.file.downloading && this.file.isArchive) {
+      if (
+        !this.isSelected &&
+        !this.isMoved &&
+        !this.copiedFiles.length &&
+        !this.file.downloading &&
+        this.file.isArchive
+      ) {
         const path = {
           path: this.file.fullPath,
           name: this.file.name

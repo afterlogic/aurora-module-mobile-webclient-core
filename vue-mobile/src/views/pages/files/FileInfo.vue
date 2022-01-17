@@ -39,9 +39,6 @@ import { getApiHost } from "src/api/helpers";
 
 export default {
   name: "FileInfo",
-  mounted() {
-    console.log(this.currentFile)
-  },
   components: {
     MainLayout,
     FileIcon,
