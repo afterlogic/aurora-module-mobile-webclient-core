@@ -17,30 +17,37 @@ const i18n = {
   }
 }
 
-const isShowAction = (action, file) => {
+const isArchiveElement = (path) => {
+  return path.split('.')[path.split('.').length - 1] === 'zip'
+}
+
+const isShowAction = (action, file, storage, path) => {
   let result = true
   if (file){
     switch (action) {
       case 'copy':
-
+        if (storage === 'shared') result = false
+        if (isArchiveElement(path)) result = false
         break
       case 'createShareableLink':
-
+        if (storage === 'shared') result = false
+        if (isArchiveElement(path)) result = false
         break
       case 'shareWithTeammates':
-
-        break
-      case 'share':
-
+        if (storage === 'corporate') result = false
+        if (storage === 'shared') result = false
+        if (isArchiveElement(path)) result = false
         break
       case 'download':
         if (file.isFolder) result = false
         break
       case 'rename':
-
+        if (storage === 'shared') result = false
+        if (isArchiveElement(path)) result = false
         break
       case 'delete':
-
+        if (storage === 'shared') result = false
+        if (isArchiveElement(path)) result = false
         break
       default:
         break
@@ -73,13 +80,6 @@ export const fileActions = {
     name: 'shareWithTeammates',
     component: 'ShareWithTeammatesDialog',
     displayName: i18n.$t.SHAREDFILES.ACTION_SHARE,
-    icon: 'share',
-    isShowAction: isShowAction,
-  },
-  share: {
-    method: null,
-    name: 'share',
-    displayName: i18n.$t.COREWEBCLIENT.ACTION_SHARE,
     icon: 'share',
     isShowAction: isShowAction,
   },

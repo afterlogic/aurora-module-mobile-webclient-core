@@ -26,7 +26,7 @@ export default () => {
         if (result) {
           return result
         }
-        return false
+        return []
       })
     },
     getStorages: async () => {
@@ -38,7 +38,7 @@ export default () => {
         if (result) {
           return result
         }
-        return false
+        return []
       })
     },
     renameItem: async (parameters) => {

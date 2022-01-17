@@ -1,6 +1,6 @@
-<template>
+<template >
   <q-btn
-    style="position: fixed; z-index: 1; bottom: 12%; right: 5%"
+    style="position: fixed; z-index: 1; bottom: 10%; right: 5%"
     color="primary"
     size="17px"
     :icon="icon"

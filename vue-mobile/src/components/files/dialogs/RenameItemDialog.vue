@@ -12,7 +12,7 @@
             @keyup.enter="renameItem"
           />
       </q-item>
-      <q-card-actions class="q-my-sm" align="right">
+      <q-card-actions align="right">
         <button-dialog
           :saving="saving" :action="renameItem"
           :label="$t('COREWEBCLIENT.ACTION_SAVE')"

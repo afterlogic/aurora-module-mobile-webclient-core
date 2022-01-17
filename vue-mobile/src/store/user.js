@@ -16,6 +16,7 @@ export default {
       const response = await AppApi.User.login(parameters)
       if (response?.AuthToken) {
         VueCookies.set('AuthToken', response?.AuthToken)
+        //VueCookies.set('SameSite', 'None')
         commit('changeAuthTokenStatus', true)
       } else {
         commit('changeAuthTokenStatus', false)

@@ -9,7 +9,10 @@
       <q-separator />
         <q-list style="height: 250px" class="scroll">
           <div v-for="fileAction in actions" :key="fileAction.name">
-            <q-item v-if="fileAction.isShowAction(fileAction.name, file)" class="q-my-sm" clickable>
+            <q-item
+              v-if="fileAction.isShowAction(fileAction.name, file, currentStorage.Type, currentPath)"
+              class="q-my-sm" clickable
+            >
               <div class="flex full-width" @click="performAction(fileAction)">
                 <div>
                   <q-icon size="26px" :name="fileAction.icon" color="primary"></q-icon>
@@ -27,6 +30,7 @@
 
 <script>
 import { getFileActionsList } from "src/utils/files/file-actions";
+import {mapGetters} from "vuex";
 
 export default {
   name: "FileMenuDialog",
@@ -35,6 +39,7 @@ export default {
     file: { type: Object, default: null }
   },
   computed: {
+    ...mapGetters('files', ['currentStorage', 'currentPath']),
     actions() {
       return getFileActionsList(this.file)
     },

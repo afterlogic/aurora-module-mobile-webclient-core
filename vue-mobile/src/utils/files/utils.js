@@ -1,5 +1,17 @@
 import typesUtils from "src/utils/types";
 
+const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
+const getFormatFile = (name) => {
+  return name.split('.')[name.split('.').length - 1]
+}
+
+const isImg = (name) => {
+  const formatFile = getFormatFile(name)
+  return imgFormats.find( format => {
+    return format === formatFile
+  })
+}
+
 const parseFile = file => {
   return {
     loading: false,
@@ -31,6 +43,8 @@ const parseFile = file => {
     percentDownloading: 0,
     isSelected: false,
     isCopied: false,
+    isImg: isImg(typesUtils.pString(file.Name)),
+    isArchive: !!file?.Actions?.list,
   }
 }
 

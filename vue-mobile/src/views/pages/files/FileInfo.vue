@@ -2,7 +2,11 @@
 <main-layout title="File info">
   <div class="file">
     <div class="flex items-center justify-center">
-      <file-icon class="file__preview" :width="64" :height="64"/>
+      <file-icon v-if="!currentFile.thumbnailUrl" class="file__preview" :width="64" :height="64"/>
+      <div style="height: 184px" v-if="currentFile.thumbnailUrl">
+        <div class="img-preview"
+             :style="{'background': `url(${filePreview}) no-repeat center`, 'background-size': 'contain'}"/>
+      </div>
     </div>
     <div>
       <div class="q-mx-md">
@@ -23,7 +27,6 @@
   <dialogs-list />
 </main-layout>
 </template>
-
 <script>
 import DialogsList from "components/files/DialogsList";
 import MainLayout from "src/views/layouts/MainLayout";
@@ -32,8 +35,13 @@ import InputForm from "components/files/common/InputForm";
 import { mapGetters } from "vuex";
 import date from "src/utils/date";
 import text from "src/utils/text";
+import { getApiHost } from "src/api/helpers";
+
 export default {
   name: "FileInfo",
+  mounted() {
+    console.log(this.currentFile)
+  },
   components: {
     MainLayout,
     FileIcon,
@@ -42,6 +50,10 @@ export default {
   },
   computed: {
     ...mapGetters('files', ['currentFile']),
+    filePreview() {
+      const api = getApiHost()
+      return  api + this.currentFile.viewUrl
+    },
     fileDate() {
       return date.getDate(this.currentFile.lastModified)
     },
