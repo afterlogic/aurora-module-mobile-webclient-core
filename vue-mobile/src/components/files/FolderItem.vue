@@ -29,23 +29,31 @@
         @touchstart.stop
         @touchend.stop="showDialog"
       />
-      <q-btn v-ripple="false" v-if="folder.isSelected" size="14px" color="grey" flat round icon="done" />
+      <q-btn
+        v-ripple="false"
+        v-if="folder.isSelected"
+        size="14px"
+        color="grey"
+        flat
+        round
+        icon="done"
+      />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import FolderIcon from "components/files/icons/FolderIcon";
-import { getShortName } from "src/utils/files/utils";
-import { mapGetters, mapActions } from "vuex";
+import FolderIcon from 'components/files/icons/FolderIcon'
+import { getShortName } from 'src/utils/files/utils'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: "FolderItem",
+  name: 'FolderItem',
   components: {
-    FolderIcon
+    FolderIcon,
   },
   props: {
-    folder: {type: Object, default: null},
+    folder: { type: Object, default: null },
     isSelected: { type: Boolean, default: false },
     isCopied: { type: Boolean, default: false },
     touchstart: { type: Function, default: null, require: true },
@@ -58,22 +66,27 @@ export default {
         return getShortName(this.folder.name, 30)
       }
       return ''
-    }
+    },
   },
   data() {
     return {
-      isMoved: false
+      isMoved: false,
     }
   },
   methods: {
-    ...mapActions('files', ['changeCurrentPaths', 'asyncGetFiles']),
+    ...mapActions('files', [
+      'changeCurrentPaths',
+      'asyncGetFiles',
+      'changeCurrentHeader',
+    ]),
     async openFolder() {
       if (!this.isSelected && !this.folder.isCopied && !this.isMoved) {
         this.touchend()
         const path = {
           path: this.folder.fullPath,
-          name: this.folder.name
+          name: this.folder.name,
         }
+        this.changeCurrentHeader('')
         await this.changeCurrentPaths({ path, lastStorage: false })
         await this.asyncGetFiles()
       } else {
@@ -86,13 +99,14 @@ export default {
     },
     showDialog() {
       if (!this.isSelected && !this.isCopied) {
-        this.$emit('showDialog', { file: this.folder, component: 'FileMenuDialog' })
+        this.$emit('showDialog', {
+          file: this.folder,
+          component: 'FileMenuDialog',
+        })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

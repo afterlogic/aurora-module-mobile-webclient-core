@@ -1,26 +1,26 @@
 <template>
   <q-layout view="hhh LpR fFf" style="height: 100vh">
-    <uploader-component ref="uploader"/>
+    <uploader-component ref="uploader" />
     <router-view />
   </q-layout>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 const mixins = {
   methods: {
     uploadFiles(methods) {
       this.$refs.uploader.open(methods)
     },
-  }
+  },
 }
 
-import UploaderComponent from "components/files/common/UploaderComponent";
+import UploaderComponent from 'components/files/common/UploaderComponent'
 export default defineComponent({
   mixins: [mixins],
   name: 'App',
   components: {
-    UploaderComponent
+    UploaderComponent,
   },
   async mounted() {
     await this.populate()
@@ -28,12 +28,12 @@ export default defineComponent({
   computed: {
     hasAuthToken() {
       return this.$store.getters['user/getAuthTokenStatus']
-    }
+    },
   },
   watch: {
     hasAuthToken(hasAuthToken) {
       this.selectPath(hasAuthToken)
-    }
+    },
   },
   methods: {
     async populate() {
@@ -53,7 +53,7 @@ export default defineComponent({
     },
     async init() {
       await this.$store.dispatch('core/init')
-    }
-  }
+    },
+  },
 })
 </script>

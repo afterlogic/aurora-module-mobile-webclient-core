@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "UploaderComponent",
+  name: 'UploaderComponent',
   data() {
     return {
       factory: null,
@@ -47,11 +47,9 @@ export default {
     },
     finishUpload() {
       this.finish()
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

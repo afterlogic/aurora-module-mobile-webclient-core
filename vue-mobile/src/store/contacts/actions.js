@@ -1,4 +1,4 @@
-import AppApi from "src/api";
+import AppApi from 'src/api'
 
 export default {
   asyncGetContacts: async ({}, parameters) => {

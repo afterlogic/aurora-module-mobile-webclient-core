@@ -8,23 +8,26 @@ export default () => {
         moduleName: 'Core',
         methodName: 'Login',
         parameters,
-      }).then( result => {
+      }).then((result) => {
         if (result && result?.AuthToken) {
           return result
         }
         return ''
       })
     },
-    logout () {
+    logout() {
       return WebApi.sendRequest({
         moduleName: 'Core',
         methodName: 'Logout',
         parameters: {},
-      }).then(() => {
-        store.dispatch('user/logout')
-      }, () => {
-        store.dispatch('user/logout')
-      })
+      }).then(
+        () => {
+          store.dispatch('user/logout')
+        },
+        () => {
+          store.dispatch('user/logout')
+        }
+      )
     },
-  };
-};
+  }
+}

@@ -1,5 +1,5 @@
-import { reactive} from 'vue'
-import {useField} from "src/hooks/field";
+import { reactive } from 'vue'
+import { useField } from 'src/hooks/field'
 
 export function useForm(init = {}) {
   const form = reactive({})

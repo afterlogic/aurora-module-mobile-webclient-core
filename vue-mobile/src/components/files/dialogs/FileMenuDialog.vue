@@ -3,36 +3,55 @@
     <q-card v-if="file" style="height: 300px">
       <q-card-section class="row items-center no-wrap" style="height: 50px">
         <div>
-          <div class="text-weight-bold">{{file.name}}</div>
+          <div class="text-weight-bold">{{ file.name }}</div>
         </div>
       </q-card-section>
       <q-separator />
-        <q-list style="height: 250px" class="scroll">
-          <q-item class="q-my-sm" clickable v-for="fileAction in actions" :key="fileAction.name">
+      <q-list style="height: 250px" class="scroll">
+        <div v-for="fileAction in actions" :key="fileAction.name">
+          <q-item
+            v-if="
+              fileAction.isShowAction(
+                fileAction.name,
+                file,
+                currentStorage.Type,
+                currentPath
+              )
+            "
+            class="q-my-sm"
+            clickable
+          >
             <div class="flex full-width" @click="performAction(fileAction)">
               <div>
-                <q-icon size="26px" name="file_copy" color="primary"></q-icon>
+                <q-icon
+                  size="26px"
+                  :name="fileAction.icon"
+                  color="primary"
+                ></q-icon>
               </div>
-              <div class="q-pl-sm text-subtitle1">
-                {{fileAction.displayName}}
+              <div class="q-pl-md text-subtitle1">
+                {{ fileAction.displayName }}
               </div>
             </div>
           </q-item>
-        </q-list>
+        </div>
+      </q-list>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { getFileActionsList } from "src/utils/files/file-actions";
+import { getFileActionsList } from 'src/utils/files/file-actions'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "FileMenuDialog",
+  name: 'FileMenuDialog',
   props: {
     dialog: { type: Boolean, default: false },
-    file: { type: Object, default: null }
+    file: { type: Object, default: null },
   },
   computed: {
+    ...mapGetters('files', ['currentStorage', 'currentPath']),
     actions() {
       return getFileActionsList(this.file)
     },
@@ -42,19 +61,17 @@ export default {
       this.openDialog = val
     },
   },
-  data () {
+  data() {
     return {
-      openDialog: false
+      openDialog: false,
     }
   },
   methods: {
     performAction(fileAction) {
       this.$emit('dialogAction', fileAction)
     },
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

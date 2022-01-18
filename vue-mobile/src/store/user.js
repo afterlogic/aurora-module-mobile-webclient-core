@@ -7,15 +7,16 @@ export default {
     hasAuthToken: false,
   },
   mutations: {
-    changeAuthTokenStatus (state, status) {
+    changeAuthTokenStatus(state, status) {
       state.hasAuthToken = status
     },
   },
   actions: {
-    async login ({ commit }, parameters) {
+    async login({ commit }, parameters) {
       const response = await AppApi.User.login(parameters)
       if (response?.AuthToken) {
         VueCookies.set('AuthToken', response?.AuthToken)
+        //VueCookies.set('SameSite', 'None')
         commit('changeAuthTokenStatus', true)
       } else {
         commit('changeAuthTokenStatus', false)
@@ -25,7 +26,7 @@ export default {
       const authToken = VueCookies.get('AuthToken')
       commit('changeAuthTokenStatus', !!authToken)
     },
-    logout ({ commit }) {
+    logout({ commit }) {
       VueCookies.set('AuthToken', '')
       commit('changeAuthTokenStatus', false)
     },
@@ -33,6 +34,6 @@ export default {
   getters: {
     getAuthTokenStatus(state) {
       return state.hasAuthToken
-    }
+    },
   },
 }

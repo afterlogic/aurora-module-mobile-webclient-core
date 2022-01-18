@@ -1,58 +1,92 @@
 <template>
-  <q-item v-if="file"
-          :disable="file.isCopied"
-          :clickable="!isCopied"
-          v-ripple="!isSelected && !isCopied"
-          :active="file.isSelected"
-          @touchstart.stop="touchstart(file)"
-          @touchmove.stop="touchMove"
-          @touchend.stop="selectFile"
+  <q-item
+    v-if="file"
+    :disable="file.isCopied"
+    :clickable="!isCopied"
+    v-ripple="!isSelected && !isCopied"
+    :active="file.isSelected"
+    @touchstart.stop="touchstart(file)"
+    @touchmove.stop="touchMove"
+    @touchend.stop="selectFile"
   >
     <q-item-section avatar>
-      <file-icon color="primary" class="text-primary"></file-icon>
+      <file-icon
+        v-if="!file.isImg"
+        color="primary"
+        class="text-primary"
+      ></file-icon>
+      <div v-if="file.isImg" class="text-primary">
+        <div
+          class="img-preview"
+          :style="{
+            background: `url(${filePreview}) no-repeat center`,
+            'background-size': 'contain',
+          }"
+        />
+      </div>
     </q-item-section>
     <q-item-section class="text-info">
       <q-item-label class="text-subtitle1">{{ fileName }}</q-item-label>
       <q-item-label v-if="!file.downloading">
-       <div class="flex">
-         <div class="q-mr-xs" v-if="isShared">
-           <q-icon style="margin-bottom: 2px" size="11px" name="share"/>
-         </div>
-         <div class="q-mr-xs" v-if="file.publicLink">
-           <q-icon style="margin-bottom: 2px" name="link"/>
-         </div>
-         <div>{{ fileSize }}</div>
-         <div class="q-mx-xs">|</div>
-         <div>{{ fileDate }}</div>
-       </div>
+        <div class="flex">
+          <div class="q-mr-xs" v-if="isShared">
+            <q-icon style="margin-bottom: 2px" size="11px" name="share" />
+          </div>
+          <div class="q-mr-xs" v-if="file.publicLink">
+            <q-icon style="margin-bottom: 2px" name="link" />
+          </div>
+          <div>{{ fileSize }}</div>
+          <div class="q-mx-xs">|</div>
+          <div>{{ fileDate }}</div>
+        </div>
       </q-item-label>
       <q-item-label v-if="file.downloading">
-        <downloading-progress :file="file"/>
+        <downloading-progress :file="file" />
       </q-item-label>
     </q-item-section>
     <q-item-section avatar side>
-      <q-btn v-if="!file.isSelected" v-ripple="!isCopied && !isSelected" :disable="isSelected" size="14px" color="grey" flat round icon="more_vert"
-             @touchstart.stop @touchend.stop="showDialog"/>
-      <q-btn v-ripple="!isCopied" v-if="file.isSelected" size="14px" color="grey" flat round icon="done"/>
+      <q-btn
+        v-if="!file.isSelected"
+        v-ripple="!isCopied && !isSelected"
+        :disable="isSelected"
+        size="14px"
+        color="grey"
+        flat
+        round
+        icon="more_vert"
+        @touchstart.stop
+        @touchend.stop="showDialog"
+      />
+      <q-btn
+        v-ripple="!isCopied"
+        v-if="file.isSelected"
+        size="14px"
+        color="grey"
+        flat
+        round
+        icon="done"
+      />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import FileIcon from "components/files/icons/FileIcon";
-import DownloadingProgress from "components/files/common/DownloadingProgress";
-import { getShortName } from "src/utils/files/utils";
-import text from "src/utils/text";
-import date from "src/utils/date"
+import FileIcon from 'components/files/icons/FileIcon'
+import DownloadingProgress from 'components/files/common/DownloadingProgress'
+import { getShortName } from 'src/utils/files/utils'
+import text from 'src/utils/text'
+import date from 'src/utils/date'
+import { mapActions, mapGetters } from 'vuex'
+import { getApiHost } from 'src/api/helpers'
 
 export default {
-  name: "FileItem",
+  name: 'FileItem',
   components: {
     FileIcon,
-    DownloadingProgress
+    DownloadingProgress,
   },
   props: {
-    file: {type: Object, default: null},
+    file: { type: Object, default: null },
     isSelected: { type: Boolean, default: false },
     isCopied: { type: Boolean, default: false },
     touchstart: { type: Function, default: null, require: true },
@@ -60,13 +94,21 @@ export default {
   },
   data() {
     return {
-      isMoved: false
+      isMoved: false,
     }
   },
   computed: {
+    ...mapGetters('files', ['copiedFiles', 'isArchive']),
     fileName() {
       if (this.file) {
         return getShortName(this.file.name, 30)
+      }
+      return ''
+    },
+    filePreview() {
+      if (this.file) {
+        const api = getApiHost()
+        return api + this.file.thumbnailUrl
       }
       return ''
     },
@@ -81,10 +123,35 @@ export default {
     },
   },
   methods: {
-    selectFile() {
-      if (!this.isSelected && !this.isMoved && !this.file.downloading) {
-        this.touchend()
-        this.$router.push({ path: `/file/${this.file.id}` })
+    ...mapActions('files', [
+      'changeCurrentPaths',
+      'changeCurrentHeader',
+      'asyncGetFiles',
+    ]),
+    async selectFile() {
+      this.touchend()
+      if (
+        !this.isSelected &&
+        !this.isMoved &&
+        !this.copiedFiles.length &&
+        !this.file.downloading &&
+        this.file.isArchive
+      ) {
+        const path = {
+          path: this.file.fullPath,
+          name: this.file.name,
+        }
+        this.changeCurrentHeader('')
+        await this.changeCurrentPaths({ path, lastStorage: false })
+        await this.asyncGetFiles()
+      } else if (
+        !this.isSelected &&
+        !this.isMoved &&
+        !this.file.downloading &&
+        !this.copiedFiles.length &&
+        !this.isArchive
+      ) {
+        await this.$router.push({ path: `/file/${this.file.id}` })
       } else {
         this.isMoved = false
       }
@@ -95,13 +162,14 @@ export default {
     },
     showDialog() {
       if (!this.isSelected && !this.isCopied) {
-        this.$emit('showDialog', { file: this.file, component: 'FileMenuDialog' })
+        this.$emit('showDialog', {
+          file: this.file,
+          component: 'FileMenuDialog',
+        })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

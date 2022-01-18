@@ -13,22 +13,20 @@
 </template>
 
 <script>
-import MenuButton from "components/common/MenuButton";
-import FilesIcon from "components/common/icons/FilesIcon";
-import MailIcon from "components/common/icons/MailIcon";
-import SettingsIcon from "components/common/icons/SettingsIcon";
+import MenuButton from 'components/common/MenuButton'
+import FilesIcon from 'components/common/icons/FilesIcon'
+import MailIcon from 'components/common/icons/MailIcon'
+import SettingsIcon from 'components/common/icons/SettingsIcon'
 
 export default {
-  name: "DefaultFooter",
+  name: 'DefaultFooter',
   components: {
     MenuButton,
     FilesIcon,
     MailIcon,
-    SettingsIcon
-  }
+    SettingsIcon,
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

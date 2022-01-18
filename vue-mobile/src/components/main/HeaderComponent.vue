@@ -1,25 +1,23 @@
 <template>
   <q-header elevated reveal class="bg-white" style="transform: none">
-    <component :is="component" @openDrawer="$emit('openDrawer')"/>
+    <component :is="component" @openDrawer="$emit('openDrawer')" />
   </q-header>
 </template>
 
 <script>
-import FilesHeader from "components/files/header/FilesHeader";
+import FilesHeader from 'components/files/header/FilesHeader'
 
 export default {
-  name: "HeaderComponent",
+  name: 'HeaderComponent',
   components: {
-    FilesHeader
+    FilesHeader,
   },
   computed: {
     component() {
       return 'FilesHeader'
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

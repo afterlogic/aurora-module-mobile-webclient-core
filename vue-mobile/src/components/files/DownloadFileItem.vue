@@ -1,8 +1,5 @@
 <template>
-  <q-item
-    v-if="isShowFile"
-    clickable
-  >
+  <q-item v-if="isShowFile" clickable>
     <q-item-section avatar>
       <file-icon color="primary" class="text-primary"></file-icon>
     </q-item-section>
@@ -14,15 +11,15 @@
 </template>
 
 <script>
-import FileIcon from "components/files/icons/FileIcon";
-import {mapActions, mapGetters} from "vuex";
+import FileIcon from 'components/files/icons/FileIcon'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: "DownloadFileItem",
+  name: 'DownloadFileItem',
   props: {
-    file: {type: Object, default: null},
+    file: { type: Object, default: null },
   },
   components: {
-    FileIcon
+    FileIcon,
   },
   data() {
     return {
@@ -33,17 +30,19 @@ export default {
     ...mapGetters('files', ['currentPath', 'currentStorage']),
     isShowFile() {
       if (!this.file) return false
-      return this.file.path === this.currentPath
-        && this.file.storage === this.currentStorage.Type
-        && this.file.isUploading
-    }
+      return (
+        this.file.path === this.currentPath &&
+        this.file.storage === this.currentStorage.Type &&
+        this.file.isUploading
+      )
+    },
   },
-  mounted () {
+  mounted() {
     this.getProgressPercent()
   },
   methods: {
     ...mapActions('files', ['changeUploadingStatus']),
-    getProgressPercent () {
+    getProgressPercent() {
       if (this.file) {
         if (this.file.file?.__progress !== 1) {
           this.progressPercent = Math.ceil(this.file.file.__progress * 100) || 0
@@ -57,10 +56,8 @@ export default {
         }
       }
     },
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

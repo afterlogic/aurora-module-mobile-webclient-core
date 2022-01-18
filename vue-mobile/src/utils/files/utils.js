@@ -1,6 +1,23 @@
-import typesUtils from "src/utils/types";
+import typesUtils from 'src/utils/types'
+import store from 'src/store'
 
-const parseFile = file => {
+const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
+const getFormatFile = (name) => {
+  return name.split('.')[name.split('.').length - 1]
+}
+
+const isImg = (name) => {
+  const formatFile = getFormatFile(name)
+  return imgFormats.find((format) => {
+    return format === formatFile
+  })
+}
+const isCopied = (hash) => {
+  const copiedFiles = store.getters['files/copiedFiles']
+  const index = copiedFiles.findIndex((file) => file.hash === hash)
+  return !!(index + 1)
+}
+const parseFile = (file) => {
   return {
     loading: false,
     content: typesUtils.pString(file.Content),
@@ -22,7 +39,9 @@ const parseFile = file => {
     viewUrl: typesUtils.pString(file?.Actions?.view?.url),
     openUrl: typesUtils.pString(file?.Actions?.open?.url),
     paranoidKey: typesUtils.pString(file?.ExtendedProps?.ParanoidKey),
-    initializationVector: typesUtils.pString(file?.ExtendedProps?.InitializationVector),
+    initializationVector: typesUtils.pString(
+      file?.ExtendedProps?.InitializationVector
+    ),
     thumbnailUrl: typesUtils.pString(file?.ThumbnailUrl),
     contentType: typesUtils.pString(file.ContentType),
     id: typesUtils.pString(file?.Id),
@@ -30,7 +49,9 @@ const parseFile = file => {
     downloading: false,
     percentDownloading: 0,
     isSelected: false,
-    isCopied: false,
+    isCopied: isCopied(typesUtils.pString(file.Hash)),
+    isImg: isImg(typesUtils.pString(file.Name)),
+    isArchive: !!file?.Actions?.list,
   }
 }
 
@@ -47,7 +68,7 @@ export const parseUploadedFile = (file, path, storage) => {
 
 export const getParseFiles = (items) => {
   const files = []
-  items.forEach( file => {
+  items.forEach((file) => {
     if (!file.IsFolder) {
       files.push(parseFile(file))
     }
@@ -56,7 +77,7 @@ export const getParseFiles = (items) => {
 }
 export const getParseFolders = (items) => {
   const folders = []
-  items.forEach( file => {
+  items.forEach((file) => {
     if (file.IsFolder) {
       folders.push(parseFile(file))
     }
@@ -65,7 +86,7 @@ export const getParseFolders = (items) => {
 }
 export const getFiles = (items) => {
   const files = []
-  items.forEach( file => {
+  items.forEach((file) => {
     if (!file.IsFolder) {
       files.push(file)
     }
@@ -74,7 +95,7 @@ export const getFiles = (items) => {
 }
 export const getFolders = (items) => {
   const folders = []
-  items.forEach( file => {
+  items.forEach((file) => {
     if (file.IsFolder) {
       folders.push(file)
     }
@@ -82,20 +103,20 @@ export const getFolders = (items) => {
   return folders
 }
 export const getShortName = (name, length) => {
-    if (name.length > length) {
-      return name.substr(0, length - 2)
-    }
-    return name
+  if (name.length > length) {
+    return name.substr(0, length - 2)
+  }
+  return name
 }
 export const getFilteredItems = (items, key) => {
-  return items.filter(item => {
+  return items.filter((item) => {
     if (item[key]) {
       return item
     }
   })
 }
 export const getParametersForShare = (items, file) => {
-  const shares = items.map( item => {
+  const shares = items.map((item) => {
     return {
       PublicId: item.email,
       Access: item.status,
@@ -106,6 +127,6 @@ export const getParametersForShare = (items, file) => {
     Path: file.path,
     Id: file.name,
     Shares: shares,
-    IsDir: file.isFolder
+    IsDir: file.isFolder,
   }
 }

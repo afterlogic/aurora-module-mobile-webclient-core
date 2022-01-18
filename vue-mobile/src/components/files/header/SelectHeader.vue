@@ -1,32 +1,63 @@
 <template>
-  <q-toolbar style="height: 55px; font-size: 16px; padding: 0" class="bg-primary">
+  <q-toolbar
+    style="height: 55px; font-size: 16px; padding: 0"
+    class="bg-primary"
+  >
     <q-card-actions align="left" class="col-3">
-      <q-btn flat size="15px" @click="remove" color="black" round dense icon="close" />
+      <q-btn
+        flat
+        size="15px"
+        @click="remove"
+        color="black"
+        round
+        dense
+        icon="close"
+      />
     </q-card-actions>
     <div class="text-center text-black text-bold col-6">
-      <span>{{`Selected: ${items.length}`}}</span>
+      <span>{{ `Selected: ${items.length}` }}</span>
     </div>
     <div class="col-3 flex justify-end q-pr-sm">
-      <q-btn flat size="15px" color="black" round dense icon="drive_file_move" @click="copyItems"/>
-      <q-btn flat size="15px" color="black" round dense icon="delete_outline" @click="deleteItems"/>
+      <q-btn
+        flat
+        size="15px"
+        color="black"
+        round
+        dense
+        icon="drive_file_move"
+        @click="copyItems"
+      />
+      <q-btn
+        flat
+        size="15px"
+        color="black"
+        round
+        dense
+        icon="delete_outline"
+        @click="deleteItems"
+      />
     </div>
   </q-toolbar>
 </template>
 
 <script>
-import { fileActions } from "src/utils/files/file-actions";
-import { mapActions } from "vuex";
+import { fileActions } from 'src/utils/files/file-actions'
+import { mapActions } from 'vuex'
 
 export default {
-  name: "SelectHeader",
+  name: 'SelectHeader',
   props: {
     items: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   methods: {
-    ...mapActions('files', ['removeSelectedItems', 'changeDialogComponent', 'addCopyItems']),
+    ...mapActions('files', [
+      'removeSelectedItems',
+      'changeDialogComponent',
+      'addCopyItems',
+    ]),
     remove() {
       this.removeSelectedItems({ items: this.items })
     },
@@ -39,11 +70,9 @@ export default {
     copyItems() {
       this.addCopyItems({ items: this.items })
       this.removeSelectedItems({ items: this.items })
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

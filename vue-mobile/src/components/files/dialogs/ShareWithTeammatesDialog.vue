@@ -10,14 +10,26 @@
             use-input
             model-value=""
             @filter="filterContacts"
-            dense outlined v-model="currentUser"
+            dense
+            outlined
+            v-model="currentUser"
             :options="selectOptions"
           />
         </div>
         <div class="flex col-2 justify-center items-center dropdown-plus">
-          <q-btn-dropdown :disable="!currentUser" flat unelevated dense dropdown-icon="none" :ripple="false">
+          <q-btn-dropdown
+            :disable="!currentUser"
+            flat
+            unelevated
+            dense
+            dropdown-icon="none"
+            :ripple="false"
+          >
             <template v-slot:label>
-              <plus-icon class="text-center items-center justify-center" style="fill: #d0d0d0"/>
+              <plus-icon
+                class="text-center items-center justify-center"
+                style="fill: #d0d0d0"
+              />
             </template>
             <q-list>
               <q-item clickable v-close-popup @click="selectUser(1)">
@@ -39,15 +51,31 @@
           </q-btn-dropdown>
         </div>
       </div>
-      <div style="height: 150px; overflow: hidden; overflow-y: scroll;" class="flex q-ma-md users-list">
-        <div v-if="!contactsList.length" class="users-list__title q-ma-md text-center full-width">No shares yet</div>
+      <div
+        style="height: 150px; overflow: hidden; overflow-y: scroll"
+        class="flex q-ma-md users-list"
+      >
+        <div
+          v-if="!contactsList.length"
+          class="users-list__title q-ma-md text-center full-width"
+        >
+          No shares yet
+        </div>
         <div style="width: 250px" v-if="contactsList.length">
-          <div class="q-ma-sm flex full-width no-wrap justify-between row" v-for="contact in contactsList" :key="contact.value">
+          <div
+            class="q-ma-sm flex full-width no-wrap justify-between row"
+            v-for="contact in contactsList"
+            :key="contact.value"
+          >
             <div class="q-mx-sm col-8">
-              <p style="overflow: hidden" class="full-width">{{ contact.email }}</p>
+              <p style="overflow: hidden" class="full-width">
+                {{ contact.email }}
+              </p>
             </div>
             <div class="q-mx-sm col-2">
-              <span class="contact-status text-primary">{{ statuses[contact.status] }}</span>
+              <span class="contact-status text-primary">{{
+                statuses[contact.status]
+              }}</span>
             </div>
             <div class="col-2 text-center" @click="removeContact(contact)">
               <q-icon class="q-pl-xs" color="grey-5" name="close" />
@@ -56,63 +84,75 @@
         </div>
       </div>
       <q-card-actions class="q-my-sm" align="right">
-        <button-dialog :saving="saving" :action="showHistory" :label="$t('SHAREDFILES.ACTION_SHOW_HISTORY')" />
-        <button-dialog :saving="saving" :action="save" :label="$t('COREWEBCLIENT.ACTION_SAVE')" />
-        <button-dialog :saving="saving" :action="cancel" :label="$t('COREWEBCLIENT.ACTION_CLOSE')" />
+        <button-dialog
+          :saving="saving"
+          :action="showHistory"
+          :label="$t('SHAREDFILES.ACTION_SHOW_HISTORY')"
+        />
+        <button-dialog
+          :saving="saving"
+          :action="save"
+          :label="$t('COREWEBCLIENT.ACTION_SAVE')"
+        />
+        <button-dialog
+          :saving="saving"
+          :action="cancel"
+          :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
+        />
       </q-card-actions>
     </div>
-    <show-history-dialog ref="showHistoryDialog"/>
+    <show-history-dialog ref="showHistoryDialog" />
   </q-dialog>
 </template>
 
 <script>
-import ShowHistoryDialog from "components/files/dialogs/ShowHistoryDialog";
-import ButtonDialog from "components/files/common/ButtonDialog";
-import PlusIcon from "components/common/icons/PlusIcon";
+import ShowHistoryDialog from 'components/files/dialogs/ShowHistoryDialog'
+import ButtonDialog from 'components/files/common/ButtonDialog'
+import PlusIcon from 'components/common/icons/PlusIcon'
 
-import { getContactsSelectOptions } from "src/utils/contacts/utils";
-import { getParametersForShare } from "src/utils/files/utils";
-import {mapActions, mapGetters} from "vuex";
+import { getContactsSelectOptions } from 'src/utils/contacts/utils'
+import { getParametersForShare } from 'src/utils/files/utils'
+import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 
 export default {
-  name: "ShareWithTeammatesDialog",
+  name: 'ShareWithTeammatesDialog',
   components: {
     ButtonDialog,
     PlusIcon,
-    ShowHistoryDialog
+    ShowHistoryDialog,
   },
   created() {
     this.init()
   },
   props: {
     file: { type: Object, default: null },
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
   },
-  data () {
+  data() {
     return {
       itemName: this.file.name,
       openDialog: false,
       saving: false,
       currentUser: null,
       userName: '',
-      contactsList:  [],
+      contactsList: [],
       selectOptions: [],
       defaultSelectOptions: [],
       statuses: {
         1: 'read',
         2: 'read/write',
         3: 'r/w/r',
-      }
+      },
     }
   },
   computed: {
-    ...mapGetters('files', ['currentStorage'])
+    ...mapGetters('files', ['currentStorage']),
   },
   watch: {
     dialog(val) {
       this.openDialog = val
-    }
+    },
   },
   methods: {
     ...mapActions('contacts', ['asyncGetContacts']),
@@ -126,12 +166,14 @@ export default {
       this.currentUser = null
     },
     removeFindContact(currentUser) {
-      const userIndex = this.selectOptions.findIndex( user => user.email === currentUser.email )
+      const userIndex = this.selectOptions.findIndex(
+        (user) => user.email === currentUser.email
+      )
       if (userIndex !== -1) this.selectOptions.splice(userIndex, 1)
     },
     async init() {
       if (this.file.shares.length) {
-        this.contactsList = this.file.shares.map(contact => {
+        this.contactsList = this.file.shares.map((contact) => {
           return {
             email: contact.PublicId,
             status: contact.Access,
@@ -139,31 +181,38 @@ export default {
         })
       }
       const parameters = {
-        Search: "",
-        Storage: "team",
+        Search: '',
+        Storage: 'team',
         SortField: 3,
         SortOrder: 1,
         WithGroups: false,
-        WithoutTeamContactsDuplicates: true
+        WithoutTeamContactsDuplicates: true,
       }
       const contacts = await this.asyncGetContacts(parameters)
       this.selectOptions = getContactsSelectOptions(contacts?.List)
       this.defaultSelectOptions = _.cloneDeep(this.selectOptions)
       if (this.contactsList.length) {
-        this.contactsList.forEach(contact => this.removeFindContact(contact))
+        this.contactsList.forEach((contact) => this.removeFindContact(contact))
       }
     },
-    filterContacts(search, update){
+    filterContacts(search, update) {
       update(async () => {
-        this.selectOptions = this.defaultSelectOptions.filter(option => option.email.indexOf(search) + 1)
+        this.selectOptions = this.defaultSelectOptions.filter(
+          (option) => option.email.indexOf(search) + 1
+        )
       })
     },
     removeContact(contact) {
-      const userIndex = this.contactsList.findIndex( user => user.email === contact.email )
+      const userIndex = this.contactsList.findIndex(
+        (user) => user.email === contact.email
+      )
       if (userIndex !== -1) this.contactsList.splice(userIndex, 1)
     },
     showHistory() {
-      this.$refs.showHistoryDialog.openDialog(this.file, this.$t('SHAREDFILES.HEADING_HISTORY_POPUP'))
+      this.$refs.showHistoryDialog.openDialog(
+        this.file,
+        this.$t('SHAREDFILES.HEADING_HISTORY_POPUP')
+      )
     },
     async save() {
       const parameters = getParametersForShare(this.contactsList, this.file)
@@ -171,8 +220,8 @@ export default {
     },
     cancel() {
       this.$emit('closeDialog')
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -20,15 +20,14 @@ function _getDateFormatForMoment(sDateFormat) {
   return sMomentDateFormat
 }
 
-function _getTimeFormat () {
+function _getTimeFormat() {
   //return (coreSettings.iTimeFormat === 0) ? 'HH:mm' : 'hh:mm A'
   return 'hh:mm A'
 }
 
 export default {
   getShortDate: function (iTimeStampInUTC, bTime) {
-    let
-      sResult = '',
+    let sResult = '',
       oMoment = moment(iTimeStampInUTC * 1000),
       oMomentNow = null
 
@@ -39,18 +38,21 @@ export default {
         sResult = oMoment.format(_getTimeFormat())
         bTime = true
       } else {
-        if (oMomentNow.clone().subtract(1, 'days').format('L') === oMoment.format('L')) {
+        if (
+          oMomentNow.clone().subtract(1, 'days').format('L') ===
+          oMoment.format('L')
+        ) {
           sResult = 'Yesterday'
           bTime = true
         } else {
           // if (coreSettings.bUserSelectsDateFormat) {
           //   sResult = oMoment.format(_getDateFormatForMoment(coreSettings.sDateFormat))
           // } else {
-            if (oMomentNow.year() === oMoment.year()) {
-              sResult = oMoment.format('MMM D')
-            } else {
-              sResult = oMoment.format('MMM D, YYYY')
-            }
+          if (oMomentNow.year() === oMoment.year()) {
+            sResult = oMoment.format('MMM D')
+          } else {
+            sResult = oMoment.format('MMM D, YYYY')
+          }
           // }
         }
 
@@ -67,8 +69,7 @@ export default {
    * @return {string}
    */
   getDate: function (iTimeStampInUTC) {
-    let
-      oMoment = moment(iTimeStampInUTC * 1000),
+    let oMoment = moment(iTimeStampInUTC * 1000),
       sFormat = 'ddd, MMM D, YYYY'
 
     // if (coreSettings.bUserSelectsDateFormat) {

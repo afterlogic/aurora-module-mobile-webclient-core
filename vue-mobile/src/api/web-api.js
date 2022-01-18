@@ -6,13 +6,19 @@ import errors from 'src/utils/errors'
 import AppApi from 'src/api/index'
 import { getApiHost } from 'src/api/helpers'
 import { saveAs } from 'file-saver'
-import _ from 'lodash';
-import notification from "src/utils/notification";
+import _ from 'lodash'
+import notification from 'src/utils/notification'
 import store from 'src/store'
 //import eventBus from 'src/event-bus'
 
 export default {
-  sendRequest: function ({ moduleName, methodName, parameters, silentError = false, defaultText }) {
+  sendRequest: function ({
+    moduleName,
+    methodName,
+    parameters,
+    silentError = false,
+    defaultText,
+  }) {
     return new Promise((resolve, reject) => {
       const unknownError = {
         ErrorCode: 0,
@@ -44,42 +50,63 @@ export default {
         data: querystring.stringify(postData),
         headers,
       })
-        .then((response) => {
-          const isOkResponse = response?.status === 200 && !!response?.data
-          if (isOkResponse) {
-            //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: response.data })
-            const result = response.data.Result
-            if (!result && (response.data.ErrorCode || response.data.ErrorMessage || response.data.SubscriptionsResult)) {
-              if (errors.isAuthError(response.data.ErrorCode) && methodName !== 'Logout') {
-                AppApi.user.logout()
-              } else {
-                if (!silentError) {
-                  notification.showError(errors.getTextFromResponse(response.data, defaultText))
+        .then(
+          (response) => {
+            const isOkResponse = response?.status === 200 && !!response?.data
+            if (isOkResponse) {
+              //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: response.data })
+              const result = response.data.Result
+              if (
+                !result &&
+                (response.data.ErrorCode ||
+                  response.data.ErrorMessage ||
+                  response.data.SubscriptionsResult)
+              ) {
+                if (
+                  errors.isAuthError(response.data.ErrorCode) &&
+                  methodName !== 'Logout'
+                ) {
+                  AppApi.user.logout()
+                } else {
+                  if (!silentError) {
+                    notification.showError(
+                      errors.getTextFromResponse(response.data, defaultText)
+                    )
+                  }
+                  reject(response.data)
                 }
-                reject(response.data)
+              } else {
+                resolve(result)
               }
             } else {
-              resolve(result)
+              //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
+              if (!silentError) {
+                notification.showError(
+                  errors.getTextFromResponse(unknownError, defaultText)
+                )
+              }
+              reject(unknownError)
             }
-          } else {
+          },
+          () => {
             //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
             if (!silentError) {
-              notification.showError(errors.getTextFromResponse(unknownError, defaultText))
+              notification.showError(
+                errors.getTextFromResponse(unknownError, defaultText)
+              )
             }
             reject(unknownError)
           }
-        }, () => {
-          //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
-          if (!silentError) {
-            notification.showError(errors.getTextFromResponse(unknownError, defaultText))
-          }
-          reject(unknownError)
-        })
+        )
         .catch((error) => {
-          const errorResponse = _.extend(unknownError, { ErrorMessage: error.message })
+          const errorResponse = _.extend(unknownError, {
+            ErrorMessage: error.message,
+          })
           //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: errorResponse })
           if (!silentError) {
-            notification.showError(errors.getTextFromResponse(errorResponse, defaultText))
+            notification.showError(
+              errors.getTextFromResponse(errorResponse, defaultText)
+            )
           }
           reject(errorResponse)
         })
@@ -101,33 +128,48 @@ export default {
         url: url,
         headers: headers,
         responseType: 'blob',
-        cancelToken : new CancelToken( function (c) {
+        cancelToken: new CancelToken(function (c) {
           store.dispatch('files/changeItemProperty', {
-            item: file, property: 'cancelToken', value: c
+            item: file,
+            property: 'cancelToken',
+            value: c,
           })
         }),
         onDownloadProgress: function (progressEvent) {
           if (file) {
-            let percentCompleted = Math.round((progressEvent.loaded * 100) / file.size)
+            let percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / file.size
+            )
             store.dispatch('files/changeItemProperty', {
-              item: file, property: 'percentDownloading', value: percentCompleted
+              item: file,
+              property: 'percentDownloading',
+              value: percentCompleted,
             })
           }
-        }
+        },
       })
         .then((response) => {
-          saveAs(new Blob([response.data], {type: response.data.type}), fileName);
+          saveAs(
+            new Blob([response.data], { type: response.data.type }),
+            fileName
+          )
           store.dispatch('files/changeItemProperty', {
-            item: file, property: 'downloading', value: false
+            item: file,
+            property: 'downloading',
+            value: false,
           })
           resolve(response)
         })
-        .catch(response => {
+        .catch((response) => {
           store.dispatch('files/changeItemProperty', {
-            item: file, property: 'percentDownloading', value: 0
+            item: file,
+            property: 'percentDownloading',
+            value: 0,
           })
           store.dispatch('files/changeItemProperty', {
-            item: file, property: 'downloading', value: false
+            item: file,
+            property: 'downloading',
+            value: false,
           })
           reject(response)
         })

@@ -1,32 +1,45 @@
 <template>
-   <q-dialog v-model="openDialog">
-     <div
-       class="flex column q-pa-sm absolute"
-       style="box-shadow: none; position: fixed; z-index: 1; bottom: 19%; right: 4%; margin-right: 2px;"
-     >
-       <q-btn class="q-mb-md" round color="primary" icon="create_new_folder" @click="createFolder" />
-       <q-btn round color="primary" icon="note_add" @click="uploadFile" />
-     </div>
-   </q-dialog>
+  <q-dialog v-model="openDialog">
+    <div
+      class="flex column q-pa-sm absolute"
+      style="
+        box-shadow: none;
+        position: fixed;
+        z-index: 1;
+        bottom: 19%;
+        right: 4%;
+        margin-right: 2px;
+      "
+    >
+      <q-btn
+        class="q-mb-md"
+        round
+        color="primary"
+        icon="create_new_folder"
+        @click="createFolder"
+      />
+      <q-btn round color="primary" icon="note_add" @click="uploadFile" />
+    </div>
+  </q-dialog>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from 'vuex'
 export default {
-  name: "CreateButtonsDialogs",
+  name: 'CreateButtonsDialogs',
   props: {
     file: { type: Object, default: null },
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
   },
   data() {
     return {
-      openDialog: false
+      openDialog: false,
     }
   },
   watch: {
     dialog(val) {
       this.openDialog = val
-    }
+    },
   },
   methods: {
     ...mapActions('files', ['changeDialogComponent']),
@@ -38,10 +51,8 @@ export default {
       this.changeDialogComponent({ component: 'FileUploader' })
       this.$emit('closeDialog')
     },
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

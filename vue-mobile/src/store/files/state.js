@@ -7,7 +7,9 @@ export default function () {
     downloadFiles: [],
     filesQuota: {},
     currentStorage: '',
+    currentHeader: '',
     isLoading: false,
+    searchText: '',
 
     dialogComponent: null,
 

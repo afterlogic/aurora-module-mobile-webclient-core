@@ -2,54 +2,63 @@
   <q-dialog v-model="openDialog" @escape-key="cancelDialog">
     <q-card class="q-dialog-size q-pt-md q-px-sm" style="min-width: 300px">
       <q-item>
-          <app-input
-            placeholder="File name"
-            outlined
-            autofocus
-            dense
-            v-model="itemName"
-            style="width: 250px"
-            @keyup.enter="renameItem"
-          />
+        <app-input
+          placeholder="File name"
+          outlined
+          autofocus
+          dense
+          v-model="itemName"
+          style="width: 250px"
+          @keyup.enter="renameItem"
+        />
       </q-item>
-      <q-card-actions class="q-my-sm" align="center">
-          <app-button :disable="saving" @click="renameItem" size="md" label="Confirm"></app-button>
+      <q-card-actions align="right">
+        <button-dialog
+          :saving="saving"
+          :action="renameItem"
+          :label="$t('COREWEBCLIENT.ACTION_SAVE')"
+        />
+        <button-dialog
+          :saving="saving"
+          :action="cancelDialog"
+          :label="$t('COREWEBCLIENT.ACTION_CLOSE')"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import AppInput from "components/common/AppInput";
-import AppButton from "components/common/AppButton";
-import { mapActions } from "vuex";
+import AppInput from 'components/common/AppInput'
+import ButtonDialog from 'components/files/common/ButtonDialog'
+import { mapActions } from 'vuex'
 export default {
   name: 'RenameItemDialog',
-  components: { AppInput, AppButton },
+  components: { AppInput, ButtonDialog },
   props: {
     file: { type: Object, default: null },
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
   },
-  data () {
+  data() {
     return {
       itemName: this.file.name,
       openDialog: false,
-      saving: false
+      saving: false,
     }
   },
   watch: {
     dialog(val) {
       this.openDialog = val
-    }
+    },
   },
   methods: {
     ...mapActions('files', ['asyncRenameItem', 'changeFileName']),
-    async renameItem () {
+    async renameItem() {
       if (this.itemName.length) {
         this.saving = true
         const result = await this.asyncRenameItem({
           file: this.file,
-          itemName: this.itemName
+          itemName: this.itemName,
         })
         if (result) {
           await this.changeFileName(this.itemName)
@@ -59,13 +68,11 @@ export default {
         }
       }
     },
-    cancelDialog () {
-      this.openDialog = false
-    }
-  }
+    cancelDialog() {
+      this.$emit('closeDialog')
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

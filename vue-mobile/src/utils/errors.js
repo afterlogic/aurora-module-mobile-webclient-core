@@ -1,4 +1,4 @@
-import i18n from "boot/i18n"
+import i18n from 'boot/i18n'
 
 import _ from 'lodash'
 
@@ -25,17 +25,17 @@ const errorsCodes = {
   FileNotFound: 814,
   CanNotUploadFileLimit: 815,
   DataTransferFailed: 1100,
-  NotDisplayedError: 1155
+  NotDisplayedError: 1155,
 }
 
 const errorsUtils = {
   modulesErrors: null,
 
-  setModulesErrors (appData) {
+  setModulesErrors(appData) {
     this.modulesErrors = typesUtils.pObject(appData?.module_errors)
   },
 
-  getTextFromResponse (response, defaultText) {
+  getTextFromResponse(response, defaultText) {
     let errorText = ''
 
     if (_.isObject(response)) {
@@ -62,9 +62,13 @@ const errorsUtils = {
     return errorText
   },
 
-  _getModuleErrorByCode (moduleName, errorCode) {
-    const isErrorFound = _.isString(moduleName) && _.isSafeInteger(errorCode) && this.modulesErrors !== null &&
-      _.isObject(this.modulesErrors[moduleName]) && _.isString(this.modulesErrors[moduleName][errorCode])
+  _getModuleErrorByCode(moduleName, errorCode) {
+    const isErrorFound =
+      _.isString(moduleName) &&
+      _.isSafeInteger(errorCode) &&
+      this.modulesErrors !== null &&
+      _.isObject(this.modulesErrors[moduleName]) &&
+      _.isString(this.modulesErrors[moduleName][errorCode])
 
     if (isErrorFound) {
       return this.modulesErrors[moduleName][errorCode]
@@ -73,7 +77,7 @@ const errorsUtils = {
     return false
   },
 
-  _getCoreErrorByCode (errorCode, defaultText) {
+  _getCoreErrorByCode(errorCode, defaultText) {
     switch (errorCode) {
       case errorsCodes.AuthError:
         return "i18n.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')"
@@ -112,11 +116,15 @@ const errorsUtils = {
     }
   },
 
-  _addSubscriptionsErrors (response, errorText) {
+  _addSubscriptionsErrors(response, errorText) {
     if (_.isArray(response.SubscriptionsResult)) {
       for (const subscriptionIndex in response.SubscriptionsResult) {
-        const subscriptionResult = response.SubscriptionsResult[subscriptionIndex]
-        const subscriptionText = this._getModuleErrorByCode(subscriptionResult?.Error?.ModuleName, subscriptionResult?.Code?.Error)
+        const subscriptionResult =
+          response.SubscriptionsResult[subscriptionIndex]
+        const subscriptionText = this._getModuleErrorByCode(
+          subscriptionResult?.Error?.ModuleName,
+          subscriptionResult?.Code?.Error
+        )
 
         if (subscriptionText) {
           if (subscriptionResult?.Error?.Override || !errorText) {
@@ -130,14 +138,17 @@ const errorsUtils = {
     return errorText
   },
 
-  _insertValuesIntoPlaceholders (response, errorText) {
+  _insertValuesIntoPlaceholders(response, errorText) {
     if (typesUtils.isNonEmptyString(errorText)) {
-      const medResult = errorText.replace(/[^%]*%(\w+)%[^%]*/g, function(match, found, index, str) {
-        if (typesUtils.isNonEmptyString(response[found])) {
-          return match.replace('%' + found + '%', response[found])
+      const medResult = errorText.replace(
+        /[^%]*%(\w+)%[^%]*/g,
+        function (match, found, index, str) {
+          if (typesUtils.isNonEmptyString(response[found])) {
+            return match.replace('%' + found + '%', response[found])
+          }
+          return match
         }
-        return match
-      })
+      )
       if (typesUtils.isNonEmptyString(medResult)) {
         errorText = medResult
       }
@@ -147,15 +158,15 @@ const errorsUtils = {
 }
 
 export default {
-  init (appData) {
+  init(appData) {
     errorsUtils.setModulesErrors(appData)
   },
 
-  getTextFromResponse (response, defaultText) {
+  getTextFromResponse(response, defaultText) {
     return errorsUtils.getTextFromResponse(response, defaultText)
   },
 
-  isAuthError (errorCode) {
+  isAuthError(errorCode) {
     return errorCode === errorsCodes.AuthError
   },
 }

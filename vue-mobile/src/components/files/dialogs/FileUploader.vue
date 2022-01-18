@@ -2,18 +2,22 @@
   <div />
 </template>
 <script>
-import {mapActions, mapGetters} from "vuex";
-import { getApiHost } from "src/api/helpers";
-import { parseUploadedFile } from "src/utils/files/utils";
-import VueCookies from "vue-cookies";
+import { mapActions, mapGetters } from 'vuex'
+import { getApiHost } from 'src/api/helpers'
+import { parseUploadedFile } from 'src/utils/files/utils'
+import VueCookies from 'vue-cookies'
 
 export default {
-  name: "FileUploader",
+  name: 'FileUploader',
   props: {
-    dialog: { type: Boolean, default: false }
+    dialog: { type: Boolean, default: false },
   },
   computed: {
-    ...mapGetters('files', ['currentStorage', 'currentPath', 'dialogComponent']),
+    ...mapGetters('files', [
+      'currentStorage',
+      'currentPath',
+      'dialogComponent',
+    ]),
   },
   watch: {
     dialogComponent(val) {
@@ -26,17 +30,21 @@ export default {
         }
         this.$root.uploadFiles(methods)
       }
-    }
+    },
   },
   methods: {
-    ...mapActions('files', ['addDownloadsFiles', 'removeUploadedFiles', 'asyncGetFiles']),
+    ...mapActions('files', [
+      'addDownloadsFiles',
+      'removeUploadedFiles',
+      'asyncGetFiles',
+    ]),
     addedFiles() {
       if (this.currentStorage.Type !== 'encrypted') {
         let url = getApiHost() + '/?/Api/'
         let sAuthToken = VueCookies.get('AuthToken')
         let headers = []
         if (sAuthToken) {
-          headers.push({name: 'Authorization', value: 'Bearer ' + sAuthToken})
+          headers.push({ name: 'Authorization', value: 'Bearer ' + sAuthToken })
         }
         return {
           url,
@@ -44,30 +52,39 @@ export default {
           headers,
           fieldName: 'jua-uploader',
           formFields: [
-            {name: 'jua-post-type', value: 'ajax'},
-            {name: 'Module', value: 'Files'},
-            {name: 'Method', value: 'UploadFile'},
-            {name: 'Parameters', value: JSON.stringify({"Type": this.currentStorage.Type, "SubPath": "", "Path": this.currentPath, "Overwrite": false})},
+            { name: 'jua-post-type', value: 'ajax' },
+            { name: 'Module', value: 'Files' },
+            { name: 'Method', value: 'UploadFile' },
+            {
+              name: 'Parameters',
+              value: JSON.stringify({
+                Type: this.currentStorage.Type,
+                SubPath: '',
+                Path: this.currentPath,
+                Overwrite: false,
+              }),
+            },
           ],
         }
       }
     },
     onFileAdded(files) {
-      const parsedFiles = files.map(file => {
-        return parseUploadedFile(file, this.currentPath, this.currentStorage.Type)
+      const parsedFiles = files.map((file) => {
+        return parseUploadedFile(
+          file,
+          this.currentPath,
+          this.currentStorage.Type
+        )
       })
       this.addDownloadsFiles(parsedFiles)
     },
-    showReport(file) {
-    },
+    showReport(file) {},
     async finishUpload() {
       await this.asyncGetFiles()
       this.removeUploadedFiles()
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,28 +1,33 @@
 <template>
-  <q-select :model-value="model" dense outlined v-model="model" :options="options" @click="action"/>
+  <q-select
+    :model-value="model"
+    dense
+    outlined
+    v-model="model"
+    :options="options"
+    @click="action"
+  />
 </template>
 
 <script>
 export default {
-  name: "SelectComponent",
+  name: 'SelectComponent',
   props: {
     options: { type: Array, default: () => [] },
     value: { type: [String, Object], default: '' },
-    action: { type: Function, default: null }
+    action: { type: Function, default: null },
   },
   data() {
     return {
-      model: null
+      model: null,
     }
   },
   watch: {
     value(val) {
       this.model = val
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

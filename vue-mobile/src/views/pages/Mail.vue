@@ -13,15 +13,13 @@
 </template>
 
 <script>
-import MainLayout from "src/views/layouts/MainLayout";
+import MainLayout from 'src/views/layouts/MainLayout'
 export default {
-  name: "Mail",
+  name: 'Mail',
   components: {
     MainLayout,
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

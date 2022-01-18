@@ -7,12 +7,12 @@ export default () => {
         moduleName: 'Core',
         methodName: 'GetAppData',
         parameters: {},
-      }).then( result => {
+      }).then((result) => {
         if (result) {
           return result
         }
         return ''
       })
-    }
-  };
-};
+    },
+  }
+}
