@@ -38,15 +38,17 @@ function getShortLangName(langName) {
     'thai.ini': 'th',
     'turkish.ini': 'tr',
     'ukrainian.ini': 'uk',
-    'vietnamese.ini': 'vi'
+    'vietnamese.ini': 'vi',
   }
   return list[langName.toLowerCase()] || 'en'
 }
 
 function getInCamelCase(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-    return index === 0 ? word.toLowerCase() : word.toUpperCase()
-  }).replace(/[-\s]+/g, '')
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase()
+    })
+    .replace(/[-\s]+/g, '')
 }
 
 function prepareLangs() {
@@ -55,7 +57,7 @@ function prepareLangs() {
 
   const importLines = []
   const nameLines = []
-  fs.readdirSync(coreI18nPath).forEach(langName => {
+  fs.readdirSync(coreI18nPath).forEach((langName) => {
     const shortName = getShortLangName(langName)
     if (prepareOneLang(modulesPath, langName, shortName)) {
       const nameInCamelCase = getInCamelCase(shortName)
@@ -68,8 +70,7 @@ function prepareLangs() {
   if (fs.existsSync(i18nDir)) {
     const names = nameLines.join('\n')
     const imports = importLines.join('\n')
-    const modulesContent =
-      `${imports}
+    const modulesContent = `${imports}
 
 export default {
 ${names}
@@ -81,7 +82,7 @@ ${names}
 
 function prepareOneLang(modulesPath, iniFileName, langFolder) {
   const langsJson = {}
-  fs.readdirSync(modulesPath).forEach(moduleName => {
+  fs.readdirSync(modulesPath).forEach((moduleName) => {
     const i18nPath = modulesPath + moduleName + '/i18n/' + iniFileName
     const englishI18nPath = modulesPath + moduleName + '/i18n/English.ini'
     if (fs.existsSync(i18nPath)) {
@@ -97,7 +98,10 @@ function prepareOneLang(modulesPath, iniFileName, langFolder) {
   _.each(langsJson, (moduleJson, moduleName) => {
     const newModuleJson = {}
     _.each(moduleJson, (constValue, constName) => {
-      constValue = constValue.replace(/^"/, '').replace(/"$/, '').replace(/\\"/g, '"')
+      constValue = constValue
+        .replace(/^"/, '')
+        .replace(/"$/, '')
+        .replace(/\\"/g, '"')
       if (constValue.indexOf('%') !== -1) {
         const re = /%([\w_\-=]+)%/gi
         constValue = constValue.replace(re, (match, p1, offset, string) => {
@@ -115,7 +119,10 @@ function prepareOneLang(modulesPath, iniFileName, langFolder) {
       fs.mkdirSync(dir)
     }
     if (fs.existsSync(dir)) {
-      fs.writeFileSync(dir + 'index.json', JSON.stringify(newLangsJson, null, 2))
+      fs.writeFileSync(
+        dir + 'index.json',
+        JSON.stringify(newLangsJson, null, 2)
+      )
       return true
     }
   }

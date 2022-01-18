@@ -25,7 +25,7 @@ export default {
       }
     }
   },
-  asyncGetFiles:  async ({ commit, getters, dispatch }) => {
+  asyncGetFiles: async ({ commit, getters, dispatch }) => {
     dispatch('changeLoadingStatus', true)
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
@@ -33,7 +33,7 @@ export default {
       Type: currentStorage?.Type,
       Path: currentPath,
       Pattern: getters['searchText'],
-      PathRequired: false
+      PathRequired: false,
     }
     const data = await AppApi.Files.getFiles(parameters)
     if (types.pArray(data?.Items)) {
@@ -258,5 +258,5 @@ export default {
   },
   changeSearchText: ({ commit }, text) => {
     commit('SET_SEARCH_TEXT', text)
-  }
+  },
 }

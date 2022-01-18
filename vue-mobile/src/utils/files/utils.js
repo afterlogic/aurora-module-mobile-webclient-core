@@ -1,4 +1,4 @@
-import typesUtils from "src/utils/types";
+import typesUtils from 'src/utils/types'
 import store from 'src/store'
 
 const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
@@ -8,16 +8,16 @@ const getFormatFile = (name) => {
 
 const isImg = (name) => {
   const formatFile = getFormatFile(name)
-  return imgFormats.find( format => {
+  return imgFormats.find((format) => {
     return format === formatFile
   })
 }
 const isCopied = (hash) => {
   const copiedFiles = store.getters['files/copiedFiles']
-  const index = copiedFiles.findIndex( file => file.hash === hash )
+  const index = copiedFiles.findIndex((file) => file.hash === hash)
   return !!(index + 1)
 }
-const parseFile = file => {
+const parseFile = (file) => {
   return {
     loading: false,
     content: typesUtils.pString(file.Content),

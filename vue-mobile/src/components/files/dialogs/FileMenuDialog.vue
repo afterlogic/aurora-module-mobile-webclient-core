@@ -7,15 +7,27 @@
         </div>
       </q-card-section>
       <q-separator />
-        <q-list style="height: 250px" class="scroll">
-          <div v-for="fileAction in actions" :key="fileAction.name">
-            <q-item
-              v-if="fileAction.isShowAction(fileAction.name, file, currentStorage.Type, currentPath)"
-              class="q-my-sm" clickable
-            >
-              <div class="flex full-width" @click="performAction(fileAction)">
-                <div>
-                  <q-icon size="26px" :name="fileAction.icon" color="primary"></q-icon>
+      <q-list style="height: 250px" class="scroll">
+        <div v-for="fileAction in actions" :key="fileAction.name">
+          <q-item
+            v-if="
+              fileAction.isShowAction(
+                fileAction.name,
+                file,
+                currentStorage.Type,
+                currentPath
+              )
+            "
+            class="q-my-sm"
+            clickable
+          >
+            <div class="flex full-width" @click="performAction(fileAction)">
+              <div>
+                <q-icon
+                  size="26px"
+                  :name="fileAction.icon"
+                  color="primary"
+                ></q-icon>
               </div>
               <div class="q-pl-md text-subtitle1">
                 {{ fileAction.displayName }}
@@ -29,8 +41,8 @@
 </template>
 
 <script>
-import { getFileActionsList } from "src/utils/files/file-actions";
-import {mapGetters} from "vuex";
+import { getFileActionsList } from 'src/utils/files/file-actions'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FileMenuDialog',

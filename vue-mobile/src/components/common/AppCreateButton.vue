@@ -1,4 +1,4 @@
-<template >
+<template>
   <q-btn
     style="position: fixed; z-index: 1; bottom: 10%; right: 5%"
     color="primary"
