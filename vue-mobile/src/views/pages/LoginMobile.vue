@@ -1,10 +1,12 @@
 <template>
-  <div class="q-gutter-y-md q-px-md full-height flex wrap content-between">
-    <FolderBluredIcon class="absolute q-ml-md" />
-    <FolderFilledIcon />
-    <div class="full-width">
-      <h4 class="q-my-sm">{{ $t('MOBILEAPPSWEBCLIENT.HEADING_MAIL_APP') }}</h4>
-      <p>Log in to continue</p>
+  <div class="q-gutter-y-md q-px-lg full-height flex wrap content-between">
+    <FolderBlurredIcon class="absolute back-icon" />
+    <div class="full-width text-weight-medium text-container">
+      <FolderFilledIcon />
+      <p class="q-mt-xl page-heading">
+        {{ $t('MOBILEAPPSWEBCLIENT.HEADING_FILES_APP') }}
+      </p>
+      <p class="q-mt-lg text-grey-5">LOG IN TO CONTINUE</p>
     </div>
     <div class="full-width">
       <q-form>
@@ -31,11 +33,11 @@
 <script>
 import AppInput from 'components/common/AppInput'
 import AppButton from 'components/common/AppButton'
+import FolderFilledIcon from 'components/files/icons/login/FolderFilledIcon'
+import FolderBlurredIcon from 'components/files/icons/login/FolderBlurredIcon'
 import { validators } from 'src/utils/validation'
 import { useForm } from 'src/hooks/form'
 import { useStore } from 'vuex'
-import FolderBluredIcon from 'components/files/icons/login/FolderBluredIcon'
-import FolderFilledIcon from 'components/files/icons/login/FolderFilledIcon'
 
 const required = (val) => !!val
 const minLength = (num) => (val) => val.length >= num
@@ -43,10 +45,10 @@ const minLength = (num) => (val) => val.length >= num
 export default {
   name: 'LoginMobile',
   components: {
-    FolderFilledIcon,
-    FolderBluredIcon,
     AppInput,
     AppButton,
+    FolderFilledIcon,
+    FolderBlurredIcon,
   },
   setup() {
     const store = useStore()
@@ -76,4 +78,15 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.back-icon {
+  margin-left: -1.5rem;
+}
+.text-container {
+  margin-top: 5.375rem;
+}
+.page-heading {
+  font-size: 2.25rem;
+  line-height: 1.5rem;
+}
+</style>
