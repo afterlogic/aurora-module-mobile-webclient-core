@@ -15,7 +15,7 @@
      <div class="col-3 flex justify-end q-pr-sm" />
    </q-toolbar>
    <q-toolbar class="flex row" style="height: 40px; font-size: 16px; padding: 0">
-     <q-input v-model="searchText" autofocus borderless style="padding: 0 20px 0 20px" class="col-10" model-value=""/>
+     <q-input v-model="text" autofocus borderless style="padding: 0 20px 0 20px" class="col-10" model-value=""/>
      <div class="col-2 flex justify-end q-pr-sm">
        <q-btn flat size="15px" color="black" round dense icon="search" @click="search"/>
      </div>
@@ -30,18 +30,23 @@ export default {
   name: "SearchHeader",
   data() {
     return {
-      searchText: ''
+      text: ''
     }
   },
   computed: {
-    ...mapGetters('files', ['currentStorage'])
+    ...mapGetters('files', ['currentStorage', 'searchText'])
+  },
+  mounted() {
+    this.text = this.searchText
   },
   methods: {
-    ...mapActions('files', ['asyncGetFiles', 'changeCurrentHeader']),
+    ...mapActions('files', ['asyncGetFiles', 'changeCurrentHeader', 'changeSearchText']),
     async search() {
-      const result = await this.asyncGetFiles(this.searchText)
+      this.changeSearchText(this.text)
+      const result = await this.asyncGetFiles()
     },
     async close() {
+      this.changeSearchText('')
       this.changeCurrentHeader('')
       await this.asyncGetFiles()
     }

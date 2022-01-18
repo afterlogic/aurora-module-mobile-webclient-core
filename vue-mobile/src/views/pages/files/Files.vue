@@ -41,6 +41,7 @@
         class="q-ma-md"
       />
     </div>
+    <files-captions v-if="!loadingStatus"/>
     <app-create-button
       icon="add"
       @click="showDialog({file: null, component: 'CreateButtonsDialogs' })"
@@ -57,6 +58,7 @@ import StorageItem from "components/files/StorageItem";
 import DialogsList from "components/files/DialogsList";
 import AppCreateButton from "components/common/AppCreateButton";
 import DownloadFileItem from "components/files/DownloadFileItem";
+import FilesCaptions from "components/files/FilesCaptions";
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Files",
@@ -67,7 +69,8 @@ export default {
     StorageItem,
     DialogsList,
     AppCreateButton,
-    DownloadFileItem
+    DownloadFileItem,
+    FilesCaptions
   },
   async mounted() {
     await this.init()
@@ -107,14 +110,23 @@ export default {
   },
   methods: {
     ...mapActions('files',
-      ['asyncGetStorages', 'asyncGetFiles', 'selectFile', 'changeDialogComponent', 'changeSelectStatus']
+      [
+        'asyncGetStorages',
+        'asyncGetFiles',
+        'selectFile',
+        'changeDialogComponent',
+        'changeSelectStatus',
+        'changeLoadingStatus'
+      ]
     ),
     async init() {
       if (!this.copiedFiles.length) {
         if (!this.currentFile) {
+          this.changeLoadingStatus(true)
           await this.asyncGetStorages()
         }
         await this.asyncGetFiles()
+        this.changeLoadingStatus(false)
       }
     },
     showDialog({ file, component }) {

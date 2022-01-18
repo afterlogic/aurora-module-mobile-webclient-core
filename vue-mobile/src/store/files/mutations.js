@@ -9,6 +9,7 @@ export default {
   SET_CURRENT_FILE: (state, file) => state.currentFile = file,
   SET_FILE_NAME: (state, fileName) => state.currentFile.name = fileName,
   SET_CURRENT_HEADER_NAME: (state, headerName) => state.currentHeader = headerName,
+  SET_SEARCH_TEXT: (state, text) => state.searchText = text,
   CHANGE_CURRENT_PATH: (state, { path, index, lastStorage }) => {
     if (!lastStorage) {
       if (index === -1) {

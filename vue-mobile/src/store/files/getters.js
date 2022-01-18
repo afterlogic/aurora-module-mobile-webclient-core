@@ -11,6 +11,7 @@ export default {
     currentFile: (state) => state.currentFile,
     downloadFiles: (state) => state.downloadFiles,
     currentHeader: (state) => state.currentHeader,
+    searchText: (state) => state.searchText,
     isArchive: (state) => {
       return state.currentPath.split('.')[state.currentPath.split('.').length - 1] === 'zip'
     },

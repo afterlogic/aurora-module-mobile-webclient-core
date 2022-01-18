@@ -9,6 +9,7 @@ export default function () {
     currentStorage: '',
     currentHeader: '',
     isLoading: false,
+    searchText: '',
 
     dialogComponent: null,
 
