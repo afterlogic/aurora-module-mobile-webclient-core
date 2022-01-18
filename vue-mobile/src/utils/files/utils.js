@@ -1,6 +1,23 @@
-import typesUtils from 'src/utils/types'
+import typesUtils from "src/utils/types";
+import store from 'src/store'
 
-const parseFile = (file) => {
+const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
+const getFormatFile = (name) => {
+  return name.split('.')[name.split('.').length - 1]
+}
+
+const isImg = (name) => {
+  const formatFile = getFormatFile(name)
+  return imgFormats.find( format => {
+    return format === formatFile
+  })
+}
+const isCopied = (hash) => {
+  const copiedFiles = store.getters['files/copiedFiles']
+  const index = copiedFiles.findIndex( file => file.hash === hash )
+  return !!(index + 1)
+}
+const parseFile = file => {
   return {
     loading: false,
     content: typesUtils.pString(file.Content),
@@ -32,7 +49,9 @@ const parseFile = (file) => {
     downloading: false,
     percentDownloading: 0,
     isSelected: false,
-    isCopied: false,
+    isCopied: isCopied(typesUtils.pString(file.Hash)),
+    isImg: isImg(typesUtils.pString(file.Name)),
+    isArchive: !!file?.Actions?.list,
   }
 }
 

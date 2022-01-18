@@ -1,16 +1,19 @@
 <template>
-  <q-item
-    v-if="file"
-    :disable="file.isCopied"
-    :clickable="!isCopied"
-    v-ripple="!isSelected && !isCopied"
-    :active="file.isSelected"
-    @touchstart.stop="touchstart(file)"
-    @touchmove.stop="touchMove"
-    @touchend.stop="selectFile"
+  <q-item v-if="file"
+          :disable="file.isCopied"
+          :clickable="!isCopied"
+          v-ripple="!isSelected && !isCopied"
+          :active="file.isSelected"
+          @touchstart.stop="touchstart(file)"
+          @touchmove.stop="touchMove"
+          @touchend.stop="selectFile"
   >
     <q-item-section avatar>
-      <file-icon color="primary" class="text-primary"></file-icon>
+      <file-icon v-if="!file.isImg" color="primary" class="text-primary"></file-icon>
+      <div v-if="file.isImg" class="text-primary">
+        <div class="img-preview"
+             :style="{'background': `url(${filePreview}) no-repeat center`, 'background-size': 'contain'}"/>
+      </div>
     </q-item-section>
     <q-item-section class="text-info">
       <q-item-label class="text-subtitle1">{{ fileName }}</q-item-label>
@@ -58,12 +61,13 @@
 </template>
 
 <script>
-import FileIcon from 'components/files/icons/FileIcon'
-import DownloadingProgress from 'components/files/common/DownloadingProgress'
-import { getShortName } from 'src/utils/files/utils'
-import text from 'src/utils/text'
-import date from 'src/utils/date'
-import { mapGetters } from 'vuex'
+import FileIcon from "components/files/icons/FileIcon";
+import DownloadingProgress from "components/files/common/DownloadingProgress";
+import { getShortName } from "src/utils/files/utils";
+import text from "src/utils/text";
+import date from "src/utils/date"
+import {mapActions, mapGetters} from "vuex";
+import { getApiHost } from "src/api/helpers";
 
 export default {
   name: 'FileItem',
@@ -84,10 +88,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('files', ['copiedFiles']),
+    ...mapGetters('files', ['copiedFiles', 'isArchive']),
     fileName() {
       if (this.file) {
         return getShortName(this.file.name, 30)
+      }
+      return ''
+    },
+    filePreview() {
+      if (this.file) {
+        const api = getApiHost()
+        return  api + this.file.thumbnailUrl
       }
       return ''
     },
@@ -102,15 +113,31 @@ export default {
     },
   },
   methods: {
-    selectFile() {
+    ...mapActions('files', ['changeCurrentPaths', 'changeCurrentHeader', 'asyncGetFiles']),
+    async selectFile() {
+      this.touchend()
       if (
         !this.isSelected &&
         !this.isMoved &&
+        !this.copiedFiles.length &&
         !this.file.downloading &&
-        !this.copiedFiles.length
+        this.file.isArchive
       ) {
-        this.touchend()
-        this.$router.push({ path: `/file/${this.file.id}` })
+        const path = {
+          path: this.file.fullPath,
+          name: this.file.name
+        }
+        this.changeCurrentHeader('')
+        await this.changeCurrentPaths({ path, lastStorage: false })
+        await this.asyncGetFiles()
+      } else if (
+          !this.isSelected &&
+          !this.isMoved &&
+          !this.file.downloading &&
+          !this.copiedFiles.length &&
+          !this.isArchive
+      ) {
+        await this.$router.push({ path: `/file/${this.file.id}` })
       } else {
         this.isMoved = false
       }

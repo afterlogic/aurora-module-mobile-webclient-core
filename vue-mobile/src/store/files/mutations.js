@@ -1,16 +1,15 @@
 export default {
-  SET_STORAGE_LIST: (state, storages) => (state.storageList = storages),
-  SET_FILES_LIST: (state, filesList) => (state.filesList = filesList),
-  SET_FOLDERS_LIST: (state, foldersList) => (state.foldersList = foldersList),
-  SET_FILES_QUOTA: (state, filesQuota) => (state.filesQuota = filesQuota),
-  SET_CURRENT_STORAGE: (state, currentStorage) =>
-    (state.currentStorage = currentStorage),
-  SET_LOADING_STATUS: (state, status) => (state.isLoading = status),
-  SET_CURRENT_PATH: (state, { path }) => (state.currentPath = path),
-  SET_CURRENT_FILE: (state, file) => (state.currentFile = file),
-  SET_FILE_NAME: (state, fileName) => (state.currentFile.name = fileName),
-  SET_CURRENT_HEADER_NAME: (state, headerName) =>
-    (state.currentHeader = headerName),
+  SET_STORAGE_LIST: (state, storages) => state.storageList = storages,
+  SET_FILES_LIST: (state, filesList) => state.filesList = filesList,
+  SET_FOLDERS_LIST: (state, foldersList) => state.foldersList = foldersList,
+  SET_FILES_QUOTA: (state, filesQuota) => state.filesQuota = filesQuota,
+  SET_CURRENT_STORAGE: (state, currentStorage) => state.currentStorage = currentStorage,
+  SET_LOADING_STATUS: (state, status) => state.isLoading = status,
+  SET_CURRENT_PATH: (state, { path }) => state.currentPath = path,
+  SET_CURRENT_FILE: (state, file) => state.currentFile = file,
+  SET_FILE_NAME: (state, fileName) => state.currentFile.name = fileName,
+  SET_CURRENT_HEADER_NAME: (state, headerName) => state.currentHeader = headerName,
+  SET_SEARCH_TEXT: (state, text) => state.searchText = text,
   CHANGE_CURRENT_PATH: (state, { path, index, lastStorage }) => {
     if (!lastStorage) {
       if (index === -1) {

@@ -7,7 +7,7 @@
         :storage="storage"
       />
     </template>
-    <q-list>
+    <q-list v-if="!loadingStatus">
       <folder-item
         v-for="file in foldersList"
         :key="file"
@@ -37,6 +37,15 @@
       />
       <div style="height: 130px" class="full-width" />
     </q-list>
+    <div class="q-mt-xl flex items-center justify-center" v-if="loadingStatus">
+      <q-circular-progress
+        indeterminate
+        size="40px"
+        color="primary"
+        class="q-ma-md"
+      />
+    </div>
+    <files-captions v-if="!loadingStatus"/>
     <app-create-button
       icon="add"
       @click="showDialog({ file: null, component: 'CreateButtonsDialogs' })"
@@ -46,13 +55,14 @@
 </template>
 
 <script>
-import MainLayout from 'src/views/layouts/MainLayout'
-import FileItem from 'components/files/FileItem'
-import FolderItem from 'components/files/FolderItem'
-import StorageItem from 'components/files/StorageItem'
-import DialogsList from 'components/files/DialogsList'
-import AppCreateButton from 'components/common/AppCreateButton'
-import DownloadFileItem from 'components/files/DownloadFileItem'
+import MainLayout from "src/views/layouts/MainLayout";
+import FileItem from "components/files/FileItem";
+import FolderItem from "components/files/FolderItem";
+import StorageItem from "components/files/StorageItem";
+import DialogsList from "components/files/DialogsList";
+import AppCreateButton from "components/common/AppCreateButton";
+import DownloadFileItem from "components/files/DownloadFileItem";
+import FilesCaptions from "components/files/FilesCaptions";
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Files',
@@ -64,6 +74,7 @@ export default {
     DialogsList,
     AppCreateButton,
     DownloadFileItem,
+    FilesCaptions
   },
   async mounted() {
     await this.init()
@@ -75,15 +86,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('files', [
-      'filesList',
-      'foldersList',
-      'storageList',
-      'selectedFiles',
-      'copiedFiles',
-      'downloadFiles',
-      'currentFile',
-    ]),
+    ...mapGetters('files',
+      [
+        'filesList',
+        'foldersList',
+        'storageList',
+        'selectedFiles',
+        'copiedFiles',
+        'downloadFiles',
+        'currentFile',
+        'isArchive',
+        'loadingStatus'
+      ]
+    ),
     isCopied() {
       return !!this.copiedFiles.length
     },
@@ -98,19 +113,24 @@ export default {
     },
   },
   methods: {
-    ...mapActions('files', [
-      'asyncGetStorages',
-      'asyncGetFiles',
-      'selectFile',
-      'changeDialogComponent',
-      'changeSelectStatus',
-    ]),
+    ...mapActions('files',
+      [
+        'asyncGetStorages',
+        'asyncGetFiles',
+        'selectFile',
+        'changeDialogComponent',
+        'changeSelectStatus',
+        'changeLoadingStatus'
+      ]
+    ),
     async init() {
       if (!this.copiedFiles.length) {
         if (!this.currentFile) {
+          this.changeLoadingStatus(true)
           await this.asyncGetStorages()
         }
         await this.asyncGetFiles()
+        this.changeLoadingStatus(false)
       }
     },
     showDialog({ file, component }) {
@@ -124,10 +144,12 @@ export default {
     touchstart(file) {
       if (!file.downloading) {
         this.selectFile(file)
-        if (!this.isSelected && !this.isCopied) {
-          this.touchTimer = setTimeout(this.selectItem, 1000)
-        } else if (!this.isCopied) {
-          this.changeSelectStatus()
+        if (!this.isArchive) {
+          if (!this.isSelected && !this.isCopied) {
+            this.touchTimer = setTimeout(this.selectItem, 1000);
+          } else if (!this.isCopied) {
+            this.changeSelectStatus()
+          }
         }
       }
     },

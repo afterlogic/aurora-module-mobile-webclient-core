@@ -25,14 +25,15 @@ export default {
       }
     }
   },
-  asyncGetFiles: async ({ commit, getters }, pattern = '') => {
+  asyncGetFiles:  async ({ commit, getters, dispatch }) => {
+    dispatch('changeLoadingStatus', true)
     const currentStorage = getters['currentStorage']
     const currentPath = getters['currentPath']
     const parameters = {
       Type: currentStorage?.Type,
       Path: currentPath,
-      Pattern: pattern,
-      PathRequired: false,
+      Pattern: getters['searchText'],
+      PathRequired: false
     }
     const data = await AppApi.Files.getFiles(parameters)
     if (types.pArray(data?.Items)) {
@@ -44,6 +45,7 @@ export default {
     if (types.pObject(data?.Quata)) {
       commit('SET_FILES_QUOTA', data.Quata)
     }
+    dispatch('changeLoadingStatus', false)
   },
   changeCurrentStorage: ({ commit }, storage) => {
     commit('SET_CURRENT_STORAGE', storage)
@@ -254,4 +256,7 @@ export default {
   changeCurrentHeader: ({ commit }, headerName) => {
     commit('SET_CURRENT_HEADER_NAME', headerName)
   },
+  changeSearchText: ({ commit }, text) => {
+    commit('SET_SEARCH_TEXT', text)
+  }
 }
