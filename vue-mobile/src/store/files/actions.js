@@ -47,6 +47,10 @@ export default {
     }
     dispatch('changeLoadingStatus', false)
   },
+  clearItemLists: ({ commit }) => {
+    commit('SET_FOLDERS_LIST', [])
+    commit('SET_FILES_LIST', [])
+  },
   changeCurrentStorage: ({ commit }, storage) => {
     commit('SET_CURRENT_STORAGE', storage)
   },

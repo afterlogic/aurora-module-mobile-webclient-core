@@ -2,7 +2,7 @@
   <q-toolbar style="height: 55px" class="justify-between">
     <q-btn
       flat
-      v-if="currentPaths.length === 1"
+      v-if="currentPaths.length <= 1"
       size="15px"
       @click="$emit('openDrawer')"
       color="black"
