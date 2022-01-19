@@ -132,8 +132,30 @@ export const getParametersForShare = (items, file) => {
   }
 }
 
-export const getPreviewIconName = (format) => {
+export const getPreviewIconName = (name) => {
+  if (!name) return 'FileIcon'
+  const format = getFormatFile(name)
+  if (!format) return 'FileIcon'
   for (let type in fileTypes) {
-    const index = 0
+    const index = fileTypes[type].findIndex(
+      (currentFormat) => currentFormat === format
+    )
+    if (index + 1) {
+      switch (type) {
+        case 'media':
+          return 'FileMediaIcon'
+        case 'text':
+          return 'FileTextIcon'
+        case 'archive':
+          return 'FileIcon'
+        case 'image':
+          return 'FileImageIcon'
+        case 'link':
+          return 'FileLinkIcon'
+        default:
+          return 'FileIcon'
+      }
+    }
   }
+  return 'FileIcon'
 }

@@ -2,12 +2,12 @@
   <main-layout title="File info">
     <div class="file">
       <div class="flex items-center justify-center">
-        <file-icon
-          v-if="!currentFile.thumbnailUrl"
-          class="file__preview"
-          :width="64"
-          :height="64"
-        />
+        <div v-if="!currentFile.thumbnailUrl" class="file__preview">
+          <file-item-icon
+            v-if="!currentFile.thumbnailUrl"
+            :file-name="currentFile.name"
+          />
+        </div>
         <div style="height: 184px" v-if="currentFile.thumbnailUrl">
           <div
             class="img-preview"
@@ -40,7 +40,7 @@
 <script>
 import DialogsList from 'components/files/DialogsList'
 import MainLayout from 'src/views/layouts/MainLayout'
-import FileIcon from 'components/files/icons/FileIcon'
+import FileItemIcon from 'components/files/icons/FileItemIcon'
 import InputForm from 'components/files/common/InputForm'
 import { mapGetters } from 'vuex'
 import date from 'src/utils/date'
@@ -51,7 +51,7 @@ export default {
   name: 'FileInfo',
   components: {
     MainLayout,
-    FileIcon,
+    FileItemIcon,
     InputForm,
     DialogsList,
   },
