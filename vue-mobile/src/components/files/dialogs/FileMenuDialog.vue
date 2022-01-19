@@ -22,15 +22,9 @@
             clickable
           >
             <div class="flex full-width" @click="performAction(fileAction)">
-              <div>
-                <q-icon
-                  size="26px"
-                  :name="fileAction.icon"
-                  color="primary"
-                ></q-icon>
-              </div>
-              <div class="q-pl-md text-subtitle1">
-                {{ fileAction.displayName }}
+              <icon-action :icon="fileAction.icon" />
+              <div class="q-pl-md text-subtitle1 flex items-center">
+                <p>{{ fileAction.displayName }}</p>
               </div>
             </div>
           </q-item>
@@ -41,6 +35,8 @@
 </template>
 
 <script>
+import IconAction from 'components/files/common/IconAction'
+
 import { getFileActionsList } from 'src/utils/files/file-actions'
 import { mapGetters } from 'vuex'
 
@@ -49,6 +45,9 @@ export default {
   props: {
     dialog: { type: Boolean, default: false },
     file: { type: Object, default: null },
+  },
+  components: {
+    IconAction,
   },
   computed: {
     ...mapGetters('files', ['currentStorage', 'currentPath']),

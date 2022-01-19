@@ -1,5 +1,6 @@
 import typesUtils from 'src/utils/types'
 import store from 'src/store'
+import { fileTypes } from 'src/utils/files/formats'
 
 const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
 const getFormatFile = (name) => {
@@ -128,5 +129,11 @@ export const getParametersForShare = (items, file) => {
     Id: file.name,
     Shares: shares,
     IsDir: file.isFolder,
+  }
+}
+
+export const getPreviewIconName = (format) => {
+  for (let type in fileTypes) {
+    const index = 0
   }
 }
