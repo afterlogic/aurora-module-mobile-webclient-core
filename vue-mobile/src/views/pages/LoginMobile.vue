@@ -11,21 +11,19 @@
     <div class="full-width">
       <q-form>
         <AppInput
-          v-model="form.login.value"
+          v-model="login"
           :placeholder="$t('COREWEBCLIENT.LABEL_EMAIL')"
-          :rules-props="form.login.rules"
           type="email"
         />
-        <AppInput
-          v-model="form.password.value"
-          placeholder="Password"
-          :rules-props="form.password.rules"
-          type="password"
-        />
+        <AppInput v-model="password" placeholder="Password" type="password" />
       </q-form>
     </div>
     <div class="full-width q-pb-xl">
-      <AppButton @click="proceedLogin" label="Login"></AppButton>
+      <AppButton
+        @click="proceedLogin"
+        label="Login"
+        :disabled="!login || !password"
+      />
     </div>
   </div>
 </template>
@@ -33,14 +31,9 @@
 <script>
 import AppInput from 'components/common/AppInput'
 import AppButton from 'components/common/AppButton'
-import FolderFilledIcon from 'components/files/icons/login/FolderFilledIcon'
-import FolderBlurredIcon from 'components/files/icons/login/FolderBlurredIcon'
-import { validators } from 'src/utils/validation'
-import { useForm } from 'src/hooks/form'
-import { useStore } from 'vuex'
-
-const required = (val) => !!val
-const minLength = (num) => (val) => val.length >= num
+import FolderFilledIcon from 'components/common/icons/login/FolderFilledIcon'
+import FolderBlurredIcon from 'components/common/icons/login/FolderBlurredIcon'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginMobile',
@@ -50,30 +43,25 @@ export default {
     FolderFilledIcon,
     FolderBlurredIcon,
   },
-  setup() {
-    const store = useStore()
-    const form = useForm({
-      login: {
-        value: '',
-        validators: { required: validators.required },
-      },
-      password: {
-        value: '',
-        validators: {
-          required: validators.required,
-          minLength: validators.minLength(8),
-        },
-      },
-    })
-
-    const proceedLogin = () => {
-      const parameters = {
-        Login: form.login.value,
-        Password: form.password.value,
+  data: () => ({
+    login: '',
+    password: '',
+  }),
+  methods: {
+    ...mapActions('user', ['loginFunc']),
+    async proceedLogin() {
+      try {
+        console.log('DT: this', this)
+        const parameters = {
+          Login: this.login,
+          Password: this.password,
+        }
+        const response = await this.loginFunc(parameters)
+        if (response) console.log('DT: response', response)
+      } catch (err) {
+        console.log('DT: Error', Error)
       }
-      store.dispatch('user/login', parameters)
-    }
-    return { form, proceedLogin }
+    },
   },
 }
 </script>

@@ -2,7 +2,7 @@
   <q-btn
     class="q-py-xs full-width"
     :size="size"
-    :disable="disable"
+    :disable="disabled"
     unelevated
     no-caps
     bg-color="primary"
@@ -18,7 +18,7 @@ export default {
   props: {
     label: { type: String, default: '' },
     size: { type: String, default: 'lg' },
-    disable: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
   },
 }
 </script>
