@@ -64,7 +64,7 @@ export const fileActions = {
     },
     name: 'copy',
     displayName: 'Copy/Move',
-    icon: 'content_copy',
+    icon: 'MoveFolderIcon',
     isShowAction: isShowAction,
   },
   createShareableLink: {
@@ -72,7 +72,7 @@ export const fileActions = {
     name: 'createShareableLink',
     component: 'CreateShareableLinkDialog',
     displayName: i18n.$t.OPENPGPFILESWEBCLIENT.HEADING_CREATE_PUBLIC_LINK,
-    icon: 'link',
+    icon: 'SecureLinkIcon',
     isShowAction: isShowAction,
   },
   shareWithTeammates: {
@@ -80,7 +80,7 @@ export const fileActions = {
     name: 'shareWithTeammates',
     component: 'ShareWithTeammatesDialog',
     displayName: i18n.$t.SHAREDFILES.ACTION_SHARE,
-    icon: 'share',
+    icon: 'ShareIcon',
     isShowAction: isShowAction,
   },
   download: {
@@ -95,7 +95,7 @@ export const fileActions = {
     },
     name: 'download',
     displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE,
-    icon: 'download',
+    icon: 'DownloadIcon',
     isShowAction: isShowAction,
   },
   rename: {
@@ -103,7 +103,7 @@ export const fileActions = {
     name: 'rename',
     component: 'RenameItemDialog',
     displayName: i18n.$t.FILESWEBCLIENT.ACTION_RENAME,
-    icon: 'edit',
+    icon: 'EditIcon',
     isShowAction: isShowAction,
   },
   delete: {
@@ -111,7 +111,7 @@ export const fileActions = {
     name: 'delete',
     component: 'DeleteItemsDialog',
     displayName: 'Delete',
-    icon: 'delete',
+    icon: 'DeleteIcon',
     isShowAction: isShowAction,
   },
 }
