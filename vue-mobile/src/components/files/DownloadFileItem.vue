@@ -3,9 +3,9 @@
     <q-item-section avatar>
       <file-item-icon :file-name="file.name" />
     </q-item-section>
-    <q-item-section class="text-info">
-      <q-item-label>{{ file.name }}</q-item-label>
-      <q-item-label>{{ progressPercent }}%</q-item-label>
+    <q-item-section>
+      <q-item-label class="file__name">{{ file.name }}</q-item-label>
+      <q-item-label class="file__info">{{ progressPercent }}%</q-item-label>
     </q-item-section>
   </q-item>
 </template>

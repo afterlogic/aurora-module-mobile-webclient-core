@@ -45,9 +45,17 @@ export default {
   watch: {
     dialogComponent(val) {
       if (val.component !== 'FileUploader') {
-        this.component = val.component
-        this.dialog = true
+        if (!val.component) {
+          this.dialog = false
+        } else {
+          this.component = val.component
+          this.dialog = true
+        }
       }
+    },
+    dialog(val) {
+      if (!val && this.dialogComponent.component === 'CreateButtonsDialogs')
+        this.changeDialogComponent({ component: '' })
     },
   },
   methods: {

@@ -147,11 +147,13 @@ export const getPreviewIconName = (name) => {
         case 'text':
           return 'FileTextIcon'
         case 'archive':
-          return 'FileIcon'
+          return 'FileArchiveIcon'
         case 'image':
           return 'FileImageIcon'
         case 'link':
           return 'FileLinkIcon'
+        case 'pdf':
+          return 'FilePdfIcon'
         default:
           return 'FileIcon'
       }

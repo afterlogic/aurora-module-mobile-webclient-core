@@ -18,11 +18,13 @@
         :touchend="touchend"
         @touchmove="touchend"
         @showDialog="showDialog"
+        class="file"
       />
       <download-file-item
         v-for="file in downloadFiles"
         :key="file.name"
         :file="file"
+        class="file"
       />
       <file-item
         v-for="file in filesList"
@@ -34,6 +36,7 @@
         :touchend="touchend"
         @touchmove="touchend"
         @showDialog="showDialog"
+        class="file"
       />
       <div style="height: 130px" class="full-width" />
     </q-list>
@@ -46,10 +49,7 @@
       />
     </div>
     <files-captions v-if="!loadingStatus" />
-    <app-create-button
-      icon="add"
-      @click="showDialog({ file: null, component: 'CreateButtonsDialogs' })"
-    />
+    <create-button />
     <dialogs-list />
   </main-layout>
 </template>
@@ -60,9 +60,9 @@ import FileItem from 'components/files/FileItem'
 import FolderItem from 'components/files/FolderItem'
 import StorageItem from 'components/files/StorageItem'
 import DialogsList from 'components/files/DialogsList'
-import AppCreateButton from 'components/common/AppCreateButton'
 import DownloadFileItem from 'components/files/DownloadFileItem'
 import FilesCaptions from 'components/files/FilesCaptions'
+import CreateButton from 'components/files/common/CreateButton'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Files',
@@ -72,7 +72,7 @@ export default {
     FileItem,
     StorageItem,
     DialogsList,
-    AppCreateButton,
+    CreateButton,
     DownloadFileItem,
     FilesCaptions,
   },
@@ -156,4 +156,26 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.file {
+  height: 60px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0 24px 0 24px;
+  padding: 0;
+  &__name {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  &__info {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 10px;
+  }
+}
+</style>

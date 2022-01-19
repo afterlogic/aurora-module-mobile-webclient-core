@@ -10,10 +10,10 @@
     @touchmove.stop="touchMove"
   >
     <q-item-section avatar>
-      <folder-icon color="primary"></folder-icon>
+      <folder-icon color="secondary"></folder-icon>
     </q-item-section>
-    <q-item-section class="text-info">
-      <q-item-label>{{ folderName }}</q-item-label>
+    <q-item-section>
+      <q-item-label class="file__name">{{ folderName }}</q-item-label>
       <q-item-label></q-item-label>
     </q-item-section>
     <q-item-section avatar side>

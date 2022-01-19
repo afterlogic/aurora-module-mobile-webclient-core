@@ -1,32 +1,27 @@
 <template>
-  <q-dialog v-model="openDialog">
-    <div
-      class="flex column q-pa-sm absolute"
-      style="
-        box-shadow: none;
-        position: fixed;
-        z-index: 1;
-        bottom: 19%;
-        right: 4%;
-        margin-right: 2px;
-      "
-    >
-      <q-btn
-        class="q-mb-md"
-        round
-        color="primary"
-        icon="create_new_folder"
-        @click="createFolder"
-      />
-      <q-btn round color="primary" icon="note_add" @click="uploadFile" />
+  <q-dialog
+    transition-show="fade"
+    transition-hide="fade"
+    transition-duration="200"
+    v-model="openDialog"
+  >
+    <div class="flex column q-pa-sm absolute create-buttons">
+      <upload-file-icon @click="uploadFile" />
+      <create-folder-icon @click="createFolder" />
     </div>
   </q-dialog>
 </template>
 
 <script>
+import CreateFolderIcon from 'components/files/icons/actions/CreateFolderIcon'
+import UploadFileIcon from 'components/files/icons/actions/UploadFileIcon'
 import { mapActions } from 'vuex'
 export default {
   name: 'CreateButtonsDialogs',
+  components: {
+    CreateFolderIcon,
+    UploadFileIcon,
+  },
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false },
@@ -55,4 +50,13 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.create-buttons {
+  box-shadow: none;
+  position: fixed;
+  z-index: 1;
+  bottom: 170px;
+  right: 19px;
+  margin-right: 2px;
+}
+</style>

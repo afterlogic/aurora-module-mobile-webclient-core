@@ -9,6 +9,8 @@ import FileLinkIcon from 'components/files/icons/preview/FileLinkIcon'
 import FileLockIcon from 'components/files/icons/preview/FileLockIcon'
 import FIleMediaIcon from 'components/files/icons/preview/FIleMediaIcon'
 import FileTextIcon from 'components/files/icons/preview/FileTextIcon'
+import FileArchiveIcon from 'components/files/icons/preview/FileArchiveIcon'
+import FilePdfIcon from 'components/files/icons/preview/FilePdfIcon'
 
 import { getPreviewIconName } from 'src/utils/files/utils'
 export default {
@@ -20,13 +22,14 @@ export default {
     FileLockIcon,
     FIleMediaIcon,
     FileTextIcon,
+    FileArchiveIcon,
+    FilePdfIcon,
   },
   props: {
     fileName: { type: String, required: true },
   },
   computed: {
     componentName() {
-      console.log(this.fileName, 'namenamename')
       return getPreviewIconName(this.fileName)
     },
   },
