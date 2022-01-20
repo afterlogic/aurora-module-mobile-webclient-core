@@ -61,8 +61,12 @@ function prepareLangs() {
     const shortName = getShortLangName(langName)
     if (prepareOneLang(modulesPath, langName, shortName)) {
       const nameInCamelCase = getInCamelCase(shortName)
-      importLines.push(`import ${nameInCamelCase} from './${shortName}'`)
-      nameLines.push(`  ${nameInCamelCase},`)
+      if (nameInCamelCase === 'en') {
+        importLines.push(`import ${nameInCamelCase} from './${shortName}'`)
+        nameLines.push(`  ${nameInCamelCase},`)
+      } else {
+        nameLines.push(`  ${nameInCamelCase}: '',`)
+      }
     }
   })
 
