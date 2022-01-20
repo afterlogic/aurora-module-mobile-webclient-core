@@ -2,13 +2,21 @@
   <main-layout title="Settings">
     <div>
       <h4 @click="logout">logout</h4>
-      <div>Setting 1</div>
-      <div>Setting 2</div>
-      <div>Setting 3</div>
-      <div>Setting 4</div>
-      <div>Setting 5</div>
-      <div>Setting 6</div>
-      <div>Setting 7</div>
+      <div>
+        {{ $i18n.t('COREWEBCLIENT.CONFIRM_DISCARD_CHANGES') }}
+      </div>
+      <div>
+        {{ $tc('COREWEBCLIENT.ERROR_PASS_INCORRECT') }}
+      </div>
+      <div>
+        {{ $tc('COREWEBCLIENT.ERROR_PASS_INCORRECT') }}
+      </div>
+      <div>
+        {{ $tc('COREWEBCLIENT.ERROR_PASS_INCORRECT') }}
+      </div>
+      <div>
+        {{ $tc('COREWEBCLIENT.ERROR_PASS_INCORRECT') }}
+      </div>
     </div>
   </main-layout>
 </template>

@@ -16,6 +16,8 @@ const mixins = {
 }
 
 import UploaderComponent from 'components/files/common/UploaderComponent'
+import { mapActions, mapGetters } from 'vuex'
+import settings from 'src/settings'
 export default defineComponent({
   mixins: [mixins],
   name: 'App',
@@ -26,16 +28,22 @@ export default defineComponent({
     await this.populate()
   },
   computed: {
+    ...mapGetters('core', ['locale']),
     hasAuthToken() {
       return this.$store.getters['user/getAuthTokenStatus']
     },
   },
   watch: {
+    locale(lang) {
+      console.log(lang, 'lang watch')
+      this.$i18n.locale = lang
+    },
     hasAuthToken(hasAuthToken) {
       this.selectPath(hasAuthToken)
     },
   },
   methods: {
+    ...mapActions('core', ['changeLocale']),
     async populate() {
       this.checkToken()
       this.selectPath(this.hasAuthToken)
@@ -53,6 +61,8 @@ export default defineComponent({
     },
     async init() {
       await this.$store.dispatch('core/init')
+      const lang = settings.getLocale()
+      this.changeLocale(lang)
     },
   },
 })
