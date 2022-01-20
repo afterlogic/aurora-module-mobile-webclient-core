@@ -18,7 +18,6 @@ export default {
     silentError = false,
     defaultText,
   }) {
-    console.log('', 'i18n')
     return new Promise((resolve, reject) => {
       const unknownError = {
         ErrorCode: 0,

@@ -1,17 +1,17 @@
 <template>
   <q-item v-if="isShowFile" clickable>
     <q-item-section avatar>
-      <file-icon color="primary" class="text-primary"></file-icon>
+      <file-item-icon :file-name="file.name" />
     </q-item-section>
-    <q-item-section class="text-info">
-      <q-item-label>{{ file.name }}</q-item-label>
-      <q-item-label>{{ progressPercent }}%</q-item-label>
+    <q-item-section>
+      <q-item-label class="file__name">{{ file.name }}</q-item-label>
+      <q-item-label class="file__info">{{ progressPercent }}%</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import FileIcon from 'components/files/icons/FileIcon'
+import FileItemIcon from 'components/files/icons/FileItemIcon'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'DownloadFileItem',
@@ -19,7 +19,7 @@ export default {
     file: { type: Object, default: null },
   },
   components: {
-    FileIcon,
+    FileItemIcon,
   },
   data() {
     return {

@@ -14,7 +14,18 @@ export default {
   },
   computed: {
     component() {
-      return 'FilesHeader'
+      const display = this.$route.fullPath.split('/')[1]
+      switch (display) {
+        case 'files':
+          return 'FilesHeader'
+        case 'file':
+          return 'FilesHeader'
+        case 'mail':
+          return 'MailHeader'
+        case 'settings':
+          return 'SettingsHeader'
+      }
+      return ''
     },
   },
 }

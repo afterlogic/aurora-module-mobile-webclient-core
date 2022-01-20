@@ -2,12 +2,23 @@
   <q-toolbar style="height: 55px" class="justify-between">
     <q-btn
       flat
+      v-if="currentPaths.length <= 1"
       size="15px"
       @click="$emit('openDrawer')"
       color="black"
       round
       dense
       icon="menu"
+    />
+    <q-btn
+      v-if="currentPaths.length > 1"
+      flat
+      size="15px"
+      color="black"
+      round
+      dense
+      icon="chevron_left"
+      @click="onPreviousPath"
     />
     <div class="flex column">
       <q-btn-dropdown
@@ -95,6 +106,13 @@ export default {
     },
     showSearchHeader() {
       this.changeCurrentHeader('SearchHeader')
+    },
+    async onPreviousPath() {
+      await this.changeCurrentPaths({
+        path: this.currentPaths[this.currentPaths.length - 2],
+        lastStorage: false,
+      })
+      await this.asyncGetFiles()
     },
   },
 }

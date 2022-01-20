@@ -10,11 +10,7 @@
     @touchend.stop="selectFile"
   >
     <q-item-section avatar>
-      <file-icon
-        v-if="!file.isImg"
-        color="primary"
-        class="text-primary"
-      ></file-icon>
+      <file-item-icon v-if="!file.isImg" :fileName="file.name" />
       <div v-if="file.isImg" class="text-primary">
         <div
           class="img-preview"
@@ -25,9 +21,11 @@
         />
       </div>
     </q-item-section>
-    <q-item-section class="text-info">
-      <q-item-label class="text-subtitle1">{{ fileName }}</q-item-label>
-      <q-item-label v-if="!file.downloading">
+    <q-item-section>
+      <q-item-label class="text-subtitle1 text-dark file__name">{{
+        fileName
+      }}</q-item-label>
+      <q-item-label class="text-secondary file__info" v-if="!file.downloading">
         <div class="flex">
           <div class="q-mr-xs" v-if="isShared">
             <q-icon style="margin-bottom: 2px" size="11px" name="share" />
@@ -71,7 +69,7 @@
 </template>
 
 <script>
-import FileIcon from 'components/files/icons/FileIcon'
+import FileItemIcon from 'components/files/icons/FileItemIcon'
 import DownloadingProgress from 'components/files/common/DownloadingProgress'
 import { getShortName } from 'src/utils/files/utils'
 import text from 'src/utils/text'
@@ -82,7 +80,7 @@ import { getApiHost } from 'src/api/helpers'
 export default {
   name: 'FileItem',
   components: {
-    FileIcon,
+    FileItemIcon,
     DownloadingProgress,
   },
   props: {

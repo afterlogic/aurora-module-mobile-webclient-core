@@ -14,7 +14,7 @@ import SelectHeader from 'components/files/header/SelectHeader'
 import CopyMoveHeader from 'components/files/header/CopyMoveHeader'
 import FileInfoHeader from 'components/files/header/FileInfoHeader'
 import SearchHeader from 'components/files/header/SearchHeader'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'FilesHeader',
   components: {
@@ -58,6 +58,18 @@ export default {
     isSearchHeader() {
       return this.currentHeader === 'SearchHeader' && !this.isInfoHeader
     },
+  },
+  methods: {
+    ...mapActions('files', [
+      'changeCurrentHeader',
+      'changeSearchText',
+      'clearItemLists',
+    ]),
+  },
+  beforeUnmount() {
+    this.changeSearchText('')
+    this.changeCurrentHeader('')
+    this.clearItemLists()
   },
 }
 </script>
