@@ -1,5 +1,6 @@
 import AppApi from 'src/api'
 import settings from 'src/settings'
+import store from 'src/store'
 
 const core = {
   appData: null,
@@ -11,9 +12,9 @@ const core = {
 }
 export default {
   init() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (core.appData === null) {
-        core.requestAppData().then(resolve, reject)
+        this.requestAppData().then(resolve)
       } else {
         resolve()
       }
@@ -21,5 +22,7 @@ export default {
   },
   async requestAppData() {
     await core.requestAppData()
+    const user = settings.getUser()
+    await store.dispatch('core/changeCurrentUser', user)
   },
 }

@@ -16,7 +16,7 @@ const mixins = {
 }
 
 import UploaderComponent from 'components/files/common/UploaderComponent'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default defineComponent({
   mixins: [mixins],
   name: 'App',
@@ -41,11 +41,9 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapActions('core', ['changeLocale']),
     async populate() {
       this.checkToken()
       this.selectPath(this.hasAuthToken)
-      await this.init()
     },
     selectPath(hasAuthToken) {
       if (hasAuthToken) {
@@ -56,9 +54,6 @@ export default defineComponent({
     },
     checkToken() {
       this.$store.dispatch('user/init')
-    },
-    async init() {
-      await this.$store.dispatch('core/init')
     },
   },
 })
