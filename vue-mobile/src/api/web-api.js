@@ -9,7 +9,6 @@ import { saveAs } from 'file-saver'
 import _ from 'lodash'
 import notification from 'src/utils/notification'
 import store from 'src/store'
-import { i18n } from 'boot/i18n'
 
 export default {
   sendRequest: function ({
@@ -19,7 +18,6 @@ export default {
     silentError = false,
     defaultText,
   }) {
-    console.log(i18n, 'i18n')
     return new Promise((resolve, reject) => {
       const unknownError = {
         ErrorCode: 0,

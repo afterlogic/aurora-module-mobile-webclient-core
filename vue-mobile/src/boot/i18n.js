@@ -13,9 +13,7 @@ export const i18n = createI18n({
 })
 
 function setI18nLanguage(lang) {
-  console.log(lang, 'setI18nLanguage')
   i18n.locale = lang
-  console.log(i18n, 'setI18nLanguage i18n')
   document.querySelector('html').setAttribute('lang', lang)
   return lang
 }

@@ -35,7 +35,6 @@ export default defineComponent({
   },
   watch: {
     locale(lang) {
-      console.log(lang, 'lang watch')
       this.$i18n.locale = lang
     },
     hasAuthToken(hasAuthToken) {

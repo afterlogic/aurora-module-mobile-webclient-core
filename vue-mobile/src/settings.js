@@ -9,7 +9,6 @@ class Settings {
   }
 
   _getShortLanguage(coreData) {
-    console.log(coreData.ShortLanguage, 'coreData.ShortLanguage')
     let shortLanguage = types.pString(coreData.ShortLanguage, 'en')
     if (
       _.isEmpty(shortLanguage) ||
@@ -34,7 +33,6 @@ export default {
       !_.isEmpty(settings.shortLanguage) &&
       i18n.global.availableLocales.indexOf(settings.shortLanguage) !== -1
     ) {
-      console.log(settings.shortLanguage, 'settings.shortLanguage')
       loadLanguageAsync(settings.shortLanguage)
     }
   },
