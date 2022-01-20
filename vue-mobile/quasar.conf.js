@@ -44,8 +44,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
-        //API: ctx.dev ? 'http://localhost:8888/aurora-platform/' : '',
-        API: 'https://aurora.afterlogic.com/',
+        API: ctx.dev ? 'http://localhost:8888/aurora-platform/' : '',
       },
 
       // transpile: false,
