@@ -7,11 +7,14 @@
     :placeholder="placeholder"
     lazy-rules
     :rules="rules"
+    label-color="yellow-5"
+    hide-bottom-space
   />
 </template>
 
 <script>
 import { errors } from 'src/utils/validation'
+
 export default {
   name: 'AppInput',
   props: {
@@ -19,11 +22,9 @@ export default {
     rulesProps: { type: Object, default: null },
     filled: { type: Boolean, default: false },
   },
-  data() {
-    return {
-      text: '',
-    }
-  },
+  data: () => ({
+    text: '',
+  }),
   computed: {
     rules() {
       const rules = []

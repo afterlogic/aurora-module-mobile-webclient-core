@@ -9,10 +9,7 @@ export default () => {
         methodName: 'Login',
         parameters,
       }).then((result) => {
-        if (result && result?.AuthToken) {
-          return result
-        }
-        return ''
+        return result
       })
     },
     logout() {

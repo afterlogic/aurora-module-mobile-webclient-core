@@ -1,8 +1,16 @@
-// app global css in SCSS form
+@import './quasar.variables.scss';
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 p {
   margin: 0;
+}
+
+a {
+  color: $primary;
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  text-decoration: none;
 }
