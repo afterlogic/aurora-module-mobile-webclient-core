@@ -50,7 +50,7 @@ export default defineComponent({
     },
     selectPath(hasAuthToken) {
       if (hasAuthToken) {
-        this.$router.replace('/mail')
+        // this.$router.replace('/mail')
       } else {
         this.$router.replace('/')
       }

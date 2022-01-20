@@ -6,7 +6,15 @@ class Settings {
   constructor(appData) {
     const coreData = types.pObject(appData.Core)
     this.shortLanguage = this._getShortLanguage(coreData)
-    this.user = types.pObject(appData.User)
+     this.user = types.pObject(appData.User)
+    const twoFactorAuth = types.pObject(appData.TwoFactorAuth)
+    this.AllowAuthenticatorApp = types.pBool(
+      twoFactorAuth.AllowAuthenticatorApp
+    )
+    this.AllowBackupCodes = types.pBool(twoFactorAuth.AllowBackupCodes)
+    this.AllowSecurityKeys = types.pBool(twoFactorAuth.AllowSecurityKeys)
+    this.AllowUsedDevices = types.pBool(twoFactorAuth.AllowUsedDevices)
+    this.TrustDevicesForDays = types.pBool(twoFactorAuth.TrustDevicesForDays)
   }
 
   _getShortLanguage(coreData) {

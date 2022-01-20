@@ -21,7 +21,7 @@ export default {
         //VueCookies.set('SameSite', 'None')
         commit('changeAuthTokenStatus', true)
       } else {
-        commit('changeAuthTokenStatus', false)
+        // commit('changeAuthTokenStatus', false)
       }
       return response
     },
