@@ -1,4 +1,7 @@
 import { route } from 'quasar/wrappers'
+import core from 'src/core'
+import settings from 'src/settings'
+import store from 'src/store'
 import {
   createRouter,
   createMemoryHistory,
@@ -34,6 +37,18 @@ export default route(function (/* { store, ssrContext } */) {
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   })
-
+  Router.beforeEach((to, from, next) => {
+    core.init().then(
+      async () => {
+        const lang = settings.getLocale()
+        console.log(lang, 'langg')
+        await store.dispatch('core/changeLocale', lang)
+        next()
+      },
+      (error) => {
+        console.log('core.init reject', error)
+      }
+    )
+  })
   return Router
 })

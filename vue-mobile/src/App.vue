@@ -17,7 +17,6 @@ const mixins = {
 
 import UploaderComponent from 'components/files/common/UploaderComponent'
 import { mapActions, mapGetters } from 'vuex'
-import settings from 'src/settings'
 export default defineComponent({
   mixins: [mixins],
   name: 'App',
@@ -60,8 +59,6 @@ export default defineComponent({
     },
     async init() {
       await this.$store.dispatch('core/init')
-      const lang = settings.getLocale()
-      this.changeLocale(lang)
     },
   },
 })

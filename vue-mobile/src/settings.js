@@ -6,6 +6,7 @@ class Settings {
   constructor(appData) {
     const coreData = types.pObject(appData.Core)
     this.shortLanguage = this._getShortLanguage(coreData)
+    this.user = types.pObject(appData.User)
   }
 
   _getShortLanguage(coreData) {
@@ -38,5 +39,8 @@ export default {
   },
   getLocale: () => {
     return settings.shortLanguage
+  },
+  getUser: () => {
+    return settings?.user
   },
 }

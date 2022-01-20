@@ -7,7 +7,7 @@ const loadedLanguages = ['en']
 
 export const i18n = createI18n({
   locale: 'en',
-  fallbackLocale: '',
+  fallbackLocale: 'en',
   lazy: true,
   messages,
 })

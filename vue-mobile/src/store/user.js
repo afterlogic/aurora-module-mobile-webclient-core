@@ -1,5 +1,6 @@
 import VueCookies from 'vue-cookies'
 import AppApi from '/src/api/index'
+import core from 'src/core'
 
 export default {
   namespaced: true,
@@ -14,7 +15,10 @@ export default {
       const response = await AppApi.User.login(parameters)
       console.log('DT: resp 1', response)
       if (response?.AuthToken) {
-        VueCookies.set('AuthToken', response?.AuthToken)
+        VueCookies.set(response?.AuthToken, 'AuthToken', response?.AuthToken)
+        console.log('response?.AuthToken')
+        await core.requestAppData()
+        console.log(231)
         //VueCookies.set('SameSite', 'None')
         commit('changeAuthTokenStatus', true)
       } else {

@@ -25,13 +25,10 @@ export default {
         commit('setAppData', appData)
       }
     },
-    async init({ dispatch, commit, state }) {
-      await dispatch('asyncGetAppData')
-
-      const appData = state.appData
-      settings.init(appData)
-      if (typesUtils.pObject(appData?.User)) {
-        commit('setCurrentUser', appData.User)
+    async init({ commit }) {
+      const user = settings.getUser()
+      if (typesUtils.pObject(user)) {
+        commit('setCurrentUser', user)
       }
     },
     changeLocale: ({ commit }, locale) => commit('SET_LOCALE', locale),
