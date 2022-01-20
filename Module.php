@@ -16,7 +16,13 @@ namespace Aurora\Modules\CoreMobileWebclient;
  */
 class Module extends \Aurora\System\Module\AbstractLicensedModule
 {
-    public function init() {
+	public function init() {
+		\Aurora\System\Router::getInstance()->registerArray(
+			self::GetName(),
+			[
+				'mobile-version' => [$this, 'EntryMobileVersion'],
+			]
+		);
 
 		\Aurora\Modules\Core\Classes\User::extend(
 			self::GetName(),
@@ -27,7 +33,17 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
 		$this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
 	}
 
-	public function GetSettings()
+	/**
+	 * @ignore
+	 */
+	public function EntryMobileVersion()
+	{
+        \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
+        $sResult = \file_get_contents('./static/vue-mobile/index.html');
+		return $sResult;
+	}
+
+    public function GetSettings()
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 

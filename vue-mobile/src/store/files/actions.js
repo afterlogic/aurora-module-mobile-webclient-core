@@ -6,6 +6,7 @@ import {
   getFiles,
   getFolders,
 } from 'src/utils/files/utils'
+import { getApiHost } from 'src/api/helpers'
 
 export default {
   asyncGetStorages: async ({ commit, dispatch }) => {
@@ -167,7 +168,7 @@ export default {
       commit('SET_ITEM_PROPERTY', {
         item: currentFile,
         property: 'publicLink',
-        value: `https://aurora.afterlogic.com/${result}`,
+        value: `${getApiHost()}${result}`,
       })
       if (parameters.Password) {
         commit('SET_ITEM_PROPERTY', {

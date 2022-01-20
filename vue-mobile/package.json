@@ -8,7 +8,9 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "prepare-langs": "node build-scripts/prepare-langs.js"
+    "prepare-langs": "node build-scripts/prepare-langs.js",
+    "prepare-files": "node build-scripts/prepare-files.js",
+    "build-production": "node build-scripts/build-production.js"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -16,6 +18,7 @@
     "core-js": "^3.6.5",
     "eslint-plugin-prettier": "^4.0.0",
     "file-saver": "^2.0.5",
+    "fs-extra": "^10.0.0",
     "iniparser": "^1.0.5",
     "lodash": "^4.17.21",
     "moment": "^2.24.0",

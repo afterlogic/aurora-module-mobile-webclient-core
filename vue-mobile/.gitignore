@@ -31,3 +31,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+/src/i18n/index.js
+/src/i18n/*/index.json
