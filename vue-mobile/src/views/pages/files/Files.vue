@@ -38,6 +38,7 @@
         @showDialog="showDialog"
         class="file"
       />
+      <files-captions v-if="!loadingStatus" />
       <div style="height: 130px" class="full-width" />
     </q-list>
     <div class="q-mt-xl flex items-center justify-center" v-if="loadingStatus">
@@ -48,7 +49,6 @@
         class="q-ma-md"
       />
     </div>
-    <files-captions v-if="!loadingStatus" />
     <create-button />
     <dialogs-list />
   </main-layout>

@@ -1,16 +1,25 @@
 <template>
-  <div class="q-mt-xl flex items-center justify-center text-h6 text-grey-6">
-    <div v-if="isFolderEmpty">Folder is empty</div>
-    <div v-if="isNothingFound">Nothing found</div>
-    <div v-if="isNoSharedFiles">No shared files</div>
+  <div class="caption flex items-center justify-center">
+    <div class="caption__inscription" v-if="isFolderEmpty">Folder is empty</div>
+    <div class="flex column caption__box" v-if="isStorageEmpty">
+      <div class="q-mb-md">
+        <box-icon />
+      </div>
+      <div>This storage is empty</div>
+    </div>
+    <div class="caption__inscription" v-if="isNothingFound">Nothing found</div>
   </div>
 </template>
 
 <script>
+import BoxIcon from 'components/files/icons/BoxIcon'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'FilesCaptions',
+  components: {
+    BoxIcon,
+  },
   computed: {
     ...mapGetters('files', [
       'downloadFiles',
@@ -20,6 +29,7 @@ export default {
       'currentStorage',
       'currentPath',
       'loadingStatus',
+      'currentPaths',
     ]),
     isFolder() {
       return !!this.currentPath
@@ -27,35 +37,45 @@ export default {
     isFolderEmpty() {
       return (
         !this.loadingStatus &&
-        !this.filesList.length &&
-        !this.foldersList.length &&
+        this.isNoFiles &&
         !this.searchText &&
         this.currentStorage.Type !== 'shared' &&
         this.isFolder &&
-        !this.downloadFiles.length
+        !this.downloadFiles.length &&
+        this.currentPaths.length !== 1
       )
     },
     isNothingFound() {
       return (
         !this.loadingStatus &&
-        !this.filesList.length &&
-        !this.foldersList.length &&
+        this.isNoFiles &&
         this.searchText &&
         !this.downloadFiles.length
       )
     },
-    isNoSharedFiles() {
+    isStorageEmpty() {
       return (
-        !this.filesList.length &&
-        !this.foldersList.length &&
-        this.currentStorage.Type === 'shared' &&
-        !this.searchText &&
-        !this.loadingStatus &&
-        !this.downloadFiles.length
+        this.isNoFiles && this.currentPaths.length === 1 && !this.isFolderEmpty
       )
+    },
+    isNoFiles() {
+      return !this.filesList.length && !this.foldersList.length
     },
   },
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.caption {
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #969494;
+  &__box {
+    margin-top: 266px;
+  }
+  &__inscription {
+    margin-top: 50px;
+  }
+}
+</style>
