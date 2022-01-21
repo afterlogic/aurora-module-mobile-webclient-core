@@ -55,7 +55,10 @@ export default {
     },
     isStorageEmpty() {
       return (
-        this.isNoFiles && this.currentPaths.length === 1 && !this.isFolderEmpty
+        this.isNoFiles &&
+        this.currentPaths.length === 1 &&
+        !this.isFolderEmpty &&
+        !this.isNothingFound
       )
     },
     isNoFiles() {

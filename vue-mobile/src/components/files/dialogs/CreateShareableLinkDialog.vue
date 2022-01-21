@@ -20,7 +20,7 @@
         <button-dialog
           :saving="saving"
           :action="createShareableLink"
-          label="Create shareable link"
+          :label="createBtnLabel"
         />
         <button-dialog :saving="saving" :action="cancelDialog" label="Cancel" />
       </q-card-actions>
@@ -31,24 +31,25 @@
       style="min-width: 350px"
     >
       <div class="q-pa-sm">
-        <div>
-          <div>
-            <span>{{ $t('FILESWEBCLIENT.LABEL_PUBLIC_LINK') }}</span>
-          </div>
-          <div class="q-mt-xs">
-            <q-icon class="q-mr-sm" size="sm" name="content_copy" />
-            <span>{{ file.publicLink }}</span>
-          </div>
-        </div>
-        <div v-if="file.linkPassword" class="q-mt-md">
-          <div>
-            <span>{{ $t('FILESWEBCLIENT.LABEL_PUBLIC_LINK') }}</span>
-          </div>
-          <div>
-            <q-icon class="q-mr-sm" size="sm" name="content_copy" />
-            <span>{{ file.linkPassword }}</span>
-          </div>
-        </div>
+        <app-dialog-input
+          :placeholder="$t('FILESWEBCLIENT.LABEL_PUBLIC_LINK')"
+          ref="link"
+          v-model="publicLink"
+          readonly
+          @click.stop="
+            copyText(publicLink, $t('FILESWEBCLIENT.LABEL_PUBLIC_LINK'))
+          "
+        />
+        <app-dialog-input
+          v-if="file.linkPassword"
+          :placeholder="$t('COREWEBCLIENT.LABEL_PASSWORD')"
+          ref="pass"
+          v-model="linkPassword"
+          @click.stop="
+            copyText(linkPassword, $t('COREWEBCLIENT.LABEL_PASSWORD'))
+          "
+          readonly
+        />
       </div>
       <q-card-actions align="right">
         <button-dialog
@@ -73,22 +74,35 @@
 
 <script>
 import ButtonDialog from 'components/files/common/ButtonDialog'
+import AppDialogInput from 'components/common/AppDialogInput'
 import { mapActions } from 'vuex'
+import notification from 'src/utils/notification'
 
 export default {
   name: 'CreateShareableLinkDialog',
-  components: { ButtonDialog },
+  components: { ButtonDialog, AppDialogInput },
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false },
   },
-  data() {
-    return {
-      withPassword: false,
-      openDialog: false,
-      saving: false,
-    }
+  mounted() {
+    this.publicLink = this.file.publicLink
+    this.linkPassword = this.file.linkPassword
   },
+  computed: {
+    createBtnLabel() {
+      return this.withPassword
+        ? 'Create protected link'
+        : 'Create shareable link'
+    },
+  },
+  data: () => ({
+    withPassword: false,
+    openDialog: false,
+    saving: false,
+    publicLink: '',
+    linkPassword: '',
+  }),
   watch: {
     dialog(val) {
       this.openDialog = val
@@ -101,12 +115,21 @@ export default {
     ]),
     async createShareableLink() {
       await this.asyncCreateShareableLink({ withPassword: this.withPassword })
+      this.publicLink = this.file.publicLink
+      this.linkPassword = this.file.linkPassword
     },
     async removeLink() {
       this.saving = true
       const result = await this.asyncDeletePublicLink()
       this.saving = false
       if (result) this.$emit('closeDialog')
+    },
+    copyText(text, valueName) {
+      navigator.clipboard.writeText(text).then(() => {
+        notification.showReport(
+          `The ${valueName} has been copied to the clipboard.`
+        )
+      })
     },
     cancelDialog() {
       this.$emit('closeDialog')

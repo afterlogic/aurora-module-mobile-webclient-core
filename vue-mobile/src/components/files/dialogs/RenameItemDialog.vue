@@ -1,25 +1,18 @@
 <template>
   <q-dialog v-model="openDialog" @escape-key="cancelDialog">
-    <q-card class="q-dialog-size q-pt-md q-px-sm" style="min-width: 300px">
-      <div style="font-size: 15px" class="q-px-md text-bold text-black text">
-        <span>{{ inscription }}</span>
-      </div>
+    <q-card class="q-dialog-size q-pt-md" style="min-width: 300px">
       <q-item>
-        <app-input
+        <app-dialog-input
           placeholder="File name"
-          outlined
-          autofocus
-          dense
           v-model="itemName"
-          style="width: 250px"
-          @keyup.enter="renameItem"
+          :autofocus="true"
         />
       </q-item>
       <q-card-actions align="right">
         <button-dialog
           :saving="saving"
           :action="renameItem"
-          :label="$t('FILESWEBCLIENT.ACTION_RENAME')"
+          :label="inscription"
         />
         <button-dialog
           :saving="saving"
@@ -32,12 +25,12 @@
 </template>
 
 <script>
-import AppInput from 'components/common/AppInput'
+import AppDialogInput from 'components/common/AppDialogInput'
 import ButtonDialog from 'components/files/common/ButtonDialog'
 import { mapActions } from 'vuex'
 export default {
   name: 'RenameItemDialog',
-  components: { AppInput, ButtonDialog },
+  components: { ButtonDialog, AppDialogInput },
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false },
@@ -57,6 +50,9 @@ export default {
   watch: {
     dialog(val) {
       this.openDialog = val
+    },
+    itemName(val) {
+      console.log(val, 'val')
     },
   },
   methods: {

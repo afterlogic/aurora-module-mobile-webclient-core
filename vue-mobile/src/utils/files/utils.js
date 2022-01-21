@@ -1,6 +1,7 @@
 import typesUtils from 'src/utils/types'
 import store from 'src/store'
 import { fileTypes } from 'src/utils/files/formats'
+import { getApiHost } from 'src/api/helpers'
 
 const imgFormats = ['jpeg', 'png', 'jpg', 'JPG', 'jpeg']
 const getFormatFile = (name) => {
@@ -18,6 +19,11 @@ const isCopied = (hash) => {
   const index = copiedFiles.findIndex((file) => file.hash === hash)
   return !!(index + 1)
 }
+
+const getPublicLink = (link) => {
+  return link ? getApiHost() + link : ''
+}
+
 const parseFile = (file) => {
   return {
     loading: false,
@@ -33,7 +39,9 @@ const parseFile = (file) => {
     path: typesUtils.pString(file.Path),
     isFolder: typesUtils.pBool(file.IsFolder),
     shares: typesUtils.pArray(file?.ExtendedProps?.Shares),
-    publicLink: typesUtils.pString(file?.ExtendedProps?.PublicLink),
+    publicLink: getPublicLink(
+      typesUtils.pString(file?.ExtendedProps?.PublicLink)
+    ),
     linkPassword: '',
     downloadUrl: typesUtils.pString(file?.Actions?.download?.url),
     eitUrl: typesUtils.pString(file?.Actions?.edit?.url),
