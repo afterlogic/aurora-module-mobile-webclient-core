@@ -30,7 +30,7 @@ export default {
         (item) => item.hash === folder.hash
       )
       if (itemIndex !== -1) {
-        state.folderList.splice(itemIndex, 1)
+        state.foldersList.splice(itemIndex, 1)
       }
     })
   },

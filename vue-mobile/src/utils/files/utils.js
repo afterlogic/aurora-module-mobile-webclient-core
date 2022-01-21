@@ -88,7 +88,7 @@ export const getParseFolders = (items) => {
 export const getFiles = (items) => {
   const files = []
   items.forEach((file) => {
-    if (!file.IsFolder) {
+    if (!file.isFolder) {
       files.push(file)
     }
   })
@@ -97,7 +97,7 @@ export const getFiles = (items) => {
 export const getFolders = (items) => {
   const folders = []
   items.forEach((file) => {
-    if (file.IsFolder) {
+    if (file.isFolder) {
       folders.push(file)
     }
   })

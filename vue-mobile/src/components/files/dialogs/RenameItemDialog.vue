@@ -1,6 +1,9 @@
 <template>
   <q-dialog v-model="openDialog" @escape-key="cancelDialog">
     <q-card class="q-dialog-size q-pt-md q-px-sm" style="min-width: 300px">
+      <div style="font-size: 15px" class="q-px-md text-bold text-black text">
+        <span>{{ inscription }}</span>
+      </div>
       <q-item>
         <app-input
           placeholder="File name"
@@ -16,7 +19,7 @@
         <button-dialog
           :saving="saving"
           :action="renameItem"
-          :label="$t('COREWEBCLIENT.ACTION_SAVE')"
+          :label="$t('FILESWEBCLIENT.ACTION_RENAME')"
         />
         <button-dialog
           :saving="saving"
@@ -38,6 +41,11 @@ export default {
   props: {
     file: { type: Object, default: null },
     dialog: { type: Boolean, default: false },
+  },
+  computed: {
+    inscription() {
+      return this.file.isFolder ? 'Rename folder' : 'Rename file'
+    },
   },
   data() {
     return {
