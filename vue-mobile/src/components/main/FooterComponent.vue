@@ -1,20 +1,27 @@
 <template>
   <q-footer elevated class="bg-white">
-    <component :is="component"></component>
+    <component :is="component" />
   </q-footer>
 </template>
 
 <script>
-import FileFooter from 'components/files/footer/FileFooter'
+import CopiedFooter from 'components/files/footer/CopiedFooter'
+import DefaultFooter from 'components/common/footer/DefaultFooter'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FooterComponent',
   components: {
-    FileFooter,
+    CopiedFooter,
+    DefaultFooter,
   },
   computed: {
+    ...mapGetters('files', ['copiedFiles']),
     component() {
-      return 'FileFooter'
+      return this.isCopiedFiles ? 'CopiedFooter' : 'DefaultFooter'
+    },
+    isCopiedFiles() {
+      return !!this.copiedFiles.length
     },
   },
 }

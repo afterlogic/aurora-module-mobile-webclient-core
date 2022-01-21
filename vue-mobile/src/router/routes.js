@@ -4,6 +4,10 @@ const routes = [
     component: () => import('src/views/pages/LoginMobile'),
   },
   {
+    path: '/contacts',
+    component: () => import('src/views/pages/Contacts'),
+  },
+  {
     path: '/files',
     component: () => import('src/views/pages/files/Files'),
   },
