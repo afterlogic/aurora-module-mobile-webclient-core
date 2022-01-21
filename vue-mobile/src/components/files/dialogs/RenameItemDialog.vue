@@ -71,9 +71,9 @@ export default {
         if (result) {
           await this.changeFileName(this.itemName)
           this.openDialog = false
-          this.saving = false
           this.$emit('closeDialog')
         }
+        this.saving = false
       }
     },
     cancelDialog() {

@@ -61,10 +61,10 @@ export default {
       this.saving = true
       const result = await this.asyncCreateFolder({ name: this.folderName })
       if (result) {
-        this.saving = false
         this.$emit('closeDialog')
         await this.asyncGetFiles()
       }
+      this.saving = false
     },
     cancelDialog() {
       this.$emit('closeDialog')

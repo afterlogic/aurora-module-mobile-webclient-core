@@ -215,8 +215,10 @@ export default {
       )
     },
     async save() {
+      this.saving = true
       const parameters = getParametersForShare(this.contactsList, this.file)
       const result = await this.asyncUpdateShare(parameters)
+      this.saving = false
     },
     cancel() {
       this.$emit('closeDialog')

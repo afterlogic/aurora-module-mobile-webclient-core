@@ -20,48 +20,64 @@ export default () => {
         moduleName: 'Files',
         methodName: 'GetFiles',
         parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return []
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return []
+        })
+        .catch(() => {
+          return []
+        })
     },
     getStorages: async () => {
       return WebApi.sendRequest({
         moduleName: 'Files',
         methodName: 'GetStorages',
         parameters: {},
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return []
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return []
+        })
+        .catch(() => {
+          return []
+        })
     },
     renameItem: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'Files',
         methodName: 'Rename',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     deleteItems: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'Files',
         methodName: 'Delete',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     copyMoveItems: async (parameters, method) => {
       return WebApi.sendRequest({
@@ -69,12 +85,16 @@ export default () => {
         methodName: method,
         parameters: parameters,
         defaultText: i18n.$t.FILESWEBCLIENT.ERROR_FILES_MOVE_PLURAL,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     createFolder: async (parameters) => {
       return WebApi.sendRequest({
@@ -82,71 +102,95 @@ export default () => {
         methodName: 'CreateFolder',
         parameters: parameters,
         defaultText: i18n.$t.FILESWEBCLIENT.ERROR_INVALID_FOLDER_NAME,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     createShareableLink: async (parameters, module) => {
       return WebApi.sendRequest({
         moduleName: module,
         methodName: 'CreatePublicLink',
         parameters: parameters,
-      }).then((result) => {
-        if (_.isString(result?.link)) return result.link
-        if (result) return result
-        return false
       })
+        .then((result) => {
+          if (_.isString(result?.link)) return result.link
+          if (result) return result
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     deletePublicLink: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'Files',
         methodName: 'DeletePublicLink',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     updateShare: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'SharedFiles',
         methodName: 'UpdateShare',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     getHistory: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'ActivityHistory',
         methodName: 'GetList',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     clearHistory: async (parameters) => {
       return WebApi.sendRequest({
         moduleName: 'ActivityHistory',
         methodName: 'Delete',
         parameters: parameters,
-      }).then((result) => {
-        if (result) {
-          return result
-        }
-        return false
       })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return false
+        })
+        .catch(() => {
+          return false
+        })
     },
     downloadFile: async (file) => {
       const parameters = {
