@@ -38,8 +38,8 @@ export default {
 <style scoped>
 .create-btn {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
+  bottom: 68px;
+  right: 10px;
   transition-duration: 300ms;
 }
 .rotate {

@@ -55,8 +55,8 @@ export default {
   box-shadow: none;
   position: fixed;
   z-index: 1;
-  bottom: 170px;
-  right: 19px;
+  bottom: 138px;
+  right: 9px;
   margin-right: 2px;
 }
 </style>
