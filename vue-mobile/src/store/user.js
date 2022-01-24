@@ -42,7 +42,7 @@ export default {
       commit('changeAuthTokenStatus', !!authToken)
     },
     logout: ({ commit }) => {
-      VueCookies.set('AuthToken', '')
+      VueCookies.remove('AuthToken')
       commit('changeAuthTokenStatus', false)
     },
   },
