@@ -3,7 +3,7 @@
     <FolderBlurredIcon class="absolute login-page__back-icon" />
     <div class="full-width text-weight-medium login-page__text">
       <FolderFilledIcon />
-      <p class="q-mt-xl login-page__text__heading">
+      <p class="q-mt-lg login-page__text__heading">
         {{ $t('MOBILEAPPSWEBCLIENT.HEADING_FILES_APP') }}
       </p>
       <p class="q-mt-lg text-grey-5">LOG IN TO CONTINUE</p>
@@ -11,22 +11,8 @@
     <div
       class="content-between full-width full-height flex column justify-between"
     >
-      <div>
-        <div v-if="!isTwoFactor">
-          <q-form>
-            <AppInput
-              type="email"
-              v-model="login"
-              :placeholder="$t('COREWEBCLIENT.LABEL_EMAIL')"
-            />
-            <AppInput
-              type="password"
-              v-model="password"
-              placeholder="Password"
-            />
-          </q-form>
-        </div>
-        <div v-else class="text-center two-factor">
+      <div class="full-width">
+        <div v-if="isTwoFactor" class="text-center two-factor full-width">
           <p class="text-weight-medium two-factor__heading">
             {{ $t('TWOFACTORAUTH.HEADING_TWA_VERIFICATION') }}
           </p>
@@ -49,10 +35,11 @@
                 class="q-mt-md"
               />
             </div>
-            <div v-else-if="trustDeviceForm">
+            <div v-else-if="trustDeviceForm && getAuthTokenStatus">
               <p class="q-mt-sm">You’re all set</p>
               <AppCheckbox
                 v-model="trustDevice"
+                leftLabel
                 label="Don’t ask again on this device for 14 days"
               />
               <AppButton
@@ -94,6 +81,20 @@
             </div>
           </div>
         </div>
+        <div v-else class="page-body-login full-width">
+          <q-form>
+            <AppInput
+              type="email"
+              v-model="login"
+              :placeholder="$t('COREWEBCLIENT.LABEL_EMAIL')"
+            />
+            <AppInput
+              type="password"
+              v-model="password"
+              placeholder="Password"
+            />
+          </q-form>
+        </div>
       </div>
       <div class="q-pb-xl text-center">
         <div v-if="!isTwoFactor">
@@ -127,6 +128,8 @@ import FolderFilledIcon from 'components/common/icons/login/FolderFilledIcon'
 import FolderBlurredIcon from 'components/common/icons/login/FolderBlurredIcon'
 import { mapActions, mapGetters } from 'vuex'
 import AppCheckbox from 'components/common/AppCheckbox'
+import settings from 'src/settings'
+import DeviceUUID from 'device-uuid'
 
 export default {
   name: 'LoginMobile',
@@ -156,9 +159,18 @@ export default {
         ? !this.verificationCode
         : !this.backupCode
     },
+    code() {
+      return this.verificationOption === 'backup'
+        ? this.backupCode
+        : this.verificationCode
+    },
   },
   methods: {
-    ...mapActions('user', ['loginFunc']),
+    ...mapActions('user', [
+      'loginFunc',
+      'confirmTwoFactorAuth',
+      'trustTheDevice',
+    ]),
     async proceedLogin() {
       const parameters = {
         Login: this.login,
@@ -166,18 +178,37 @@ export default {
       }
       const response = await this.loginFunc(parameters)
       if (response && response.TwoFactorAuth) {
+        const data = settings.getTwoFactorData()
         this.isTwoFactor = true
+        this.trustDeviceForm = data.allowUsedDevices
       }
+      console.log('DB: this', this)
     },
-    verifyCode() {
-      console.log('DT: verify', this.verificationCode)
+    async verifyCode() {
+      const data = {
+        Login: this.login,
+        Password: this.password,
+        Code: this.code,
+      }
+      await this.confirmTwoFactorAuth(data)
     },
     chooseMethod(method) {
       this.isMethodChoosing = false
       this.verificationOption = method
     },
-    goHome() {
-      console.log('DT: goHome')
+    async goHome() {
+      const uuid = DeviceUUID.DeviceUUID().get()
+      const deviceName = window.navigator.userAgent
+      const data = {
+        Login: this.login,
+        Password: this.password,
+        Code: this.code,
+        DeviceId: uuid,
+        DeviceName: deviceName,
+      }
+      console.log('DB: data', data)
+      await this.trustTheDevice(data)
+      await this.$router.push('/mail')
     },
   },
 }
@@ -185,6 +216,8 @@ export default {
 
 <style lang="scss" scoped>
 .login-page {
+  flex-wrap: inherit;
+
   &__back-icon {
     margin-left: -1.5rem;
   }
@@ -197,10 +230,15 @@ export default {
     }
   }
   .two-factor {
+    padding-top: 6.25rem;
+
     &__heading {
       font-size: 1.125rem;
       line-height: 1.25rem;
     }
+  }
+  .page-body-login {
+    padding-top: 9.25rem;
   }
 }
 </style>

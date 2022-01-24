@@ -1,5 +1,6 @@
 import typesUtils from 'src/utils/types.js'
 import AppApi from '/src/api/index'
+import settings from 'src/settings'
 
 export default {
   namespaced: true,
@@ -9,9 +10,6 @@ export default {
     locale: 'en',
   },
   mutations: {
-    setAppData(state, appData) {
-      state.appData = appData
-    },
     SET_CURRENT_USER: (state, user) => (state.user = user),
     SET_LOCALE: (state, locale) => (state.locale = locale),
   },

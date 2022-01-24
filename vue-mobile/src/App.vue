@@ -18,7 +18,7 @@ const mixins = {
 }
 
 import UploaderComponent from 'components/files/common/UploaderComponent'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default defineComponent({
   mixins: [mixins],
   name: 'App',

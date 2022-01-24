@@ -12,6 +12,24 @@ export default () => {
         return result
       })
     },
+    confirmTwoFactorAuth: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'VerifyAuthenticatorAppCode',
+        parameters,
+      }).then((result) => {
+        return result
+      })
+    },
+    trustTheDevice: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'TrustDevice',
+        parameters,
+      }).then((result) => {
+        return result
+      })
+    },
     logout() {
       return WebApi.sendRequest({
         moduleName: 'Core',
