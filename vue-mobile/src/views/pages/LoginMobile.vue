@@ -177,7 +177,10 @@ export default {
         Password: this.password,
       }
       const response = await this.loginFunc(parameters)
-      if (response && response.TwoFactorAuth) {
+      if (response?.AuthToken) {
+        await this.$router.push('/mail')
+      }
+      if (response?.TwoFactorAuth) {
         const data = settings.getTwoFactorData()
         this.isTwoFactor = true
         this.trustDeviceForm = data.allowUsedDevices
