@@ -205,6 +205,7 @@ export default {
         Code: this.code,
         DeviceId: uuid,
         DeviceName: deviceName,
+        Trust: this.trustDevice,
       }
       console.log('DB: data', data)
       await this.trustTheDevice(data)
