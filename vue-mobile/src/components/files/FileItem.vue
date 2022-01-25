@@ -17,6 +17,8 @@
           :style="{
             background: `url(${filePreview}) no-repeat center`,
             'background-size': 'contain',
+            width: '32px',
+            height: '32px',
           }"
         />
       </div>

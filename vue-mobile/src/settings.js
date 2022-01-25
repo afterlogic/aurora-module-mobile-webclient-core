@@ -1,12 +1,15 @@
 import { i18n, loadLanguageAsync } from 'boot/i18n'
 import _ from 'lodash'
 import types from 'src/utils/types'
+import VueCookies from 'vue-cookies'
 
 class Settings {
   constructor(appData) {
     const coreData = types.pObject(appData.Core)
     this.shortLanguage = this._getShortLanguage(coreData)
     this.user = types.pObject(appData.User)
+    this.cookiePath = types.pString(coreData.CookiePath)
+    this.cookieSecure = types.pBool(coreData.CookieSecure)
     const twoFactorAuth = types.pObject(appData.TwoFactorAuth)
     console.log('DT: twoFactorAuth settings', twoFactorAuth)
     this.allowUsedDevices = types.pBool(twoFactorAuth.AllowUsedDevices)
@@ -39,6 +42,9 @@ export default {
       i18n.global.availableLocales.indexOf(settings.shortLanguage) !== -1
     ) {
       loadLanguageAsync(settings.shortLanguage)
+    }
+    if (process.env.NODE_ENV !== 'development') {
+      VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
   },
   getLocale: () => {

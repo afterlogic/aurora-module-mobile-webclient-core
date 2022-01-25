@@ -51,9 +51,6 @@ export default {
     dialog(val) {
       this.openDialog = val
     },
-    itemName(val) {
-      console.log(val, 'val')
-    },
   },
   methods: {
     ...mapActions('files', ['asyncRenameItem', 'changeFileName']),

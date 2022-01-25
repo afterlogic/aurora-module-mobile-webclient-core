@@ -41,7 +41,6 @@ export default route(function (/* { store, ssrContext } */) {
     core.init().then(
       async () => {
         const lang = settings.getLocale()
-        console.log(lang, 'langg')
         await store.dispatch('core/changeLocale', lang)
         next()
       },

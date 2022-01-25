@@ -1,6 +1,6 @@
 <template>
   <main-layout title="File info">
-    <div class="file">
+    <div class="file__info">
       <div class="flex items-center justify-center">
         <div v-if="!currentFile.thumbnailUrl" class="file__preview">
           <file-item-icon
@@ -75,5 +75,9 @@ export default {
 .file__preview {
   margin-top: 60px;
   margin-bottom: 60px;
+}
+.img-preview {
+  height: 200px;
+  min-width: 100px;
 }
 </style>
