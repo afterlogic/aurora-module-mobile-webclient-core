@@ -54,14 +54,7 @@
                 'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_IMPORT_STRING_KEY'
               )
             "
-            class="q-mt-md"
-          />
-          <app-button
-            :label="
-              $t(
-                'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_GENERATE_NEW_KEY'
-              )
-            "
+            @click="showImportKeyDialog = true"
             class="q-mt-md"
           />
         </div>
@@ -74,6 +67,7 @@
         :label="$t('COREWEBCLIENT.ACTION_SAVE')"
       />
     </div>
+    <import-key-from-stying v-model="showImportKeyDialog" />
   </div>
 </template>
 
@@ -82,17 +76,20 @@ import AppCheckbox from 'components/common/AppCheckbox'
 import AppButton from 'components/common/AppButton'
 import settings from 'src/settings'
 import { mapActions } from 'vuex'
+import ImportKeyFromStying from 'components/settings/paranoid/dialogs/ImportKeyFromStying'
 
 export default {
   name: 'ParanoidEncryption',
   components: {
     AppCheckbox,
     AppButton,
+    ImportKeyFromStying,
   },
   data: () => ({
     enableModule: false,
     enableInPersonalStorage: false,
     enableBackwardCompatibility: false,
+    showImportKeyDialog: false,
   }),
   mounted() {
     const data = settings.getCoreParanoidEncryptionSettings()

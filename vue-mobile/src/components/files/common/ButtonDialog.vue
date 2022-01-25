@@ -16,7 +16,7 @@ export default {
   name: 'ButtonDialog',
   props: {
     saving: { type: Boolean, default: false },
-    action: { type: Function, required: true },
+    action: { type: Function, default: null },
   },
 }
 </script>

@@ -9,6 +9,7 @@
       class="q-ma-md"
       outlined
       dense
+      :autofocus="autofocus"
     />
   </div>
 </template>
@@ -18,6 +19,7 @@ export default {
   name: 'AppDialogInput',
   props: {
     placeholder: { type: String, default: '' },
+    autofocus: { type: Boolean, default: false },
   },
 }
 </script>
