@@ -2,6 +2,7 @@ import files from './files'
 import user from './user'
 import core from './core'
 import contacts from './contacts'
+import settings from './settings'
 import Vuex from 'vuex'
 
 export default new Vuex.Store({
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     files,
     core,
     contacts,
+    settings,
   },
 
   // enable strict mode (adds overhead!)

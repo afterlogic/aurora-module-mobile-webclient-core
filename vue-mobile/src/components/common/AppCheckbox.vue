@@ -1,6 +1,6 @@
 <template>
   <q-checkbox
-    v-model="checked"
+    v-bind="$attrs"
     :left-label="leftLabel"
     :label="label"
     color="primary"
@@ -16,9 +16,6 @@ export default {
     label: { type: String, default: '' },
     leftLabel: { type: Boolean, default: false },
   },
-  data: () => ({
-    checked: '',
-  }),
 }
 </script>
 

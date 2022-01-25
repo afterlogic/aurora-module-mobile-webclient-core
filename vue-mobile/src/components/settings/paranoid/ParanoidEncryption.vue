@@ -3,7 +3,7 @@
     <div>
       <app-checkbox
         class="settings__checkbox"
-        v-model="enableParanoidEncryption"
+        v-model="enableModule"
         left-label
         :label="
           $t('COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.LABEL_ENABLE_JSCRYPTO')
@@ -16,7 +16,7 @@
       </div>
       <app-checkbox
         class="settings__checkbox q-mt-md"
-        v-model="allowEncryptingFiles"
+        v-model="enableInPersonalStorage"
         left-label
         label="Allow encrypting files in Personal Storage"
       />
@@ -29,18 +29,48 @@
           }}
         </span>
       </div>
-      <app-button
-        :label="
-          $t(
-            'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_ENABLE_BACKWARD_COMPATIBILITY'
-          )
-        "
-        class="q-mt-lg"
-      />
+      <div>
+        <div v-if="!enableBackwardCompatibility">
+          <app-button
+            @click="enableBackwardCompatibility = true"
+            :label="
+              $t(
+                'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_ENABLE_BACKWARD_COMPATIBILITY'
+              )
+            "
+            class="q-mt-lg"
+          />
+        </div>
+        <div v-if="enableBackwardCompatibility">
+          <app-button
+            :label="
+              $t('COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_IMPORT_FILE_KEY')
+            "
+            class="q-mt-lg"
+          />
+          <app-button
+            :label="
+              $t(
+                'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_IMPORT_STRING_KEY'
+              )
+            "
+            class="q-mt-md"
+          />
+          <app-button
+            :label="
+              $t(
+                'COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.ACTION_GENERATE_NEW_KEY'
+              )
+            "
+            class="q-mt-md"
+          />
+        </div>
+      </div>
     </div>
     <div class="full-width">
       <app-button
         class="settings__save-btn"
+        @click="save"
         :label="$t('COREWEBCLIENT.ACTION_SAVE')"
       />
     </div>
@@ -50,6 +80,8 @@
 <script>
 import AppCheckbox from 'components/common/AppCheckbox'
 import AppButton from 'components/common/AppButton'
+import settings from 'src/settings'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ParanoidEncryption',
@@ -58,15 +90,37 @@ export default {
     AppButton,
   },
   data: () => ({
-    enableParanoidEncryption: false,
-    allowEncryptingFiles: false,
+    enableModule: false,
+    enableInPersonalStorage: false,
+    enableBackwardCompatibility: false,
   }),
+  mounted() {
+    const data = settings.getCoreParanoidEncryptionSettings()
+    this.enableModule = data.enableModule
+    this.enableInPersonalStorage = data.enableInPersonalStorage
+  },
+  methods: {
+    ...mapActions('settings', ['asyncChangeParanoidEncryptionSettings']),
+    async save() {
+      const parameters = {
+        EnableModule: this.enableModule,
+        EnableInPersonalStorage: this.enableInPersonalStorage,
+      }
+      const result = await this.asyncChangeParanoidEncryptionSettings(
+        parameters
+      )
+      if (result) {
+        settings.setEncryptFilesPersonalStorage(this.enableInPersonalStorage)
+        settings.setEnableParanoidEncryption(this.enableModule)
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .settings {
-  height: 100vh;
+  height: 86vh;
   &__checkbox {
     font-size: 14px;
     line-height: 16px;
@@ -77,7 +131,7 @@ export default {
     line-height: 14px;
   }
   &__save-btn {
-    margin-bottom: 180px;
+    margin-bottom: 40px;
   }
 }
 </style>

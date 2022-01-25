@@ -13,6 +13,30 @@ class Settings {
     const twoFactorAuth = types.pObject(appData.TwoFactorAuth)
     this.allowUsedDevices = types.pBool(twoFactorAuth.AllowUsedDevices)
     this.trustDevicesForDays = types.pInt(twoFactorAuth.TrustDevicesForDays)
+    const coreParanoidEncryptionWebclientPlugin = types.pObject(
+      appData.CoreParanoidEncryptionWebclientPlugin
+    )
+    this.allowChangeSettings = types.pBool(
+      coreParanoidEncryptionWebclientPlugin.AllowChangeSettings
+    )
+    this.allowMultiChunkUpload = types.pBool(
+      coreParanoidEncryptionWebclientPlugin.AllowMultiChunkUpload
+    )
+    this.chunkSizeMb = types.pInt(
+      coreParanoidEncryptionWebclientPlugin.ChunkSizeMb
+    )
+    this.dontRemindMe = types.pBool(
+      coreParanoidEncryptionWebclientPlugin.DontRemindMe
+    )
+    this.enableInPersonalStorage = types.pBool(
+      coreParanoidEncryptionWebclientPlugin.EnableInPersonalStorage
+    )
+    this.enableModule = types.pBool(
+      coreParanoidEncryptionWebclientPlugin.EnableModule
+    )
+    this.encryptionMode = types.pInt(
+      coreParanoidEncryptionWebclientPlugin.EncryptionMode
+    )
   }
 
   _getShortLanguage(coreData) {
@@ -57,5 +81,17 @@ export default {
       allowUsedDevices: settings?.allowUsedDevices,
       trustDevicesForDays: settings?.trustDevicesForDays,
     }
+  },
+  getCoreParanoidEncryptionSettings: () => {
+    return {
+      enableInPersonalStorage: settings.enableInPersonalStorage,
+      enableModule: settings.enableModule,
+    }
+  },
+  setEnableParanoidEncryption: (enableModule) => {
+    settings.enableModule = enableModule
+  },
+  setEncryptFilesPersonalStorage: (enableInPersonalStorage) => {
+    settings.enableInPersonalStorage = enableInPersonalStorage
   },
 }
