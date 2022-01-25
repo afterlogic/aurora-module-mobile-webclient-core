@@ -6,11 +6,13 @@
 
 <script>
 import FilesHeader from 'components/files/header/FilesHeader'
+import SettingsHeader from 'components/settings/header/SettingsHeader'
 
 export default {
   name: 'HeaderComponent',
   components: {
     FilesHeader,
+    SettingsHeader,
   },
   computed: {
     component() {

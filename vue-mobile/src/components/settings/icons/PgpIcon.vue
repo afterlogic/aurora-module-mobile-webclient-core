@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'KeyIcon',
+  name: 'PgpIcon',
 }
 </script>
 

@@ -22,6 +22,17 @@ const routes = [
   {
     path: '/settings',
     component: () => import('src/views/pages/Settings'),
+    children: [
+      {
+        path: '/settings/menu',
+        component: () => import('src/components/settings/SettingsMenu'),
+      },
+      {
+        path: '/settings/paranoid-encryption',
+        component: () =>
+          import('src/components/settings/paranoid/ParanoidEncryption'),
+      },
+    ],
   },
   // Always leave this as last one,
   // but you can also remove it

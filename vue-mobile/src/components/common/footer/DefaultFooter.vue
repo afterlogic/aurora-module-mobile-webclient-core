@@ -9,7 +9,7 @@
     <menu-button url="/files">
       <files-icon :color="filesIconColor" />
     </menu-button>
-    <menu-button url="/settings">
+    <menu-button url="/settings/menu">
       <settings-icon :color="settingsIconColor" />
     </menu-button>
   </q-toolbar>
