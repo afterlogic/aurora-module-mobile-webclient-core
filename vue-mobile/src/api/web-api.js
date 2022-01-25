@@ -38,7 +38,10 @@ export default {
       // If a user is also logged in the browser, then his AppData will be received and the login screen will be displayed,
       // because the user is not a superadmin.
       const authToken = VueCookies.get('AuthToken')
-      const headers = {}
+      const deviceId = VueCookies.get('DeviceId')
+      const headers = {
+        'X-DeviceId': deviceId,
+      }
       if (authToken) {
         headers.Authorization = 'Bearer ' + authToken
       }

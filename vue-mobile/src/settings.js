@@ -11,9 +11,8 @@ class Settings {
     this.cookiePath = types.pString(coreData.CookiePath)
     this.cookieSecure = types.pBool(coreData.CookieSecure)
     const twoFactorAuth = types.pObject(appData.TwoFactorAuth)
-    console.log('DT: twoFactorAuth settings', twoFactorAuth)
     this.allowUsedDevices = types.pBool(twoFactorAuth.AllowUsedDevices)
-    this.arustDevicesForDays = types.pInt(twoFactorAuth.TrustDevicesForDays)
+    this.trustDevicesForDays = types.pInt(twoFactorAuth.TrustDevicesForDays)
   }
 
   _getShortLanguage(coreData) {

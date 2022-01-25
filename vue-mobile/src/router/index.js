@@ -45,7 +45,7 @@ export default route(function (/* { store, ssrContext } */) {
         next()
       },
       (error) => {
-        console.log('core.init reject', error)
+        console.error('core.init reject', error)
       }
     )
   })

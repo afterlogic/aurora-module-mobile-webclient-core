@@ -2,9 +2,10 @@
   <q-layout view="hhh LpR fFf" style="height: 100vh">
     <uploader-component ref="uploader" />
     <router-view />
-    <footer-component v-if="hasAuthToken" />
+    <footer-component v-if="hasAuthToken && $route.fullPath !== '/'" />
   </q-layout>
 </template>
+
 <script>
 import { defineComponent } from 'vue'
 import FooterComponent from 'components/main/FooterComponent'
@@ -18,7 +19,9 @@ const mixins = {
 }
 
 import UploaderComponent from 'components/files/common/UploaderComponent'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import settings from 'src/settings'
+
 export default defineComponent({
   mixins: [mixins],
   name: 'App',
@@ -49,8 +52,9 @@ export default defineComponent({
       this.selectPath(this.hasAuthToken)
     },
     selectPath(hasAuthToken) {
-      if (hasAuthToken) {
-        // this.$router.replace('/mail')
+      const data = settings.getTwoFactorData()
+      if (hasAuthToken && !data.allowUsedDevices) {
+        this.$router.replace('/mail')
       } else {
         this.$router.replace('/')
       }
