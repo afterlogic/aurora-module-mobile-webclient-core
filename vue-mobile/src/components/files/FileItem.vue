@@ -108,7 +108,10 @@ export default {
     filePreview() {
       if (this.file) {
         const api = getApiHost()
-        return api + this.file.thumbnailUrl
+        if (this.file.thumbnailUrl) {
+          return api + this.file.thumbnailUrl
+        }
+        return ''
       }
       return ''
     },

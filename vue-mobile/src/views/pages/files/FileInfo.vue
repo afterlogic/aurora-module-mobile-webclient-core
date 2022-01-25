@@ -2,13 +2,17 @@
   <main-layout title="File info">
     <div class="file__info">
       <div class="flex items-center justify-center">
-        <div v-if="!currentFile.thumbnailUrl" class="file__preview">
+        <div v-if="!currentFile.thumbnailUrl" class="file__preview q-my-xl">
           <file-item-icon
             v-if="!currentFile.thumbnailUrl"
             :file-name="currentFile.name"
           />
         </div>
-        <div style="height: 184px" v-if="currentFile.thumbnailUrl">
+        <div
+          class="q-my-md"
+          style="height: 248px"
+          v-if="currentFile.thumbnailUrl"
+        >
           <div
             class="img-preview"
             :style="{
@@ -77,7 +81,7 @@ export default {
   margin-bottom: 60px;
 }
 .img-preview {
-  height: 200px;
-  min-width: 100px;
+  height: 248px;
+  min-width: 248px;
 }
 </style>
