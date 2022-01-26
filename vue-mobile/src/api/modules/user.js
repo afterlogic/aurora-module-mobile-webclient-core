@@ -30,6 +30,15 @@ export default () => {
         return result
       })
     },
+    getUsedDevices: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'GetUsedDevices',
+        parameters,
+      }).then((result) => {
+        return result
+      })
+    },
     logout() {
       return WebApi.sendRequest({
         moduleName: 'Core',

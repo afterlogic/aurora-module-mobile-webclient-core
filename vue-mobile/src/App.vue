@@ -7,8 +7,12 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
 import FooterComponent from 'components/main/FooterComponent'
+import UploaderComponent from 'components/files/common/UploaderComponent'
+import settings from 'src/settings'
+import VueCookies from 'vue-cookies'
 
 const mixins = {
   methods: {
@@ -17,10 +21,6 @@ const mixins = {
     },
   },
 }
-
-import UploaderComponent from 'components/files/common/UploaderComponent'
-import { mapGetters } from 'vuex'
-import settings from 'src/settings'
 
 export default defineComponent({
   mixins: [mixins],
@@ -47,16 +47,23 @@ export default defineComponent({
     },
   },
   methods: {
+    ...mapActions('user', ['getUsedDevices']),
     async populate() {
       this.checkToken()
-      this.selectPath(this.hasAuthToken)
+      await this.selectPath(this.hasAuthToken)
     },
-    selectPath(hasAuthToken) {
+    async selectPath(hasAuthToken) {
       const data = settings.getTwoFactorData()
-      if (hasAuthToken && !data.allowUsedDevices) {
-        this.$router.replace('/mail')
+      const deviceId = VueCookies.get('DeviceId')
+      let isDevice = false
+      if (hasAuthToken) {
+        const deviceData = await this.getUsedDevices({})
+        isDevice = !!deviceData.find((device) => device.DeviceId === deviceId)
+      }
+      if (hasAuthToken && (!data.allowUsedDevices || isDevice)) {
+        await this.$router.push('/mail')
       } else {
-        this.$router.replace('/')
+        await this.$router.push('/')
       }
     },
     checkToken() {

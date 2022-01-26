@@ -37,6 +37,9 @@ export default {
       const response = await AppApi.User.trustTheDevice(payload)
       console.log('DB: response trust', response)
     },
+    getUsedDevices: async ({ commit }, payload) => {
+      return await AppApi.User.getUsedDevices(payload)
+    },
     init: ({ commit }) => {
       const authToken = VueCookies.get('AuthToken')
       commit('changeAuthTokenStatus', !!authToken)

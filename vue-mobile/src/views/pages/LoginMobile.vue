@@ -121,8 +121,8 @@ export default {
     AppButton,
   },
   data: () => ({
-    login: '',
-    password: '',
+    login: 'test1@afterlogic.com',
+    password: 'p12345q',
     loading: false,
     isTwoFactor: false,
     trustDevice: false,
@@ -160,29 +160,40 @@ export default {
       'loginFunc',
       'confirmTwoFactorAuth',
       'trustTheDevice',
+      'getUsedDevices',
     ]),
     async proceedLogin() {
       this.loading = true
-      const parameters = {
-        Login: this.login,
-        Password: this.password,
+      try {
+        const parameters = {
+          Login: this.login,
+          Password: this.password,
+        }
+        const response = await this.loginFunc(parameters)
+        if (response?.TwoFactorAuth) {
+          this.isTwoFactor = true
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.loading = false
       }
-      const response = await this.loginFunc(parameters)
-      if (response?.TwoFactorAuth) {
-        this.isTwoFactor = true
-      }
-      this.loading = false
     },
     async verifyCode() {
       this.loading = true
-      const data = {
-        Login: this.login,
-        Password: this.password,
-        Code: this.code,
+      try {
+        const data = {
+          Login: this.login,
+          Password: this.password,
+          Code: this.code,
+        }
+        await this.confirmTwoFactorAuth(data)
+        // await this.showTrustForm()
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.loading = false
       }
-      await this.confirmTwoFactorAuth(data)
-      this.showTrustForm()
-      this.loading = false
     },
     async goHome() {
       this.loading = true
@@ -208,9 +219,17 @@ export default {
       this.isMethodChoosing = false
       this.verificationOption = method
     },
-    showTrustForm() {
-      if (this.getAuthTokenStatus && this.allowUsedDevices) {
+    async showTrustForm() {
+      const deviceId = VueCookies.get('DeviceId')
+      let isDevice = false
+      if (this.getAuthTokenStatus) {
+        const deviceData = await this.getUsedDevices({})
+        isDevice = !!deviceData.find((device) => device.DeviceId === deviceId)
+      }
+      if (this.getAuthTokenStatus && this.allowUsedDevices && !isDevice) {
         this.isTwoFactor = true
+      } else if (this.getAuthTokenStatus || isDevice) {
+        await this.$router.push('/mail')
       }
     },
   },
