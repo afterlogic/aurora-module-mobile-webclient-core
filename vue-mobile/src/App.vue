@@ -43,7 +43,8 @@ export default defineComponent({
       this.$i18n.locale = lang
     },
     hasAuthToken(hasAuthToken) {
-      this.selectPath(hasAuthToken)
+      if (!hasAuthToken) this.$router.push('/')
+      // this.selectPath(hasAuthToken)
     },
   },
   methods: {
@@ -60,7 +61,17 @@ export default defineComponent({
         const deviceData = await this.getUsedDevices({})
         isDevice = !!deviceData.find((device) => device.DeviceId === deviceId)
       }
-      if (hasAuthToken && (!data.allowUsedDevices || isDevice)) {
+      console.log('DB: data', data)
+      console.log(
+        'DB: hasAuthToken',
+        hasAuthToken,
+        data.allowUsedDevices,
+        isDevice
+      )
+      if (
+        (hasAuthToken && (!data.allowUsedDevices || isDevice)) ||
+        (data.allowUsedDevices === undefined && hasAuthToken)
+      ) {
         await this.$router.push('/mail')
       } else {
         await this.$router.push('/')

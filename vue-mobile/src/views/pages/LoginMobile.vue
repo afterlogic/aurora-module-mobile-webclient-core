@@ -170,6 +170,9 @@ export default {
           Password: this.password,
         }
         const response = await this.loginFunc(parameters)
+        if (response?.AuthToken) {
+          await this.$router.push('/mail')
+        }
         if (response?.TwoFactorAuth) {
           this.isTwoFactor = true
         }
