@@ -4,7 +4,7 @@
     class="flex content-between q-py-lg"
   >
     <div class="q-px-lg">External public keys</div>
-    <div style="height: 60vh; overflow-y: auto" class="full-width">
+    <div style="max-height: 50vh; overflow-y: auto" class="full-width">
       <div class="keys-list">
         <div class="q-px-lg">
           <key-item v-for="key in externalKeys" :key="key" :label="key.Email" />
@@ -20,14 +20,14 @@
         </div>
       </div>
     </div>
-    <div class="q-px-lg">
+    <div class="q-px-lg full-width">
       <app-button
         @click="enableBackwardCompatibility = true"
         :label="$t('OPENPGPWEBCLIENT.ACTION_EXPORT_ALL_PUBLIC_KEYS')"
         class="q-mt-lg"
       />
       <app-button
-        @click="enableBackwardCompatibility = true"
+        @click="showImportKeys = true"
         :label="$t('OPENPGPWEBCLIENT.ACTION_IMPORT_KEY')"
         class="q-mt-lg"
       />
@@ -37,28 +37,36 @@
         class="q-mt-lg"
       />
     </div>
+    <import-key-dialog v-model="showImportKeys" />
   </div>
 </template>
 
 <script>
+import ImportKeyDialog from 'components/settings/pgp/dialogs/ImportKeyDialog'
 import KeyItem from 'components/settings/pgp/KeyItem'
 import AppButton from 'components/common/AppButton'
-import AppApi from 'src/api'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ExternalKeys',
   components: {
+    ImportKeyDialog,
     KeyItem,
     AppButton,
   },
   data: () => ({
     externalKeys: [],
+    showImportKeys: false,
   }),
   mounted() {
     this.getExternalKeys()
   },
+  computed: {
+    ...mapGetters('openPGP', ['externalKeys']),
+  },
   methods: {
+    ...mapActions('openPGP', ['asyncGetExternalsKeys']),
     async getExternalKeys() {
-      this.externalKeys = await AppApi.openPGP.getExternalKeys()
+      await this.asyncGetExternalsKeys()
     },
   },
 }

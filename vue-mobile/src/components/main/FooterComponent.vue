@@ -1,5 +1,5 @@
 <template>
-  <q-footer elevated class="bg-white">
+  <q-footer v-if="showFooter" elevated class="bg-white">
     <component :is="component" />
   </q-footer>
 </template>
@@ -22,6 +22,16 @@ export default {
     },
     isCopiedFiles() {
       return !!this.copiedFiles.length
+    },
+    showFooter() {
+      const patch = this.$route.fullPath.split('/')
+      console.log(patch, 'patch')
+      if (patch[1] === 'settings') {
+        if (patch[2] !== 'menu') {
+          return false
+        }
+      }
+      return true
     },
   },
 }

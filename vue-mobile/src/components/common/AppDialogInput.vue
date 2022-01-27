@@ -7,7 +7,6 @@
       v-bind="$attrs"
       @input="$emit('input', $event)"
       class="q-ma-md"
-      outlined
       dense
       :autofocus="autofocus"
     />

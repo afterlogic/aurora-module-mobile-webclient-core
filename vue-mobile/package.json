@@ -22,6 +22,7 @@
     "fs-extra": "^10.0.0",
     "iniparser": "^1.0.5",
     "lodash": "^4.17.21",
+    "openpgp": "4.5.2",
     "moment": "^2.24.0",
     "prettier": "^2.5.1",
     "quasar": "^2.0.0",

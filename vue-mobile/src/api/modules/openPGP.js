@@ -14,8 +14,8 @@ export default () => {
           }
           return []
         })
-        .catch((err) => {
-          return err
+        .catch(() => {
+          return []
         })
     },
   }

@@ -6,6 +6,7 @@
           placeholder="File name"
           v-model="itemName"
           :autofocus="true"
+          outlined
         />
       </q-item>
       <q-card-actions align="right">
