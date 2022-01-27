@@ -1,5 +1,6 @@
 <template>
   <q-checkbox
+    model-value=""
     v-bind="$attrs"
     :left-label="leftLabel"
     :label="label"

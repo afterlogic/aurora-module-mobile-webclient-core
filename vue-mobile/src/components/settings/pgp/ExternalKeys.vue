@@ -8,15 +8,6 @@
       <div class="keys-list">
         <div class="q-px-lg">
           <key-item v-for="key in externalKeys" :key="key" :label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
-          <key-item label="key.Email" />
         </div>
       </div>
     </div>
@@ -54,7 +45,6 @@ export default {
     AppButton,
   },
   data: () => ({
-    externalKeys: [],
     showImportKeys: false,
   }),
   mounted() {

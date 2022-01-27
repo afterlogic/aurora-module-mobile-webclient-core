@@ -34,10 +34,10 @@ export const checkPgpKeys = async (keysArmorToImport, openPgpExternalKeys) => {
             isExternal: !OpenPgp.isOwnEmail(keyEmailParts.email),
           })
 
-        keyData.sAddInfo = key.isPublic()
+        keyData.addInfo = key.isPublic()
           ? '(' + bitSize + '-bit, public)'
           : '(' + bitSize + '-bit, private)'
-        keyData.bChecked = !hasSameKey && !noEmail
+        keyData.checked = !hasSameKey && !noEmail
 
         if (noEmail) {
           keysBroken.push(keyData)
