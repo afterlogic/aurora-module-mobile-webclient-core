@@ -41,6 +41,7 @@ export default {
       const deviceId = VueCookies.get('DeviceId')
       const headers = {
         'X-DeviceId': deviceId,
+        'X-MobileApp': '1'
       }
       if (authToken) {
         headers.Authorization = 'Bearer ' + authToken

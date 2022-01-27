@@ -65,7 +65,7 @@
 <script>
 import AppDialogInput from 'components/common/AppDialogInput'
 import ImportKeyItem from 'components/settings/pgp/ImportKeyItem'
-import ButtonDialog from 'components/files/common/ButtonDialog'
+import ButtonDialog from '../../../../../../../FilesMobileWebclient/vue-mobile/components/common/ButtonDialog'
 import { checkPgpKeys } from 'src/utils/openPGP/utils'
 import { mapGetters } from 'vuex'
 export default {

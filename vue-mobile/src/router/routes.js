@@ -5,19 +5,19 @@ const routes = [
   },
   {
     path: '/contacts',
-    component: () => import('src/views/pages/Contacts'),
+    component: () => import('src/../../../ContactsMobileWebclient/vue-mobile/pages/Contacts'),
   },
   {
     path: '/files',
-    component: () => import('src/views/pages/files/Files'),
+    component: () => import('src/../../../FilesMobileWebclient/vue-mobile/pages/Files'),
   },
   {
     path: '/file/:id',
-    component: () => import('src/views/pages/files/FileInfo'),
+    component: () => import('src/../../../FilesMobileWebclient/vue-mobile/pages/FileInfo'),
   },
   {
     path: '/mail',
-    component: () => import('src/views/pages/Mail'),
+    component: () => import('src/../../../MailMobileWebclient/vue-mobile/pages/Mail'),
   },
   {
     path: '/settings',

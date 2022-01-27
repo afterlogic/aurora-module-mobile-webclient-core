@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FilesHeader from 'components/files/header/FilesHeader'
+import FilesHeader from '../../../../../FilesMobileWebclient/vue-mobile/components/header/FilesHeader'
 import SettingsHeader from 'components/settings/header/SettingsHeader'
 
 export default {

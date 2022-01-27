@@ -1,3 +1,3 @@
 require('./prepare-langs')
-// require('./prepare-modules')
-// require('./prepare-stores')
+require('./prepare-modules')
+require('./prepare-stores')

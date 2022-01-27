@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import ButtonDialog from 'components/files/common/ButtonDialog'
+import ButtonDialog from '../../../../../../../FilesMobileWebclient/vue-mobile/components/common/ButtonDialog'
 import AppDialogInput from 'components/common/AppDialogInput'
 import VueCookies from 'vue-cookies'
 

@@ -10,7 +10,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
 import FooterComponent from 'components/main/FooterComponent'
-import UploaderComponent from 'components/files/common/UploaderComponent'
+import UploaderComponent from '../../../FilesMobileWebclient/vue-mobile/components/common/UploaderComponent'
 import settings from 'src/settings'
 import VueCookies from 'vue-cookies'
 

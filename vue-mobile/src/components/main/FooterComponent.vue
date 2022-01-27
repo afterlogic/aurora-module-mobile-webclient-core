@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CopiedFooter from 'components/files/footer/CopiedFooter'
+import CopiedFooter from '../../../../../FilesMobileWebclient/vue-mobile/components/footer/CopiedFooter'
 import DefaultFooter from 'components/common/footer/DefaultFooter'
 import { mapGetters } from 'vuex'
 

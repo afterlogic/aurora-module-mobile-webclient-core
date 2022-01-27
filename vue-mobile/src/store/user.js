@@ -1,16 +1,38 @@
+import _ from 'lodash'
 import VueCookies from 'vue-cookies'
+
 import AppApi from '/src/api/index'
 import core from 'src/core'
+import typesUtils from 'src/utils/types'
 
 export default {
   namespaced: true,
+
   state: {
     hasAuthToken: false,
+
+    userPublicId: null,
+    userRole: null,
   },
+
   mutations: {
     changeAuthTokenStatus: (state, status) => (state.hasAuthToken = status),
+
+    setUserData (state, userData) {
+      if (!_.isEmpty(userData)) {
+        // state.userId = typesUtils.pInt(userData.Id)
+        // state.userName = typesUtils.pString(userData.Name)
+        state.userPublicId = typesUtils.pString(userData.PublicId)
+        state.userRole = typesUtils.pString(userData.Role)
+        // state.userTenantId = typesUtils.pInt(userData.TenantId)
+      }
+    },
   },
+
   actions: {
+    parseAppData ({ commit }, appData) {
+      commit('setUserData', appData.User)
+    },
     loginFunc: async ({ commit }, parameters) => {
       const response = await AppApi.User.login(parameters)
       if (response?.AuthToken) {
