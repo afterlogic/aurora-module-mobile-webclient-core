@@ -25,7 +25,6 @@ export default {
     },
     showFooter() {
       const patch = this.$route.fullPath.split('/')
-      console.log(patch, 'patch')
       if (patch[1] === 'settings') {
         if (patch[2] !== 'menu') {
           return false

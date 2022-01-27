@@ -151,7 +151,6 @@ export default {
     this.enableModule = data.enableModule
     this.enableInPersonalStorage = data.enableInPersonalStorage
     this.aesKey = VueCookies.get('AesKey')
-    console.log(this.aesKey, 'this.aesKey')
   },
   methods: {
     ...mapActions('settings', ['asyncChangeParanoidEncryptionSettings']),
