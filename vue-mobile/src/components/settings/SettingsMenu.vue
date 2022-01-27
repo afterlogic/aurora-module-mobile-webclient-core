@@ -11,9 +11,9 @@
       :action="() => $router.push('/settings/paranoid-encryption')"
     />
     <settings-menu-item
-      :label="$t('COREWEBCLIENT.LABEL_COMMON_SETTINGS_TABNAME')"
+      :label="$t('OPENPGPWEBCLIENT.LABEL_SETTINGS_TAB')"
       icon="PgpIcon"
-      :action="() => $router.push('/settings/paranoid-encryption')"
+      :action="() => $router.push('/settings/open-pgp')"
     />
     <settings-menu-item :action="logout" label="Log out" icon="LogoutIcon" />
   </div>

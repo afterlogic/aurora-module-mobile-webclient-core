@@ -3,6 +3,7 @@
     <q-card class="q-dialog-size q-pt-md" style="min-width: 300px">
       <q-item>
         <app-dialog-input
+          v-model="keyName"
           :placeholder="
             $t('COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.LABEL_KEY_NAME')
           "
@@ -10,6 +11,7 @@
       </q-item>
       <q-item>
         <app-dialog-input
+          v-model="key"
           :placeholder="
             $t('COREPARANOIDENCRYPTIONWEBCLIENTPLUGIN.LABEL_YOUR_KEY')
           "
@@ -35,6 +37,7 @@
 <script>
 import ButtonDialog from 'components/files/common/ButtonDialog'
 import AppDialogInput from 'components/common/AppDialogInput'
+import VueCookies from 'vue-cookies'
 
 export default {
   name: 'ImportKeyFromString',
@@ -44,10 +47,17 @@ export default {
   },
   data: () => ({
     saving: false,
+    keyName: '',
+    key: '',
   }),
   methods: {
     importKey() {
-      console.log('dsfs')
+      const aesKey = {
+        keyName: this.keyName,
+        key: this.key,
+      }
+      VueCookies.set('AesKey', JSON.stringify(aesKey))
+      this.$emit('close')
     },
   },
 }

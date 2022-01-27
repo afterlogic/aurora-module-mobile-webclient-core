@@ -32,6 +32,18 @@ const routes = [
         component: () =>
           import('src/components/settings/paranoid/ParanoidEncryption'),
       },
+      {
+        path: '/settings/open-pgp',
+        component: () => import('src/components/settings/pgp/OpenPgp'),
+      },
+      {
+        path: '/settings/open-pgp/external-keys',
+        component: () => import('src/components/settings/pgp/ExternalKeys'),
+      },
+      {
+        path: '/settings/open-pgp/my-keys',
+        component: () => import('src/components/settings/pgp/KeysComponent'),
+      },
     ],
   },
   // Always leave this as last one,
