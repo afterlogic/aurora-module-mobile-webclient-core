@@ -2,6 +2,7 @@ import { i18n, loadLanguageAsync } from 'boot/i18n'
 import _ from 'lodash'
 import types from 'src/utils/types'
 import VueCookies from 'vue-cookies'
+import store from "src/store";
 
 class Settings {
   constructor(appData) {
@@ -58,20 +59,20 @@ class Settings {
 let settings = null
 
 export default {
-  init: (appData) => {
+  init: async (appData) => {
     settings = new Settings(appData)
     if (
       !_.isEmpty(settings.shortLanguage) &&
       i18n.global.availableLocales.indexOf(settings.shortLanguage) !== -1
     ) {
-      loadLanguageAsync(settings.shortLanguage)
+      await loadLanguageAsync(settings.shortLanguage)
     }
+
+    await store.dispatch('core/changeLocale', settings.shortLanguage)
+
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
-  },
-  getLocale: () => {
-    return settings.shortLanguage
   },
   getUser: () => {
     return settings?.user

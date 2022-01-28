@@ -12,16 +12,6 @@ let allModules = null
 let allModulesNames = []
 let pages = null
 
-let systemTabs = null
-
-let tenantTabs = null
-let tenantEditDataComponent = null
-
-let userTabs = null
-let userMainDataComponent = null
-let userOtherDataComponents = null
-let userFilters = null
-
 function _checkIfModuleAvailable(module, modules, depth = 1) {
   if (depth > 4) {
     return true // to prevent infinite recursion if some modules require each other for some reason
@@ -90,13 +80,13 @@ export default {
     return allModulesNames.indexOf(moduleName) !== -1 || availableBackendModules.indexOf(moduleName) !== -1
   },
 
-  getPages () {
+  getNormalUserPages () {
     if (pages === null && allModules !== null) {
       pages = []
-      _.each(allModules, oModule => {
-        const aPages = _.isFunction(oModule.getPages) && oModule.getPages()
-        if (_.isArray(aPages)) {
-          pages = pages.concat(aPages)
+      allModules.forEach(module => {
+        const modulePages = _.isFunction(module.getNormalUserPages) && module.getNormalUserPages()
+        if (_.isArray(modulePages)) {
+          pages = pages.concat(modulePages)
         }
       })
     }

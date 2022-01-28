@@ -1,14 +1,15 @@
 import { route } from 'quasar/wrappers'
-import core from 'src/core'
-import settings from 'src/settings'
-import store from 'src/store'
 import {
   createRouter,
   createMemoryHistory,
   createWebHistory,
   createWebHashHistory,
 } from 'vue-router'
+
 import routes from './routes'
+
+import core from 'src/core'
+import modulesManager from 'src/modules-manager'
 
 /*
  * If not building with SSR mode, you can
@@ -26,7 +27,7 @@ export default route(function (/* { store, ssrContext } */) {
     ? createWebHistory
     : createWebHashHistory
 
-  const Router = createRouter({
+  const router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
@@ -37,11 +38,20 @@ export default route(function (/* { store, ssrContext } */) {
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   })
-  Router.beforeEach((to, from, next) => {
+
+  let isRoutesAdded = false
+  router.beforeEach((to, from, next) => {
     core.init().then(
       async () => {
-        const lang = settings.getLocale()
-        await store.dispatch('core/changeLocale', lang)
+        if (!isRoutesAdded) {
+          const normalUserPages = modulesManager.getNormalUserPages()
+          normalUserPages.forEach(page => {
+            router.addRoute(page.pageName, { path: page.pagePath, component: page.pageComponent })
+          })
+          isRoutesAdded = true
+          next(to.path)
+          return
+        }
         next()
       },
       (error) => {
@@ -49,5 +59,5 @@ export default route(function (/* { store, ssrContext } */) {
       }
     )
   })
-  return Router
+  return router
 })

@@ -4,22 +4,6 @@ const routes = [
     component: () => import('src/views/pages/LoginMobile'),
   },
   {
-    path: '/contacts',
-    component: () => import('src/../../../ContactsMobileWebclient/vue-mobile/pages/Contacts'),
-  },
-  {
-    path: '/files',
-    component: () => import('src/../../../FilesMobileWebclient/vue-mobile/pages/Files'),
-  },
-  {
-    path: '/file/:id',
-    component: () => import('src/../../../FilesMobileWebclient/vue-mobile/pages/FileInfo'),
-  },
-  {
-    path: '/mail',
-    component: () => import('src/../../../MailMobileWebclient/vue-mobile/pages/Mail'),
-  },
-  {
     path: '/settings',
     component: () => import('src/views/pages/Settings'),
     children: [

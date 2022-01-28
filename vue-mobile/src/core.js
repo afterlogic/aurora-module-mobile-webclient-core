@@ -18,7 +18,7 @@ const core = {
   appData: null,
 
   setAppData (appData) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       this.appData = appData
       enums.init(appData)
       errors.init(appData)

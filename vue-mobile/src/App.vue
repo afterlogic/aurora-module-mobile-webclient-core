@@ -10,7 +10,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
 import FooterComponent from 'components/main/FooterComponent'
-import UploaderComponent from '../../../FilesMobileWebclient/vue-mobile/components/common/UploaderComponent'
+import UploaderComponent from 'components/common/UploaderComponent'
 import settings from 'src/settings'
 import VueCookies from 'vue-cookies'
 
@@ -72,7 +72,10 @@ export default defineComponent({
         (hasAuthToken && (!data.allowUsedDevices || isDevice)) ||
         (data.allowUsedDevices === undefined && hasAuthToken)
       ) {
-        await this.$router.push('/mail')
+        const currentPath = this.$router.currentRoute && this.$router.currentRoute.path ? this.$router.currentRoute.path : ''
+        if (currentPath === '/') {
+          await this.$router.push('/mail')
+        }
       } else {
         await this.$router.push('/')
       }
