@@ -4,10 +4,15 @@
     class="flex content-between q-py-lg"
   >
     <div class="q-px-lg">External public keys</div>
-    <div style="max-height: 50vh; overflow-y: auto" class="full-width">
-      <div class="keys-list">
+    <div style="max-height: 50vh; overflow-y: auto" class="full-width keys-list">
+      <div>
         <div class="q-px-lg">
-          <key-item v-for="key in externalKeys" :key="key" :label="key.Email" />
+          <key-item
+            v-for="key in externalKeys"
+            :key="key"
+            :label="key.Email"
+            @click="openKey(key)"
+          />
         </div>
       </div>
     </div>
@@ -28,7 +33,7 @@
         class="q-mt-lg"
       />
     </div>
-    <import-key-dialog v-model="showImportKeys" />
+    <import-key-dialog v-model="showImportKeys" @close="showImportKeys = false"/>
   </div>
 </template>
 
@@ -54,17 +59,43 @@ export default {
     ...mapGetters('openPGP', ['externalKeys']),
   },
   methods: {
-    ...mapActions('openPGP', ['asyncGetExternalsKeys']),
+    ...mapActions('openPGP', ['asyncGetExternalsKeys', 'changeCurrentKeys']),
     async getExternalKeys() {
       await this.asyncGetExternalsKeys()
+    },
+    openKey(key) {
+      const keys = {
+        type: 'external',
+        keys: [key]
+      }
+      this.changeCurrentKeys(keys)
+      this.$router.push(`/settings/open-pgp/external-keys/${key.Email}`)
+    },
+    viewKeys (aKeys) {
+      // if (aKeys.length === 1) {
+      //   if (aKeys[0].bPublic) {
+      //     this.viewKeysHeader = 'View OpenPGP public key for ' + aKeys[0].sEmail
+      //     this.viewKeysFileName = aKeys[0].sEmail + ' OpenPGP public key.asc'
+      //   } else {
+      //     this.viewKeysHeader = 'View OpenPGP private key for ' + aKeys[0].sEmail
+      //     this.viewKeysFileName = aKeys[0].sEmail + ' OpenPGP private key.asc'
+      //   }
+      // } else {
+      //   this.viewKeysHeader = 'View all OpenPGP public keys'
+      //   this.viewKeysFileName = 'OpenPGP public keys.asc'
+      // }
+      // let aArmors = _.map(aKeys, function (oKey) {
+      //   return oKey.sArmor
+      // })
+      // this.viewKeysValue = aArmors.join('\r\n\r\n')
+      // this.viewKeysDialog = true
     },
   },
 }
 </script>
 
 <style scoped>
-.keys-list {
-  /*max-height: 325px;*/
-  /*height: 55vh;*/
+.keys-list::-webkit-scrollbar {
+  width: 0;
 }
 </style>

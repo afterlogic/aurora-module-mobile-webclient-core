@@ -677,12 +677,12 @@ COpenPgp.prototype.getAllKeys = function () {
   (COpenPgp.prototype.getOwnKeysByEmails = function (aEmail, bIsPublic) {
     bIsPublic = !!bIsPublic
 
-    let aOpenPgpKeys = store.getters['main/getOpenPgpKeys']
+    let aOpenPgpKeys = store.getters['openPGP/externalKeys']
     let aResult = []
 
     _.each(aEmail, (sEmail) => {
       let oKey = _.find(aOpenPgpKeys, (oKey) => {
-        let oKeyEmail = addressUtils.getEmailParts(oKey.sEmail)
+        let oKeyEmail = addressUtils.getEmailParts(oKey.Email)
         return oKey.bPublic === bIsPublic && oKeyEmail.email === sEmail
       })
 

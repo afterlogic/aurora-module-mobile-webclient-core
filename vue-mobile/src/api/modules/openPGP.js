@@ -18,5 +18,21 @@ export default () => {
           return []
         })
     },
+    addPublicKeys: async (parameters) => {
+      return WebApi.sendRequest({
+        moduleName: 'OpenPgpWebclient',
+        methodName: 'AddPublicKeysToContacts',
+        parameters: parameters,
+      })
+        .then((result) => {
+          if (result) {
+            return result
+          }
+          return []
+        })
+        .catch(() => {
+          return []
+        })
+    },
   }
 }

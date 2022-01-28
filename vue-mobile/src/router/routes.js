@@ -41,6 +41,10 @@ const routes = [
         component: () => import('src/components/settings/pgp/ExternalKeys'),
       },
       {
+        path: '/settings/open-pgp/external-keys/:key',
+        component: () => import('src/components/settings/pgp/KeyComponent'),
+      },
+      {
         path: '/settings/open-pgp/my-keys',
         component: () => import('src/components/settings/pgp/KeysComponent'),
       },

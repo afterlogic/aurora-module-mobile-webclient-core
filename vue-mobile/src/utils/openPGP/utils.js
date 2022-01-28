@@ -9,7 +9,6 @@ export const checkPgpKeys = async (keysArmorToImport, openPgpExternalKeys) => {
     keysAlreadyThere = [],
     keysPrivateExternal = [],
     keysToImport = []
-
   if (types.isNonEmptyArray(keysFromArmor)) {
     keysFromArmor.forEach((key) => {
       if (key) {
@@ -33,7 +32,6 @@ export const checkPgpKeys = async (keysArmorToImport, openPgpExternalKeys) => {
             isPublic: key.isPublic(),
             isExternal: !OpenPgp.isOwnEmail(keyEmailParts.email),
           })
-
         keyData.addInfo = key.isPublic()
           ? '(' + bitSize + '-bit, public)'
           : '(' + bitSize + '-bit, private)'

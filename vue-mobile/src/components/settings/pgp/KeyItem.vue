@@ -4,7 +4,7 @@
       <div class="flex-1">
         <p>{{ label }}</p>
       </div>
-      <div class="flex items-center content-center icon-margin">
+      <div class="flex items-end content-center icon-margin">
         <arrow-right-icon />
       </div>
     </div>

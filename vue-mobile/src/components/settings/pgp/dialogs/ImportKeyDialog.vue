@@ -10,8 +10,8 @@
             :autofocus="true"
           />
         </q-item>
-        <q-card-actions align="right">
-          <button-dialog
+        <q-card-actions class="q-mx-md" align="right">
+          <app-button-dialog
             :saving="saving"
             :action="check"
             :label="$t('OPENPGPWEBCLIENT.ACTION_CHECK')"
@@ -56,6 +56,13 @@
             :pgpKey="key"
           />
         </div>
+        <q-card-actions class="q-mr-md q-my-sm" align="right">
+          <app-button-dialog
+            :saving="saving"
+            :action="importKeys"
+            :label="$t('OPENPGPWEBCLIENT.ACTION_IMPORT_KEYS')"
+          />
+        </q-card-actions>
       </div>
       <div></div>
     </q-card>
@@ -65,14 +72,14 @@
 <script>
 import AppDialogInput from 'components/common/AppDialogInput'
 import ImportKeyItem from 'components/settings/pgp/ImportKeyItem'
-import ButtonDialog from '../../../../../../../FilesMobileWebclient/vue-mobile/components/common/ButtonDialog'
+import AppButtonDialog from "components/common/AppButtonDialog";
 import { checkPgpKeys } from 'src/utils/openPGP/utils'
-import { mapGetters } from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'ImportKeyDialog',
   components: {
     AppDialogInput,
-    ButtonDialog,
+    AppButtonDialog,
     ImportKeyItem,
   },
   data: () => ({
@@ -95,11 +102,32 @@ export default {
     },
   },
   methods: {
+    ...mapActions('openPGP', ['asyncAddPublicKeys']),
     close() {
+      this.clearKeys()
+    },
+    clearKeys() {
       this.keysBroken = []
       this.keysAlreadyThere = []
       this.keysPrivateExternal = []
       this.keysToImport = []
+    },
+    async importKeys() {
+      const checkedKeys = []
+        this.keysToImport.forEach( key => {
+        if (key.checked) {
+          checkedKeys.push({
+            Email: key.email.substring(key.email.lastIndexOf("<")+1,key.email.lastIndexOf(">")),
+            Key: key.armor,
+            Name: ''
+          })
+        }
+      })
+      const result = await this.asyncAddPublicKeys(checkedKeys)
+      if (result) {
+        this.clearKeys()
+        this.$emit('close')
+      }
     },
     async check() {
       const keysFromArmor = await checkPgpKeys(
