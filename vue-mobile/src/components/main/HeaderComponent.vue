@@ -1,35 +1,33 @@
 <template>
   <q-header elevated reveal class="bg-white" style="transform: none">
-    <component :is="component" @openDrawer="$emit('openDrawer')" />
+    <component :is="headerModuleComponent" @openDrawer="$emit('openDrawer')"></component>
   </q-header>
 </template>
 
 <script>
-import FilesHeader from '../../../../../FilesMobileWebclient/vue-mobile/components/header/FilesHeader'
-import SettingsHeader from 'components/settings/header/SettingsHeader'
+
+import modulesManager from 'src/modules-manager'
 
 export default {
   name: 'HeaderComponent',
-  components: {
-    FilesHeader,
-    SettingsHeader,
+
+  data() {
+    return {
+      headerModuleComponent: null,
+    }
   },
-  computed: {
-    component() {
-      const display = this.$route.fullPath.split('/')[1]
-      switch (display) {
-        case 'files':
-          return 'FilesHeader'
-        case 'file':
-          return 'FilesHeader'
-        case 'mail':
-          return 'MailHeader'
-        case 'settings':
-          return 'SettingsHeader'
-      }
-      return ''
+
+  mounted () {
+    this.getHeaderModuleComponent()
+  },
+
+  methods: {
+    async getHeaderModuleComponent () {
+      const currentPageName = this.$route.fullPath.split('/')[1]
+      this.headerModuleComponent = await modulesManager.getPageHeaderComponent(currentPageName)
     },
   },
+
 }
 </script>
 

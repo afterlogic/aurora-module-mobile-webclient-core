@@ -92,4 +92,16 @@ export default {
     }
     return pages === null ? [] : pages
   },
+
+  async getPageHeaderComponent (currentPageName) {
+    const normalUserPages = this.getNormalUserPages()
+    const currentPageData = normalUserPages.find(pageData => pageData.pageName === currentPageName)
+    if (_.isFunction(currentPageData?.pageHeaderComponent)) {
+      const component = await currentPageData.pageHeaderComponent()
+      if (component?.default) {
+        return component.default
+      }
+    }
+    return null
+  },
 }

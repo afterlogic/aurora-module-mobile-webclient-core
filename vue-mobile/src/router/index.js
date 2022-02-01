@@ -46,7 +46,11 @@ export default route(function (/* { store, ssrContext } */) {
         if (!isRoutesAdded) {
           const normalUserPages = modulesManager.getNormalUserPages()
           normalUserPages.forEach(page => {
-            router.addRoute(page.pageName, { path: page.pagePath, component: page.pageComponent })
+            const routeData = { name: page.pageName, path: page.pagePath, component: page.pageComponent }
+            if (page.pageChildren) {
+              routeData.children = page.pageChildren
+            }
+            router.addRoute(page.pageName, routeData)
           })
           isRoutesAdded = true
           next(to.path)

@@ -22,10 +22,11 @@
     "fs-extra": "^10.0.0",
     "iniparser": "^1.0.5",
     "lodash": "^4.17.21",
-    "openpgp": "4.5.2",
     "moment": "^2.24.0",
+    "openpgp": "4.5.2",
     "prettier": "^2.5.1",
     "quasar": "^2.0.0",
+    "tiny-emitter": "^2.1.0",
     "vue-cookies": "^1.7.4",
     "vue-i18n": "9.0",
     "vuex": "^4.0.1"
