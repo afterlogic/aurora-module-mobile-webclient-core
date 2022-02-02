@@ -9,6 +9,7 @@ import {
 import routes from './routes'
 
 import core from 'src/core'
+import store from 'src/store'
 import modulesManager from 'src/modules-manager'
 
 /*
@@ -39,22 +40,37 @@ export default route(function (/* { store, ssrContext } */) {
     ),
   })
 
-  let isRoutesAdded = false
+  let routesAdded = false
   router.beforeEach((to, from, next) => {
     core.init().then(
       async () => {
-        if (!isRoutesAdded) {
-          const normalUserPages = modulesManager.getNormalUserPages()
-          normalUserPages.forEach(page => {
+        if (!routesAdded) {
+          modulesManager.getAllPages().forEach(page => {
             const routeData = { name: page.pageName, path: page.pagePath, component: page.pageComponent }
             if (page.pageChildren) {
               routeData.children = page.pageChildren
             }
             router.addRoute(page.pageName, routeData)
           })
-          isRoutesAdded = true
+          routesAdded = true
           next(to.path)
           return
+        }
+        if (!_.isArray(to.matched) || to.matched.length === 0) {
+          if (store.getters['user/isUserNormalOrTenant']) {
+            if (to.path !== '/mail') {
+              next('/mail')
+              return
+            }
+          } else {
+            if (to.path !== '/') {
+              next('/')
+              return
+            }
+          }
+          modulesManager.setCurrentPageName('')
+        } else {
+          modulesManager.setCurrentPageName(to.matched[0].name)
         }
         next()
       },

@@ -6,11 +6,9 @@
       <p class="q-mt-lg login-page__text__heading">
         {{ $t('MOBILEAPPSWEBCLIENT.HEADING_FILES_APP') }}
       </p>
-      <p class="q-mt-lg text-grey-5">LOG IN TO CONTINUE</p>
+      <p class="q-mt-lg text-grey-5">{{ subheading }}</p>
     </div>
-    <div
-      class="content-between full-width full-height flex column justify-between"
-    >
+    <div class="content-between full-width full-height flex column justify-between">
       <slot />
     </div>
   </div>
@@ -22,6 +20,14 @@ import FolderBlurredIcon from 'components/common/icons/login/FolderBlurredIcon'
 
 export default {
   name: 'LoginLayout',
+
+  props: {
+    subheading: {
+      type: String,
+      default: '',
+    },
+  },
+
   components: {
     FolderFilledIcon,
     FolderBlurredIcon,

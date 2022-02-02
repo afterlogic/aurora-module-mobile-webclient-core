@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import HeaderComponent from 'components/main/HeaderComponent'
+import HeaderComponent from 'components/main/Header'
 import DrawerComponent from 'components/main/DrawerComponent'
 
 export default {

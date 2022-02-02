@@ -3,6 +3,7 @@ import VueCookies from 'vue-cookies'
 
 import AppApi from '/src/api/index'
 import core from 'src/core'
+import enums from 'src/enums'
 import typesUtils from 'src/utils/types'
 
 export default {
@@ -20,10 +21,11 @@ export default {
 
     setUserData (state, userData) {
       if (!_.isEmpty(userData)) {
+        const UserRoles = enums.getUserRoles()
         // state.userId = typesUtils.pInt(userData.Id)
         // state.userName = typesUtils.pString(userData.Name)
         state.userPublicId = typesUtils.pString(userData.PublicId)
-        state.userRole = typesUtils.pString(userData.Role)
+        state.userRole = typesUtils.pEnum(userData.Role, UserRoles, UserRoles.Anonymous)
         // state.userTenantId = typesUtils.pInt(userData.TenantId)
       }
     },
@@ -71,9 +73,14 @@ export default {
       commit('changeAuthTokenStatus', false)
     },
   },
+
   getters: {
     getAuthTokenStatus: (state) => {
       return state.hasAuthToken
+    },
+    isUserNormalOrTenant (state) {
+      const UserRoles = enums.getUserRoles()
+      return state.userRole === UserRoles.NormalUser || state.userRole === UserRoles.TenantAdmin
     },
   },
 }

@@ -3,14 +3,16 @@ import _ from 'lodash'
 import typesUtils from 'src/utils/types'
 
 import moduleList from 'src/modules'
-
+import router from 'src/router'
 let availableClientModules = []
 let availableBackendModules = []
 let availableModules = []
 
 let allModules = null
 let allModulesNames = []
-let pages = null
+let normalUserPages = null
+let anonymousPages = null
+let currentPageName = null
 
 function _checkIfModuleAvailable(module, modules, depth = 1) {
   if (depth > 4) {
@@ -80,20 +82,41 @@ export default {
     return allModulesNames.indexOf(moduleName) !== -1 || availableBackendModules.indexOf(moduleName) !== -1
   },
 
-  getNormalUserPages () {
-    if (pages === null && allModules !== null) {
-      pages = []
+  setCurrentPageName (pageName) {
+    currentPageName = pageName
+  },
+
+  getAllPages () {
+    return this.getAnonymousPages().concat(this.getNormalUserPages())
+  },
+
+  getAnonymousPages () {
+    if (anonymousPages === null && allModules !== null) {
+      anonymousPages = []
       allModules.forEach(module => {
-        const modulePages = _.isFunction(module.getNormalUserPages) && module.getNormalUserPages()
+        const modulePages = _.isFunction(module.getAnonymousPages) && module.getAnonymousPages()
         if (_.isArray(modulePages)) {
-          pages = pages.concat(modulePages)
+          anonymousPages = anonymousPages.concat(modulePages)
         }
       })
     }
-    return pages === null ? [] : pages
+    return anonymousPages === null ? [] : anonymousPages
   },
 
-  async getPageHeaderComponent (currentPageName) {
+  getNormalUserPages () {
+    if (normalUserPages === null && allModules !== null) {
+      normalUserPages = []
+      allModules.forEach(module => {
+        const modulePages = _.isFunction(module.getNormalUserPages) && module.getNormalUserPages()
+        if (_.isArray(modulePages)) {
+          normalUserPages = normalUserPages.concat(modulePages)
+        }
+      })
+    }
+    return normalUserPages === null ? [] : normalUserPages
+  },
+
+  async getPageHeaderComponent () {
     const normalUserPages = this.getNormalUserPages()
     const currentPageData = normalUserPages.find(pageData => pageData.pageName === currentPageName)
     if (_.isFunction(currentPageData?.pageHeaderComponent)) {
