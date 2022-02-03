@@ -1,4 +1,4 @@
-import AppApi from '/src/api/index'
+import appApi from '/src/api/index'
 import types from 'src/utils/types'
 import {
   getParseFiles,
@@ -10,7 +10,7 @@ import { getApiHost } from 'src/api/helpers'
 
 export default {
   asyncGetStorages: async ({ commit, dispatch }) => {
-    const storages = await AppApi.Files.getStorages()
+    const storages = await appApi.files.getStorages()
     if (types.pArray(storages)) {
       commit('SET_STORAGE_LIST', storages)
       commit('SET_CURRENT_STORAGE', storages.length ? storages[0] : {})
@@ -36,7 +36,7 @@ export default {
       Pattern: getters['searchText'],
       PathRequired: false,
     }
-    const data = await AppApi.Files.getFiles(parameters)
+    const data = await appApi.files.getFiles(parameters)
     if (types.pArray(data?.Items)) {
       const files = getParseFiles(data.Items)
       const folders = getParseFolders(data.Items)
@@ -78,7 +78,7 @@ export default {
       IsLink: 0,
       IsFolder: file.isFolder,
     }
-    return await AppApi.Files.renameItem(parameters)
+    return await appApi.files.renameItem(parameters)
   },
   changeFileName: ({ commit }, fileName) => {
     commit('SET_FILE_NAME', fileName)
@@ -97,7 +97,7 @@ export default {
       Path: currentPath,
       Items: items,
     }
-    return await AppApi.Files.deleteItems(parameters)
+    return await appApi.files.deleteItems(parameters)
   },
 
   changeItemsLists: ({ commit }, { items }) => {
@@ -127,7 +127,7 @@ export default {
   },
   copyItems: async ({ dispatch, getters }) => {
     const parameters = getters['getCopyMoveParameters']
-    const result = await AppApi.Files.copyMoveItems(parameters, 'Copy')
+    const result = await appApi.files.copyMoveItems(parameters, 'Copy')
     if (result) {
       dispatch('removeCopiedFiles')
       dispatch('asyncGetFiles')
@@ -135,7 +135,7 @@ export default {
   },
   moveItems: async ({ dispatch, getters }) => {
     const parameters = getters['getCopyMoveParameters']
-    const result = await AppApi.Files.copyMoveItems(parameters, 'Move')
+    const result = await appApi.files.copyMoveItems(parameters, 'Move')
     if (result) {
       dispatch('removeCopiedFiles')
       dispatch('asyncGetFiles')
@@ -148,7 +148,7 @@ export default {
       Path: getters['currentPath'],
       FolderName: name,
     }
-    return await AppApi.Files.createFolder(parameters)
+    return await appApi.files.createFolder(parameters)
   },
   asyncCreateShareableLink: async ({ commit, getters }, { withPassword }) => {
     const currentFile = getters['currentFile']
@@ -163,7 +163,7 @@ export default {
       Password: withPassword ? '1234567890' : '',
     }
     const module = withPassword ? 'OpenPgpFilesWebclient' : 'Files'
-    const result = await AppApi.Files.createShareableLink(parameters, module)
+    const result = await appApi.files.createShareableLink(parameters, module)
     if (result) {
       commit('SET_ITEM_PROPERTY', {
         item: currentFile,
@@ -188,7 +188,7 @@ export default {
       Path: currentFile.path,
       Name: currentFile.name,
     }
-    const result = await AppApi.Files.deletePublicLink(parameters)
+    const result = await appApi.files.deletePublicLink(parameters)
     if (result) {
       commit('SET_ITEM_PROPERTY', {
         item: currentFile,
@@ -204,7 +204,7 @@ export default {
     return result
   },
   asyncUpdateShare: async ({ commit, getters }, parameters) => {
-    const result = await AppApi.Files.updateShare(parameters)
+    const result = await appApi.files.updateShare(parameters)
     if (result) {
       const currentFile = getters['currentFile']
       commit('SET_ITEM_PROPERTY', {
@@ -226,7 +226,7 @@ export default {
       Offset: offset,
       Limit: limit,
     }
-    return AppApi.Files.getHistory(parameters)
+    return appApi.files.getHistory(parameters)
   },
   asyncClearHistory: async (
     { state, commit, getters, dispatch },
@@ -236,7 +236,7 @@ export default {
       ResourceType: resourceType,
       ResourceId: resourceId,
     }
-    return AppApi.Files.clearHistory(parameters)
+    return appApi.files.clearHistory(parameters)
   },
   addDownloadsFiles: ({ state, commit, getters, dispatch }, files) => {
     commit('SET_DOWNLOADS_FILES', files)
@@ -256,7 +256,7 @@ export default {
   },
   asyncDownloadFile: async ({ getters }) => {
     const file = getters['currentFile']
-    await AppApi.Files.downloadFile(file)
+    await appApi.files.downloadFile(file)
   },
   changeCurrentHeader: ({ commit }, headerName) => {
     commit('SET_CURRENT_HEADER_NAME', headerName)

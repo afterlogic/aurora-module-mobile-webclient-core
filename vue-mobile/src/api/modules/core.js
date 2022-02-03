@@ -1,9 +1,9 @@
-import WebApi from 'src/api/web-api'
+import webApi from 'src/api/web-api'
 
 export default () => {
   return {
     getAppData: async () => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Core',
         methodName: 'GetAppData',
         parameters: {},

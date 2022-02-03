@@ -1,7 +1,7 @@
-import AppApi from 'src/api'
+import appApi from 'src/api'
 
 export default {
   asyncGetContacts: async ({}, parameters) => {
-    return await AppApi.Contacts.getContactSuggestions(parameters)
+    return await appApi.contacts.getContactSuggestions(parameters)
   },
 }

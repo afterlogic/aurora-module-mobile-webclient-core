@@ -2,7 +2,7 @@ import _ from 'lodash'
 import VueCookies from 'vue-cookies'
 import { i18n } from 'boot/i18n'
 
-import AppApi from 'src/api'
+import appApi from 'src/api'
 import settings from 'src/settings'
 import store from 'src/store'
 import enums from 'src/enums'
@@ -33,7 +33,7 @@ const core = {
 
   async requestAppData() {
     return new Promise(async (resolve, reject) => {
-      const appData = await AppApi.Core.getAppData()
+      const appData = await appApi.core.getAppData()
       if (_.isObject(appData)) {
         this.setAppData(appData).then(() => {
           resolve()

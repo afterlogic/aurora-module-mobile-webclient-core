@@ -1,4 +1,4 @@
-import WebApi from 'src/api/web-api'
+import webApi from 'src/api/web-api'
 import _ from 'lodash'
 
 const i18n = {
@@ -16,7 +16,7 @@ const i18n = {
 export default () => {
   return {
     getFiles: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'GetFiles',
         parameters,
@@ -32,7 +32,7 @@ export default () => {
         })
     },
     getStorages: async () => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'GetStorages',
         parameters: {},
@@ -48,7 +48,7 @@ export default () => {
         })
     },
     renameItem: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'Rename',
         parameters: parameters,
@@ -64,7 +64,7 @@ export default () => {
         })
     },
     deleteItems: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'Delete',
         parameters: parameters,
@@ -80,7 +80,7 @@ export default () => {
         })
     },
     copyMoveItems: async (parameters, method) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: method,
         parameters: parameters,
@@ -97,7 +97,7 @@ export default () => {
         })
     },
     createFolder: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'CreateFolder',
         parameters: parameters,
@@ -114,7 +114,7 @@ export default () => {
         })
     },
     createShareableLink: async (parameters, module) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: module,
         methodName: 'CreatePublicLink',
         parameters: parameters,
@@ -129,7 +129,7 @@ export default () => {
         })
     },
     deletePublicLink: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Files',
         methodName: 'DeletePublicLink',
         parameters: parameters,
@@ -145,7 +145,7 @@ export default () => {
         })
     },
     updateShare: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'SharedFiles',
         methodName: 'UpdateShare',
         parameters: parameters,
@@ -161,7 +161,7 @@ export default () => {
         })
     },
     getHistory: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'ActivityHistory',
         methodName: 'GetList',
         parameters: parameters,
@@ -177,7 +177,7 @@ export default () => {
         })
     },
     clearHistory: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'ActivityHistory',
         methodName: 'Delete',
         parameters: parameters,
@@ -198,7 +198,7 @@ export default () => {
         fileName: file.name,
         file,
       }
-      return WebApi.downloadByUrl(parameters)
+      return webApi.downloadByUrl(parameters)
         .then((result) => {
           if (result) return result
           return false

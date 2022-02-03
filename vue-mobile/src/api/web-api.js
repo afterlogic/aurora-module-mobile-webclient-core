@@ -3,7 +3,7 @@ import VueCookies from 'vue-cookies'
 import querystring from 'querystring'
 
 import errors from 'src/utils/errors'
-import AppApi from 'src/api/index'
+import appApi from 'src/api/index'
 import { getApiHost } from 'src/api/helpers'
 import { saveAs } from 'file-saver'
 import _ from 'lodash'
@@ -65,16 +65,13 @@ export default {
                   response.data.ErrorMessage ||
                   response.data.SubscriptionsResult)
               ) {
-                if (
-                  errors.isAuthError(response.data.ErrorCode) &&
-                  methodName !== 'Logout'
-                ) {
-                  AppApi.user.logout()
+                const needToLogout = errors.isAuthError(response.data.ErrorCode)
+                  && methodName !== 'Logout' && methodName !== 'Login'
+                if (needToLogout) {
+                  appApi.user.logout()
                 } else {
                   if (!silentError) {
-                    notification.showError(
-                      errors.getTextFromResponse(response.data, defaultText)
-                    )
+                    notification.showError(errors.getTextFromResponse(response.data, defaultText))
                   }
                   reject(response.data)
                 }
@@ -84,9 +81,7 @@ export default {
             } else {
               //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
               if (!silentError) {
-                notification.showError(
-                  errors.getTextFromResponse(unknownError, defaultText)
-                )
+                notification.showError(errors.getTextFromResponse(unknownError, defaultText))
               }
               reject(unknownError)
             }

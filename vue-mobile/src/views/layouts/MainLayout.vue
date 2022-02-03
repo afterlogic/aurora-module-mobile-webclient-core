@@ -8,32 +8,34 @@
       <slot />
     </q-page>
   </q-page-container>
+  <footer-component />
 </template>
 
 <script>
 import HeaderComponent from 'components/main/Header'
 import DrawerComponent from 'components/main/DrawerComponent'
+import FooterComponent from 'components/main/FooterComponent'
 
 export default {
   name: 'MainLayout',
+
   components: {
     HeaderComponent,
     DrawerComponent,
+    FooterComponent,
   },
+
   props: {
     title: { type: String, required: true },
     description: { type: String, default: '' },
   },
+
   data() {
     return {
       leftDrawerOpen: false,
     }
   },
-  computed: {
-    hasAuthToken() {
-      return this.$store.getters['user/getAuthTokenStatus']
-    },
-  },
+
   methods: {
     closeDrawer(value) {
       this.leftDrawerOpen = value

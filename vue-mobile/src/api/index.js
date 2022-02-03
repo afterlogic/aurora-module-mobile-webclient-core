@@ -6,10 +6,10 @@ import coreParanoidEncryption from 'src/api/modules/coreParanoidEncryption'
 import openPGP from 'src/api/modules/openPGP'
 
 export default {
-  Files: files(),
-  User: user(),
-  Core: core(),
-  Contacts: contacts(),
+  files: files(),
+  user: user(),
+  core: core(),
+  contacts: contacts(),
   coreParanoidEncryption: coreParanoidEncryption(),
   openPGP: openPGP(),
 }

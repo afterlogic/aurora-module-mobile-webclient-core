@@ -1,9 +1,9 @@
-import WebApi from 'src/api/web-api'
+import webApi from 'src/api/web-api'
 
 export default () => {
   return {
     setParanoidEncryptionSettings: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'CoreParanoidEncryptionWebclientPlugin',
         methodName: 'UpdateSettings',
         parameters: parameters,

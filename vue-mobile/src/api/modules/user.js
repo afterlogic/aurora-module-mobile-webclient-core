@@ -1,46 +1,22 @@
-import WebApi from 'src/api/web-api'
+import webApi from 'src/api/web-api'
 import store from 'src/store'
 
 export default () => {
   return {
     login: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Core',
         methodName: 'Login',
         parameters,
       }).then((result) => {
         return result
+      }, () => {
+        return false
       })
     },
-    confirmTwoFactorAuth: async (parameters) => {
-      return WebApi.sendRequest({
-        moduleName: 'TwoFactorAuth',
-        methodName: 'VerifyAuthenticatorAppCode',
-        parameters,
-      }).then((result) => {
-        return result
-      })
-    },
-    trustTheDevice: async (parameters) => {
-      return WebApi.sendRequest({
-        moduleName: 'TwoFactorAuth',
-        methodName: 'TrustDevice',
-        parameters,
-      }).then((result) => {
-        return result
-      })
-    },
-    getUsedDevices: async (parameters) => {
-      return WebApi.sendRequest({
-        moduleName: 'TwoFactorAuth',
-        methodName: 'GetUsedDevices',
-        parameters,
-      }).then((result) => {
-        return result
-      })
-    },
+
     logout() {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Core',
         methodName: 'Logout',
         parameters: {},
@@ -52,6 +28,34 @@ export default () => {
           store.dispatch('user/logout')
         }
       )
+    },
+
+    confirmTwoFactorAuth: async (parameters) => {
+      return webApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'VerifyAuthenticatorAppCode',
+        parameters,
+      }).then((result) => {
+        return result
+      })
+    },
+    trustTheDevice: async (parameters) => {
+      return webApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'TrustDevice',
+        parameters,
+      }).then((result) => {
+        return result
+      })
+    },
+    getUsedDevices: async (parameters) => {
+      return webApi.sendRequest({
+        moduleName: 'TwoFactorAuth',
+        methodName: 'GetUsedDevices',
+        parameters,
+      }).then((result) => {
+        return result
+      })
     },
   }
 }

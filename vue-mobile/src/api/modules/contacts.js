@@ -1,9 +1,9 @@
-import WebApi from 'src/api/web-api'
+import webApi from 'src/api/web-api'
 
 export default () => {
   return {
     getContactSuggestions: async (parameters) => {
-      return WebApi.sendRequest({
+      return webApi.sendRequest({
         moduleName: 'Contacts',
         methodName: 'GetContactSuggestions',
         parameters: parameters,
