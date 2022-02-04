@@ -24,7 +24,6 @@ import core from './core'
 import user from './user'
 import contacts from './contacts'
 import files from './files'
-import openPGP from './openPGP'
 import settings from './settings'
 ${paths}
 export default new Vuex.Store({
@@ -33,7 +32,6 @@ export default new Vuex.Store({
     user,
     contacts,
     files,
-    openPGP,
     settings,
 ${names}
   },

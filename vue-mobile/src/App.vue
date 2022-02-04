@@ -40,13 +40,12 @@ export default defineComponent({
 
     isUserNormalOrTenant (isUserNormalOrTenant) {
       const currentPath = this.$router.currentRoute && this.$router.currentRoute.path ? this.$router.currentRoute.path : ''
-      console.log('currentPath', currentPath)
       if (isUserNormalOrTenant) {
-        if (currentPath !== '/mail') {
+        if (currentPath === '') {
           this.$router.push('/mail')
         }
       } else {
-        if (currentPath !== '/') {
+        if (currentPath !== '') {
           this.$router.push('/')
         }
       }

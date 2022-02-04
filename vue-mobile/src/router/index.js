@@ -58,7 +58,7 @@ export default route(function (/* { store, ssrContext } */) {
         }
         if (!_.isArray(to.matched) || to.matched.length === 0) {
           if (store.getters['user/isUserNormalOrTenant']) {
-            if (to.path !== '/mail') {
+            if (to.path === '/') {
               next('/mail')
               return
             }
