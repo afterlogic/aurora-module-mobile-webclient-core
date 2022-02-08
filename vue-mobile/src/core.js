@@ -2,8 +2,7 @@ import _ from 'lodash'
 import VueCookies from 'vue-cookies'
 import { i18n } from 'boot/i18n'
 
-import appApi from 'src/api'
-import settings from 'src/settings'
+import coreWebApi from 'src/api/core-web-api'
 import store from 'src/store'
 import enums from 'src/enums'
 
@@ -23,7 +22,7 @@ const core = {
       enums.init(appData)
       errors.init(appData)
       modulesManager.getModules(appData).then(() => {
-        store.dispatch('user/parseAppData', appData).then(() => {
+        store.dispatch('core/parseAppData', appData).then(() => {
           modulesManager.initModules(appData)
           resolve()
         }, reject)
@@ -33,7 +32,7 @@ const core = {
 
   async requestAppData() {
     return new Promise(async (resolve, reject) => {
-      const appData = await appApi.core.getAppData()
+      const appData = await coreWebApi.getAppData()
       if (_.isObject(appData)) {
         this.setAppData(appData).then(() => {
           resolve()
@@ -59,8 +58,6 @@ export default {
   },
   async requestAppData() {
     await core.requestAppData()
-    const user = settings.getUser()
-    await store.dispatch('core/changeCurrentUser', user)
   },
   addCookies() {
     const uuid = DeviceUUID.DeviceUUID().get()

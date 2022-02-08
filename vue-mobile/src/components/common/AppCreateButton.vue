@@ -27,7 +27,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('files', ['changeDialogComponent']),
+    ...mapActions('filesmobile', ['changeDialogComponent']),
     showDialog() {
       if (this.dialogComponent.component === 'CreateButtonsDialogs') {
         this.changeDialogComponent({ component: '' })

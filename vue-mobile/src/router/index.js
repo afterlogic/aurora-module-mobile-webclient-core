@@ -9,7 +9,6 @@ import {
 import routes from './routes'
 
 import core from 'src/core'
-import store from 'src/store'
 import modulesManager from 'src/modules-manager'
 
 /*
@@ -56,21 +55,11 @@ export default route(function (/* { store, ssrContext } */) {
           next(to.path)
           return
         }
-        if (!_.isArray(to.matched) || to.matched.length === 0) {
-          if (store.getters['user/isUserNormalOrTenant']) {
-            if (to.path === '/') {
-              next('/mail')
-              return
-            }
-          } else {
-            if (to.path !== '/') {
-              next('/')
-              return
-            }
-          }
-          modulesManager.setCurrentPageName('')
-        } else {
-          modulesManager.setCurrentPageName(to.matched[0].name)
+
+        const correctedPath = modulesManager.correctPathForUser(to.matched, to.path)
+        if (to.path !== correctedPath) {
+          next(correctedPath)
+          return
         }
         next()
       },

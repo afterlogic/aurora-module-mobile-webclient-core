@@ -68,14 +68,11 @@ export default {
       await loadLanguageAsync(settings.shortLanguage)
     }
 
-    await store.dispatch('core/changeLocale', settings.shortLanguage)
+    await store.dispatch('core/setLocale', settings.shortLanguage)
 
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
-  },
-  getUser: () => {
-    return settings?.user
   },
   getTwoFactorData: () => {
     return {

@@ -27,9 +27,10 @@ export default {
     value: { type: Boolean, default: false },
   },
   computed: {
-    ...mapGetters('core', ['currentUser']),
+    ...mapGetters('core', ['userPublicId']),
+
     userName() {
-      return this.currentUser?.PublicId ? this.currentUser.PublicId : ''
+      return this.userPublicId?.PublicId ? this.userPublicId.PublicId : ''
     },
   },
   data() {

@@ -3,10 +3,13 @@ import _ from 'lodash'
 import typesUtils from 'src/utils/types'
 
 import moduleList from 'src/modules'
-import router from 'src/router'
+import store from 'src/store'
+
 let availableClientModules = []
 let availableBackendModules = []
 let availableModules = []
+
+const modulesOrder = ['mail', 'contacts', 'files', 'settings']
 
 let allModules = null
 let allModulesNames = []
@@ -91,6 +94,54 @@ export default {
     return this.getAnonymousPages().concat(this.getNormalUserPages())
   },
 
+  getDefaultPageForUser () {
+    const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    let page = null
+    if (isUserNormalOrTenant) {
+      page = normalUserPages.find(page => page.pageName === modulesOrder[0]) || null
+    } else {
+      page = anonymousPages[0]
+    }
+    return page
+  },
+
+  /**
+   * Path is corrected depending on which page is allowed for user (if someone is authenticated) or anonymous (if no one is authenticated)
+   * @param matchedRoutes
+   * @param toPath
+   * @returns {string}
+   */
+  correctPathForUser (matchedRoutes, toPath = null) {
+    if (!_.isArray(anonymousPages) || anonymousPages.length === 0 || !_.isArray(normalUserPages) || normalUserPages.length === 0) {
+      this.setCurrentPageName('')
+      return toPath || '/'
+    }
+
+    const matchedRouteName = _.isArray(matchedRoutes) && matchedRoutes.length > 0 ? matchedRoutes[0].name : null
+    const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    let page = null
+    if (matchedRouteName !== null) {
+      if (isUserNormalOrTenant) {
+        page = normalUserPages.find(page => page.pageName === matchedRouteName) || null
+      } else {
+        page = anonymousPages.find(page => page.pageName === matchedRouteName) || null
+      }
+    }
+    if (page === null) {
+      page = this.getDefaultPageForUser()
+    }
+    if (page === null) {
+      this.setCurrentPageName('')
+      return '/'
+    } else if (page.pageName === matchedRouteName) {
+      this.setCurrentPageName(page.pageName)
+      return toPath || page.pagePath
+    } else {
+      this.setCurrentPageName(page.pageName)
+      return page.pagePath
+    }
+  },
+
   getAnonymousPages () {
     if (anonymousPages === null && allModules !== null) {
       anonymousPages = []
@@ -161,10 +212,9 @@ export default {
       }
     }
 
-    const buttonsOrder = ['mail', 'contacts', 'files', 'settings']
     normalUserFooterButtons.sort(function(a, b) {
-      const aPos = buttonsOrder.indexOf(a.pageName)
-      const bPos = buttonsOrder.indexOf(b.pageName)
+      const aPos = modulesOrder.indexOf(a.pageName)
+      const bPos = modulesOrder.indexOf(b.pageName)
       return aPos - bPos
     })
 

@@ -59,8 +59,8 @@ const isShowAction = (action, file, storage, path) => {
 export const fileActions = {
   copy: {
     method: async (store) => {
-      const currentFile = store.getters['files/currentFile']
-      await store.dispatch('files/addCopyItems', { items: [currentFile] })
+      const currentFile = store.getters['filesmobile/currentFile']
+      await store.dispatch('filesmobile/addCopyItems', { items: [currentFile] })
     },
     name: 'copy',
     displayName: 'Copy/Move',
@@ -85,13 +85,13 @@ export const fileActions = {
   },
   download: {
     method: (store) => {
-      const file = store.getters['files/currentFile']
-      store.dispatch('files/changeItemProperty', {
+      const file = store.getters['filesmobile/currentFile']
+      store.dispatch('filesmobile/changeItemProperty', {
         item: file,
         property: 'downloading',
         value: true,
       })
-      store.dispatch('files/asyncDownloadFile')
+      store.dispatch('filesmobile/asyncDownloadFile')
     },
     name: 'download',
     displayName: i18n.$t.COREWEBCLIENT.ACTION_DOWNLOAD_FILE,

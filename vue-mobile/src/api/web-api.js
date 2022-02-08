@@ -1,12 +1,12 @@
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import querystring from 'querystring'
+import _ from 'lodash'
+import { saveAs } from 'file-saver'
 
 import errors from 'src/utils/errors'
-import appApi from 'src/api/index'
+import coreWebApi from 'src/api/core-web-api'
 import { getApiHost } from 'src/api/helpers'
-import { saveAs } from 'file-saver'
-import _ from 'lodash'
 import notification from 'src/utils/notification'
 import store from 'src/store'
 
@@ -68,7 +68,7 @@ export default {
                 const needToLogout = errors.isAuthError(response.data.ErrorCode)
                   && methodName !== 'Logout' && methodName !== 'Login'
                 if (needToLogout) {
-                  appApi.user.logout()
+                  coreWebApi.logout()
                 } else {
                   if (!silentError) {
                     notification.showError(errors.getTextFromResponse(response.data, defaultText))
@@ -127,7 +127,7 @@ export default {
         headers: headers,
         responseType: 'blob',
         cancelToken: new CancelToken(function (c) {
-          store.dispatch('files/changeItemProperty', {
+          store.dispatch('filesmobile/changeItemProperty', {
             item: file,
             property: 'cancelToken',
             value: c,
@@ -138,7 +138,7 @@ export default {
             let percentCompleted = Math.round(
               (progressEvent.loaded * 100) / file.size
             )
-            store.dispatch('files/changeItemProperty', {
+            store.dispatch('filesmobile/changeItemProperty', {
               item: file,
               property: 'percentDownloading',
               value: percentCompleted,
@@ -151,7 +151,7 @@ export default {
             new Blob([response.data], { type: response.data.type }),
             fileName
           )
-          store.dispatch('files/changeItemProperty', {
+          store.dispatch('filesmobile/changeItemProperty', {
             item: file,
             property: 'downloading',
             value: false,
@@ -159,12 +159,12 @@ export default {
           resolve(response)
         })
         .catch((response) => {
-          store.dispatch('files/changeItemProperty', {
+          store.dispatch('filesmobile/changeItemProperty', {
             item: file,
             property: 'percentDownloading',
             value: 0,
           })
-          store.dispatch('files/changeItemProperty', {
+          store.dispatch('filesmobile/changeItemProperty', {
             item: file,
             property: 'downloading',
             value: false,

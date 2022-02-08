@@ -9,6 +9,9 @@
 import { mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
 
+import modulesManager from 'src/modules-manager'
+import typesUtils from 'src/utils/types'
+
 import UploaderComponent from 'components/common/UploaderComponent'
 
 const mixins = {
@@ -29,8 +32,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapGetters('core', ['locale']),
-    ...mapGetters('user', ['isUserNormalOrTenant']),
+    ...mapGetters('core', ['locale', 'isUserNormalOrTenant']),
   },
 
   watch: {
@@ -38,18 +40,13 @@ export default defineComponent({
       this.$i18n.locale = lang
     },
 
-    isUserNormalOrTenant (isUserNormalOrTenant) {
-      const currentPath = this.$router.currentRoute && this.$router.currentRoute.path ? this.$router.currentRoute.path : null
-      if (currentPath !== null) {
-        if (isUserNormalOrTenant) {
-          if (currentPath === '') {
-            this.$router.push('/mail')
-          }
-        } else {
-          if (currentPath !== '') {
-            this.$router.push('/')
-          }
-        }
+    isUserNormalOrTenant () {
+      const currentRoute = this.$router.currentRoute.value
+      const currentPath = currentRoute?.path
+      const matchedRoutes = typesUtils.pArray(currentRoute?.matched)
+      const correctedPath = modulesManager.correctPathForUser(matchedRoutes)
+      if (matchedRoutes.length > 0 && currentPath !== correctedPath) {
+        this.$router.push(correctedPath)
       }
     },
   },

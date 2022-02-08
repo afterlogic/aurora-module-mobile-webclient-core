@@ -15,7 +15,7 @@ const isImg = (name) => {
   })
 }
 const isCopied = (hash) => {
-  const copiedFiles = store.getters['files/copiedFiles']
+  const copiedFiles = store.getters['filesmobile/copiedFiles']
   const index = copiedFiles.findIndex((file) => file.hash === hash)
   return !!(index + 1)
 }
