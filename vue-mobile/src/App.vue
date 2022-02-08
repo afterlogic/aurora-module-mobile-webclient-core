@@ -39,14 +39,16 @@ export default defineComponent({
     },
 
     isUserNormalOrTenant (isUserNormalOrTenant) {
-      const currentPath = this.$router.currentRoute && this.$router.currentRoute.path ? this.$router.currentRoute.path : ''
-      if (isUserNormalOrTenant) {
-        if (currentPath === '') {
-          this.$router.push('/mail')
-        }
-      } else {
-        if (currentPath !== '') {
-          this.$router.push('/')
+      const currentPath = this.$router.currentRoute && this.$router.currentRoute.path ? this.$router.currentRoute.path : null
+      if (currentPath !== null) {
+        if (isUserNormalOrTenant) {
+          if (currentPath === '') {
+            this.$router.push('/mail')
+          }
+        } else {
+          if (currentPath !== '') {
+            this.$router.push('/')
+          }
         }
       }
     },

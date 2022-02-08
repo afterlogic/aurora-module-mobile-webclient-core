@@ -13,6 +13,7 @@ let allModulesNames = []
 let normalUserPages = null
 let anonymousPages = null
 let currentPageName = null
+let normalUserFooterButtons = null
 
 function _checkIfModuleAvailable(module, modules, depth = 1) {
   if (depth > 4) {
@@ -126,5 +127,47 @@ export default {
       }
     }
     return null
+  },
+
+  async getPageFooterComponent () {
+    const normalUserPages = this.getNormalUserPages()
+    const currentPageData = normalUserPages.find(pageData => pageData.pageName === currentPageName)
+    if (_.isFunction(currentPageData?.pageFooterComponent)) {
+      const component = await currentPageData.pageFooterComponent()
+      if (component?.default) {
+        return component.default
+      }
+    }
+    return null
+  },
+
+  async getPageFooterButtons () {
+    if (normalUserFooterButtons === null && allModules !== null) {
+      normalUserFooterButtons = []
+      allModules.forEach(module => {
+        const moduleFooterButtons = _.isFunction(module.getPageFooterButtons) && module.getPageFooterButtons()
+        if (_.isArray(moduleFooterButtons)) {
+          normalUserFooterButtons = normalUserFooterButtons.concat(moduleFooterButtons)
+        }
+      })
+      for (const footerButtonsData of normalUserFooterButtons) {
+        if (_.isFunction(footerButtonsData?.getIconComponent)) {
+          const component = await footerButtonsData.getIconComponent()
+          if (component?.default) {
+            footerButtonsData.iconComponent = component.default
+          }
+          delete footerButtonsData.getIconComponent
+        }
+      }
+    }
+
+    const buttonsOrder = ['mail', 'contacts', 'files', 'settings']
+    normalUserFooterButtons.sort(function(a, b) {
+      const aPos = buttonsOrder.indexOf(a.pageName)
+      const bPos = buttonsOrder.indexOf(b.pageName)
+      return aPos - bPos
+    })
+
+    return normalUserFooterButtons === null ? [] : normalUserFooterButtons
   },
 }

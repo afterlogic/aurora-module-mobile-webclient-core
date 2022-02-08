@@ -10,7 +10,7 @@ import { shallowRef, triggerRef } from 'vue'
 import modulesManager from 'src/modules-manager'
 
 export default {
-  name: 'Header',
+  name: 'MainHeader',
 
   setup() {
     let headerModuleComponent = shallowRef(null)

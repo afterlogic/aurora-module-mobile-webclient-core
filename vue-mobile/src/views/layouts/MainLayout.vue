@@ -1,28 +1,28 @@
 <template>
-  <header-component @openDrawer="leftDrawerOpen = !leftDrawerOpen" />
-  <drawer-component :value="leftDrawerOpen" @closeDrawer="closeDrawer">
+  <main-header @openDrawer="leftDrawerOpen = !leftDrawerOpen"></main-header>
+  <main-drawer :value="leftDrawerOpen" @closeDrawer="closeDrawer">
     <slot name="drawer" />
-  </drawer-component>
+  </main-drawer>
   <q-page-container class="full-height">
     <q-page>
       <slot />
     </q-page>
   </q-page-container>
-  <footer-component />
+  <main-footer></main-footer>
 </template>
 
 <script>
-import HeaderComponent from 'components/main/Header'
-import DrawerComponent from 'components/main/DrawerComponent'
-import FooterComponent from 'components/main/FooterComponent'
+import MainHeader from 'components/main/MainHeader'
+import MainDrawer from 'components/main/MainDrawer'
+import MainFooter from 'components/main/MainFooter'
 
 export default {
   name: 'MainLayout',
 
   components: {
-    HeaderComponent,
-    DrawerComponent,
-    FooterComponent,
+    MainHeader,
+    MainDrawer,
+    MainFooter,
   },
 
   props: {

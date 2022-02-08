@@ -22,7 +22,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'DrawerComponent',
+  name: 'MainDrawer',
   props: {
     value: { type: Boolean, default: false },
   },
