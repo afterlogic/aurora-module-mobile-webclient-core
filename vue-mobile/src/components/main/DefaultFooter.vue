@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { shallowRef } from 'vue'
+import { shallowRef, triggerRef } from 'vue'
 
 import modulesManager from 'src/modules-manager'
 
@@ -26,6 +26,7 @@ export default {
     let footerButtons = shallowRef(null)
     modulesManager.getPageFooterButtons().then(footerButtonsValue => {
       footerButtons.value = footerButtonsValue
+      triggerRef(footerButtons)
     })
     return {
       footerButtons,

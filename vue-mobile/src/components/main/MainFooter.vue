@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { shallowRef } from 'vue'
+import { shallowRef, triggerRef } from 'vue'
 
 import modulesManager from 'src/modules-manager'
 
@@ -17,6 +17,7 @@ export default {
     modulesManager.getPageFooterComponent().then(component => {
       if (component) {
         footerModuleComponent.value = component
+        triggerRef(footerModuleComponent)
       }
     })
     return {
