@@ -1,14 +1,14 @@
 import _ from 'lodash'
 
-import typesUtils from 'src/utils/types'
+import types from 'src/utils/types'
 
 const enums = {
   UserRoles: {},
 
   init (appData) {
-    const coreData = typesUtils.pObject(appData.Core, {})
+    const coreData = types.pObject(appData.Core, {})
     if (!_.isEmpty(coreData)) {
-      this.UserRoles = typesUtils.pObject(coreData.EUserRole)
+      this.UserRoles = types.pObject(coreData.EUserRole)
     }
   },
 }

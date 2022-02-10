@@ -3,7 +3,7 @@ import { i18n } from 'boot/i18n'
 import _ from 'lodash'
 
 import textUtils from 'src/utils/text'
-import typesUtils from 'src/utils/types'
+import types from 'src/utils/types'
 
 const errorsCodes = {
   InvalidToken: 101,
@@ -32,7 +32,7 @@ const errorsUtils = {
   modulesErrors: null,
 
   setModulesErrors(appData) {
-    this.modulesErrors = typesUtils.pObject(appData?.module_errors)
+    this.modulesErrors = types.pObject(appData?.module_errors)
   },
 
   getTextFromResponse(response, defaultText) {
@@ -43,13 +43,13 @@ const errorsUtils = {
 
       errorText = this._getModuleErrorByCode(response.Module, errorCode)
 
-      if (!typesUtils.isNonEmptyString(errorText)) {
+      if (!types.isNonEmptyString(errorText)) {
         errorText = this._getCoreErrorByCode(errorCode, defaultText)
       }
 
-      if (typesUtils.isNonEmptyString(errorText)) {
+      if (types.isNonEmptyString(errorText)) {
         const responseError = textUtils.encodeHtml(response.ErrorMessage || '')
-        if (typesUtils.isNonEmptyString(responseError)) {
+        if (types.isNonEmptyString(responseError)) {
           errorText += ' (' + responseError + ')'
         }
 
@@ -143,17 +143,17 @@ const errorsUtils = {
   },
 
   _insertValuesIntoPlaceholders(response, errorText) {
-    if (typesUtils.isNonEmptyString(errorText)) {
+    if (types.isNonEmptyString(errorText)) {
       const medResult = errorText.replace(
         /[^%]*%(\w+)%[^%]*/g,
         function (match, found, index, str) {
-          if (typesUtils.isNonEmptyString(response[found])) {
+          if (types.isNonEmptyString(response[found])) {
             return match.replace('%' + found + '%', response[found])
           }
           return match
         }
       )
-      if (typesUtils.isNonEmptyString(medResult)) {
+      if (types.isNonEmptyString(medResult)) {
         errorText = medResult
       }
     }

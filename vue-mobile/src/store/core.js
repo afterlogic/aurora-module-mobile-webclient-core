@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import core from 'src/core'
 import enums from 'src/enums'
-import typesUtils from 'src/utils/types'
+import types from 'src/utils/types'
 
 export default {
   namespaced: true,
@@ -21,8 +21,8 @@ export default {
         const UserRoles = enums.getUserRoles()
         // state.userId = typesUtils.pInt(userData.Id)
         // state.userName = typesUtils.pString(userData.Name)
-        state.userPublicId = typesUtils.pString(userData.PublicId)
-        state.userRole = typesUtils.pEnum(userData.Role, UserRoles, UserRoles.Anonymous)
+        state.userPublicId = types.pString(userData.PublicId)
+        state.userRole = types.pEnum(userData.Role, UserRoles, UserRoles.Anonymous)
         // state.userTenantId = typesUtils.pInt(userData.TenantId)
       }
     },

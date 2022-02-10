@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import typesUtils from 'src/utils/types'
+import types from 'src/utils/types'
 
 import moduleList from 'src/modules'
 import store from 'src/store'
@@ -39,8 +39,8 @@ function _checkIfModuleAvailable(module, modules, depth = 1) {
 export default {
   async getModules (appData) {
     if (allModules === null) {
-      availableClientModules = typesUtils.pArray(appData?.Core?.AvailableClientModules)
-      availableBackendModules = typesUtils.pArray(appData?.Core?.AvailableBackendModules)
+      availableClientModules = types.pArray(appData?.Core?.AvailableClientModules)
+      availableBackendModules = types.pArray(appData?.Core?.AvailableBackendModules)
       availableModules = _.uniq(availableClientModules.concat(availableBackendModules))
       let modules = await moduleList.getModules()
       if (_.isArray(modules)) {

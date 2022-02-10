@@ -1,43 +1,16 @@
-import { i18n, loadLanguageAsync } from 'boot/i18n'
-import _ from 'lodash'
-import types from 'src/utils/types'
 import VueCookies from 'vue-cookies'
-import store from "src/store";
+import _ from 'lodash'
+
+import { i18n, loadLanguageAsync } from 'boot/i18n'
+import types from 'src/utils/types'
+import store from 'src/store'
 
 class Settings {
   constructor(appData) {
     const coreData = types.pObject(appData.Core)
     this.shortLanguage = this._getShortLanguage(coreData)
-    this.user = types.pObject(appData.User)
     this.cookiePath = types.pString(coreData.CookiePath)
     this.cookieSecure = types.pBool(coreData.CookieSecure)
-    const twoFactorAuth = types.pObject(appData.TwoFactorAuth)
-    this.allowUsedDevices = types.pBool(twoFactorAuth.AllowUsedDevices)
-    this.trustDevicesForDays = types.pInt(twoFactorAuth.TrustDevicesForDays)
-    const coreParanoidEncryptionWebclientPlugin = types.pObject(
-      appData.CoreParanoidEncryptionWebclientPlugin
-    )
-    this.allowChangeSettings = types.pBool(
-      coreParanoidEncryptionWebclientPlugin.AllowChangeSettings
-    )
-    this.allowMultiChunkUpload = types.pBool(
-      coreParanoidEncryptionWebclientPlugin.AllowMultiChunkUpload
-    )
-    this.chunkSizeMb = types.pInt(
-      coreParanoidEncryptionWebclientPlugin.ChunkSizeMb
-    )
-    this.dontRemindMe = types.pBool(
-      coreParanoidEncryptionWebclientPlugin.DontRemindMe
-    )
-    this.enableInPersonalStorage = types.pBool(
-      coreParanoidEncryptionWebclientPlugin.EnableInPersonalStorage
-    )
-    this.enableModule = types.pBool(
-      coreParanoidEncryptionWebclientPlugin.EnableModule
-    )
-    this.encryptionMode = types.pInt(
-      coreParanoidEncryptionWebclientPlugin.EncryptionMode
-    )
   }
 
   _getShortLanguage(coreData) {
@@ -73,23 +46,5 @@ export default {
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
-  },
-  getTwoFactorData: () => {
-    return {
-      allowUsedDevices: settings?.allowUsedDevices,
-      trustDevicesForDays: settings?.trustDevicesForDays,
-    }
-  },
-  getCoreParanoidEncryptionSettings: () => {
-    return {
-      enableInPersonalStorage: settings.enableInPersonalStorage,
-      enableModule: settings.enableModule,
-    }
-  },
-  setEnableParanoidEncryption: (enableModule) => {
-    settings.enableModule = enableModule
-  },
-  setEncryptFilesPersonalStorage: (enableInPersonalStorage) => {
-    settings.enableInPersonalStorage = enableInPersonalStorage
   },
 }
