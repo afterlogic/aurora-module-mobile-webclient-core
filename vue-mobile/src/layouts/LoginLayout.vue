@@ -6,7 +6,9 @@
       <p class="q-mt-lg login-page__text__heading">
         {{ $t('MOBILEAPPSWEBCLIENT.HEADING_FILES_APP') }}
       </p>
-      <p class="q-mt-lg text-grey-5">{{ subheading }}</p>
+      <p class="q-mt-lg text-grey-5 text-uppercase">
+        {{ subheading }}
+      </p>
     </div>
     <div class="content-between full-width full-height flex column justify-between">
       <slot />
