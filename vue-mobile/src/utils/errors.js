@@ -35,7 +35,7 @@ const errorsUtils = {
     this.modulesErrors = types.pObject(appData?.module_errors)
   },
 
-  getTextFromResponse(response, defaultText) {
+  getTextFromResponse(response, defaultErrorText) {
     let errorText = ''
 
     if (_.isObject(response)) {
@@ -44,7 +44,7 @@ const errorsUtils = {
       errorText = this._getModuleErrorByCode(response.Module, errorCode)
 
       if (!types.isNonEmptyString(errorText)) {
-        errorText = this._getCoreErrorByCode(errorCode, defaultText)
+        errorText = this._getCoreErrorByCode(errorCode, defaultErrorText)
       }
 
       if (types.isNonEmptyString(errorText)) {
@@ -77,7 +77,7 @@ const errorsUtils = {
     return false
   },
 
-  _getCoreErrorByCode(errorCode, defaultText) {
+  _getCoreErrorByCode(errorCode, defaultErrorText) {
     switch (errorCode) {
       case errorsCodes.AuthError:
         return i18n.global.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')
@@ -116,7 +116,7 @@ const errorsUtils = {
       case errorsCodes.SystemNotConfigured:
         return i18n.global.tc('COREWEBCLIENT.ERROR_SYSTEM_NOT_CONFIGURED')
       default:
-        return defaultText || i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN')
+        return defaultErrorText || i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN')
     }
   },
 
@@ -166,8 +166,8 @@ export default {
     errorsUtils.setModulesErrors(appData)
   },
 
-  getTextFromResponse(response, defaultText) {
-    return errorsUtils.getTextFromResponse(response, defaultText)
+  getTextFromResponse(response, defaultErrorText) {
+    return errorsUtils.getTextFromResponse(response, defaultErrorText)
   },
 
   isAuthError(errorCode) {
