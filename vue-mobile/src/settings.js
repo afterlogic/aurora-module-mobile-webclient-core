@@ -11,6 +11,7 @@ class Settings {
     this.shortLanguage = this._getShortLanguage(coreData)
     this.cookiePath = types.pString(coreData.CookiePath)
     this.cookieSecure = types.pBool(coreData.CookieSecure)
+    this.siteName = types.pString(coreData.SiteName)
   }
 
   _getShortLanguage(coreData) {
@@ -46,5 +47,9 @@ export default {
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
+  },
+
+  getSetting(settingName) {
+    return settings ? settings[settingName] : null
   },
 }

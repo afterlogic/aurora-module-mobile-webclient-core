@@ -4,7 +4,7 @@
     <div class="full-width text-weight-medium login-page__text">
       <FolderFilledIcon />
       <p class="q-mt-lg login-page__text__heading">
-        {{ $t('MOBILEAPPSWEBCLIENT.HEADING_FILES_APP') }}
+        {{ heading }}
       </p>
       <p class="q-mt-lg text-grey-5 text-uppercase">
         {{ subheading }}
@@ -20,6 +20,8 @@
 import FolderFilledIcon from 'components/common/icons/login/FolderFilledIcon'
 import FolderBlurredIcon from 'components/common/icons/login/FolderBlurredIcon'
 
+import settings from '../settings'
+
 export default {
   name: 'LoginLayout',
 
@@ -34,6 +36,12 @@ export default {
     FolderFilledIcon,
     FolderBlurredIcon,
   },
+
+  computed: {
+    heading() {
+      return settings.getSetting('siteName')
+    }
+  }
 }
 </script>
 
