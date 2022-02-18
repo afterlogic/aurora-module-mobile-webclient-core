@@ -3,7 +3,7 @@
   <main-drawer :value="leftDrawerOpen" @closeDrawer="closeDrawer">
     <slot name="drawer" />
   </main-drawer>
-  <q-page-container style="overflow: hidden" class="full-height">
+  <q-page-container class="full-height">
     <q-page>
       <slot />
     </q-page>
