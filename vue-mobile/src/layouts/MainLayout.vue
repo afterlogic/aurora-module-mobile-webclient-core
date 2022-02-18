@@ -25,11 +25,6 @@ export default {
     MainFooter,
   },
 
-  props: {
-    title: { type: String, required: true },
-    description: { type: String, default: '' },
-  },
-
   data() {
     return {
       leftDrawerOpen: false,
