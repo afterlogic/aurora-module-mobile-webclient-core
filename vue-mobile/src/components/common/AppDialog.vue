@@ -1,13 +1,13 @@
 <template>
-  <q-dialog v-bind="$attrs" @escape-key="cancelDialog">
+  <q-dialog v-bind="$attrs" @escape-key="close">
     <q-card class="q-dialog-size dialog" style="min-width: 300px">
-      <div class="dialog__head">
+      <div class="dialog__head q-mx-sm">
         <slot name="head"/>
       </div>
-      <q-card-actions align="right">
+      <q-card-actions class="q-mx-sm" align="right">
         <slot name="actions" />
       </q-card-actions>
-      <cancel-cross-icon v-if="showCross" class="cancel-icon" @click="cancelDialog"/>
+      <cancel-cross-icon v-if="showCross" class="cancel-icon" @click="close"/>
     </q-card>
   </q-dialog>
 </template>
@@ -22,7 +22,7 @@ export default {
     CancelCrossIcon
   },
   props: {
-    cancelDialog: { type: Function, default: () => null },
+    close: { type: Function, default: () => null },
     showCross: { type: Boolean, default: () => true }
   }
 }
