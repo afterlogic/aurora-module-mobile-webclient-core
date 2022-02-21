@@ -1,9 +1,9 @@
 <template>
   <div class="q-gutter-y-md q-px-lg full-height flex column login-page">
-    <FolderBlurredIcon class="absolute login-page__back-icon" />
+    <FolderBlurredIcon class="absolute no-pointer-events login-page__back-icon" />
     <div class="full-width text-weight-medium login-page__text">
       <FolderFilledIcon />
-      <p class="q-mt-lg login-page__text__heading">
+      <p class="q-mt-lg ellipsis-3-lines login-page__text__heading">
         {{ heading }}
       </p>
       <p class="q-mt-lg text-grey-5 text-uppercase">
@@ -57,7 +57,7 @@ export default {
 
     &__heading {
       font-size: 2.25rem;
-      line-height: 1.5rem;
+      line-height: 1;
     }
   }
 }
