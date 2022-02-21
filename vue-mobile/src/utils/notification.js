@@ -25,7 +25,7 @@ export default {
 
   showReport(message) {
     Notify.create({
-      color: 'info',
+      color: 'green',
       textColor: 'white',
       icon: null,
       message,

@@ -1,6 +1,6 @@
 <template>
   <div class="full-width">
-    <div class="q-px-md text-bold text-black text placeholder">
+    <div v-if="placeholder" class="q-px-md dialog__header-text">
       <span>{{ placeholder }}</span>
     </div>
     <q-input
