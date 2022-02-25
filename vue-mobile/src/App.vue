@@ -19,22 +19,35 @@ const mixins = {
     uploadFiles(methods) {
       this.$refs.uploader.open(methods)
     },
+    _getParentComponent(sComponentName) {
+      if (this.$options.name === sComponentName) return this
+      let oComponent = null
+      let oParent = this.$parent
+      while (oParent && !oComponent) {
+        if (oParent.$options.name === sComponentName) {
+          oComponent = oParent
+        }
+        oParent = oParent.$parent
+      }
+      return oComponent
+    },
   },
 }
-
 export default defineComponent({
   mixins: [mixins],
 
   name: 'App',
+  mounted() {
+    console.log(this)
+  },
 
   components: {
-    UploaderComponent,
+    UploaderComponent
   },
 
   computed: {
     ...mapGetters('core', ['locale', 'isUserNormalOrTenant']),
   },
-
   watch: {
     locale(lang) {
       this.$i18n.locale = lang

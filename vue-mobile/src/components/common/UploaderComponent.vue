@@ -39,8 +39,7 @@ export default {
       return this.factory()
     },
     onFileAdded(files) {
-      this.added(files)
-      this.$refs.uploader.upload()
+      this.added(files, this.$refs.uploader)
     },
     showReport(file) {
       this.uploaded(file)
