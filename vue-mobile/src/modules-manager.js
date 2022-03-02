@@ -201,15 +201,6 @@ export default {
           normalUserFooterButtons = normalUserFooterButtons.concat(moduleFooterButtons)
         }
       })
-      for (const footerButtonsData of normalUserFooterButtons) {
-        if (_.isFunction(footerButtonsData?.getIconComponent)) {
-          const component = await footerButtonsData.getIconComponent()
-          if (component?.default) {
-            footerButtonsData.iconComponent = component.default
-          }
-          delete footerButtonsData.getIconComponent
-        }
-      }
     }
 
     normalUserFooterButtons.sort(function(a, b) {

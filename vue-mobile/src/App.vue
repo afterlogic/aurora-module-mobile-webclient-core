@@ -1,6 +1,12 @@
 <template>
   <q-layout view="hhh LpR fFf" style="height: 100vh">
     <uploader-component ref="uploader" />
+    <component
+      v-for="component in currentComponents"
+      :key="component.name"
+      :ref="component.name"
+      :is="component.component"
+    />
     <router-view />
   </q-layout>
 </template>
@@ -8,10 +14,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
-
+import moduleList from 'src/modules'
 import modulesManager from 'src/modules-manager'
 import types from 'src/utils/types'
-
+import eventBus from 'src/event-bus'
 import UploaderComponent from 'components/common/UploaderComponent'
 
 const mixins = {
@@ -37,10 +43,14 @@ export default defineComponent({
   mixins: [mixins],
 
   name: 'App',
-  mounted() {
-    console.log(this)
+  data: () => ({
+    currentComponents: []
+  }),
+  async mounted() {
+    setTimeout(() => {
+      eventBus.$emit('checkComponents', this.currentComponents)
+    }, 1000)
   },
-
   components: {
     UploaderComponent
   },
@@ -51,6 +61,9 @@ export default defineComponent({
   watch: {
     locale(lang) {
       this.$i18n.locale = lang
+    },
+    currentComponents(val) {
+      console.log(val, 'val')
     },
 
     isUserNormalOrTenant () {

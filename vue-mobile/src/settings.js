@@ -12,6 +12,7 @@ class Settings {
     this.cookiePath = types.pString(coreData.CookiePath)
     this.cookieSecure = types.pBool(coreData.CookieSecure)
     this.siteName = types.pString(coreData.SiteName)
+    this.availableClientModules = types.pArray(coreData.AvailableClientModules)
   }
 
   _getShortLanguage(coreData) {
