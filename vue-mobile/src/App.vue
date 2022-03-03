@@ -48,11 +48,12 @@ export default defineComponent({
   async mounted() {
     console.log('mounted App')
     setTimeout(() => {
+      console.log('eventBus.$emit')
       eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
-    }, 1000)
+    }, 1500)
     setTimeout(() => {
       console.log(this.currentComponents, 'this.currentComponents')
-    }, 1500)
+    }, 2000)
   },
   components: {
     UploaderComponent
