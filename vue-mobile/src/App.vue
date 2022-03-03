@@ -46,14 +46,7 @@ export default defineComponent({
     currentComponents: []
   }),
   async mounted() {
-    console.log('mounted App')
-    setTimeout(() => {
-      console.log('eventBus.$emit')
-      eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
-    }, 1500)
-    setTimeout(() => {
-      console.log(this.currentComponents, 'this.currentComponents')
-    }, 2000)
+    eventBus.$on('CoreMobileWebclient::InitSubscription', this.initSubscription)
   },
   components: {
     UploaderComponent
@@ -80,5 +73,11 @@ export default defineComponent({
       }
     },
   },
+  methods: {
+    initSubscription() {
+      console.log('initSubscription')
+      eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
+    }
+  }
 })
 </script>
