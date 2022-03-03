@@ -14,7 +14,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { defineComponent } from 'vue'
-import moduleList from 'src/modules'
 import modulesManager from 'src/modules-manager'
 import types from 'src/utils/types'
 import eventBus from 'src/event-bus'
@@ -62,8 +61,8 @@ export default defineComponent({
     locale(lang) {
       this.$i18n.locale = lang
     },
-    currentComponents(val) {
-      console.log(val, 'val')
+    'currentComponents.length'(val) {
+      console.log(this.currentComponents, 'val')
     },
 
     isUserNormalOrTenant () {
