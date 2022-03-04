@@ -35,6 +35,13 @@ export default {
         this.$refs.uploader.pickFiles()
       }
     },
+    upload(methods) {
+      this.factory = methods.factory
+      this.added = methods.added
+      this.uploaded = methods.uploaded
+      this.finish = methods.finish
+      this.$refs.uploader.upload()
+    },
     addedFiles() {
       return this.factory()
     },

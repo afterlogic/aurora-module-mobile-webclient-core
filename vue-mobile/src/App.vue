@@ -24,6 +24,9 @@ const mixins = {
     uploadFiles(methods) {
       this.$refs.uploader.open(methods)
     },
+    nextUploadFiles(methods) {
+      this.$refs.uploader.upload(methods)
+    },
     _getParentComponent(sComponentName) {
       if (this.$options.name === sComponentName) return this
       let oComponent = null
@@ -47,6 +50,7 @@ export default defineComponent({
   }),
   async mounted() {
     eventBus.$on('CoreMobileWebclient::InitSubscription', this.initSubscription)
+    eventBus.$on('CoreMobileWebclient::SetComponents', this.setComponents)
   },
   components: {
     UploaderComponent
@@ -59,10 +63,6 @@ export default defineComponent({
     locale(lang) {
       this.$i18n.locale = lang
     },
-    'currentComponents.length'(val) {
-      console.log(this.currentComponents, 'val')
-    },
-
     isUserNormalOrTenant () {
       const currentRoute = this.$router.currentRoute.value
       const currentPath = currentRoute?.path
@@ -75,8 +75,10 @@ export default defineComponent({
   },
   methods: {
     initSubscription() {
-      console.log('initSubscription')
       eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
+    },
+    setComponents(component) {
+      this.currentComponents.push(component)
     }
   }
 })
