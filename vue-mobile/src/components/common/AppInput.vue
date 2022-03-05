@@ -10,6 +10,7 @@
     label-color="yellow-5"
     hide-bottom-space
     :autofocus="autofocus"
+    :type="type"
   />
 </template>
 
@@ -23,6 +24,7 @@ export default {
     rulesProps: { type: Object, default: null },
     filled: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false },
+    type: { type: String, default: 'text' }
   },
   data: () => ({
     text: '',
