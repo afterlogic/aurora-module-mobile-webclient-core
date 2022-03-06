@@ -1,10 +1,10 @@
 <template>
   <q-dialog v-bind="$attrs" @escape-key="close">
     <q-card class="q-dialog-size dialog" :style="{ minWidth: width }">
-      <div class="dialog__head q-mx-sm">
+      <div class="dialog__head">
         <slot name="head"/>
       </div>
-      <q-card-actions class="q-mx-sm" align="right">
+      <q-card-actions align="right">
         <slot name="actions" />
       </q-card-actions>
       <cancel-cross-icon v-if="showCross" class="cancel-icon" @click="close"/>
