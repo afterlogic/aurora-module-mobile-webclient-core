@@ -4,7 +4,7 @@
       <div class="dialog__head">
         <slot name="head"/>
       </div>
-      <q-card-actions align="right">
+      <q-card-actions :align="alignActions">
         <slot name="actions" />
       </q-card-actions>
       <cancel-cross-icon v-if="showCross" class="cancel-icon" @click="close"/>
@@ -25,7 +25,8 @@ export default {
   props: {
     close: { type: Function, default: () => null },
     showCross: { type: Boolean, default: () => true },
-    width: { type: String, default: '300px' }
+    width: { type: String, default: '300px' },
+    alignActions: { type: String, default: 'right' }
   }
 }
 </script>
