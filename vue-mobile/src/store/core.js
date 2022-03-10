@@ -55,7 +55,7 @@ export default {
     },
 
     userPublicId: (state) => state.userPublicId,
-
+    userData: (state) => state.user,
     locale: (state) => state.locale,
   },
 }
