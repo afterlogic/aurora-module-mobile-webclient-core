@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-bind="$attrs" @escape-key="close">
+  <q-dialog v-bind="$attrs" @escape-key="close" persistent @shake="shake">
     <q-card class="q-dialog-size dialog" :style="{ minWidth: width }">
       <div class="dialog__head">
         <slot name="head"/>
@@ -27,6 +27,11 @@ export default {
     showCross: { type: Boolean, default: () => true },
     width: { type: String, default: '300px' },
     alignActions: { type: String, default: 'right' }
+  },
+  methods: {
+    shake() {
+      this.close()
+    }
   }
 }
 </script>

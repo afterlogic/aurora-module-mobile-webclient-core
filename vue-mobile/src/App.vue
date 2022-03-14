@@ -1,6 +1,7 @@
 <template>
   <q-layout view="hhh LpR fFf" style="height: 100vh">
     <uploader-component ref="uploader" />
+    <unsaved-changes-dialog ref="unsavedChangesDialog"/>
     <component
       v-for="component in currentComponents"
       :key="component.name"
@@ -18,9 +19,13 @@ import modulesManager from 'src/modules-manager'
 import types from 'src/utils/types'
 import eventBus from 'src/event-bus'
 import UploaderComponent from 'components/common/UploaderComponent'
+import UnsavedChangesDialog from "components/common/dialogs/UnsavedChangesDialog";
 
 const mixins = {
   methods: {
+    unsavedChangesDialog(next) {
+      this.$refs.unsavedChangesDialog.openConfirmDiscardChangesDialog(next)
+    },
     uploadFiles(methods) {
       this.$refs.uploader.open(methods)
     },
@@ -53,7 +58,8 @@ export default defineComponent({
     eventBus.$on('CoreMobileWebclient::SetComponents', this.setComponents)
   },
   components: {
-    UploaderComponent
+    UploaderComponent,
+    UnsavedChangesDialog
   },
 
   computed: {
