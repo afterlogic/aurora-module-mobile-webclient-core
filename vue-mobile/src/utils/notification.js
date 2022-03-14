@@ -15,7 +15,7 @@ export default {
       icon: null,
       message,
       html: true,
-      position: 'top-right',
+      position: 'bottom',
       avatar: null,
       multiLine: false, // if multiLine=true then close button is displayed at the bottom
       timeout,
@@ -30,7 +30,7 @@ export default {
       icon: null,
       message,
       html: true,
-      position: 'top-right',
+      position: 'bottom',
       avatar: null,
       multiLine: false, // if multiLine=true then close button is displayed at the bottom
       timeout: 10000,
@@ -46,7 +46,7 @@ export default {
       icon: null,
       message,
       html: true,
-      position: 'top-right',
+      position: 'bottom',
       avatar: null,
       multiLine: false,
       timeout: 0,
