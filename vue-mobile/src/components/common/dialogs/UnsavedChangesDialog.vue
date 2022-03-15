@@ -11,10 +11,6 @@
         :action="discard"
         :label="$t('COREWEBCLIENT.ACTION_OK')"
       />
-      <button-dialog
-        :action="cancel"
-        :label="$t('COREWEBCLIENT.ACTION_CANCEL')"
-      />
     </template>
   </app-dialog>
 </template>
