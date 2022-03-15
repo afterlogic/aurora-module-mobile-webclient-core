@@ -9,7 +9,7 @@
     <template v-slot:actions>
       <button-dialog
         :action="discard"
-        :label="$t('COREWEBCLIENT.ACTION_OK')"
+        label="Discard"
       />
     </template>
   </app-dialog>
