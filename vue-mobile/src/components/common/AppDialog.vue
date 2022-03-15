@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-bind="$attrs" @escape-key="close" persistent @shake="shake">
-    <q-card class="q-dialog-size dialog" :style="{ minWidth: width }">
+    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width }">
       <div class="dialog__head">
         <slot name="head"/>
       </div>
@@ -46,5 +46,8 @@ export default {
   &__head {
     padding-top: 36px
   }
+}
+.card-radius {
+  border-radius: 10px;
 }
 </style>
