@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    class="text-no-wrap"
+    class="text-no-wrap button-dialog"
     no-caps
     size="14px"
     flat
@@ -20,4 +20,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.button-dialog {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+}
+</style>
