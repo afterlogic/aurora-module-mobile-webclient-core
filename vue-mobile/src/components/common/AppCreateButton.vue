@@ -1,52 +1,31 @@
 <template>
-  <q-btn
-    @click="showDialog"
-    :class="`create-btn rotate ${classes}`"
-    color="primary"
-    size="17px"
-    :icon="icon"
-    round
-  />
+  <plus-btn-icon @click="showDialog" :class="`create-btn ${classes}`" />
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import PlusBtnIcon from 'components/common/icons/PlusBtnIcon'
 
 export default {
-  name: 'AppCreateButton',
+  name: 'CreateButton',
+  components: {
+    PlusBtnIcon,
+  },
   props: {
-    icon: { type: String, default: '' },
-  },
-  computed: {
-    ...mapGetters('files', ['dialogComponent']),
-    classes() {
-      if (this.dialogComponent.component === 'CreateButtonsDialogs') {
-        return 'z-index-max'
-      }
-      return 'z-index-min'
-    },
-  },
-  methods: {
-    ...mapActions('filesmobile', ['changeDialogComponent']),
-    showDialog() {
-      if (this.dialogComponent.component === 'CreateButtonsDialogs') {
-        this.changeDialogComponent({ component: '' })
-      } else {
-        this.changeDialogComponent({ component: 'CreateButtonsDialogs' })
-      }
-    },
+    classes: { type: String, default: 'z-index-min' },
+    showDialog: { type: Function, default: () => null }
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .create-btn {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
+  bottom: 68px;
+  right: 10px;
+  transition-duration: 300ms;
 }
 .rotate {
-  transform: rotateY(180deg);
+  transform: rotate(225deg);
 }
 .z-index-max {
   z-index: 10000;

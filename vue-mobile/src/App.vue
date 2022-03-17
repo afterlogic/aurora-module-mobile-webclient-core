@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh LpR fFf" style="height: 100vh">
+  <q-layout class="app-layout" view="hhh LpR fFf">
     <uploader-component ref="uploader" />
     <unsaved-changes-dialog ref="unsavedChangesDialog"/>
     <component

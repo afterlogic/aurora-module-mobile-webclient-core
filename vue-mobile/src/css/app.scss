@@ -1,9 +1,25 @@
 @import './quasar.variables.scss';
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+html {
+  overflow: hidden;
+  height: 100%;
 }
 
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  height: 100%;
+}
+
+#q-app {
+  height: 100%;
+}
+.app-layout {
+  height: 100%;
+}
+main {
+  height: 100%;
+}
 p {
   margin: 0;
 }
