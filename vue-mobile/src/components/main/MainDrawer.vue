@@ -6,16 +6,7 @@
     behavior="mobile"
     elevated
   >
-    <q-item class="user-info flex column q-mb-xs">
-      <div v-if="userName" class="user-name q-mx-md q-mb-xs">
-        {{ userName }}
-      </div>
-      <div :class="`q-mx-md ${!userName ? 'user-name q-mb-xs' : 'user-email'}`">
-        {{ userEmail }}
-      </div>
-    </q-item>
-    <q-separator />
-    <div @click="test">
+    <div>
       <slot />
     </div>
   </q-drawer>
@@ -23,11 +14,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import eventBus from "src/event-bus";
 export default {
   name: 'MainDrawer',
   props: {
     value: { type: Boolean, default: false },
+  },
+  mounted() {
+    eventBus.$on('closeDrawer', this.close)
   },
   computed: {
     ...mapGetters('core', ['userData', 'userPublicId']),
@@ -58,29 +52,18 @@ export default {
     closeDrawer(value) {
       this.$emit('closeDrawer', value)
     },
-    test() {
+    close() {
       setTimeout(() => {
         this.leftDrawerOpen = false
       }, 300)
     },
   },
+  beforeMount() {
+    eventBus.$off('closeDrawer', this.close)
+  }
 }
 </script>
 
 <style scoped>
-.user-info {
-  padding-top: 36px;
-}
-.user-email {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 25px;
-  color: rgba(0, 0, 0, 0.6);
-}
-.user-name {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-  color: #000000;
-}
+
 </style>
