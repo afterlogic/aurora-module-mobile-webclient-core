@@ -4,7 +4,21 @@ export const getContactsSelectOptions = (contacts, selectContacts) => {
   const filteredContacts = []
   const currentUserEmail = store.getters['core/userPublicId']
   contacts.forEach((contact) => {
-    const index = selectContacts.findIndex( selectContact => selectContact.email === (contact.ViewEmail || contact.email))
+    if (contact.isGroup || contact.IsGroup) {
+      const index = selectContacts.findIndex( selectContact => selectContact.email === (contact.Name || contact.email))
+      if (index === -1 && currentUserEmail !== (contact.Name || contact.email)) {
+        filteredContacts.push({
+          email: contact.Name || contact.email,
+          label: contact.Name || contact.email,
+          value: contact.Name || contact.email,
+          isAll: contact.IsAll || contact.isAll,
+          isGroup: true,
+          groupId: contact.Id || contact.groupId,
+          status: '',
+        })
+      }
+    } else {
+      const index = selectContacts.findIndex( selectContact => selectContact.email === (contact.ViewEmail || contact.email))
       if (index === -1 && currentUserEmail !== (contact.ViewEmail || contact.email)) {
         filteredContacts.push({
           email: contact.ViewEmail || contact.email,
@@ -13,16 +27,29 @@ export const getContactsSelectOptions = (contacts, selectContacts) => {
           status: '',
         })
       }
+    }
   })
   return filteredContacts
 }
 export const getAllContactsSelectOptions = (contacts) => {
   return contacts.map( contact => {
-    return {
-      email: contact.ViewEmail || contact.email,
-      label: contact.ViewEmail || contact.email,
-      value: contact.ViewEmail || contact.email,
-      status: '',
+    if (contact?.IsGroup || contact.isGroup) {
+      return {
+        email: contact.Name || contact.email,
+        label: contact.Name || contact.email,
+        value: contact.Name || contact.email,
+        isAll: contact.IsAll || contact.isAll,
+        isGroup: true,
+        groupId: contact.Id || contact.groupId,
+        status: '',
+      }
+    } else  {
+      return {
+        email: contact.ViewEmail || contact.email,
+        label: contact.ViewEmail || contact.email,
+        value: contact.ViewEmail || contact.email,
+        status: '',
+      }
     }
   } )
 }
