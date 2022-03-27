@@ -7,7 +7,6 @@
     :placeholder="placeholder"
     lazy-rules
     :rules="rules"
-    label-color="yellow-5"
     hide-bottom-space
     :autofocus="autofocus"
     :type="type"
