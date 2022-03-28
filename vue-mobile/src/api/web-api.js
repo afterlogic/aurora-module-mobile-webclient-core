@@ -66,7 +66,11 @@ export default {
                   coreWebApi.logout()
                 } else {
                   if (!silentError) {
-                    notification.showError(errors.getTextFromResponse(response.data, defaultErrorText))
+                    if (_.isObject(response.data)) {
+                      notification.showError(errors.getTextFromResponse(response.data, defaultErrorText))
+                    } else {
+                      notification.showError(errors.getTextFromResponse(unknownError, defaultErrorText))
+                    }
                   }
                   reject(response.data)
                 }
