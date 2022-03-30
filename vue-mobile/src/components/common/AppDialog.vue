@@ -1,8 +1,13 @@
 <template>
   <q-dialog v-bind="$attrs" @escape-key="close" persistent @shake="shake">
-    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width }">
-      <div class="dialog__head">
-        <slot name="head"/>
+    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width, overflow: 'hidden' }">
+      <div class="dialog__title dialog__title-text q-mx-lg">
+        <slot name="title"/>
+      </div>
+      <div>
+        <div class="dialog__head scroll" style="max-height: 45vh">
+          <slot name="head"/>
+        </div>
       </div>
       <q-card-actions :align="alignActions">
         <slot name="actions" />
@@ -43,8 +48,8 @@ export default {
   right: 16px
 }
 .dialog {
-  &__head {
-    padding-top: 36px
+  &__title {
+    padding-top: 36px;
   }
 }
 .card-radius {

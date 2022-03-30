@@ -7,6 +7,7 @@
     color="primary"
     :size="size"
     keep-color
+    class="app-checkbox"
   />
 </template>
 
@@ -35,5 +36,8 @@ export default {
   /* Main text color */
 
   color: #000000;
+}
+.q-checkbox.disabled {
+  opacity: 0.55 !important;
 }
 </style>
