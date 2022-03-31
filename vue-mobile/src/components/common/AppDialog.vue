@@ -1,11 +1,11 @@
 <template>
   <q-dialog v-bind="$attrs" @escape-key="close" persistent @shake="shake">
-    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width, overflow: 'hidden' }">
+    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width }">
       <div class="dialog__title dialog__title-text q-mx-lg">
         <slot name="title"/>
       </div>
       <div>
-        <div class="dialog__head scroll" style="max-height: 45vh">
+        <div class="dialog__head scroll" :style="{'max-height': headMaxHeight}">
           <slot name="head"/>
         </div>
       </div>
@@ -31,7 +31,8 @@ export default {
     close: { type: Function, default: () => null },
     showCross: { type: Boolean, default: () => true },
     width: { type: String, default: '300px' },
-    alignActions: { type: String, default: 'right' }
+    alignActions: { type: String, default: 'right' },
+    headMaxHeight: {type: String, default: '60vh' }
   },
   methods: {
     shake() {
