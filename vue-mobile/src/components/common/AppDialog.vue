@@ -1,13 +1,11 @@
 <template>
-  <q-dialog v-bind="$attrs" @escape-key="close" persistent @shake="shake">
-    <q-card class="q-dialog-size dialog card-radius" :style="{ minWidth: width }">
+  <q-dialog full-hight v-bind="$attrs" @escape-key="close" persistent @shake="shake">
+    <q-card class="dialog card-radius" :style="{ minWidth: width }">
       <div class="dialog__title dialog__title-text q-mx-lg">
         <slot name="title"/>
       </div>
-      <div>
-        <div class="dialog__head scroll" :style="{'max-height': headMaxHeight}">
-          <slot name="head"/>
-        </div>
+      <div class="scroll dialog__content">
+        <slot name="content"/>
       </div>
       <q-card-actions :align="alignActions">
         <slot name="actions" />
@@ -49,6 +47,8 @@ export default {
   right: 16px
 }
 .dialog {
+  display: flex;
+  flex-direction: column;
   &__title {
     padding-top: 36px;
   }

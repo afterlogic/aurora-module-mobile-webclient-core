@@ -1,6 +1,6 @@
 <template>
   <app-dialog v-model="confirm" :close="cancel">
-    <template v-slot:head>
+    <template v-slot:content>
       <div class="dialog__title-text q-mx-lg q-my-md">
         <span>{{ $t('COREWEBCLIENT.CONFIRM_DISCARD_CHANGES') }}</span>
       </div>
