@@ -7,12 +7,9 @@ export default {
       moduleName: 'Core',
       methodName: 'GetAppData',
       parameters: {},
-    }).then((result) => {
-      if (result) {
-        return result
-      }
-      return ''
     })
+      .then(result => result)
+      .catch(error => false)
   },
 
   login: async (parameters) => {
@@ -20,11 +17,9 @@ export default {
       moduleName: 'Core',
       methodName: 'Login',
       parameters,
-    }).then((result) => {
-      return result
-    }, () => {
-      return false
     })
+      .then(result => result)
+      .catch(error => false)
   },
 
   logout() {
@@ -32,13 +27,12 @@ export default {
       moduleName: 'Core',
       methodName: 'Logout',
       parameters: {},
-    }).then(
-      () => {
+    })
+      .then(result => {
         store.dispatch('core/logout')
-      },
-      () => {
+      })
+      .catch(error => {
         store.dispatch('core/logout')
-      }
-    )
+      })
   },
 }

@@ -10,6 +10,14 @@ import { getApiHost } from 'src/api/helpers'
 import notification from 'src/utils/notification'
 import store from 'src/store'
 
+function rejectWithError(reject, responseData, defaultErrorText, silentError) {
+  const errorText = errors.getTextFromResponse(responseData, defaultErrorText)
+  if (!silentError) {
+    notification.showError(errorText)
+  }
+  reject(new Error(errorText))
+}
+
 export default {
   sendRequest: function ({
     moduleName,
@@ -65,34 +73,20 @@ export default {
                 if (needToLogout) {
                   coreWebApi.logout()
                 } else {
-                  if (!silentError) {
-                    if (_.isObject(response.data)) {
-                      notification.showError(errors.getTextFromResponse(response.data, defaultErrorText))
-                    } else {
-                      notification.showError(errors.getTextFromResponse(unknownError, defaultErrorText))
-                    }
-                  }
-                  reject(response.data)
+                  const responseData = _.isObject(response.data) ? response.data : unknownError
+                  rejectWithError(reject, responseData, defaultErrorText, silentError)
                 }
               } else {
                 resolve(result)
               }
             } else {
               //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
-              if (!silentError) {
-                notification.showError(errors.getTextFromResponse(unknownError, defaultErrorText))
-              }
-              reject(unknownError)
+              rejectWithError(reject, unknownError, defaultErrorText, silentError)
             }
           },
           () => {
             //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
-            if (!silentError) {
-              notification.showError(
-                errors.getTextFromResponse(unknownError, defaultErrorText)
-              )
-            }
-            reject(unknownError)
+            rejectWithError(reject, unknownError, defaultErrorText, silentError)
           }
         )
         .catch((error) => {
@@ -100,12 +94,7 @@ export default {
             ErrorMessage: error.message,
           })
           //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: errorResponse })
-          if (!silentError) {
-            notification.showError(
-              errors.getTextFromResponse(errorResponse, defaultErrorText)
-            )
-          }
-          reject(errorResponse)
+          rejectWithError(reject, errorResponse, defaultErrorText, silentError)
         })
     })
   },
