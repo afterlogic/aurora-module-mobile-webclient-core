@@ -73,8 +73,7 @@ export default {
                 if (needToLogout) {
                   coreWebApi.logout()
                 } else {
-                  const responseData = _.isObject(response.data) ? response.data : unknownError
-                  rejectWithError(reject, responseData, defaultErrorText, silentError)
+                  rejectWithError(reject, response.data, defaultErrorText, silentError)
                 }
               } else {
                 resolve(result)

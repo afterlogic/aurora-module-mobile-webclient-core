@@ -35,28 +35,30 @@ const errorsUtils = {
     this.modulesErrors = types.pObject(appData?.module_errors)
   },
 
-  getTextFromResponse(response, defaultErrorText) {
-    let errorText = ''
+  getTextFromResponse(responseData, defaultErrorText) {
+    if (!_.isObject(responseData)) {
+      responseData = {
+        ErrorCode: errorsCodes.DataTransferFailed,
+        Module: 'Core',
+      }
+    }
 
-    if (_.isObject(response)) {
-      const errorCode = response.ErrorCode
+    const errorCode = responseData.ErrorCode
+    let errorText = this._getModuleErrorByCode(responseData.Module, errorCode)
 
-      errorText = this._getModuleErrorByCode(response.Module, errorCode)
+    if (!types.isNonEmptyString(errorText)) {
+      errorText = this._getCoreErrorByCode(errorCode, defaultErrorText)
+    }
 
-      if (!types.isNonEmptyString(errorText)) {
-        errorText = this._getCoreErrorByCode(errorCode, defaultErrorText)
+    if (types.isNonEmptyString(errorText)) {
+      const responseError = textUtils.encodeHtml(responseData.ErrorMessage || '')
+      if (types.isNonEmptyString(responseError)) {
+        errorText += ' (' + responseError + ')'
       }
 
-      if (types.isNonEmptyString(errorText)) {
-        const responseError = textUtils.encodeHtml(response.ErrorMessage || '')
-        if (types.isNonEmptyString(responseError)) {
-          errorText += ' (' + responseError + ')'
-        }
+      errorText = this._addSubscriptionsErrors(responseData, errorText)
 
-        errorText = this._addSubscriptionsErrors(response, errorText)
-
-        errorText = this._insertValuesIntoPlaceholders(response, errorText)
-      }
+      errorText = this._insertValuesIntoPlaceholders(responseData, errorText)
     }
 
     return errorText
@@ -88,9 +90,7 @@ const errorsUtils = {
       case errorsCodes.LicenseLimit:
         return i18n.global.tc('COREWEBCLIENT.ERROR_LICENSE_USERS_LIMIT')
       case errorsCodes.DemoLimitations:
-        return i18n.global.tc(
-          'COREWEBCLIENT.INFO_DEMO_THIS_FEATURE_IS_DISABLED'
-        )
+        return i18n.global.tc('COREWEBCLIENT.INFO_DEMO_THIS_FEATURE_IS_DISABLED')
       case errorsCodes.Captcha:
         return i18n.global.tc('COREWEBCLIENT.ERROR_CAPTCHA_IS_INCORRECT')
       case errorsCodes.AccessDenied:
@@ -104,9 +104,7 @@ const errorsUtils = {
       case errorsCodes.CanNotChangePassword:
         return i18n.global.tc('COREWEBCLIENT.ERROR_UNABLE_CHANGE_PASSWORD')
       case errorsCodes.AccountOldPasswordNotCorrect:
-        return i18n.global.tc(
-          'COREWEBCLIENT.ERROR_CURRENT_PASSWORD_NOT_CORRECT'
-        )
+        return i18n.global.tc('COREWEBCLIENT.ERROR_CURRENT_PASSWORD_NOT_CORRECT')
       case errorsCodes.AccountAlreadyExists:
         return i18n.global.tc('COREWEBCLIENT.ERROR_ACCOUNT_ALREADY_EXISTS')
       case errorsCodes.DataTransferFailed:
