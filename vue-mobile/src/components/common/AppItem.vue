@@ -59,5 +59,6 @@ export default {
 }
 .is-selected {
   background: rgba(70, 156, 248, 0.4);
+  border-bottom: 1px solid #8CA0B7;
 }
 </style>
