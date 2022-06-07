@@ -4,6 +4,7 @@
     @touchstart.stop="touchstart"
     @touchend.stop="touchend"
     @touchmove.stop="touchMove"
+    :class="isSelected ? 'is-selected' : ''"
   >
     <transition name="icon">
       <div class="q-ml-md flex items-center" v-if="isChoice">
@@ -57,7 +58,6 @@ export default {
   opacity: 0;
 }
 .is-selected {
-  background: #469CF8;
-  opacity: 0.4;
+  background: rgba(70, 156, 248, 0.4);
 }
 </style>
