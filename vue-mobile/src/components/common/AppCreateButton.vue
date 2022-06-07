@@ -6,7 +6,7 @@
 import PlusBtnIcon from 'components/common/icons/PlusBtnIcon'
 
 export default {
-  name: 'CreateButton',
+  name: 'AppCreateButton',
   components: {
     PlusBtnIcon,
   },
