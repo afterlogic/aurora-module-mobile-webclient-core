@@ -4,6 +4,7 @@
     @touchstart="touchstart"
     @touchend="touchend"
     @touchmove="touchMove"
+    class="unselectable"
     :class="isSelected ? 'is-selected' : ''"
   >
     <transition name="icon">
@@ -60,5 +61,13 @@ export default {
 .is-selected {
   background: rgba(70, 156, 248, 0.4);
   border-bottom: 1px solid #8CA0B7;
+}
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>
