@@ -1,54 +1,54 @@
 {
-  "Disabled": [
-    false,
-    "bool"
-  ],
-  "Disabled_Description": [
-    "",
-    "string"
-  ],
-  "Theme": [
-    "Default",
-    "string"
-  ],
-  "Theme_Description": [
-    "",
-    "string"
-  ],
-  "ThemeList": [
-    [
-      "Default"
-    ],
-    "array"
-  ],
-  "ThemeList_Description": [
-    "",
-    "string"
-  ],
-  "IncludeInMobile": [
-    true,
-    "bool"
-  ],
-  "IncludeInMobile_Description": [
-    "",
-    "string"
-  ],
-  "IncludeInDesktop": [
-    false,
-    "bool"
-  ],
-  "IncludeInDesktop_Description": [
-    "",
-    "string"
-  ],
-  "RequireInMobile": [
-    [
-      "CoreWebclient"
-    ],
-    "array"
-  ],
-  "RequireInMobile_Description": [
-    "",
-    "string"
-  ]
+	"Disabled": [
+		false,
+		"bool"
+	],
+	"Disabled_Description": [
+		"",
+		"string"
+	],
+	"Theme": [
+		"Default",
+		"string"
+	],
+	"Theme_Description": [
+		"",
+		"string"
+	],
+	"ThemeList": [
+		[
+			"Default"
+		],
+		"array"
+	],
+	"ThemeList_Description": [
+		"",
+		"string"
+	],
+	"IncludeInMobile": [
+		true,
+		"bool"
+	],
+	"IncludeInMobile_Description": [
+		"",
+		"string"
+	],
+	"IncludeInDesktop": [
+		false,
+		"bool"
+	],
+	"IncludeInDesktop_Description": [
+		"",
+		"string"
+	],
+	"RequireInMobile": [
+		[
+			"CoreWebclient"
+		],
+		"array"
+	],
+	"RequireInMobile_Description": [
+		"",
+		"string"
+	]
 }
