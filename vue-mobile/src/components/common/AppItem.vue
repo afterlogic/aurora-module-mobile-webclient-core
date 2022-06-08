@@ -1,9 +1,9 @@
 <template>
   <q-item
     v-bind="$attrs"
-    @touchstart.stop="touchstart"
-    @touchend.stop="touchend"
-    @touchmove.stop="touchMove"
+    @touchstart="touchstart"
+    @touchend="touchend"
+    @touchmove="touchMove"
     :class="isSelected ? 'is-selected' : ''"
   >
     <transition name="icon">
