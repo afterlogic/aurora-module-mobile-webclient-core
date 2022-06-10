@@ -1,40 +1,50 @@
 import _ from 'lodash'
 
-let addressUtils = {
-  /**
-   * Checks if specified email is correct.
-   * @param {string} sValue String to check.
-   * @return {boolean}
-   */
-  isCorrectEmail: function (sValue) {
-    return !!sValue.match(/^[A-Z0-9\"!#\$%\^\{\}`~&'\+\-=_\.]+@[A-Z0-9\.\-]+$/i)
-  },
+function isCorrectEmail (value = '') {
+  return !!value.match(/^[A-Z0-9\"!#\$%\^\{\}`~&'\+\-=_\.]+@[A-Z0-9\.\-]+$/i)
+}
 
-  /**
-   * @param {string} sName
-   * @param {string} sEmail
-   * @returns {string}
-   */
-  getFullEmail: function (sName, sEmail) {
-    let sFull = ''
+function getFullEmail (name = '', email = '') {
+  let fullEmail = email
 
-    if (sEmail.length > 0) {
-      if (sName.length > 0) {
-        if (this.isCorrectEmail(sName) || sName.indexOf(',') !== -1) {
-          sFull = '"' + sName + '" <' + sEmail + '>'
-        } else {
-          sFull = sName + ' <' + sEmail + '>'
-        }
+  if (name.length > 0) {
+    if (email.length > 0) {
+      if (isCorrectEmail(name) || name.indexOf(',') !== -1) {
+        fullEmail = `"${name}" <${email}>`
       } else {
-        sFull = sEmail
+        fullEmail = `${name} <${email}>`
       }
     } else {
-      sFull = sName
+      fullEmail = name
     }
+  }
 
-    return sFull
-  },
+  return fullEmail
+}
 
+function getFullEmailsFromMailsoAddresses(...mailsoAddressesList) {
+  let fullEmails = []
+  mailsoAddressesList.forEach(mailsoAddress => {
+    if (Array.isArray(mailsoAddress && mailsoAddress['@Collection'])) {
+      fullEmails = fullEmails.concat(mailsoAddress['@Collection'].map(addressData => getFullEmail(addressData.DisplayName, addressData.Email)))
+    }
+  })
+  return fullEmails
+}
+
+function getDisplayNamesFromMailsoAddresses(...mailsoAddressesList) {
+  let fullEmails = []
+  mailsoAddressesList.forEach(mailsoAddress => {
+    if (Array.isArray(mailsoAddress && mailsoAddress['@Collection'])) {
+      fullEmails = fullEmails.concat(mailsoAddress['@Collection'].map(addressData => {
+        return addressData.DisplayName ? addressData.DisplayName : addressData.Email
+      }))
+    }
+  })
+  return fullEmails
+}
+
+let addressUtils = {
   /**
    * Obtains Recipient-object which include "name", "email" and "full" fields from string.
    * @param {string} sFullEmail String includes only name, only email or both name and email.
@@ -75,7 +85,7 @@ let addressUtils = {
     return {
       name: sName,
       email: sEmail,
-      full: addressUtils.getFullEmail(sName, sEmail),
+      full: getFullEmail(sName, sEmail),
     }
   },
 
@@ -98,7 +108,7 @@ let addressUtils = {
       sFullEmail = _.trim(aEmails[iIndex])
       if (sFullEmail.length > 0) {
         oEmailParts = addressUtils.getEmailParts(_.trim(aEmails[iIndex]))
-        if (!addressUtils.isCorrectEmail(oEmailParts.email)) {
+        if (!isCorrectEmail(oEmailParts.email)) {
           aIncorrectEmails.push(oEmailParts.email)
         }
       }
@@ -106,6 +116,11 @@ let addressUtils = {
 
     return aIncorrectEmails
   },
+
+  isCorrectEmail,
+  getFullEmail,
+  getDisplayNamesFromMailsoAddresses,
+  getFullEmailsFromMailsoAddresses,
 }
 
 export default addressUtils
