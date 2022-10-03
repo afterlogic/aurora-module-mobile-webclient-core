@@ -4,7 +4,7 @@
     @touchstart="touchstart"
     @touchend="touchend"
     @touchmove="touchMove"
-    class="unselectable"
+    class="unselectable item"
     :class="isSelected ? 'is-selected' : ''"
   >
     <transition name="icon">
@@ -58,9 +58,14 @@ export default {
 .icon-leave-to {
   opacity: 0;
 }
+
+.item {
+  border-bottom: 1px solid #F6F6F6;
+}
 .is-selected {
   background: rgba(70, 156, 248, 0.4);
   border-bottom: 1px solid #8CA0B7;
+  color: #fff;
 }
 .unselectable {
   -webkit-touch-callout: none;
