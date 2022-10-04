@@ -9,6 +9,7 @@
 /* eslint-env node */
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { configure } = require('quasar/wrappers')
+const env = require('./env.js')
 
 module.exports = configure(function (ctx) {
   return {
@@ -44,7 +45,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
-        API: ctx.dev ? 'http://localhost:8888/aurora-platform/' : '',
+        API: ctx.dev ? env.API_ENDPOINT : '',
       },
 
       // transpile: false,
