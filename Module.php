@@ -24,12 +24,6 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
 			]
 		);
 
-		\Aurora\Modules\Core\Classes\User::extend(
-			self::GetName(),
-			[
-				'Theme' => array('string', $this->getConfig('Theme', 'Default')),
-			]
-		);
 		$this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
 	}
 
