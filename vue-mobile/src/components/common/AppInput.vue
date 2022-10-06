@@ -10,6 +10,7 @@
     hide-bottom-space
     :autofocus="autofocus"
     :type="type"
+    v-on:input="$emit('input', $event.target.value)"
   />
 </template>
 
@@ -23,7 +24,7 @@ export default {
     rulesProps: { type: Object, default: null },
     filled: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false },
-    type: { type: String, default: 'text' }
+    type: { type: String, default: 'text' },
   },
   data: () => ({
     text: '',
@@ -40,7 +41,7 @@ export default {
       }
       return rules.length ? rules : [true]
     },
-  },
+}
 }
 </script>
 
