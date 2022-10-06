@@ -8,7 +8,7 @@
     :class="isSelected ? 'is-selected' : ''"
   >
     <transition name="icon">
-      <div class="q-ml-md flex items-center" v-if="isChoice">
+      <div class="q-mr-md flex items-center" v-if="isChoice">
         <not-selected-item-icon v-if="!isSelected" />
         <selected-item-icon v-if="isSelected"/>
       </div>
@@ -61,6 +61,7 @@ export default {
 
 .item {
   border-bottom: 1px solid #F6F6F6;
+  height: 64px;
 }
 .is-selected {
   background: rgba(70, 156, 248, 0.4);

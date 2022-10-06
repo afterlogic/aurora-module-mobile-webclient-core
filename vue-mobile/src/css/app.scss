@@ -99,5 +99,10 @@ a {
   &__icon {
     color: #B6B5B5;
   }
+
+  &__side {
+    text-align: right;
+    align-items: end !important;
+  }
 }
 
