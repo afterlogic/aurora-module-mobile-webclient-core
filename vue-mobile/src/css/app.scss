@@ -37,6 +37,9 @@ a {
   line-height: 0.875rem;
   text-decoration: none;
 }
+
+@import "./app-header.scss";
+
 .dialog__title-text {
   font-family: 'Arial', serif;
   font-style: normal;
