@@ -25,7 +25,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  
 .app-create-button {
   position: fixed;
   bottom: 76px;
