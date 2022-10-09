@@ -38,7 +38,17 @@ a {
   text-decoration: none;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 @import "./app-header.scss";
+@import "./items-list.scss";
 
 .dialog__title-text {
   font-family: 'Arial', serif;
@@ -77,35 +87,5 @@ a {
   color: $flagged;
 }
 
-.main-list-item {
-  width: 100vw;
-  border-bottom: solid 1px #F6F6F6;
 
-  &__text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__text-primary {
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: 0.3px;
-  }
-
-  &__text-secondary {
-    color: $subtext;
-    font-size: 12px;
-    line-height: 10px;
-  }
-
-  &__icon {
-    color: #B6B5B5;
-  }
-
-  &__side {
-    text-align: right;
-    align-items: end !important;
-  }
-}
 

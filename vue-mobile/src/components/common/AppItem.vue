@@ -1,12 +1,12 @@
 <template>
   <q-item
     v-bind="$attrs"
-    @touchstart="touchstart"
-    @touchend="touchend"
-    @touchmove="touchMove"
-    class="unselectable item"
-    :class="isSelected ? 'is-selected' : ''"
+    class="unselectable list-item"
+    :class="{'list-item__selected': isSelected}"
   >
+  <!-- @touchstart="touchstart"
+    @touchend="touchend"
+    @touchmove="touchMove" -->
     <transition name="icon">
       <div class="q-mr-md flex items-center" v-if="isChoice">
         <not-selected-item-icon v-if="!isSelected" />
@@ -33,15 +33,15 @@ export default {
     SelectedItemIcon
   },
   methods: {
-    touchstart() {
-      this.$emit('start')
-    },
-    touchend() {
-      this.$emit('end')
-    },
-    touchMove() {
-      this.$emit('move')
-    }
+    // touchstart() {
+    //   this.$emit('start')
+    // },
+    // touchend() {
+    //   this.$emit('end')
+    // },
+    // touchMove() {
+    //   this.$emit('move')
+    // }
   }
 }
 </script>
@@ -59,21 +59,4 @@ export default {
   opacity: 0;
 }
 
-.item {
-  border-bottom: 1px solid #F6F6F6;
-  height: 64px;
-}
-.is-selected {
-  background: rgba(70, 156, 248, 0.4);
-  border-bottom: 1px solid #8CA0B7;
-  color: #fff;
-}
-.unselectable {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 </style>
