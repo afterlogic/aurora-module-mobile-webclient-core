@@ -1,5 +1,47 @@
 .app-header {
     height: 55px;
+    
+    // &__left {   
+    // }
+
+    &__right {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+    }
+
+    &__title {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 20px;
+        text-align: center;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__title-main {
+        
+    }
+    &__title-secondary {
+        font-size: 12px;
+        line-height: 10px;
+        color: $secondary;
+        margin-top: 6px;
+    }
+}
+
+.search-toolbar {
+    &__field {
+        height: 56px;
+        padding-bottom: 12px;
+    }
+
+    &__input {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+    }
 }
 
 .dropdown-more .q-btn-dropdown__arrow {
