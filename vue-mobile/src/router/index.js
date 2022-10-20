@@ -45,7 +45,7 @@ export default route(function (/* { store, ssrContext } */) {
       async () => {
         if (!routesAdded) {
           modulesManager.getAllPages().forEach(page => {
-            const routeData = { name: page.pageName, path: page.pagePath, component: page.pageComponent }
+            const routeData = { name: page.pageName, path: page.pagePath, component: page.pageComponent, strict: page.pageStrict }
             if (page.pageChildren) {
               routeData.children = page.pageChildren
             }
