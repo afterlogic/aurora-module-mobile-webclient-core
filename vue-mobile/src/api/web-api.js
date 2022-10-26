@@ -19,13 +19,7 @@ function rejectWithError(reject, responseData, defaultErrorText, silentError) {
 }
 
 export default {
-  sendRequest: function ({
-    moduleName,
-    methodName,
-    parameters,
-    silentError = false,
-    defaultErrorText,
-  }) {
+  sendRequest: function ({ moduleName, methodName, parameters, silentError = false, signal, defaultErrorText }) {
     return new Promise((resolve, reject) => {
       const unknownError = {
         ErrorCode: 0,
@@ -49,7 +43,7 @@ export default {
       const deviceId = VueCookies.get('DeviceId')
       const headers = {
         'X-DeviceId': deviceId,
-        'X-MobileApp': '1'
+        'X-MobileApp': '1',
       }
       if (authToken) {
         headers.Authorization = 'Bearer ' + authToken
@@ -60,43 +54,41 @@ export default {
         url: getApiHost() + '?/Api/',
         data: querystring.stringify(postData),
         headers,
+        signal,
       })
-        .then(
-          (response) => {
-            const isOkResponse = response?.status === 200 && !!response?.data
-            if (isOkResponse) {
-              //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: response.data })
-              const result = response.data.Result
-              if (!result) {
-                const needToLogout = errors.isAuthError(response.data.ErrorCode)
-                  && methodName !== 'Logout' && methodName !== 'Login'
-                if (needToLogout) {
-                  coreWebApi.logout()
-                } else {
-                  rejectWithError(reject, response.data, defaultErrorText, silentError)
-                }
+        .then((response) => {
+          const isOkResponse = response?.status === 200 && !!response?.data
+          if (isOkResponse) {
+            //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: response.data })
+            const result = response.data.Result
+            if (!result) {
+              const needToLogout =
+                errors.isAuthError(response.data.ErrorCode) && methodName !== 'Logout' && methodName !== 'Login'
+              if (needToLogout) {
+                coreWebApi.logout()
               } else {
-                resolve(result)
+                rejectWithError(reject, response.data, defaultErrorText, silentError)
               }
             } else {
-              //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
-              rejectWithError(reject, unknownError, defaultErrorText, silentError)
+              resolve(result)
             }
-          },
-          () => {
+          } else {
             //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: unknownError })
             rejectWithError(reject, unknownError, defaultErrorText, silentError)
           }
-        )
+        })
         .catch((error) => {
-          const errorResponse = _.extend(unknownError, {
-            ErrorMessage: error.message,
-          })
-          //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: errorResponse })
-          rejectWithError(reject, errorResponse, defaultErrorText, silentError)
+          if (!axios.isCancel(error)) {
+            const errorResponse = _.extend(unknownError, {
+              ErrorMessage: error.message,
+            })
+            //eventBus.$emit('webApi::Response', { moduleName, methodName, parameters, response: errorResponse })
+            rejectWithError(reject, errorResponse, defaultErrorText, silentError)
+          }
         })
     })
   },
+
   downloadByUrl: async function ({ downloadUrl, fileName, file = null }) {
     return new Promise((resolve, reject) => {
       const CancelToken = axios.CancelToken
@@ -122,9 +114,7 @@ export default {
         }),
         onDownloadProgress: function (progressEvent) {
           if (file) {
-            let percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / file.size
-            )
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / file.size)
             store.dispatch('filesmobile/changeItemProperty', {
               item: file,
               property: 'percentDownloading',
@@ -134,10 +124,7 @@ export default {
         },
       })
         .then((response) => {
-          saveAs(
-            new Blob([response.data], { type: response.data.type }),
-            fileName
-          )
+          saveAs(new Blob([response.data], { type: response.data.type }), fileName)
           store.dispatch('filesmobile/changeItemProperty', {
             item: file,
             property: 'downloading',
