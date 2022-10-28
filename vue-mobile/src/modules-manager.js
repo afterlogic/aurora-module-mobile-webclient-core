@@ -37,23 +37,23 @@ function _checkIfModuleAvailable(module, modules, depth = 1) {
 }
 
 export default {
-  async getModules (appData) {
+  async getModules(appData) {
     if (allModules === null) {
       availableClientModules = types.pArray(appData?.Core?.AvailableClientModules)
       availableBackendModules = types.pArray(appData?.Core?.AvailableBackendModules)
       availableModules = _.uniq(availableClientModules.concat(availableBackendModules))
       let modules = await moduleList.getModules()
       if (_.isArray(modules)) {
-        modules = modules.map(module => {
+        modules = modules.map((module) => {
           return _.isObject(module.default) ? module.default : null
         })
-        allModules = modules.filter(module => {
+        allModules = modules.filter((module) => {
           if (_.isObject(module)) {
             return _checkIfModuleAvailable(module, modules)
           }
           return false
         })
-        allModulesNames = allModules.map(module => {
+        allModulesNames = allModules.map((module) => {
           return module.moduleName
         })
       } else {
@@ -69,36 +69,36 @@ export default {
     }
   },
 
-  initModules (appData) {
-    _.each(allModules, oModule => {
+  initModules(appData) {
+    _.each(allModules, (oModule) => {
       if (_.isFunction(oModule.initSubscriptions)) {
         oModule.initSubscriptions(appData)
       }
     })
-    _.each(allModules, oModule => {
+    _.each(allModules, (oModule) => {
       if (_.isFunction(oModule.init)) {
         oModule.init(appData)
       }
     })
   },
 
-  isModuleAvailable (moduleName) {
+  isModuleAvailable(moduleName) {
     return allModulesNames.indexOf(moduleName) !== -1 || availableBackendModules.indexOf(moduleName) !== -1
   },
 
-  setCurrentPageName (pageName) {
+  setCurrentPageName(pageName) {
     currentPageName = pageName
   },
 
-  getAllPages () {
+  getAllPages() {
     return this.getAnonymousPages().concat(this.getNormalUserPages())
   },
 
-  getDefaultPageForUser () {
+  getDefaultPageForUser() {
     const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
     let page = null
     if (isUserNormalOrTenant) {
-      page = normalUserPages.find(page => page.pageName === modulesOrder[0]) || null
+      page = normalUserPages.find((page) => page.pageName === modulesOrder[0]) || null
     } else {
       page = anonymousPages[0]
     }
@@ -111,8 +111,13 @@ export default {
    * @param toPath
    * @returns {string}
    */
-  correctPathForUser (matchedRoutes, toPath = null) {
-    if (!_.isArray(anonymousPages) || anonymousPages.length === 0 || !_.isArray(normalUserPages) || normalUserPages.length === 0) {
+  correctPathForUser(matchedRoutes, toPath = null) {
+    if (
+      !_.isArray(anonymousPages) ||
+      anonymousPages.length === 0 ||
+      !_.isArray(normalUserPages) ||
+      normalUserPages.length === 0
+    ) {
       this.setCurrentPageName('')
       return toPath || '/'
     }
@@ -122,9 +127,9 @@ export default {
     let page = null
     if (matchedRouteName !== null) {
       if (isUserNormalOrTenant) {
-        page = normalUserPages.find(page => page.pageName === matchedRouteName) || null
+        page = normalUserPages.find((page) => page.pageName === matchedRouteName) || null
       } else {
-        page = anonymousPages.find(page => page.pageName === matchedRouteName) || null
+        page = anonymousPages.find((page) => page.pageName === matchedRouteName) || null
       }
     }
     if (page === null) {
@@ -142,10 +147,10 @@ export default {
     }
   },
 
-  getAnonymousPages () {
+  getAnonymousPages() {
     if (anonymousPages === null && allModules !== null) {
       anonymousPages = []
-      allModules.forEach(module => {
+      allModules.forEach((module) => {
         const modulePages = _.isFunction(module.getAnonymousPages) && module.getAnonymousPages()
         if (_.isArray(modulePages)) {
           anonymousPages = anonymousPages.concat(modulePages)
@@ -155,10 +160,10 @@ export default {
     return anonymousPages === null ? [] : anonymousPages
   },
 
-  getNormalUserPages () {
+  getNormalUserPages() {
     if (normalUserPages === null && allModules !== null) {
       normalUserPages = []
-      allModules.forEach(module => {
+      allModules.forEach((module) => {
         const modulePages = _.isFunction(module.getNormalUserPages) && module.getNormalUserPages()
         if (_.isArray(modulePages)) {
           normalUserPages = normalUserPages.concat(modulePages)
@@ -168,21 +173,9 @@ export default {
     return normalUserPages === null ? [] : normalUserPages
   },
 
-  async getPageHeaderComponent () {
+  async getPageFooterComponent() {
     const normalUserPages = this.getNormalUserPages()
-    const currentPageData = normalUserPages.find(pageData => pageData.pageName === currentPageName)
-    if (_.isFunction(currentPageData?.pageHeaderComponent)) {
-      const component = await currentPageData.pageHeaderComponent()
-      if (component?.default) {
-        return component.default
-      }
-    }
-    return null
-  },
-
-  async getPageFooterComponent () {
-    const normalUserPages = this.getNormalUserPages()
-    const currentPageData = normalUserPages.find(pageData => pageData.pageName === currentPageName)
+    const currentPageData = normalUserPages.find((pageData) => pageData.pageName === currentPageName)
     if (_.isFunction(currentPageData?.pageFooterComponent)) {
       const component = await currentPageData.pageFooterComponent()
       if (component?.default) {
@@ -192,10 +185,10 @@ export default {
     return null
   },
 
-  async getPageFooterButtons () {
+  async getPageFooterButtons() {
     if (normalUserFooterButtons === null && allModules !== null) {
       normalUserFooterButtons = []
-      allModules.forEach(module => {
+      allModules.forEach((module) => {
         const moduleFooterButtons = _.isFunction(module.getPageFooterButtons) && module.getPageFooterButtons()
         if (_.isArray(moduleFooterButtons)) {
           normalUserFooterButtons = normalUserFooterButtons.concat(moduleFooterButtons)
@@ -203,7 +196,7 @@ export default {
       })
     }
 
-    normalUserFooterButtons.sort(function(a, b) {
+    normalUserFooterButtons.sort(function (a, b) {
       const aPos = modulesOrder.indexOf(a.pageName)
       const bPos = modulesOrder.indexOf(b.pageName)
       return aPos - bPos
