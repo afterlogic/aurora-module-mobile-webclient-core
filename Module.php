@@ -16,51 +16,48 @@ namespace Aurora\Modules\CoreMobileWebclient;
  */
 class Module extends \Aurora\System\Module\AbstractLicensedModule
 {
-    public function init() {
-		$this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
-	}
+    public function init()
+    {
+        $this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
+    }
 
-	public function GetSettings()
-	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
+    public function GetSettings()
+    {
+        \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 
-		$oUser = \Aurora\System\Api::getAuthenticatedUser();
+        $oUser = \Aurora\System\Api::getAuthenticatedUser();
 
-		return array(
-			'Theme' => $oUser && isset($oUser->{self::GetName().'::Theme'}) ? $oUser->{self::GetName().'::Theme'} : $this->getConfig('Theme', 'Default'),
-			'ThemeList' => $this->getConfig('ThemeList', ['Default']),
-		);
-	}
+        return array(
+            'Theme' => $oUser && isset($oUser->{self::GetName().'::Theme'}) ? $oUser->{self::GetName().'::Theme'} : $this->getConfig('Theme', 'Default'),
+            'ThemeList' => $this->getConfig('ThemeList', ['Default']),
+        );
+    }
 
-	/**
-	 *
-	 * @param array $Args
-	 * @param mixed $Result
-	 */
-	public function onAfterUpdateSettings($Args, &$Result)
-	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
+    /**
+     *
+     * @param array $Args
+     * @param mixed $Result
+     */
+    public function onAfterUpdateSettings($Args, &$Result)
+    {
+        \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 
-		$oUser = \Aurora\System\Api::getAuthenticatedUser();
-		if ($oUser && $oUser->isNormalOrTenant())
-		{
-			if (isset($Args['MobileTheme']))
-			{
-				$oUser->setExtendedProp(self::GetName().'::Theme', $Args['MobileTheme']);
-			}
+        $oUser = \Aurora\System\Api::getAuthenticatedUser();
+        if ($oUser && $oUser->isNormalOrTenant()) {
+            if (isset($Args['MobileTheme'])) {
+                $oUser->setExtendedProp(self::GetName().'::Theme', $Args['MobileTheme']);
+            }
 
-			$oCoreDecorator = \Aurora\Modules\Core\Module::Decorator();
-			$Result = $oCoreDecorator->UpdateUserObject($oUser);
-		}
+            $oCoreDecorator = \Aurora\Modules\Core\Module::Decorator();
+            $Result = $oCoreDecorator->UpdateUserObject($oUser);
+        }
 
-		if ($oUser && $oUser->Role === \Aurora\System\Enums\UserRole::SuperAdmin)
-		{
-			if (isset($Args['MobileTheme']))
-			{
-				$this->setConfig('Theme', $Args['MobileTheme']);
-			}
+        if ($oUser && $oUser->Role === \Aurora\System\Enums\UserRole::SuperAdmin) {
+            if (isset($Args['MobileTheme'])) {
+                $this->setConfig('Theme', $Args['MobileTheme']);
+            }
 
-			$Result = $this->saveModuleConfig();
-		}
-	}
+            $Result = $this->saveModuleConfig();
+        }
+    }
 }
