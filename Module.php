@@ -21,6 +21,15 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
         $this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
     }
 
+    /**
+     *
+     * @return Module
+     */
+    public static function Decorator()
+    {
+        return parent::Decorator();
+    }
+
     public function GetSettings()
     {
         \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
