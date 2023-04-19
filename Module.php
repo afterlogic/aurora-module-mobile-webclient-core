@@ -12,6 +12,8 @@ namespace Aurora\Modules\CoreMobileWebclient;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
  *
+ * @property Settings $oModuleSettings
+ *
  * @package Modules
  */
 class Module extends \Aurora\System\Module\AbstractLicensedModule
@@ -46,8 +48,8 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
         $oUser = \Aurora\System\Api::getAuthenticatedUser();
 
         return array(
-            'Theme' => $oUser && isset($oUser->{self::GetName().'::Theme'}) ? $oUser->{self::GetName().'::Theme'} : $this->getConfig('Theme', 'Default'),
-            'ThemeList' => $this->getConfig('ThemeList', ['Default']),
+            'Theme' => $oUser && isset($oUser->{self::GetName().'::Theme'}) ? $oUser->{self::GetName().'::Theme'} : $this->oModuleSettings->Theme,
+            'ThemeList' => $this->oModuleSettings->ThemeList,
         );
     }
 
