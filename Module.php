@@ -54,7 +54,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
         $oUser = \Aurora\System\Api::getAuthenticatedUser();
 
         return array(
-            'Theme' => $oUser && isset($oUser->{self::GetName().'::Theme'}) ? $oUser->{self::GetName().'::Theme'} : $this->oModuleSettings->Theme,
+            'Theme' => $oUser && null !== $oUser->getExtendedProp(self::GetName().'::Theme') ? $oUser->getExtendedProp(self::GetName().'::Theme') : $this->oModuleSettings->Theme,
             'ThemeList' => $this->oModuleSettings->ThemeList,
         );
     }
