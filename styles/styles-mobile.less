@@ -113,12 +113,19 @@
 	padding: 10px;
 }
 
-.sharing_panel {
+.public-page-card {
 	border: 1px solid #473d48;
 	border-radius: 5px;
 	font-size: 16px;
 	padding-top: 80px !important;
 	margin-top: 20px !important;
+
+	&.media {
+		.fields {
+			width: 280px;
+			margin: 0px auto;
+		}
+	}
 	
 	.item .size {
 		color: #bbb;
@@ -157,13 +164,6 @@
 	
 	.video-player-dimensions {
 		width: auto;
-	}
-}
-
-.sharing_panel.media {
-	.fields {
-		width: 280px;
-		margin: 0px auto;
 	}
 }
 
