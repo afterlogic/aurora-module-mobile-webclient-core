@@ -13,6 +13,7 @@
     "build-production": "node build-scripts/build-production.js"
   },
   "dependencies": {
+    "@quasar/cli": "^2.2.3",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.22.0",
     "core-js": "^3.6.5",
