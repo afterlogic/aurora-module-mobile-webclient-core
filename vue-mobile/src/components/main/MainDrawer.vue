@@ -51,7 +51,6 @@ export default {
   },
 
   unmounted() {
-    console.log('unmounted')
     eventBus.$off('openDrawer', this.open)
     eventBus.$off('closeDrawer', this.close)
   },
