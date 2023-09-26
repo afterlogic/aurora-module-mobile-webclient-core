@@ -15,12 +15,10 @@ export default {
     refreshAction: { type: Function, default: () => null }
   },
   methods: {
-    async refresh() {
+    async refresh(done) {
       await this.refreshAction()
+      done()
     }
   }
 }
 </script>
-
-<style scoped>
-</style>
