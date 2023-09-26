@@ -7,7 +7,7 @@ let dismissLoading = null
 export default {
   showError(message, timeout) {
     if (!_.isInteger(timeout)) {
-      timeout = 10000
+      timeout = 2000
     }
     return Notify.create({
       color: 'negative',
