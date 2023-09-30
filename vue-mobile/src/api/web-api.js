@@ -8,7 +8,9 @@ import errors from 'src/utils/errors'
 import coreWebApi from 'src/api/core-web-api'
 import { getApiHost } from 'src/api/helpers'
 import notification from 'src/utils/notification'
-import store from 'src/store'
+// import store from 'src/stores'
+import { useCoreStore } from 'src/stores/index-pinia'
+
 
 function rejectWithError(reject, responseData, defaultErrorText, silentError) {
   const errorText = errors.getTextFromResponse(responseData, defaultErrorText)
@@ -91,6 +93,7 @@ export default {
 
   downloadByUrl: async function ({ downloadUrl, fileName, file = null }) {
     return new Promise((resolve, reject) => {
+      const coreStore = useCoreStore()
       const CancelToken = axios.CancelToken
       let url = getApiHost() + '/' + downloadUrl
       let authToken = VueCookies.get('AuthToken')
@@ -106,7 +109,8 @@ export default {
         headers: headers,
         responseType: 'blob',
         cancelToken: new CancelToken(function (c) {
-          store.dispatch('filesmobile/changeItemProperty', {
+          // store.dispatch('filesmobile/changeItemProperty', {
+          coreStore.changeItemProperty({
             item: file,
             property: 'cancelToken',
             value: c,
@@ -115,7 +119,8 @@ export default {
         onDownloadProgress: function (progressEvent) {
           if (file) {
             let percentCompleted = Math.round((progressEvent.loaded * 100) / file.size)
-            store.dispatch('filesmobile/changeItemProperty', {
+            // store.dispatch('filesmobile/changeItemProperty', {
+            coreStore.changeItemProperty({
               item: file,
               property: 'percentDownloading',
               value: percentCompleted,
@@ -125,7 +130,8 @@ export default {
       })
         .then((response) => {
           saveAs(new Blob([response.data], { type: response.data.type }), fileName)
-          store.dispatch('filesmobile/changeItemProperty', {
+          // store.dispatch('filesmobile/changeItemProperty', {
+          coreStore.changeItemProperty({
             item: file,
             property: 'downloading',
             value: false,
@@ -133,12 +139,14 @@ export default {
           resolve(response)
         })
         .catch((response) => {
-          store.dispatch('filesmobile/changeItemProperty', {
+          // store.dispatch('filesmobile/changeItemProperty', {
+          coreStore.changeItemProperty({
             item: file,
             property: 'percentDownloading',
             value: 0,
           })
-          store.dispatch('filesmobile/changeItemProperty', {
+          // store.dispatch('filesmobile/changeItemProperty', {
+          coreStore.changeItemProperty({
             item: file,
             property: 'downloading',
             value: false,

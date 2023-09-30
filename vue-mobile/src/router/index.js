@@ -1,11 +1,5 @@
 import { route } from 'quasar/wrappers'
-import {
-  createRouter,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory,
-} from 'vue-router'
-
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 
 import core from 'src/core'
@@ -23,24 +17,20 @@ import modulesManager from 'src/modules-manager'
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : process.env.VUE_ROUTER_MODE === 'history'
-    ? createWebHistory
-    : createWebHashHistory
+    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
 
-  const router = createRouter({
+  const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    history: createHistory(
-      process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
-    ),
+    history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
   })
 
   let routesAdded = false
-  router.beforeEach((to, from, next) => {
+  Router.beforeEach((to, from, next) => {
     core.init().then(
       async () => {
         if (!routesAdded) {
@@ -49,7 +39,7 @@ export default route(function (/* { store, ssrContext } */) {
             if (page.pageChildren) {
               routeData.children = page.pageChildren
             }
-            router.addRoute(page.pageName, routeData)
+            Router.addRoute(page.pageName, routeData)
           })
           routesAdded = true
           next(to.path)
@@ -68,5 +58,6 @@ export default route(function (/* { store, ssrContext } */) {
       }
     )
   })
-  return router
+
+  return Router
 })

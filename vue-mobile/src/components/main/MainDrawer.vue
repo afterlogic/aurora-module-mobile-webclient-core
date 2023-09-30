@@ -7,7 +7,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'pinia'
+
+import { useCoreStore } from 'src/stores/index-pinia'
 
 import eventBus from 'src/event-bus'
 
@@ -20,7 +22,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('core', ['userData', 'userPublicId']),
+    ...mapState(useCoreStore, ['userData', 'userPublicId']),
 
     userName() {
       if (this.userData) return this.userData.Name

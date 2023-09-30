@@ -1,5 +1,6 @@
 import webApi from 'src/api/web-api'
-import store from 'src/store'
+// import store from 'src/stores'
+import { useCoreStore } from 'src/stores/index-pinia'
 
 export default {
   getAppData: async () => {
@@ -23,16 +24,20 @@ export default {
   },
 
   logout() {
+    const coreStore = useCoreStore()
+
     return webApi.sendRequest({
       moduleName: 'Core',
       methodName: 'Logout',
       parameters: {},
     })
       .then(result => {
-        store.dispatch('core/logout')
+        // store.dispatch('core/logout')
+        coreStore.logout()
       })
       .catch(error => {
-        store.dispatch('core/logout')
+        // store.dispatch('core/logout')
+        coreStore.logout()
       })
   },
 }

@@ -1,8 +1,11 @@
-import store from 'src/store'
+// import store from 'src/store'
+import { useCoreStore } from 'src/stores/index-pinia'
 
 export const getContactsSelectOptions = (contacts, selectContacts) => {
   const filteredContacts = []
-  const currentUserEmail = store.getters['core/userPublicId']
+  // const currentUserEmail = store.getters['core/userPublicId']
+  const coreStore = useCoreStore()
+  const currentUserEmail = coreStore.userPublicId
   contacts.forEach((contact) => {
     if (contact.isGroup || contact.IsGroup) {
       const index = selectContacts.findIndex( selectContact => selectContact.email === (contact.Name || contact.email))

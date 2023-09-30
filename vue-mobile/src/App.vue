@@ -12,12 +12,15 @@
   </q-layout>
 </template>
 
+
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'pinia'
 import { defineComponent } from 'vue'
 import modulesManager from 'src/modules-manager'
 import types from 'src/utils/types'
 import eventBus from 'src/event-bus'
+
+import { useCoreStore } from 'src/stores/index-pinia'
 import UploaderComponent from 'components/common/UploaderComponent'
 import UnsavedChangesDialog from "components/common/dialogs/UnsavedChangesDialog";
 
@@ -63,7 +66,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapGetters('core', ['locale', 'isUserNormalOrTenant']),
+    ...mapState(useCoreStore, ['locale', 'isUserNormalOrTenant']),
   },
   watch: {
     locale(lang) {

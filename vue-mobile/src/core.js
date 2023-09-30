@@ -3,7 +3,9 @@ import VueCookies from 'vue-cookies'
 import { i18n } from 'boot/i18n'
 
 import coreWebApi from 'src/api/core-web-api'
-import store from 'src/store'
+// import store from 'src/stores'
+import { useCoreStore } from 'src/stores/index-pinia'
+
 import enums from 'src/enums'
 
 import DeviceUUID from 'device-uuid'
@@ -22,10 +24,17 @@ const core = {
       enums.init(appData)
       errors.init(appData)
       modulesManager.getModules(appData).then(() => {
-        store.dispatch('core/parseAppData', appData).then(() => {
-          modulesManager.initModules(appData)
-          resolve()
-        }, reject)
+        // store.dispatch('core/parseAppData', appData).then(() => {
+        const coreStore = useCoreStore()
+        //  coreStore.parseAppData is not async
+        coreStore.parseAppData(appData)
+        modulesManager.initModules(appData)
+        resolve()
+
+        // coreStore.parseAppData(appData).then(() => {
+        //   modulesManager.initModules(appData)
+        //   resolve()
+        // }, reject)
       }, reject)
     })
   },

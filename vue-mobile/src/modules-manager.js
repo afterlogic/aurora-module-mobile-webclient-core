@@ -1,9 +1,13 @@
 import _ from 'lodash'
 
 import types from 'src/utils/types'
+import { pickHighestOrder } from 'src/utils/common'
 
 import moduleList from 'src/modules'
-import store from 'src/store'
+// import store from 'src/stores'
+
+import { useCoreStore } from 'src/stores/index-pinia'
+// const coreStore = useCoreStore()
 
 let availableClientModules = []
 let availableBackendModules = []
@@ -95,10 +99,13 @@ export default {
   },
 
   getDefaultPageForUser() {
-    const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    // const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    const coreStore = useCoreStore()
+    const isUserNormalOrTenant = coreStore.isUserNormalOrTenant
     let page = null
     if (isUserNormalOrTenant) {
-      page = normalUserPages.find((page) => page.pageName === modulesOrder[0]) || null
+      page = pickHighestOrder(normalUserPages, modulesOrder) || null
+      // page = normalUserPages.find((page) => page.pageName === modulesOrder[0]) || null
     } else {
       page = anonymousPages[0]
     }
@@ -113,17 +120,17 @@ export default {
    */
   correctPathForUser(matchedRoutes, toPath = null) {
     if (
-      !_.isArray(anonymousPages) ||
-      anonymousPages.length === 0 ||
-      !_.isArray(normalUserPages) ||
-      normalUserPages.length === 0
+      !_.isArray(anonymousPages) || anonymousPages.length === 0
+      || !_.isArray(normalUserPages) || normalUserPages.length === 0
     ) {
       this.setCurrentPageName('')
       return toPath || '/'
     }
 
     const matchedRouteName = _.isArray(matchedRoutes) && matchedRoutes.length > 0 ? matchedRoutes[0].name : null
-    const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    // const isUserNormalOrTenant = store.getters['core/isUserNormalOrTenant']
+    const coreStore = useCoreStore()
+    const isUserNormalOrTenant = coreStore.isUserNormalOrTenant
     let page = null
     if (matchedRouteName !== null) {
       if (isUserNormalOrTenant) {
@@ -135,6 +142,7 @@ export default {
     if (page === null) {
       page = this.getDefaultPageForUser()
     }
+
     if (page === null) {
       this.setCurrentPageName('')
       return '/'
@@ -196,11 +204,13 @@ export default {
       })
     }
 
-    normalUserFooterButtons.sort(function (a, b) {
-      const aPos = modulesOrder.indexOf(a.pageName)
-      const bPos = modulesOrder.indexOf(b.pageName)
-      return aPos - bPos
-    })
+    if (typeof normalUserFooterButtons === 'array') {
+      normalUserFooterButtons.sort(function (a, b) {
+        const aPos = modulesOrder.indexOf(a.pageName)
+        const bPos = modulesOrder.indexOf(b.pageName)
+        return aPos - bPos
+      })
+    }
 
     return normalUserFooterButtons === null ? [] : normalUserFooterButtons
   },

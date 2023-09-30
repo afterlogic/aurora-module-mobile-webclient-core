@@ -3,7 +3,10 @@ import _ from 'lodash'
 
 import { i18n, loadLanguageAsync } from 'boot/i18n'
 import types from 'src/utils/types'
-import store from 'src/store'
+// import store from 'src/stores'
+
+import { useCoreStore } from 'src/stores/index-pinia'
+const coreStore = useCoreStore()
 
 class Settings {
   constructor(appData) {
@@ -43,7 +46,8 @@ export default {
       await loadLanguageAsync(settings.shortLanguage)
     }
 
-    await store.dispatch('core/setLocale', settings.shortLanguage)
+    // await store.dispatch('core/setLocale', settings.shortLanguage)
+    await coreStore.setLocale(settings.shortLanguage)
 
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
