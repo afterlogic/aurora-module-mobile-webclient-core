@@ -6,9 +6,9 @@
     flat
     ref="uploader"
     :factory="addedFiles"
-    @added="onFileAdded"
-    @uploaded="showReport"
-    @finish="finishUpload"
+    @added="onFilesSelected"
+    @uploaded="onFileUploaded"
+    @finish="onFinishUpload"
   />
 </template>
 
@@ -45,17 +45,15 @@ export default {
     addedFiles() {
       return this.factory()
     },
-    onFileAdded(files) {
+    onFilesSelected(files) {
       this.added(files, this.$refs.uploader)
     },
-    showReport(file) {
+    onFileUploaded(file) {
       this.uploaded(file)
     },
-    finishUpload() {
+    onFinishUpload() {
       this.finish()
     },
   },
 }
 </script>
-
-<style scoped></style>
