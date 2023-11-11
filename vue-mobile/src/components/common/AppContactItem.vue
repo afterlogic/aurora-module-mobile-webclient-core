@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="flex items-center justify-end ">
-      <key-icon  v-if="contact.HasPgpPublicKey"/>
+      <KeyIcon v-if="contact.HasPgpPublicKey"/>
     </div>
   </div>
 </template>

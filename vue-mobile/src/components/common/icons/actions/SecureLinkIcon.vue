@@ -42,5 +42,3 @@ export default {
   name: 'SecureLinkIcon',
 }
 </script>
-
-<style scoped></style>

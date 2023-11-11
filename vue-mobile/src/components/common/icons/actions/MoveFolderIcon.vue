@@ -24,5 +24,3 @@ export default {
   name: 'MoveFolderIcon',
 }
 </script>
-
-<style scoped></style>

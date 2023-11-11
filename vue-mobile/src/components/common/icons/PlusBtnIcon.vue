@@ -56,5 +56,3 @@ export default {
   name: 'PlusBtnIcon',
 }
 </script>
-
-<style scoped></style>

@@ -26,5 +26,3 @@ export default {
   name: 'EditIcon',
 }
 </script>
-
-<style scoped></style>

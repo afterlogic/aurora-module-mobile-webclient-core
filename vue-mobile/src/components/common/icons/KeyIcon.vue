@@ -13,7 +13,3 @@ export default {
   name: "KeyIcon"
 }
 </script>
-
-<style scoped>
-
-</style>

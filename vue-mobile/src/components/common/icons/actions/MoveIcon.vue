@@ -23,5 +23,3 @@ export default {
   name: 'MoveIcon',
 }
 </script>
-
-<style scoped></style>

@@ -24,5 +24,3 @@ export default {
   name: 'InfoHorizontalIcon',
 }
 </script>
-
-<style scoped></style>

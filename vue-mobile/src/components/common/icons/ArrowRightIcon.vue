@@ -20,5 +20,3 @@ export default {
   name: 'ArrowRightIcon',
 }
 </script>
-
-<style scoped></style>

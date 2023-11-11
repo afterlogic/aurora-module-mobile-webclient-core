@@ -20,5 +20,3 @@ export default {
   name: 'ActiveStarIcon',
 }
 </script>
-
-<style scoped></style>

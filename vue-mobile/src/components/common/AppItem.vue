@@ -9,8 +9,8 @@
     @touchmove="touchMove" -->
     <transition name="icon">
       <div class="q-mr-md flex items-center" v-if="isChoice">
-        <not-selected-item-icon v-if="!isSelected" />
-        <selected-item-icon v-if="isSelected"/>
+        <NotSelectedItemIcon v-if="!isSelected" />
+        <SelectedItemIcon v-if="isSelected"/>
       </div>
     </transition>
     <slot />

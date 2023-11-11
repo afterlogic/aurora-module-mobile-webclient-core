@@ -2,15 +2,15 @@
   <q-header elevated reveal class="bg-white" style="transform: none">
     <slot name="header" />
   </q-header>
-  <main-drawer>
+  <MainDrawer>
     <slot name="drawer" />
-  </main-drawer>
+  </MainDrawer>
   <q-page-container class="full-height">
     <q-page :style-fn="pageStyles">
       <slot />
     </q-page>
   </q-page-container>
-  <main-footer></main-footer>
+  <MainFooter></MainFooter>
 </template>
 
 <script>

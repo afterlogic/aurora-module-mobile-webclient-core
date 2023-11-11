@@ -23,7 +23,7 @@
   </div>
   <div class="scroll full-width q-mt-lg" style="max-height: 400px;">
     <div v-if="!isWaitingContacts">
-      <app-contact-item
+      <AppContactItem
         v-for="contact in contacts"
         :contact="contact"
         :key="contact.ETag"
@@ -72,7 +72,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

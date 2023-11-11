@@ -21,5 +21,3 @@ export default {
   name: 'MoreIcon',
 }
 </script>
-
-<style scoped></style>

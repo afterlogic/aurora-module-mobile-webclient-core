@@ -1,5 +1,5 @@
 <template>
-  <app-dialog v-model="confirm" :close="cancel">
+  <AppDialog v-model="confirm" :close="cancel">
     <template v-slot:content>
       <div class="dialog__title-text q-mx-lg q-my-md">
         <span>{{ $t('COREWEBCLIENT.CONFIRM_DISCARD_CHANGES') }}</span>
@@ -7,12 +7,12 @@
     </template>
 
     <template v-slot:actions>
-      <button-dialog
+      <ButtonDialog
         :action="discard"
         label="Discard"
       />
     </template>
-  </app-dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -51,7 +51,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

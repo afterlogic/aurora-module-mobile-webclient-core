@@ -2,7 +2,7 @@
   <!-- <div class="app-create-button" @click="showDialog" :class="{'rotate': rotate}"> -->
   <div class="app-create-button" :class="{'rotate': rotate}">
     <slot>
-      <plus-icon color="#fff" />
+      <PlusIcon color="#fff" />
     </slot>
   </div>
 </template>

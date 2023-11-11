@@ -10,14 +10,13 @@
       <q-card-actions :align="alignActions">
         <slot name="actions" />
       </q-card-actions>
-      <cancel-cross-icon v-if="showCross" class="cancel-icon" @click="close"/>
+      <CancelCrossIcon v-if="showCross" class="cancel-icon" @click="close"/>
       <slot name="dialogs"/>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-
 import CancelCrossIcon from "components/common/icons/CancelCrossIcon";
 
 export default {

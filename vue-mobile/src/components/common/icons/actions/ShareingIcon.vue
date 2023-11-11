@@ -26,5 +26,3 @@ export default {
   name: 'ShareingIcon',
 }
 </script>
-
-<style scoped></style>

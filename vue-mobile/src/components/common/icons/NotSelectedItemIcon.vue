@@ -9,7 +9,3 @@ export default {
   name: "NotSelectedItemIcon"
 }
 </script>
-
-<style scoped>
-
-</style>

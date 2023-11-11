@@ -12,7 +12,3 @@ export default {
   name: "CancelCrossIcon"
 }
 </script>
-
-<style scoped>
-
-</style>

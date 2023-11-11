@@ -1,7 +1,7 @@
 <template>
   <q-layout class="app-layout" view="hhh LpR fFf">
-    <uploader-component ref="uploader" />
-    <unsaved-changes-dialog ref="unsavedChangesDialog"/>
+    <UploaderComponent ref="uploader" />
+    <UnsavedChangesDialog ref="unsavedChangesDialog"/>
     <component
       v-for="component in currentComponents"
       :key="component.name"
@@ -11,7 +11,6 @@
     <router-view />
   </q-layout>
 </template>
-
 
 <script>
 import { mapState } from 'pinia'
@@ -50,19 +49,21 @@ const mixins = {
   },
 }
 export default defineComponent({
+  name: 'App',
+
   mixins: [mixins],
 
-  name: 'App',
+  components: {
+    UploaderComponent,
+    UnsavedChangesDialog
+  },
+
   data: () => ({
     currentComponents: []
   }),
   async mounted() {
     eventBus.$on('CoreMobileWebclient::InitSubscription', this.initSubscription)
     eventBus.$on('CoreMobileWebclient::SetComponents', this.setComponents)
-  },
-  components: {
-    UploaderComponent,
-    UnsavedChangesDialog
   },
 
   computed: {

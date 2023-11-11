@@ -1,9 +1,9 @@
 <template>
   <q-footer elevated class="bg-white">
     <q-toolbar class="flex justify-between" style="height: 60px">
-      <menu-button v-for="buttonData in footerButtons" :key="buttonData.pagePath" :url="buttonData.pagePath">
+      <MenuButton v-for="buttonData in footerButtons" :key="buttonData.pagePath" :url="buttonData.pagePath">
         <component :is="buttonData.iconComponent" :color="buttonData.highlightPaths.indexOf(currentPath) !== -1 ? '#469CF8' : '#B6B5B5'"></component>
-      </menu-button>
+      </MenuButton>
     </q-toolbar>
   </q-footer>
 </template>
@@ -41,5 +41,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

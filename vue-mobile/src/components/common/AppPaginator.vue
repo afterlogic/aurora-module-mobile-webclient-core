@@ -60,23 +60,11 @@
 export default {
   name: 'AppPagination',
   props: {
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
-    itemsPerPage: {
-      type: Number,
-      default: 20,
-    },
-    itemsCount: {
-      type: Number,
-      default: 0,
-    },
+    currentPage: { type: Number, default: 1, },
+    itemsPerPage: { type: Number, default: 20, },
+    itemsCount: { type: Number, default: 0, },
     changePage: Function,
-    border: {
-      type: Boolean,
-      default: true,
-    },
+    border: { type: Boolean, default: true, },
   },
   computed: {
     pagesCount: function () {
