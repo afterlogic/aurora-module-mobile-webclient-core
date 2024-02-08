@@ -204,7 +204,7 @@ export default {
       })
     }
 
-    if (typeof normalUserFooterButtons === 'array') {
+    if (Array.isArray(normalUserFooterButtons)) {
       normalUserFooterButtons.sort(function (a, b) {
         const aPos = modulesOrder.indexOf(a.pageName)
         const bPos = modulesOrder.indexOf(b.pageName)
