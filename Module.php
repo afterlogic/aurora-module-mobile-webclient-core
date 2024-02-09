@@ -70,7 +70,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
         $oUser = \Aurora\System\Api::getAuthenticatedUser();
 
         return array(
-            'Theme' => $oUser && null !== $oUser->getExtendedProp(self::GetName().'::Theme') ? $oUser->getExtendedProp(self::GetName().'::Theme') : $this->oModuleSettings->Theme,
+            'Theme' => $oUser && null !== $oUser->getExtendedProp(self::GetName() . '::Theme') ? $oUser->getExtendedProp(self::GetName() . '::Theme') : $this->oModuleSettings->Theme,
             'ThemeList' => $this->oModuleSettings->ThemeList,
         );
     }
@@ -87,7 +87,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
         $oUser = \Aurora\System\Api::getAuthenticatedUser();
         if ($oUser && $oUser->isNormalOrTenant()) {
             if (isset($Args['MobileTheme'])) {
-                $oUser->setExtendedProp(self::GetName().'::Theme', $Args['MobileTheme']);
+                $oUser->setExtendedProp(self::GetName() . '::Theme', $Args['MobileTheme']);
             }
 
             $oCoreDecorator = \Aurora\Modules\Core\Module::Decorator();
