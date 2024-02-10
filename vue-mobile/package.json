@@ -21,6 +21,7 @@
     "core-js": "^3.6.5",
     "device-uuid": "^1.0.4",
     "file-saver": "^2.0.5",
+    "moment": "^2.30.1",
     "openpgp": "4.5",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
