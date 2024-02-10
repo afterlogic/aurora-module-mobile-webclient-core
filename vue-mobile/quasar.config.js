@@ -10,6 +10,7 @@
 
 
 const ESLintPlugin = require('eslint-webpack-plugin')
+const path = require('path')
 
 
 const { configure } = require('quasar/wrappers');
@@ -79,6 +80,10 @@ module.exports = configure(function (ctx) {
       chainWebpack (chain) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
+		chain.resolve.modules
+          .clear()
+          .add(path.resolve(__dirname, 'node_modules'))
+          .add(path.resolve(__dirname, 'node_modules/@quasar/app-webpack/node_modules'))
       }
       
     },
