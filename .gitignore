@@ -2,3 +2,4 @@
 .idea
 .vscode
 vue-mobile/env.js
+vue-mobile/src/stores/index-all.js
