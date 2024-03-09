@@ -3,8 +3,8 @@
     :class="`toggle ${value ? '' : 'toggle-disable'} full-width justify-between`"
     v-bind="$attrs"
     color="primary"
-    :false-value="0"
-    :true-value="1"
+    :false-value="false"
+    :true-value="true"
     :label="label"
     left-label
     keep-color
@@ -16,7 +16,7 @@ export default {
   name: "AppToggle",
   props: {
     label: { type: String, default: '' },
-    value: { type: Boolean, default: null }
+    value: { type: Boolean, default: false }
   }
 }
 </script>
