@@ -24,6 +24,8 @@ export default defineConfig(function (ctx) {
     build: {
       vueRouterMode: 'hash',
       publicPath: '/static/vue-mobile/',
+      // App is served from site root (?mobile-version), not from /static/vue-mobile/
+      vueRouterBase: '/',
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },

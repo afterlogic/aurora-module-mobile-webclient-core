@@ -45,14 +45,6 @@ if (fse.existsSync(srcDir)) {
   fse.moveSync(srcDir, destDir)
   console.log('The app is now in the static/vue-mobile directory')
 
-  console.log('Start to prepare index.html...')
-  let indexContent = fse.readFileSync(destDir + 'index.html', 'utf8')
-  indexContent = indexContent.replace(
-    /<head><title>/g,
-    '<head><base href="/static/vue-mobile/"><title>'
-  )  
-  fse.writeFileSync(destDir + 'index.html', indexContent)
-
   console.log('Everything is ready now')
 } else {
   console.log('An error occurred while building the app')
