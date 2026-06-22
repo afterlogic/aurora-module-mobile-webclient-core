@@ -1,4 +1,4 @@
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { createI18n } from 'vue-i18n'
 
 import messages from 'src/i18n'
@@ -13,13 +13,13 @@ export const i18n = createI18n({
 })
 
 function setI18nLanguage(lang) {
-  i18n.locale = lang
+  i18n.global.locale = lang
   document.querySelector('html').setAttribute('lang', lang)
   return lang
 }
 
 export function loadLanguageAsync(lang) {
-  if (i18n.locale === lang) {
+  if (i18n.global.locale === lang) {
     return Promise.resolve(setI18nLanguage(lang))
   }
 
@@ -34,6 +34,6 @@ export function loadLanguageAsync(lang) {
   })
 }
 
-export default boot(({ app }) => {
+export default defineBoot(({ app }) => {
   app.use(i18n)
 })

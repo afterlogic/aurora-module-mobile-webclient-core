@@ -10,7 +10,6 @@ export default {
       await import('src/../../../OpenPgpMobileWebclient/vue-mobile/manager'),
       await import('src/../../../SettingsMobileWebclient/vue-mobile/manager'),
       await import('src/../../../StandardLoginFormMobileWebclient/vue-mobile/manager'),
-      await import('src/../../../TwoFactorAuth/vue-mobile/manager'),
     ]
   },
 }
