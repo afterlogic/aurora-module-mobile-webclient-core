@@ -58,6 +58,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
      */
     public function EntryMobileVersion()
     {
+        \Aurora\System\Managers\Integrator::getInstance()->setMobile(true);
         \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
         $sResult = \file_get_contents('./static/vue-mobile/index.html');
         return $sResult;
