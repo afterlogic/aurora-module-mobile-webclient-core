@@ -6,7 +6,8 @@ export function getApiHost() {
     const appOrigin =
       window.location.origin ||
       window.location.protocol + '//' + window.location.host
-    apiHost = appOrigin + window.location.pathname
+    // API is always at site root (?/Api/), even when static assets use /static/vue-mobile/
+    apiHost = appOrigin + '/'
   }
   if (
     types.isNonEmptyString(apiHost) &&

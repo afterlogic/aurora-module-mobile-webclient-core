@@ -8,6 +8,7 @@ export default defineConfig(function (ctx) {
     supportTS: false,
 
     boot: [
+      'mobile-cookie',
       'i18n',
       'axios',
     ],

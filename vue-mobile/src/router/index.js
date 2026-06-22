@@ -55,6 +55,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
       },
       (error) => {
         console.error('core.init reject', error)
+        next('/')
       }
     )
   })
