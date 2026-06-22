@@ -9,9 +9,7 @@
         :is="resolveComponent(component.component)"
       />
     </template>
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+    <router-view />
   </q-layout>
 </template>
 
