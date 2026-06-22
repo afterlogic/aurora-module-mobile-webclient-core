@@ -42,7 +42,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
             Router.addRoute(routeData)
           })
           routesAdded = true
-          next(to.path)
+          next({ ...to, replace: true })
           return
         }
 

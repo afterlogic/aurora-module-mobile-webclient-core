@@ -1,7 +1,12 @@
 /* eslint-env node */
 
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { defineConfig } from '#q-app/wrappers'
 import env from './env.cjs'
+
+const quasarConfigDir = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(function (ctx) {
   return {
@@ -9,6 +14,7 @@ export default defineConfig(function (ctx) {
 
     boot: [
       'mobile-cookie',
+      'mobile-components',
       'i18n',
       'axios',
     ],
@@ -30,6 +36,23 @@ export default defineConfig(function (ctx) {
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },
+
+      // Per-SFC auto-import patches `components` via lodash.extend after defineComponent,
+      // wiping custom entries (MessageItem, AppInput, CreateContactIcon, …). Use globals only.
+      chainWebpack (chain) {
+        chain.module.rule('vue').uses.delete('vue-auto-import-quasar')
+      },
+
+      // Single vue/quasar instance across sync + async chunks.
+      extendWebpack (cfg) {
+        const dedupe = (name) => path.resolve(quasarConfigDir, 'node_modules', name)
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          vue: dedupe('vue'),
+          'vue-router': dedupe('vue-router'),
+          quasar: dedupe('quasar'),
+        }
+      },
     },
 
     devServer: {
@@ -44,7 +67,65 @@ export default defineConfig(function (ctx) {
       config: {},
       i18n: 'en',
 
-      plugins: ['Notify']
+      plugins: ['Notify'],
+
+      directives: [
+        'Ripple',
+        'ClosePopup',
+        'TouchHold',
+        'Intersection',
+      ],
+
+      // Global registration — SFC auto-import is disabled (see chainWebpack above).
+      components: [
+        'QLayout',
+        'QPageContainer',
+        'QPage',
+        'QHeader',
+        'QFooter',
+        'QDrawer',
+        'QToolbar',
+        'QToolbarTitle',
+        'QBtn',
+        'QBtnDropdown',
+        'QForm',
+        'QField',
+        'QInput',
+        'QSelect',
+        'QCheckbox',
+        'QToggle',
+        'QOptionGroup',
+        'QEditor',
+        'QFile',
+        'QDialog',
+        'QCard',
+        'QCardSection',
+        'QCardActions',
+        'QList',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
+        'QSeparator',
+        'QSpace',
+        'QIcon',
+        'QImg',
+        'QChip',
+        'QMenu',
+        'QPopupProxy',
+        'QScrollArea',
+        'QVirtualScroll',
+        'QPullToRefresh',
+        'QTabs',
+        'QRouteTab',
+        'QTree',
+        'QDate',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl',
+        'QUploader',
+        'QLinearProgress',
+        'QCircularProgress',
+        'QSpinnerDots',
+      ],
     },
 
     animations: [],

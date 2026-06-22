@@ -26,13 +26,14 @@ export default {
   },
 
   methods: {
-    pageStyles (offset) {
-      // "offset" is a Number (pixels) that refers to the total
-      // height of header + footer that occupies on screen,
-      // based on the QLayout "view" prop configuration
-
-      // this is actually what the default style-fn does in Quasar
-      return { 'flex-wrap': 'nowrap' }
+    pageStyles (offset, height) {
+      const pageHeight = height - offset
+      return {
+        minHeight: `${pageHeight}px`,
+        height: `${pageHeight}px`,
+        display: 'flex',
+        flexDirection: 'column',
+      }
     }
   }
 }

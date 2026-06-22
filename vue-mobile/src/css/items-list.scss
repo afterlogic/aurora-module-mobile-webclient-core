@@ -1,4 +1,11 @@
 
+.messages__list,
+.contacts__list {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+}
+
 .list-item {
     border-bottom: 1px solid #F6F6F6;
     height: 64px;

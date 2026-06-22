@@ -6,20 +6,21 @@ import messages from 'src/i18n'
 const loadedLanguages = ['en']
 
 export const i18n = createI18n({
+  legacy: true,
   locale: 'en',
   fallbackLocale: 'en',
-  lazy: true,
   messages,
 })
 
 function setI18nLanguage(lang) {
   i18n.global.locale = lang
-  document.querySelector('html').setAttribute('lang', lang)
+  document.querySelector('html')?.setAttribute('lang', lang)
   return lang
 }
 
 export function loadLanguageAsync(lang) {
-  if (i18n.global.locale === lang) {
+  const currentLocale = i18n.global.locale
+  if (currentLocale === lang) {
     return Promise.resolve(setI18nLanguage(lang))
   }
 

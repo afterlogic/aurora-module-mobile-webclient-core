@@ -2,26 +2,29 @@
   <q-layout class="app-layout" view="hhh LpR fFf">
     <UploaderComponent ref="uploader" />
     <UnsavedChangesDialog ref="unsavedChangesDialog"/>
-    <component
-      v-for="component in currentComponents"
-      :key="component.name"
-      :ref="(el) => registerDynamicRef(component.name, el)"
-      :is="component.component"
-    />
-    <router-view />
+    <template v-if="enableModuleComponents">
+      <component
+        v-for="component in currentComponents"
+        :key="component.name"
+        :is="resolveComponent(component.component)"
+      />
+    </template>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { mapState } from 'pinia'
-import { defineComponent } from 'vue'
+import { defineComponent, isRef, unref } from 'vue'
 import modulesManager from 'src/modules-manager'
 import types from 'src/utils/types'
 import eventBus from 'src/event-bus'
 
 import { useCoreStore } from 'src/stores/index-pinia'
 import UploaderComponent from 'components/common/UploaderComponent'
-import UnsavedChangesDialog from "components/common/dialogs/UnsavedChangesDialog";
+import UnsavedChangesDialog from 'components/common/dialogs/UnsavedChangesDialog'
 
 const mixins = {
   methods: {
@@ -55,15 +58,28 @@ export default defineComponent({
 
   components: {
     UploaderComponent,
-    UnsavedChangesDialog
+    UnsavedChangesDialog,
   },
 
   data: () => ({
-    currentComponents: []
+    currentComponents: [],
+    moduleRefs: {},
+    enableModuleComponents: false,
   }),
-  async mounted() {
+  created() {
     eventBus.$on('CoreMobileWebclient::InitSubscription', this.initSubscription)
     eventBus.$on('CoreMobileWebclient::SetComponents', this.setComponents)
+  },
+  mounted() {
+    this.$router.isReady().then(() => {
+      this.$nextTick(() => {
+        this.enableModuleComponents = true
+      })
+    })
+  },
+  beforeUnmount() {
+    eventBus.$off('CoreMobileWebclient::InitSubscription', this.initSubscription)
+    eventBus.$off('CoreMobileWebclient::SetComponents', this.setComponents)
   },
 
   computed: {
@@ -71,7 +87,9 @@ export default defineComponent({
   },
   watch: {
     locale(lang) {
-      this.$i18n.global.locale = lang
+      if (this.$i18n) {
+        this.$i18n.locale = lang
+      }
     },
     isUserNormalOrTenant () {
       const currentRoute = this.$router.currentRoute.value
@@ -85,17 +103,21 @@ export default defineComponent({
   },
   methods: {
     initSubscription() {
-      eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
+      this.$nextTick(() => {
+        eventBus.$emit('CoreMobileWebclient::CheckComponents', this.currentComponents)
+        if (this.currentComponents.length > 0) {
+          this.currentComponents = [...this.currentComponents]
+        }
+      })
     },
     setComponents(component) {
-      this.currentComponents.push(component)
+      this.currentComponents = [...this.currentComponents, component]
     },
-    registerDynamicRef(name, el) {
-      if (el) {
-        this.$refs[name] = el
-      } else if (this.$refs[name]) {
-        delete this.$refs[name]
-      }
+    resolveComponent(component) {
+      return isRef(component) ? unref(component) : component
+    },
+    getModuleRef(name) {
+      return this.moduleRefs[name] || this.$refs[name] || null
     },
   }
 })

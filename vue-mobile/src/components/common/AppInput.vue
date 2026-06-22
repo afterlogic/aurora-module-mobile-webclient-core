@@ -1,16 +1,19 @@
 <template>
   <q-input
     class="q-pt-sm"
-    model-value=""
+    :dense="dense"
     :filled="filled"
-    v-model="text"
+    :model-value="modelValue"
     :placeholder="placeholder"
+    :label="label"
     lazy-rules
     :rules="rules"
     hide-bottom-space
     :autofocus="autofocus"
     :type="type"
-    v-on:input="$emit('input', $event.target.value)"
+    :disable="disable"
+    stack-label
+    @update:model-value="$emit('update:modelValue', $event)"
   />
 </template>
 
@@ -19,16 +22,21 @@ import { errors } from 'src/utils/validation'
 
 export default {
   name: 'AppInput',
+
   props: {
+    modelValue: { type: [String, Number], default: '' },
+    label: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     rulesProps: { type: Object, default: null },
     filled: { type: Boolean, default: false },
+    dense: { type: Boolean, default: false },
+    disable: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false },
     type: { type: String, default: 'text' },
   },
-  data: () => ({
-    text: '',
-  }),
+
+  emits: ['update:modelValue'],
+
   computed: {
     rules() {
       const rules = []
@@ -41,6 +49,6 @@ export default {
       }
       return rules.length ? rules : [true]
     },
-}
+  },
 }
 </script>
