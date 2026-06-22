@@ -49,7 +49,7 @@ if (fse.existsSync(srcDir)) {
   let indexContent = fse.readFileSync(destDir + 'index.html', 'utf8')
   indexContent = indexContent.replace(
     /<head><title>/g,
-    '<head><base href="static/vue-mobile/"><title>'
+    '<head><base href="/static/vue-mobile/"><title>'
   )  
   fse.writeFileSync(destDir + 'index.html', indexContent)
 

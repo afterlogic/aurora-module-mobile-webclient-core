@@ -23,10 +23,10 @@ export default defineConfig(function (ctx) {
 
     build: {
       vueRouterMode: 'hash',
+      publicPath: '/static/vue-mobile/',
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },
-
     },
 
     devServer: {
