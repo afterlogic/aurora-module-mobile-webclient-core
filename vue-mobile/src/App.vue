@@ -5,7 +5,7 @@
     <component
       v-for="component in currentComponents"
       :key="component.name"
-      :ref="component.name"
+      :ref="(el) => registerDynamicRef(component.name, el)"
       :is="component.component"
     />
     <router-view />
@@ -71,7 +71,7 @@ export default defineComponent({
   },
   watch: {
     locale(lang) {
-      this.$i18n.locale = lang
+      this.$i18n.global.locale = lang
     },
     isUserNormalOrTenant () {
       const currentRoute = this.$router.currentRoute.value
@@ -89,7 +89,14 @@ export default defineComponent({
     },
     setComponents(component) {
       this.currentComponents.push(component)
-    }
+    },
+    registerDynamicRef(name, el) {
+      if (el) {
+        this.$refs[name] = el
+      } else if (this.$refs[name]) {
+        delete this.$refs[name]
+      }
+    },
   }
 })
 </script>

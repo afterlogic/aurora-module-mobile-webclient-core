@@ -39,7 +39,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
             if (page.pageChildren) {
               routeData.children = page.pageChildren
             }
-            Router.addRoute(page.pageName, routeData)
+            Router.addRoute(routeData)
           })
           routesAdded = true
           next(to.path)
