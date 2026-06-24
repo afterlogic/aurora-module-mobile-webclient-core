@@ -1130,7 +1130,9 @@
     "HEADING_ACCOUNTS": "Аккаунты",
     "HEADING_FOLDERS": "Папки",
     "HEADING_UNIFIED_FOLDERS": "Единые папки",
-    "INFO_UNREAD_MESSAGES": "Непрочитанные сообщения"
+    "INFO_UNREAD_MESSAGES": "Непрочитанные сообщения",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Вы уверены, что хотите удалить все сообщения в папке Спам?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Вы уверены, что хотите удалить все сообщения в папке Корзина?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Введите примечание здесь",

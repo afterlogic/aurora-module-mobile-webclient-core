@@ -1135,7 +1135,9 @@
   },
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Konto",
-    "HEADING_FOLDERS": "Ordner"
+    "HEADING_FOLDERS": "Ordner",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Möchten Sie wirklich alle Nachrichten im Ordner Spam löschen?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Möchten Sie wirklich alle Nachrichten im Ordner Papierkorb löschen?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Geben Sie Ihre Notiz hier ein",

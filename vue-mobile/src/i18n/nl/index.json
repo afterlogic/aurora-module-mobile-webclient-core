@@ -1135,7 +1135,9 @@
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Accounts",
     "HEADING_FOLDERS": "Mappen",
-    "HEADING_UNIFIED_FOLDERS": "Uniforme mappen"
+    "HEADING_UNIFIED_FOLDERS": "Uniforme mappen",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Weet u zeker dat u alle berichten in de map Spam wilt verwijderen?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Weet u zeker dat u alle berichten in de map Prullenbak wilt verwijderen?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Voer hier uw notitie in",

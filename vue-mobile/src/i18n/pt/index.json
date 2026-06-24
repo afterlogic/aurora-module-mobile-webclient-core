@@ -1137,7 +1137,9 @@
     "HEADING_ACCOUNTS": "Accounts",
     "HEADING_FOLDERS": "Folders",
     "HEADING_UNIFIED_FOLDERS": "Unified folders",
-    "LABEL_EMPTY_FOLDER": "The folder is empty"
+    "LABEL_EMPTY_FOLDER": "The folder is empty",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Are you sure you want to delete all messages in folder Spam?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Are you sure you want to delete all messages in folder Trash?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Enter your note here",

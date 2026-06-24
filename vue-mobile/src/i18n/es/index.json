@@ -1136,7 +1136,9 @@
   },
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Cuentas",
-    "HEADING_FOLDERS": "Carpetas"
+    "HEADING_FOLDERS": "Carpetas",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "¿Está seguro de que desea eliminar todos los mensajes de la carpeta Spam?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "¿Está seguro de que desea eliminar todos los mensajes de la carpeta Papelera?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Introduzca su nota aquí",

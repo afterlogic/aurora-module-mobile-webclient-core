@@ -1133,7 +1133,9 @@
   },
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Kontod",
-    "HEADING_FOLDERS": "Kaustad"
+    "HEADING_FOLDERS": "Kaustad",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Kas olete kindel, et soovite kustutada kõik sõnumid kaustas Rämpspost?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Kas olete kindel, et soovite kustutada kõik sõnumid kaustas Prügikast?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Siia saab kirjutada uue memo.",

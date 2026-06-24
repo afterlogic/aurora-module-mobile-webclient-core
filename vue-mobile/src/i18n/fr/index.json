@@ -1134,7 +1134,9 @@
   },
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Comptes",
-    "HEADING_FOLDERS": "Dossiers"
+    "HEADING_FOLDERS": "Dossiers",
+    "CONFIRM_EMPTY_SPAM_FOLDER": "Voulez-vous vraiment supprimer tous les messages du dossier Spam ?",
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Voulez-vous vraiment supprimer tous les messages du dossier Corbeille ?"
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Entrez votre note ici",
