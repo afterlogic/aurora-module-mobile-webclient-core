@@ -50,6 +50,18 @@ a {
 @import "./app-header.scss";
 @import "./items-list.scss";
 
+.q-header .q-layout__shadow:after,
+.q-footer .q-layout__shadow:after {
+  box-shadow: 0 0 10px 2px rgba($primary, 0.2), 0 0 10px rgba($primary, 0.24);
+}
+
+body.body--dark {
+  .q-header .q-layout__shadow:after,
+  .q-footer .q-layout__shadow:after {
+    box-shadow: 0 0 10px 2px rgba($primary, 0.3), 0 0 10px rgba($primary, 0.35);
+  }
+}
+
 .dialog__title-text {
   font-family: 'Arial', serif;
   font-style: normal;
