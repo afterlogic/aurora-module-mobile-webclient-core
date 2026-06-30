@@ -1,8 +1,8 @@
 <template>
   <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated>
-    <div>
+    <q-scroll-area class="fit" :thumb-style="{ width: '5px' }">
       <slot />
-    </div>
+    </q-scroll-area>
   </q-drawer>
 </template>
 
