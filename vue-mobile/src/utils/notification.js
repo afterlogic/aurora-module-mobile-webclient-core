@@ -23,7 +23,10 @@ export default {
     })
   },
 
-  showReport(message) {
+  showReport(message, timeout) {
+    if (!_.isInteger(timeout)) {
+      timeout = 2000
+    }
     Notify.create({
       color: 'green',
       textColor: 'white',
@@ -33,7 +36,7 @@ export default {
       position: 'bottom',
       avatar: null,
       multiLine: false, // if multiLine=true then close button is displayed at the bottom
-      timeout: 10000,
+      timeout,
       actions: [{ icon: 'close', color: 'white' }],
     })
   },

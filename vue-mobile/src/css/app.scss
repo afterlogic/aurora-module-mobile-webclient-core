@@ -88,5 +88,9 @@ body.body--dark {
   color: $flagged;
 }
 
+.q-notification {
+  transition: transform 200ms ease, opacity 200ms ease !important;
+}
+
 
 
