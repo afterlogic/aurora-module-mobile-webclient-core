@@ -29,6 +29,36 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
   })
 
+  // Reload once when a stale bundle fails to load a lazy chunk after deploy.
+  const isChunkLoadError = (error) => {
+    const message = (error && (error.message || error.toString())) || ''
+    return /Loading (CSS )?chunk [^ ]+ failed/i.test(message) ||
+      /ChunkLoadError/i.test(message) ||
+      /Loading dynamically imported module/i.test(message) ||
+      /Failed to fetch dynamically imported module/i.test(message) ||
+      /error loading dynamically imported module/i.test(message)
+  }
+
+  Router.onError((error, to) => {
+    if (!isChunkLoadError(error)) {
+      return
+    }
+
+    const targetPath = (to && to.fullPath) || window.location.pathname + window.location.hash
+    const reloadKey = 'chunkReloadPath'
+
+    if (sessionStorage.getItem(reloadKey) === targetPath) {
+      return
+    }
+
+    sessionStorage.setItem(reloadKey, targetPath)
+    window.location.assign(targetPath)
+  })
+
+  Router.afterEach(() => {
+    sessionStorage.removeItem('chunkReloadPath')
+  })
+
   let routesAdded = false
   Router.beforeEach((to, from, next) => {
     core.init().then(
