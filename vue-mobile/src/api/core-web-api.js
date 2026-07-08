@@ -40,4 +40,13 @@ export default {
         coreStore.logout()
       })
   },
+
+  setMobile (mobile) {
+    return webApi.sendRequest({
+      moduleName: 'Core',
+      methodName: 'SetMobile',
+      parameters: { Mobile: !!mobile },
+      silentError: true,
+    })
+  },
 }
