@@ -1,5 +1,5 @@
 <template>
-  <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated>
+  <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated @hide="onHide">
     <q-scroll-area class="fit" :thumb-style="{ width: '5px' }">
       <slot />
     </q-scroll-area>
@@ -34,6 +34,14 @@ export default {
     },
   },
 
+  watch: {
+    leftDrawerOpen(isOpen) {
+      if (!isOpen) {
+        eventBus.$emit('closeDrawer')
+      }
+    },
+  },
+
   data() {
     return {
       leftDrawerOpen: false,
@@ -41,6 +49,10 @@ export default {
   },
 
   methods: {
+    onHide() {
+      eventBus.$emit('closeDrawer')
+    },
+
     close() {
       setTimeout(() => {
         this.leftDrawerOpen = false
