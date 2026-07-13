@@ -15,7 +15,7 @@ export default {
 
   login: async (parameters) => {
     return webApi.sendRequest({
-      moduleName: 'Core',
+      moduleName: 'StandardLoginFormWebclient',
       methodName: 'Login',
       parameters,
     })

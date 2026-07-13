@@ -3,6 +3,7 @@ export default {
     return [
       await import('src/manager'),
       await import('src/../../../CloudflareTurnstileWebclientPlugin/vue-mobile/manager'),
+      await import('src/../../../RecaptchaWebclientPlugin/vue-mobile/manager'),
       await import('src/../../../ContactsMobileWebclient/vue-mobile/manager'),
       await import('src/../../../CoreParanoidEncryptionWebclientPlugin/vue-mobile/manager'),
       await import('src/../../../FilesMobileWebclient/vue-mobile/manager'),
