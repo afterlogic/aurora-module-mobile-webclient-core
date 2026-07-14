@@ -3,7 +3,9 @@ import { useCoreStore } from 'src/stores/index-pinia'
 
 export const getContactsSelectOptions = (contacts, selectContacts) => {
   const filteredContacts = []
-  // const currentUserEmail = store.getters['core/userPublicId']
+  if (!Array.isArray(contacts)) {
+    return filteredContacts
+  }
   const coreStore = useCoreStore()
   const currentUserEmail = coreStore.userPublicId
   contacts.forEach((contact) => {
@@ -35,6 +37,9 @@ export const getContactsSelectOptions = (contacts, selectContacts) => {
   return filteredContacts
 }
 export const getAllContactsSelectOptions = (contacts) => {
+  if (!Array.isArray(contacts)) {
+    return []
+  }
   return contacts.map( contact => {
     if (contact?.IsGroup || contact.isGroup) {
       return {

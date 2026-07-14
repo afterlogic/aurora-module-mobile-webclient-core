@@ -42,10 +42,11 @@ if (fse.existsSync(srcDir)) {
 
   console.log('Start to prepare index.html...')
   let indexContent = fse.readFileSync(destDir + 'index.html', 'utf8')
+  indexContent = indexContent.replace(/<base href="[^"]*">/g, '')
   indexContent = indexContent.replace(
-    /<head><title>/g,
-    '<head><base href="static/vue-mobile/"><title>'
-  )  
+    /<head>/,
+    '<head><base href="/static/vue-mobile/">'
+  )
   fse.writeFileSync(destDir + 'index.html', indexContent)
 
   console.log('Everything is ready now')

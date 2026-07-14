@@ -6,7 +6,14 @@ export function getApiHost() {
     const appOrigin =
       window.location.origin ||
       window.location.protocol + '//' + window.location.host
-    apiHost = appOrigin + window.location.pathname
+    const pathname = window.location.pathname || '/'
+
+    // The SPA may be opened from /static/vue-mobile/, but API always lives at the app root.
+    if (pathname.includes('/static/vue-mobile')) {
+      apiHost = appOrigin + '/'
+    } else {
+      apiHost = appOrigin + pathname
+    }
   }
   if (
     types.isNonEmptyString(apiHost) &&

@@ -48,7 +48,7 @@ const core = {
         }, reject)
       } else {
         notification.showError(i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN'))
-        reject()
+        reject(new Error('Failed to load application data'))
       }
     })
   },
@@ -56,10 +56,10 @@ const core = {
 
 export default {
   init() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (core.appData === null) {
         this.addCookies()
-        this.requestAppData().then(resolve)
+        this.requestAppData().then(resolve, reject)
       } else {
         resolve()
       }

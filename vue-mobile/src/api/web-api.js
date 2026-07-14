@@ -65,7 +65,9 @@ export default {
               const needToLogout =
                 errors.isAuthError(response.data.ErrorCode) && methodName !== 'Logout' && methodName !== 'Login'
               if (needToLogout) {
-                coreWebApi.logout()
+                coreWebApi.logout().finally(() => {
+                  rejectWithError(reject, response.data, defaultErrorText, silentError)
+                })
               } else {
                 rejectWithError(reject, response.data, defaultErrorText, silentError)
               }
