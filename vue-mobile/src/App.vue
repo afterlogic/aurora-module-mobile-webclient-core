@@ -5,7 +5,7 @@
     <component
       v-for="component in currentComponents"
       :key="component.name"
-      :ref="component.name"
+      :ref="(el) => setModuleComponentRef(component.name, el)"
       :is="component.component"
     />
     <router-view />
@@ -59,7 +59,8 @@ export default defineComponent({
   },
 
   data: () => ({
-    currentComponents: []
+    currentComponents: [],
+    moduleRefs: {},
   }),
   async mounted() {
     eventBus.$on('CoreMobileWebclient::InitSubscription', this.initSubscription)
@@ -89,7 +90,17 @@ export default defineComponent({
     },
     setComponents(component) {
       this.currentComponents.push(component)
-    }
+    },
+    setModuleComponentRef(name, el) {
+      if (el) {
+        this.moduleRefs[name] = el
+      } else {
+        delete this.moduleRefs[name]
+      }
+    },
+    getModuleRef(name) {
+      return this.moduleRefs[name] || this.$refs[name] || null
+    },
   }
 })
 </script>
