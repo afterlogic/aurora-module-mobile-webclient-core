@@ -7,6 +7,7 @@
         v-for="component in currentComponents"
         :key="component.name"
         :is="resolveComponent(component.component)"
+        :ref="(el) => setModuleComponentRef(component.name, el)"
       />
     </template>
     <router-view />
@@ -113,6 +114,13 @@ export default defineComponent({
     },
     resolveComponent(component) {
       return isRef(component) ? unref(component) : component
+    },
+    setModuleComponentRef(name, el) {
+      if (el) {
+        this.moduleRefs[name] = el
+      } else {
+        delete this.moduleRefs[name]
+      }
     },
     getModuleRef(name) {
       return this.moduleRefs[name] || this.$refs[name] || null
