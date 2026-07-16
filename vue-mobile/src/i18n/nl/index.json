@@ -165,7 +165,9 @@
     "ADMIN_SETTINGS_TAB_LABEL": "Merken",
     "HEADING_SETTINGS_TAB": "Merk instellingen",
     "LOGIN_LOGO_URL_LABEL": "Login logo URL",
-    "TABSBAR_LOGO_URL_LABEL": "Tabbar logo URL"
+    "TABSBAR_LOGO_URL_LABEL": "Tabbar logo URL",
+    "MOBILE_LOGIN_LOGO_URL_LABEL": "Mobiele login logo URL",
+    "PRODUCT_NAME_LABEL": "Productnaam"
   },
   "CALENDAR": {
     "CALENDAR_DEFAULT_NAME": "Mijn kalender",
@@ -1320,7 +1322,7 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Zoekresultaten voor <span class='part'>{SEARCH}</span> in <span class='part'> Alle verenigde accounts</span>:",
     "INFO_UNREAD_MESSAGES": "Ongelezen berichten in map <span class='part'>{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Ongelezen berichten", 
+    "MOBILE_INFO_UNREAD_MESSAGES": "Ongelezen berichten",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Zoekresultaten voor <span class='part'>{SEARCH}</span> in map <span class='part'>{FOLDER}</span>, alleen ongelezen berichten:",
     "INFO_NO_UNREAD_MESSAGES": "U heeft geen ongelezen berichten.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Geen ongelezen berichten gevonden.",

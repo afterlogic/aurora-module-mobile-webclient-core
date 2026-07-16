@@ -165,7 +165,9 @@
     "ADMIN_SETTINGS_TAB_LABEL": "Branding",
     "HEADING_SETTINGS_TAB": "Brandings settings",
     "LOGIN_LOGO_URL_LABEL": "Login logo URL",
-    "TABSBAR_LOGO_URL_LABEL": "Tabsbar logo URL"
+    "TABSBAR_LOGO_URL_LABEL": "Tabsbar logo URL",
+    "MOBILE_LOGIN_LOGO_URL_LABEL": "Mobile login logo URL",
+    "PRODUCT_NAME_LABEL": "Product name"
   },
   "CALENDAR": {
     "CALENDAR_DEFAULT_NAME": "My Calendar",
@@ -1322,7 +1324,7 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Search results for <span class=\"part\">{SEARCH}</span> in <span class=\"part\">All unified accounts</span>:",
     "INFO_UNREAD_MESSAGES": "Unread messages in <span class=\"part\">{FOLDER}</span> folder:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Unread messages:", 
+    "MOBILE_INFO_UNREAD_MESSAGES": "Unread messages:",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Search results for <span class=\"part\">{SEARCH}</span> in <span class=\"part\">{FOLDER}</span> folder, unread messages only:",
     "INFO_NO_UNREAD_MESSAGES": "You don't have any unread messages.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "No unread messages found.",

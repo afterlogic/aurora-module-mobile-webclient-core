@@ -165,7 +165,9 @@
     "ADMIN_SETTINGS_TAB_LABEL": "Marca",
     "HEADING_SETTINGS_TAB": "Ajustes de marca",
     "LOGIN_LOGO_URL_LABEL": "Logotipo en autentificación",
-    "TABSBAR_LOGO_URL_LABEL": "Logotipo en barra de tareas"
+    "TABSBAR_LOGO_URL_LABEL": "Logotipo en barra de tareas",
+    "MOBILE_LOGIN_LOGO_URL_LABEL": "Logotipo en autentificación móvil",
+    "PRODUCT_NAME_LABEL": "Nombre del producto"
   },
   "CALENDAR": {
     "CALENDAR_DEFAULT_NAME": "Mi calendario",

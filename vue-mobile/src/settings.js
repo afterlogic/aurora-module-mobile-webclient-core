@@ -16,6 +16,11 @@ class Settings {
     this.cookieSecure = types.pBool(coreData.CookieSecure)
     this.siteName = types.pString(coreData.SiteName)
     this.availableClientModules = types.pArray(coreData.AvailableClientModules)
+
+    const brandingData = types.pObject(appData.BrandingWebclient)
+    this.brandingLoginLogo = types.pString(brandingData.LoginLogo)
+    this.brandingMobileLoginLogo = types.pString(brandingData.MobileLoginLogo)
+    this.brandingProductName = types.pString(brandingData.ProductName)
   }
 
   _getShortLanguage(coreData) {
