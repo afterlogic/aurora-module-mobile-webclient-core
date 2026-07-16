@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "Dieser Benutzer ist der Administrator des Mandanten",
     "LABEL_ITS_ME": "Das ich bin!",
     "LABEL_ITS_ADMIN": "Admin",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "Standard",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "AdminPanel",
     "ACTION_CREATE_IN_PROGRESS": "Wird erstellt...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQL Passwort",
     "LABEL_DN_NAME": "Datenbankname",
     "LABEL_DB_HOST": "Host",
+    "BUTTON_DB_TEST_CONNECTION": "Verbindung testen",
     "BUTTON_DB_CREATE_TABLES": "Tabellen erstellen",
     "BUTTON_DB_CREATING_TABLES": "Tabellen erstellen/aktualisieren...",
     "BUTTON_DB_UPDATE_TABLES": "Tabellen aktualisieren",
     "INFO_AUTHTOKEN_DB_STORED": "AuthToken wird in der Datenbank gespeichert, daher müssen Sie sich möglicherweise neu anmelden, nachdem Sie die Datenbankeinstellungen geändert haben.",
-    "BUTTON_TEST_CONNECTION": "Verbindung testen",
-    "REPORT_CONNECT_SUCCESSFUL": "Erfolgreich verbunden.",
-    "ERROR_CONNECT_FAILED": "Verbindung fehlgeschlagen!",
     "LABEL_LICENSING_SETTINGS_TAB": "Lizenzieren",
     "LABEL_LICENSING_HINT": "Erlaubt Ihnen, den Lizenzschlüssel für das Produkt einzugeben und zeigt die aktuellen Details auf der Lizenz.",
     "LABEL_LICENSING_KEY": "Lizenzschlüssel",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "Neues Passwort",
     "LABEL_SECURITY_CONFIRM_PASS": "Neues Passwort bestätigen",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "Separate Log-Dateien für diesen Benutzer",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "Erfolgreich verbunden.",
+    "ERROR_DB_CONNECT_FAILED": "Verbindung fehlgeschlagen.",
     "HINT_DB_CREATE_TABLES": "Um Tabellen zu erstellen, drücken Sie den Knopf unten. Bitte testen Sie zuerst die Datenbank Verbindung.",
     "HEADING_DB_SETTINGS": "Datenbankeinstellungen",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "Tabellen erfolgreich erstellt.",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "Bitte Administrator Passwort eingeben bei System&#8594;AdminAccount tab. Administrator Account ist nicht sicher ohne Passowrt.",
     "ERROR_DB_ACCESS": "Bitte Zugriff zur Datenbank konfigurieren bei System&#8594;Datenbank Einstellungen tab.",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "Die Datenbankeinstellungen müssen vorher gespeichert werden bevor Tabellen erstellt werden können. Datenbank Einstellungen speichern?",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "Bitte prüfen Sie, dass 'data/encryption_key.php' Datei existiert und nicht leer ist.",
+    "ERROR_SALT_EMPTY": "Bitte prüfen Sie, dass 'data/encryption_key.php' Datei existiert und nicht leer ist.",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "Bitte stellen Sie sicher, dass die Dateien im Datenverzeichnis vor dem Zugriff über das Internet geschützt sind. Dafür sorgen .htaccess- und data/.htaccess-Dateien. Möglicherweise ist eine zusätzliche Neukonfiguration des Webservers erforderlich.",
     "INFO_SEARCH_RESULT": "Nach Ergebnissen suchen für \"{SEARCH}\":",
     "INFO_NO_ENTITIES_USER": "Es gibt keine Benutzer.",
@@ -156,7 +155,6 @@
     "LABEL_GROUPS_NO_OPTIONS": "Keine Gruppen",
     "INFO_TEAM_GROUP_IN_SYSTEM": "Diese Gruppe wurde automatisch generiert und enthält alle Benutzer im System. Die Gruppe kann nicht bearbeitet oder gelöscht werden.",
     "INFO_TEAM_GROUP_IN_TENANT": "Diese Gruppe wurde automatisch generiert und enthält alle Benutzer des Mandats. Die Gruppe kann nicht bearbeitet oder gelöscht werden.",
-    "LABEL_USER_NOTE": "Notiz",
     "LABEL_USER_CREATED": "Erstellt am",
     "LABEL_USER_LAST_LOGIN": "Letzte Anmeldung",
     "LABEL_USER_NEVER_LOGIN": "noch nie"
@@ -182,7 +180,8 @@
     "EVENT_BEGIN": "Startet am: ",
     "EMAIL_EXPLANATION": "Sie erhalten diese Nachricht, da Sie im Kalender {CALENDAR_NAME} eine Benachrichtigung angefordert haben.",
     "TASKS_DEFAULT_NAME": "Meine Aufgaben",
-    "ERROR_NO_CALENDAR": "Sie haben keinen solchen Kalender. Er wurde möglicherweise gelöscht."
+    "ERROR_NO_CALENDAR": "Sie haben keinen solchen Kalender. Er wurde möglicherweise gelöscht.",
+    "ERROR_INVALID_SUBSCRIBED_ICS": "iCal URL is not valid"
   },
   "CALENDARMEETINGSPLUGIN": {
     "LOCATION": "Ort",
@@ -220,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "Der Titel des Kalendereintrags darf nicht leer sein.",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "Alle Teilnehmer entfernen?",
     "ERROR_EMAIL_BLANK": "Bitte E-Mail-Adresse eingeben",
+    "ERROR_EMAIL_INVALID": "Ungültige E-Mail-Adresse",
     "LABEL_HOURS_PLURAL": "{COUNT} Stunde|{COUNT} Stunden",
     "LABEL_DAYS_PLURAL": "{COUNT} Tag|{COUNT} Tage",
     "LABEL_WEEKS_PLURAL": "{COUNT} Woche|{COUNT} Wochen",
@@ -311,6 +311,8 @@
     "LABEL_ICS_LINK": "Link zur ICS-Datei",
     "LABEL_WEB_ACCESS": "Erstelle einen öffentlichen Link für diesen Kalender",
     "LABEL_WEB_LINK": "Web-Link",
+    "ACTION_CREATE_LINK": "Create link",
+    "ACTION_REMOVE_LINK": "Remove link",
     "INFO_OLD_VERSION_INVITATION": "Es gibt eine neuere Version dieser Einladung in Ihrer Mailbox. Diese hier ist nicht länger gültig, da die Sitzung aktualisiert wurde seit Sie sie erhalten haben.",
     "ACTION_ADD_ICAL": "Zum Kalender hinzufügen",
     "REPORT_EVENT_SAVED": "Kalendereintrag wurde gespeichert.",
@@ -364,6 +366,10 @@
     "LABEL_CURRENT_PASSWORD": "Aktuelles Passwort",
     "LABEL_NEW_PASSWORD": "Neues Passwort",
     "LABEL_CONFIRM_NEW_PASSWORD": "Passwort bestätigen"
+  },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "You did not complete the Cloudflare Turnstile verification properly.",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Cloudflare Turnstile unknown error."
   },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "Alle",
@@ -630,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "Passwort bestätigen",
     "ERROR_UNKNOWN": "Unbekannter Fehler.",
     "ACTION_CANCEL": "Abbrechen",
+    "ACTION_BACK": "Zurück",
     "ERROR_UPLOAD_FILE": "Fehler beim Hochladen",
     "LABEL_UPLOADING_PERCENT": "Hochladen {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "S M D M D F S",
@@ -846,13 +853,18 @@
     "INFO_ITEMS_CUTTED": "Objekte wurden ausgeschnitten. Wählen Sie einen Zielordner und drücken Sie den Button Einfügen, um sie dort zu platzieren.",
     "INFO_ITEMS_COPIED": "Objekte wurden kopiert. Wählen Sie einen Zielordner und drücken Sie den Button Einfügen, um sie dort zu einzufügen."
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "Speicher"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Dateien",
     "ACTION_SHOW_FILES": "Dateien",
     "LABEL_SETTINGS_TAB": "Dateien",
     "HEADING_SETTINGS_TAB": "Dateien-Tabellenansicht",
     "LABEL_ALLOW_FILES": "Tabellenansicht aktivieren für Dateiliste",
-    "LABEL_ENABLE_PREVIEW_PANE": "Vorschauanzeige aktivieren"
+    "LABEL_ENABLE_PREVIEW_PANE": "Vorschauanzeige aktivieren",
+    "ACTION_USE_GRID_VIEW": "Raster",
+    "ACTION_USE_LIST_VIEW": "Liste"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "Dateien",
@@ -904,6 +916,7 @@
     "ACTION_CREATE_SHORTCUT": "Verknüpfung zu einem externen Dokument erstellen",
     "ACTION_SEND_FILES": "Dateien senden",
     "ACTION_RENAME": "Umbenennen",
+    "ACTION_COPY_MOVE": "Kopieren/Verschieben",
     "ACTION_CREATE_PUBLIC_LINK": "Öffentlichen Link erstellen",
     "ERROR_DELETE_PUBLIC_LINK": "Freigabelink konnte nicht gelöscht werden.",
     "ERROR_CREATE_PUBLIC_LINK": "Freigabelink konnte nicht erstellt werden.",
@@ -914,13 +927,10 @@
     "LABEL_ENABLE_CORPORATE": "Aktiviere Firmenspeicher",
     "LABEL_USER_SPACE_LIMIT": "Benutzer-Speicherbegrenzung",
     "LABEL_CORPORATE_SPACE_LIMIT": "Firmen-Speicherbeschränkung",
+    "ERROR_FAVORITE_NOT_SET": "Das Element konnte nicht zu den Favoriten hinzugefügt werden.",
     "ERROR_FILE_RENAME": "Dateiumbenennung fehlgeschlagen.",
     "ERROR_FILES_MOVE_PLURAL": "Dateiverschiebung fehlgeschlagen.|Dateienverschiebung fehlgeschlagen.",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "Datei kann nicht verschoben werden wegen Speicherbegrenzung.|Dateien können nicht verschoben werden wegen Speicherbegrenzung.",
-    "MOBILE_DAVSYNC_APPS_TITLE": "Datei Speicher Apps",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "Spezifieren Sie die URL unten in den Apps.",
-    "SERVICES_FILES_APPSYNC_SERVER": "Server",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "Benutzen Sie Ihre allgemeinen Anmeldeinformationen, um in dieses Web Interface einzuloggen.",
     "CONFIRM_DELETE_FILES_PLURAL": "Ausgewählte Datei endgültig löschen?|Ausgewählte Dateien endgültig löschen?",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "Ausgewählten Ordner endgültig löschen?|Ausgewählte Ordner endgültig löschen?",
     "CONFIRM_DELETE_ITEMS_PLURAL": "Ausgewähltes Objekt endgültig löschen?|Ausgewählte Objekte endgültig löschen?",
@@ -934,7 +944,10 @@
     "HEADING_HISTORY_POPUP": "Aktivitätsverlauf für öffentliche Links",
     "CURRENT_FOLDER_STATS": "Dateien: {FILES_OVERAL} ({SIZE_OVERAL}), Ordner: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Ausgewählte Dateien: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Ausgewählte Ordner: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Ausgewählte Ordner: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "Read, compose, send, and permanently delete all your email from Gmail"
@@ -1040,7 +1053,7 @@
     "LABEL_TYPE_TRIAL": "Testversion",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": ", läuft ab in {DAYS} Tag.|, läuft ab in {DAYS} Tagen.",
     "LABEL_TYPE_EXPIRED": ", abgelaufen.",
-    "LABEL_TYPE_OUTDATED_INFO": "Diese Lizenz ist abgelaufen, bitte kontaktieren Sie Afterlogic, um den Lizenz Schlüssel upzugraden.",
+    "LABEL_TYPE_OUTDATED_INFO": "Diese Lizenz ist abgelaufen, bitte kontaktieren Sie den Systemanbieter, um den Lizenzschlüssel zu aktualisieren.",
     "ERROR_LICENSE_KEY_MISSING": "Produktlizenzschlüssel fehlt. Bitte geben Sie einen gültigen Schlüssel ein, bevor Sie das System konfigurieren oder einen neuen Benutzer hinzufügen.",
     "INFO_LICENSE_KEY_CHANGED": "Drücken Sie OK, um die Verwaltungsoberfläche neu zu laden und die neuen Lizenzdaten zu übernehmen."
   },
@@ -1128,7 +1141,8 @@
     "ACTION_BACK": "Zurück",
     "LABEL_REMEMBER_ME": "In Zukunft automatisch anmelden",
     "HEADING_SELECT_LANGUAGE": "{SITENAME} in Ihrer Sprache",
-    "HEADING_DEFAULT_SITENAME": "Schnittstelle"
+    "HEADING_DEFAULT_SITENAME": "Schnittstelle",
+    "LABEL_USERNAME": "Username"
   },
   "MAILMASTERPASSWORD": {
     "LABEL_SETTINGS_TAB": "Master Passwort",
@@ -1138,8 +1152,11 @@
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Konto",
     "HEADING_FOLDERS": "Ordner",
+    "HEADING_UNIFIED_FOLDERS": "Unified folders",
+    "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Möchten Sie wirklich alle Nachrichten im Ordner Spam löschen?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Möchten Sie wirklich alle Nachrichten im Ordner Papierkorb löschen?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Möchten Sie wirklich alle Nachrichten im Ordner Papierkorb löschen?",
+    "ERROR_DOMAIN_NOT_FOUND": "Mail server not found for this email domain."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Geben Sie Ihre Notiz hier ein",
@@ -1322,7 +1339,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Suchergebnisse für <span class=\"part\">{SEARCH}</span> in <span class=\"part\">allen einheitlichen Konten</span>:",
     "INFO_UNREAD_MESSAGES": "Ungelesene Nachrichten im Ordner <span class=\"part\">{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Ungelesene Nachrichten",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Suchergebnisse für <span class=\"part\">{SEARCH}</span> in <span class=\"part\">{FOLDER}</span>, zeige nur ungelesene Nachrichten:",
     "INFO_NO_UNREAD_MESSAGES": "Keine ungelesenen Nachrichten vorhanden.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Keine ungelesenen Nachrichten vorhanden.",
@@ -1546,10 +1562,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Markierte Nachrichten anzeigen von",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "Nur Posteingang",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "Alle Ordner",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "Benutzern erlauben, das Mail-Bildschirm-Layout zu ändern",
     "LABEL_LAYOUT": "Layout",
     "LABEL_DEFAULT_LAYOUT": "Standard Layout",
     "LABEL_VERT_SPLIT_LAYOUT": "Horizontal geteilt",
     "LABEL_HORIZ_SPLIT_LAYOUT": "Vertikal geteilt",
+    "LABEL_SEPARATED_LAYOUT": "Getrenntes Layout",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "Automatische Bereitstellung neuer Benutzer zulassen",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "Wenn sich ein neuer Benutzer mit den Anmeldeinformationen anmeldet, die ein gültiges E-Mail-Konto auf Ihrem Mailserver angeben, wird der Benutzer automatisch in der Datenbank erstellt.<br />Wenn diese Einstellung deaktiviert ist, muss der Administrator explizit alle Domänen und Benutzer hinzufügen.",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "Benutzern erlauben, externe Postfächer hinzuzufügen",
@@ -1639,7 +1657,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "Sie haben sich erfolgreich von diesen Nachrichten abgemeldet.",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "Beim Abbestellen der Nachricht ist ein Fehler aufgetreten.",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "Eine Nachricht wird an <b style=\"word-break: break-word;\">{RECIPIENT}</b> gesendet, um diese Nachrichten abzubestellen.",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Eine Nachricht mit dem Betreff <b style=\"word-break: break-word;\">{SUBJECT}</b> wird an <b style=\"word-break: break-word;\">{RECIPIENT}</b> gesendet, um diese Nachrichten abzubestellen."
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Eine Nachricht mit dem Betreff <b style=\"word-break: break-word;\">{SUBJECT}</b> wird an <b style=\"word-break: break-word;\">{RECIPIENT}</b> gesendet, um diese Nachrichten abzubestellen.",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "Hinweis: SMTP-Einstellungen werden ignoriert, wenn \"Angegebene Anmeldedaten verwenden\" aktiviert ist."
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "...ZIP-Datei"
@@ -1853,6 +1872,8 @@
     "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Keys with no email address in their names",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, öffentlich)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, privat)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}, öffentlich)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}, privat)",
     "ERROR_IMPORT_NO_KEY_FOUND": "Keine OpenPGP-Schlüssel zum Importieren gefunden.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "OpenPGP-Schlüssel wurde erfolgreich importiert.|OpenPGP-Schlüssel wurden erfolgreich importiert.",
     "ERROR_IMPORT_KEY": "Fehler beim Importieren des OpenPGP-Schlüssels.",
@@ -1950,7 +1971,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "Persönliche Dateien",
-    "INFO_NOTFOUND": "Das Objekt existiert nicht oder es konnte nicht darauf zugegriffen werden."
+    "INFO_NOTFOUND": "Das Objekt existiert nicht oder es konnte nicht darauf zugegriffen werden.",
+    "LABEL_TRASH_STORAGE": "Papierkorb",
+    "LABEL_FAVORITES_STORAGE": "Favoriten"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "You did not complete the reCAPTCHA verification properly.",
@@ -2008,7 +2031,9 @@
     "INFO_REGION": "For AWS S3, specify region value. For other S3-compatible services, for instance DigitalOcean Spaces, set to \"us-east-1\".",
     "BUTTON_TEST_CONNECTION": "Test connection",
     "REPORT_CONNECT_SUCCESSFUL": "Connected successfully.",
-    "ERROR_CONNECT_FAILED": "Failed to connect."
+    "ERROR_CONNECT_FAILED": "Failed to connect.",
+    "LABEL_TRASH_STORAGE": "Trash",
+    "LABEL_FAVORITES_STORAGE": "Favorite"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Sicherheit",
@@ -2162,11 +2187,13 @@
     "LABEL_SETTINGS_TAB": "Sicherheit",
     "HEADING_SETTINGS_TAB": "Erhöhte Sicherheit durch Zwei-Faktor-Authentifizierung",
     "ACTION_BACK": "Zurück",
+    "ACTION_BACK_TO_LOGIN": "Back to login",
     "ACTION_ENABLE_TWOFACTORAUTH": "Aktivieren",
     "HINT_ABOUT_TWOFACTORAUTH": "Erhöhen Sie die Sicherheit, indem Sie die Zwei-Faktor-Authentifizierung für Ihr Konto aktivieren.",
     "ACTION_VERIFY_PASSWORD": "Passwort bestätigen",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Überprüfung...",
     "HINT_ABOUT_CONFIRMATION": "Für den Zugriff auf die Einstellungen der Zwei-Faktor-Authentifizierung muss das Kennwort Ihres Kontos bestätigt werden:",
+    "ERROR_SECRET_GENERATION_FAILED": "Das Geheimnis kann nicht generiert werden",
     "ERROR_WRONG_PASSWORD": "Falsches Passwort",
     "ACTION_CONFIGURE": "Konfigurieren",
     "ACTION_REFUSE_CONFIGURE": "Nein, Danke",

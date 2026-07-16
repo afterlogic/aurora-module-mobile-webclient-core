@@ -89,12 +89,17 @@ function prepareOneLang(modulesPath, iniFileName, langFolder) {
   fs.readdirSync(modulesPath).forEach((moduleName) => {
     const i18nPath = modulesPath + moduleName + '/i18n/' + iniFileName
     const englishI18nPath = modulesPath + moduleName + '/i18n/English.ini'
+    let englishJson = {}
+    if (fs.existsSync(englishI18nPath)) {
+      englishJson = iniParser.parseString(fs.readFileSync(englishI18nPath, 'utf8'))
+    }
     if (fs.existsSync(i18nPath)) {
-      const content = fs.readFileSync(i18nPath, 'utf8')
-      langsJson[moduleName.toUpperCase()] = iniParser.parseString(content)
-    } else if (fs.existsSync(englishI18nPath)) {
-      const content = fs.readFileSync(englishI18nPath, 'utf8')
-      langsJson[moduleName.toUpperCase()] = iniParser.parseString(content)
+      // English as base, language-specific values override existing keys.
+      // Missing keys in a language file are filled from English.ini.
+      const langJson = iniParser.parseString(fs.readFileSync(i18nPath, 'utf8'))
+      langsJson[moduleName.toUpperCase()] = Object.assign({}, englishJson, langJson)
+    } else if (!_.isEmpty(englishJson)) {
+      langsJson[moduleName.toUpperCase()] = englishJson
     }
   })
 

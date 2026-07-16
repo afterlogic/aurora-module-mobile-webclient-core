@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "此用户是租户的管理员",
     "LABEL_ITS_ME": "是我！",
     "LABEL_ITS_ADMIN": "行政人员",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "默认",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "管理面板",
     "ACTION_CREATE_IN_PROGRESS": "创建中...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQL 密码",
     "LABEL_DN_NAME": "数据库名称",
     "LABEL_DB_HOST": "主机",
+    "BUTTON_DB_TEST_CONNECTION": "测试连接",
     "BUTTON_DB_CREATE_TABLES": "创建/更新 数据表",
     "BUTTON_DB_CREATING_TABLES": "创建/更新数据表中...",
     "BUTTON_DB_UPDATE_TABLES": "更新数据表",
     "INFO_AUTHTOKEN_DB_STORED": "AuthToken 存储在数据库中，因此您可能需要在更改数据库设置后重新登录。",
-    "BUTTON_TEST_CONNECTION": "测试连接",
-    "REPORT_CONNECT_SUCCESSFUL": "连接成功。",
-    "ERROR_CONNECT_FAILED": "连接失败！",
     "LABEL_LICENSING_SETTINGS_TAB": "授权许可",
     "LABEL_LICENSING_HINT": "允许您输入产品的许可证密钥并显示许可证的当前详细信息。",
     "LABEL_LICENSING_KEY": "许可证密钥",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "新密码",
     "LABEL_SECURITY_CONFIRM_PASS": "确认新密码",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "此用户的独立日志文件",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "连接成功。",
+    "ERROR_DB_CONNECT_FAILED": "连接失败。",
     "HINT_DB_CREATE_TABLES": "要创建表格，请单击下面的按钮。 请先测试数据库连接。",
     "HEADING_DB_SETTINGS": "数据库设置",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "表创建/更新成功。",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "请在 System&#8594;AdminAccount 选项卡上输入管理员密码，没有密码的管理员帐户不安全。",
     "ERROR_DB_ACCESS": "请在系统&#8594;数据库设置选项卡上配置对数据库的访问。",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "需要先保存数据库设置，然后才能创建表。 保存数据库设置？",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "请检查“data/encryption_key.php”文件是否存在且不为空。",
+    "ERROR_SALT_EMPTY": "请检查“data/encryption_key.php”文件是否存在且不为空。",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "请确保数据目录中的文件受到保护，无法通过网络访问。 .htaccess 和 data/.htaccess 文件确保了这一点。 可能需要额外的网络服务器重新配置。",
     "INFO_SEARCH_RESULT": "\"{SEARCH}\" 的搜索结果：",
     "INFO_NO_ENTITIES_USER": "没有用户。",
@@ -156,10 +155,9 @@
     "LABEL_GROUPS_NO_OPTIONS": "没有群组",
     "INFO_TEAM_GROUP_IN_SYSTEM": "该组是自动生成的，包含系统中的所有用户，无法编辑或删除该组。",
     "INFO_TEAM_GROUP_IN_TENANT": "该组是自动生成的，包含租户中的所有用户，无法编辑或删除该组。",
-    "LABEL_USER_NOTE": "备注",
-    "LABEL_USER_CREATED": "创建时间",
-    "LABEL_USER_LAST_LOGIN": "上次登录",
-    "LABEL_USER_NEVER_LOGIN": "从未"
+    "LABEL_USER_CREATED": "Created At",
+    "LABEL_USER_LAST_LOGIN": "Last login",
+    "LABEL_USER_NEVER_LOGIN": "Never"
   },
   "BRANDINGWEBCLIENT": {
     "ADMIN_SETTINGS_TAB_LABEL": "自定义",
@@ -221,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "您不能将主题留空。",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "删除所有与会者？",
     "ERROR_EMAIL_BLANK": "请输入邮箱",
+    "ERROR_EMAIL_INVALID": "无效的电子邮件地址",
     "LABEL_HOURS_PLURAL": "{COUNT} 小时|{COUNT} 小时",
     "LABEL_DAYS_PLURAL": "{COUNT} 日|{COUNT} 日",
     "LABEL_WEEKS_PLURAL": "{COUNT} 周|{COUNT} 周",
@@ -312,6 +311,8 @@
     "LABEL_ICS_LINK": "链接到 .ics",
     "LABEL_WEB_ACCESS": "公开指向此日历的 Web 链接",
     "LABEL_WEB_LINK": "Web 链接",
+    "ACTION_CREATE_LINK": "Create link",
+    "ACTION_REMOVE_LINK": "Remove link",
     "INFO_OLD_VERSION_INVITATION": "您的邮箱中必须有此邀请的较新版本，此会议已不再有效，因为自您收到会议以来已对其进行了更新。",
     "ACTION_ADD_ICAL": "添加到日程",
     "REPORT_EVENT_SAVED": "您的事件已保存。",
@@ -365,6 +366,10 @@
     "LABEL_CURRENT_PASSWORD": "当前密码",
     "LABEL_NEW_PASSWORD": "新密码",
     "LABEL_CONFIRM_NEW_PASSWORD": "确认新密码"
+  },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "您没有正确完成 Cloudflare Turnstile 验证。",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Cloudflare Turnstile 未知错误。"
   },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "All",
@@ -631,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "确认密码",
     "ERROR_UNKNOWN": "未知错误。",
     "ACTION_CANCEL": "取消",
+    "ACTION_BACK": "返回",
     "ERROR_UPLOAD_FILE": "上传文件时出错",
     "LABEL_UPLOADING_PERCENT": "上传中 {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "周日 周一 周二 周三 周四 周五 周六",
@@ -847,13 +853,18 @@
     "INFO_ITEMS_CUTTED": "项目已被剪切，请选择一个目标文件夹，然后单击粘贴按钮移动它们。",
     "INFO_ITEMS_COPIED": "项目已被复制，请选择一个目标文件夹，然后单击粘贴按钮以插入它们。"
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "存储"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "网盘",
     "ACTION_SHOW_FILES": "网盘",
     "LABEL_SETTINGS_TAB": "网盘",
     "HEADING_SETTINGS_TAB": "查看文件列表",
     "LABEL_ALLOW_FILES": "为文件列表启用表格视图",
-    "LABEL_ENABLE_PREVIEW_PANE": "启用文件预览"
+    "LABEL_ENABLE_PREVIEW_PANE": "启用文件预览",
+    "ACTION_USE_GRID_VIEW": "网格视图",
+    "ACTION_USE_LIST_VIEW": "列表视图"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "网盘",
@@ -905,6 +916,7 @@
     "ACTION_CREATE_SHORTCUT": "创建快捷方式",
     "ACTION_SEND_FILES": "发送文件",
     "ACTION_RENAME": "重命名",
+    "ACTION_COPY_MOVE": "复制/移动",
     "ACTION_CREATE_PUBLIC_LINK": "创建公开链接",
     "ERROR_DELETE_PUBLIC_LINK": "无法删除共享链接。",
     "ERROR_CREATE_PUBLIC_LINK": "无法创建共享链接。",
@@ -915,13 +927,10 @@
     "LABEL_ENABLE_CORPORATE": "启用企业/组织存储",
     "LABEL_USER_SPACE_LIMIT": "用户容量限制",
     "LABEL_CORPORATE_SPACE_LIMIT": "企业/组织容量限制",
+    "ERROR_FAVORITE_NOT_SET": "无法将项目添加到收藏夹。",
     "ERROR_FILE_RENAME": "文件重命名失败。",
     "ERROR_FILES_MOVE_PLURAL": "文件移动失败。|文件移动失败。",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "由于容量限制，无法移动文件。|由于容量限制，无法移动文件。",
-    "MOBILE_DAVSYNC_APPS_TITLE": "网盘APP",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "在应用程序中使用指定的以下 URL。",
-    "SERVICES_FILES_APPSYNC_SERVER": "服务器",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "使用您用于登入此 Web 界面的常用凭据，如用户名和密码。",
     "CONFIRM_DELETE_FILES_PLURAL": "永久删除选定的文件？|永久删除选定的文件？",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "永久删除所选文件夹？|永久删除所选文件夹？",
     "CONFIRM_DELETE_ITEMS_PLURAL": "永久删除所选项目？|永久删除所选项目？",
@@ -935,7 +944,10 @@
     "HEADING_HISTORY_POPUP": "公开链接活动历史",
     "CURRENT_FOLDER_STATS": "Files: {FILES_OVERAL} ({SIZE_OVERAL}), Folders: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Selected files: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "阅读、撰写、发送和永久删除 Gmail 中的所有电子邮件"
@@ -1041,7 +1053,7 @@
     "LABEL_TYPE_TRIAL": "试用",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": "，在 {DAYS} 天后到期。|，在 {DAYS} 天后到期。",
     "LABEL_TYPE_EXPIRED": "，已到期。",
-    "LABEL_TYPE_OUTDATED_INFO": "此许可证已过期，请联系 Afterlogic 升级您的许可证密钥。",
+    "LABEL_TYPE_OUTDATED_INFO": "此许可证已过期，请联系系统供应商以升级您的许可证密钥。",
     "ERROR_LICENSE_KEY_MISSING": "产品许可证密钥丢失，请在配置系统或添加新用户之前提供有效密钥。",
     "INFO_LICENSE_KEY_CHANGED": "按 OK 重新加载管理界面并应用新的许可证数据。"
   },
@@ -1129,7 +1141,8 @@
     "ACTION_BACK": "Back",
     "LABEL_REMEMBER_ME": "下次自动登陆",
     "HEADING_SELECT_LANGUAGE": "{SITENAME} in your language",
-    "HEADING_DEFAULT_SITENAME": "Interface"
+    "HEADING_DEFAULT_SITENAME": "Interface",
+    "LABEL_USERNAME": "Username"
   },
   "MAILMASTERPASSWORD": {
     "LABEL_SETTINGS_TAB": "Master Password",
@@ -1142,7 +1155,8 @@
     "HEADING_UNIFIED_FOLDERS": "Unified folders",
     "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Are you sure you want to delete all messages in folder Spam?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Are you sure you want to delete all messages in folder Trash?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Are you sure you want to delete all messages in folder Trash?",
+    "ERROR_DOMAIN_NOT_FOUND": "Mail server not found for this email domain."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "在此处输入您的笔记内容",
@@ -1325,7 +1339,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "<span class=\"part\">所有其他邮箱</span>中<span class=\"part\">{SEARCH}</span>的搜索结果：",
     "INFO_UNREAD_MESSAGES": "<span class=\"part\">{FOLDER}</span> 文件夹中的未读邮件：",
-    "MOBILE_INFO_UNREAD_MESSAGES": "未读消息",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "<span class=\"part\">{SEARCH}</span> 在 <span class=\"part\">{FOLDER}</span> 文件夹中的搜索结果，仅限未读邮件：",
     "INFO_NO_UNREAD_MESSAGES": "您没有任何未读邮件。",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "未找到未读邮件。",
@@ -1549,10 +1562,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Show starred messages from",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "Inbox only",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "All folders",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "允许用户更改邮件界面布局",
     "LABEL_LAYOUT": "布局",
     "LABEL_DEFAULT_LAYOUT": "默认布局",
     "LABEL_VERT_SPLIT_LAYOUT": "垂直分割",
     "LABEL_HORIZ_SPLIT_LAYOUT": "水平分割",
+    "LABEL_SEPARATED_LAYOUT": "分离布局",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "允许自动配置新用户",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "如果新用户使用表示您邮件服务器上有效电子邮件帐户的登入凭据，请在数据库中自动创建此用户。<br />如果此设置关闭，管理员必须明确添加所有域和用户。",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "允许用户添加外部邮箱",
@@ -1642,7 +1657,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "您已成功取消订阅这些邮件。",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "取消订阅邮件时出错。",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "将向 <b style=\"word-break: break-word;\">{RECIPIENT}</b> 发送一封邮件以退订邮件订阅。",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "主题为 <b style=\"word-break: break-word;\">{SUBJECT}</b> 的邮件将发送到 <b style=\"word-break: break-word;\">{RECIPIENT}</ b> 以取消订阅这些邮件订阅。"
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "主题为 <b style=\"word-break: break-word;\">{SUBJECT}</b> 的邮件将发送到 <b style=\"word-break: break-word;\">{RECIPIENT}</ b> 以取消订阅这些邮件订阅。",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "注意：启用\"使用指定的凭据\"时，SMTP设置将被忽略。"
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "...zip 压缩文件"
@@ -1856,6 +1872,8 @@
     "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Keys with no email address in their names",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, public)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, private)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}，公开)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}，私人)",
     "ERROR_IMPORT_NO_KEY_FOUND": "No OpenPGP keys found for import.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "OpenPGP key was successfully imported.|OpenPGP keys was successfully imported.",
     "ERROR_IMPORT_KEY": "An error occurred when importing OpenPGP key.",
@@ -1953,7 +1971,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "个人文件",
-    "INFO_NOTFOUND": "该项目不存在或无法访问。"
+    "INFO_NOTFOUND": "该项目不存在或无法访问。",
+    "LABEL_TRASH_STORAGE": "回收站",
+    "LABEL_FAVORITES_STORAGE": "收藏夹"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "您没有正确完成 reCAPTCHA 验证。",
@@ -2011,7 +2031,9 @@
     "INFO_REGION": "对于 AWS S3，指定区域值。 对于 DigitalOcean Spaces，设置为“us-east-1”。",
     "BUTTON_TEST_CONNECTION": "测试连接",
     "REPORT_CONNECT_SUCCESSFUL": "连接成功。",
-    "ERROR_CONNECT_FAILED": "连接失败。"
+    "ERROR_CONNECT_FAILED": "连接失败。",
+    "LABEL_TRASH_STORAGE": "回收站",
+    "LABEL_FAVORITES_STORAGE": "收藏夹"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Security",
@@ -2171,7 +2193,8 @@
     "ACTION_VERIFY_PASSWORD": "Verify password",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Verifying...",
     "HINT_ABOUT_CONFIRMATION": "Accessing Two Factor Verification settings requires confirmation of your account password",
-    "ERROR_WRONG_PASSWORD": "Wrong password.",
+    "ERROR_SECRET_GENERATION_FAILED": "Can't generate the Secret",
+    "ERROR_WRONG_PASSWORD": "Wrong password",
     "ACTION_CONFIGURE": "Configure",
     "ACTION_REFUSE_CONFIGURE": "No, Thanks",
     "HINT_ABOUT_TWOFACTORAUTH_USE": "You can use a mobile application like Google Authenticator to scan the QR code below. Alternatively, you can enter your secret key there. Mobile app will then be able to generate one-time codes you'll need to additionaly enter during the login procedure.",

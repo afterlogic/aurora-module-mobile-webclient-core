@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "See kasutaja on üürniku administraator.",
     "LABEL_ITS_ME": "See olen mina ise.",
     "LABEL_ITS_ADMIN": "Admin",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "Vaikimisi",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "Admin",
     "ACTION_CREATE_IN_PROGRESS": "Loomisel...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQLi parool",
     "LABEL_DN_NAME": "Andmebaasi nimi",
     "LABEL_DB_HOST": "Host",
+    "BUTTON_DB_TEST_CONNECTION": "Testi ühendust",
     "BUTTON_DB_CREATE_TABLES": "Tabelite loomine/uuendamine",
     "BUTTON_DB_CREATING_TABLES": "Creating/Updating tables...",
     "BUTTON_DB_UPDATE_TABLES": "Tabelite uuendamine",
     "INFO_AUTHTOKEN_DB_STORED": "AuthToken on hoiul andmebaasis, mistõttu teil võib olla vaja pärast andmebaasi seadete muutmist uuesti sisse logida.",
-    "BUTTON_TEST_CONNECTION": "Testi ühendust",
-    "REPORT_CONNECT_SUCCESSFUL": "Ühendus õnnestus.",
-    "ERROR_CONNECT_FAILED": "Ühendus ebaõnnestus!",
     "LABEL_LICENSING_SETTINGS_TAB": "Litsents",
     "LABEL_LICENSING_HINT": "Siin saate sisestada tarkvara litsentsivõtme ja näete ajakohaseid andmeid litsentsi kohta.",
     "LABEL_LICENSING_KEY": "Litsentsivõti",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "Uus parool",
     "LABEL_SECURITY_CONFIRM_PASS": "Uus parool veel kord",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "Selle kasutaja kohta koostatakse eraldi logifail.",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "Ühendus õnnestus.",
+    "ERROR_DB_CONNECT_FAILED": "Ühendust ei õnnestunud saada.",
     "HINT_DB_CREATE_TABLES": "Tabelite loomiseks klõpsake allpool oleval nupul. Enne seda testige ühendust andmebaasiga.",
     "HEADING_DB_SETTINGS": "Andmebaasi seaded",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "Tabelite loomine/uuendamine õnnestus.",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "Palun määrake sektsioonis „Süsteem”&#8594;„Administraatorikonto” administraatori parool. Administraatorikonto ei ole ilma paroolita turvaline.",
     "ERROR_DB_ACCESS": "Palun konfigureerige juurdepääs andmebaasile sektsioonis „Süsteem”&#8594;„Andmebaasi seaded”.",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "Enne tabelite loomist on vaja salvestada andmebaasi seaded. Kas salvestada?",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "Palun kontrollige, et fail 'data/encryption_key.php' oleks olemas ja see ei oleks tühi.",
+    "ERROR_SALT_EMPTY": "Palun kontrollige, et fail 'data/encryption_key.php' oleks olemas ja see ei oleks tühi.",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "Palun veenduge, et failid kataloogis data ei ole veebist juurdepääsetavad. See tagatakse failidega .htaccess ja data/.htaccess. Peale selle võib olla vaja ka veebiserverit konfigureerida.",
     "INFO_SEARCH_RESULT": "Tulemused otsingule \"{SEARCH}\":",
     "INFO_NO_ENTITIES_USER": "There are no users.",
@@ -156,10 +155,9 @@
     "LABEL_GROUPS_NO_OPTIONS": "No groups",
     "INFO_TEAM_GROUP_IN_SYSTEM": "This group is auto-generated and contains all users in the system. The group can't be edited or deleted.",
     "INFO_TEAM_GROUP_IN_TENANT": "This group is auto-generated and contains all users in the tenant. The group can't be edited or deleted.",
-    "LABEL_USER_NOTE": "Märkus",
-    "LABEL_USER_CREATED": "Loodud",
-    "LABEL_USER_LAST_LOGIN": "Viimane sisselogimine",
-    "LABEL_USER_NEVER_LOGIN": "Mitte kunagi"
+    "LABEL_USER_CREATED": "Created At",
+    "LABEL_USER_LAST_LOGIN": "Last login",
+    "LABEL_USER_NEVER_LOGIN": "Never"
   },
   "BRANDINGWEBCLIENT": {
     "ADMIN_SETTINGS_TAB_LABEL": "Kuvand",
@@ -182,7 +180,8 @@
     "EVENT_BEGIN": "algusaeg: ",
     "EMAIL_EXPLANATION": "See kiri on saabunud teie kontole {EMAIL} sellepärast, et tellisite oma kalendris {CALENDAR_NAME} sündmusest teatamise.",
     "TASKS_DEFAULT_NAME": "Minu ülesanded",
-    "ERROR_NO_CALENDAR": "Sellist kalendrit ei ole. See võib olla kustutatud."
+    "ERROR_NO_CALENDAR": "Sellist kalendrit ei ole. See võib olla kustutatud.",
+    "ERROR_INVALID_SUBSCRIBED_ICS": "iCal URL is not valid"
   },
   "CALENDARMEETINGSPLUGIN": {
     "LOCATION": "Koht:",
@@ -220,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "Sündmuse nime välja ei tohi tühjaks jätta.",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "Kas kustutada kõik osalejad?",
     "ERROR_EMAIL_BLANK": "Palun sisestage e-postiaadress.",
+    "ERROR_EMAIL_INVALID": "Kehtetu e-posti aadress",
     "LABEL_HOURS_PLURAL": "{COUNT} tund|{COUNT} tundi",
     "LABEL_DAYS_PLURAL": "{COUNT} päev|{COUNT} päeva",
     "LABEL_WEEKS_PLURAL": "{COUNT} nädal|{COUNT} nädalat",
@@ -311,6 +311,8 @@
     "LABEL_ICS_LINK": "Link .ics-failile",
     "LABEL_WEB_ACCESS": "Moodusta avalik veebilink sellele kalendrile.",
     "LABEL_WEB_LINK": "Veebilink",
+    "ACTION_CREATE_LINK": "Create link",
+    "ACTION_REMOVE_LINK": "Remove link",
     "INFO_OLD_VERSION_INVITATION": "Sellest kutsest peab olema teie postkastis uuem versioon. See kutse enam ei kehti, sest pärast seda, kui teie selle saite, on kokkusaamise andmeid muudetud.",
     "ACTION_ADD_ICAL": "Lisa kalendrisse",
     "REPORT_EVENT_SAVED": "Sündmus on salvestatud.",
@@ -364,6 +366,10 @@
     "LABEL_CURRENT_PASSWORD": "Praegune parool",
     "LABEL_NEW_PASSWORD": "Uus parool",
     "LABEL_CONFIRM_NEW_PASSWORD": "Uus parool veel kord"
+  },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "Te ei läbinud Cloudflare Turnstile kontrolli korrektselt.",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Tundmatu viga Cloudflare Turnstile."
   },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "Kõik",
@@ -630,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "Parool veel kord",
     "ERROR_UNKNOWN": "Tundmatu viga.",
     "ACTION_CANCEL": "Loobun",
+    "ACTION_BACK": "Tagasi",
     "ERROR_UPLOAD_FILE": "Faili üleslaadimisel tekkis viga.",
     "LABEL_UPLOADING_PERCENT": "uploading {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "P E T K N R L",
@@ -788,6 +795,7 @@
     "ERROR_DELETE_ALIASES_PLURAL": "Aliase kustutamine ebaõnnestus.|Aliaste kustutamine ebaõnnestus.",
     "CONFIRM_CPANEL_ACCOUNTS_WILL_BE_DELETED_WITH_USERS_HTML_PLURAL": "<b>NB</b>: E-posti konto koos kõikide kirjadega kustutatakse ka cPanelise.|NB: Kõik selekteeritud kasutajate e-posti kontod koos kõikide kirjadega kustutatakse ka cPanelis.",
     "CONFIRM_CPANEL_ACCOUNTS_WILL_BE_DELETED_WITH_DOMAINS_HTML_PLURAL": "<b>NB</b>: Kõik selle domeeni e-posti kontod kustutatakse ka cPanelis.|NB: Kõik selekteeritud domeenide e-posti kontod kustutatakse ka cPanelis.",
+    "CONFIRM_CPANEL_ACCOUNTS_WILL_BE_DELETED_WITH_SERVER_HTML": "<b>NB</b>: all email accounts in the mail server will be deleted on cPanel as well.",
     "CONFIRM_CPANEL_ACCOUNTS_WILL_BE_DELETED_WITH_TENANTS_HTML_PLURAL": "<b>NB</b>: all email accounts in the tenant will be deleted on cPanel as well.|NB: all email accounts in the selected tenants will be deleted on cPanel as well.",
     "ERROR_DOMAIN_OUTSIDE_TENANT": "Cannot create alias in domain outside of this tenant.",
     "ERROR_CREATE_ALIAS": "Cannot create alias, email account with this name already exists.",
@@ -834,7 +842,9 @@
     "INFO_NOTFOUND": "Seda objekti ei ole olemas või see ei ole ligipääsetav.",
     "INFO_NOTPERMITTED": "Operation is not permitted.",
     "ERROR_ITEM_ALREADY_EXISTS": "The item with the same name already exists.",
-    "ERROR_CANNOT_DELETE_SHARED_ITEM": "Shared with you files and directories were not deleted."
+    "ERROR_CANNOT_DELETE_SHARED_ITEM": "Shared with you files and directories were not deleted.",
+    "ERROR_CANNOT_COPY_OR_MOVE_ITEM_TO_ITSELF": "Cannot copy or move a file or directory to itself",
+    "ERROR_NOT_POSSIBLE_TO_MOVE_SHARED_FILE_OR_DIR_TO_CORPORATE_STORAGE": "You cannot move a shared file or directory to Corporate storage. Only the copy action is allowed."
   },
   "FILESCUTCOPYPASTEWEBCLIENTPLUGIN": {
     "ACTION_CUT": "Lõika",
@@ -843,13 +853,18 @@
     "INFO_ITEMS_CUTTED": "Objektid on lõikamisele võetud. Nende ümbertõstmiseks valige sihtkaust ja klõpsake „Kleebi”.",
     "INFO_ITEMS_COPIED": "Objektid on kopeerimisele võetud. Nende paigutamiseks valige sihtkaust ja klõpsake „Kleebi”."
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "Salvestid"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Failid",
     "ACTION_SHOW_FILES": "Failid",
     "LABEL_SETTINGS_TAB": "Failide seaded",
     "HEADING_SETTINGS_TAB": "Failide tabelvaate seaded",
     "LABEL_ALLOW_FILES": "Tabelvaade failide loetelus on lubatud.",
-    "LABEL_ENABLE_PREVIEW_PANE": "Eelvaatesektsioon on lubatud."
+    "LABEL_ENABLE_PREVIEW_PANE": "Eelvaatesektsioon on lubatud.",
+    "ACTION_USE_GRID_VIEW": "Ruudustik",
+    "ACTION_USE_LIST_VIEW": "Loend"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "Pilvefailid",
@@ -901,6 +916,7 @@
     "ACTION_CREATE_SHORTCUT": "Loo otsetee välisdokumendile",
     "ACTION_SEND_FILES": "Saadan faili(d)",
     "ACTION_RENAME": "Nimetan ümber",
+    "ACTION_COPY_MOVE": "Kopeeri/Teisalda",
     "ACTION_CREATE_PUBLIC_LINK": "Moodusta avalik link failile",
     "ERROR_DELETE_PUBLIC_LINK": "Could not delete shareable link.",
     "ERROR_CREATE_PUBLIC_LINK": "Could not create shareable link.",
@@ -911,13 +927,10 @@
     "LABEL_ENABLE_CORPORATE": "Firma salvestusmaht on lubatud",
     "LABEL_USER_SPACE_LIMIT": "Kasutaja salvestusmahu piirang",
     "LABEL_CORPORATE_SPACE_LIMIT": "Firma salvestusmahu piirang",
+    "ERROR_FAVORITE_NOT_SET": "Ei saa lisada kirjet lemmikutesse.",
     "ERROR_FILE_RENAME": "Faili ei õnnestunud ümber nimetada.",
     "ERROR_FILES_MOVE_PLURAL": "Faili ei õnnestunud ümber tõsta.|Faile ei õnnestunud ümber tõsta.",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "Faili ei saa mahupiirangu tõttu ümber tõsta.|Faile ei saa mahupiirangu tõttu ümber tõsta.",
-    "MOBILE_DAVSYNC_APPS_TITLE": "Pilvefailide äppide seaded",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "Sisestage allpool näidatud aadress nendesse äppidesse.",
-    "SERVICES_FILES_APPSYNC_SERVER": "Server",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "Sisselogimiseks kasutage sama kasutajatunnust ja parooli nagu käesolevas veebipostirakenduses.",
     "CONFIRM_DELETE_FILES_PLURAL": "Kas kustutada valitud fail?|Kas kustutada valitud failid?",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "Kas kustutada valitud kaust?|Kas kustutada valitud kaustad?",
     "CONFIRM_DELETE_ITEMS_PLURAL": "Kas kustutada valitud objekt?|Kas kustutada valitud objektid?",
@@ -931,7 +944,10 @@
     "HEADING_HISTORY_POPUP": "Avaliku lingi ajalugu",
     "CURRENT_FOLDER_STATS": "Files: {FILES_OVERAL} ({SIZE_OVERAL}), Folders: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Selected files: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "Read, compose, send, and permanently delete all your email from Gmail"
@@ -1037,7 +1053,7 @@
     "LABEL_TYPE_TRIAL": "Prooviaeg",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": ", aegub {DAYS} päeva pärast.|, aegub {DAYS} päeva pärast.",
     "LABEL_TYPE_EXPIRED": ", aegunud.",
-    "LABEL_TYPE_OUTDATED_INFO": "See litsents on aegunud. Litsentsi uuendamiseks palun võtke ühendust Afterlogic’uga.",
+    "LABEL_TYPE_OUTDATED_INFO": "See litsents on aegunud. Litsentsivõtme uuendamiseks palun võtke ühendust süsteemi tarnijaga.",
     "ERROR_LICENSE_KEY_MISSING": "Product license key is missing. Please provide a valid key before configuring the system or adding new users.",
     "INFO_LICENSE_KEY_CHANGED": "Press OK to reload admin interface and apply the new license data."
   },
@@ -1136,8 +1152,11 @@
   "MAILMOBILEWEBCLIENT": {
     "HEADING_ACCOUNTS": "Kontod",
     "HEADING_FOLDERS": "Kaustad",
+    "HEADING_UNIFIED_FOLDERS": "Unified folders",
+    "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Kas olete kindel, et soovite kustutada kõik sõnumid kaustas Rämpspost?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Kas olete kindel, et soovite kustutada kõik sõnumid kaustas Prügikast?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Kas olete kindel, et soovite kustutada kõik sõnumid kaustas Prügikast?",
+    "ERROR_DOMAIN_NOT_FOUND": "Mail server not found for this email domain."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Siia saab kirjutada uue memo.",
@@ -1320,7 +1339,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Tulemused otsingule <span class=\"part\">{SEARCH}</span> <span class=\"part\">kõikidest ühendatud kaustadest</span>:",
     "INFO_UNREAD_MESSAGES": "Lugemata kirjad kaustas <span class=\"part\">{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Lugemata kirjad",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Tulemused otsingule <span class=\"part\">{SEARCH}</span> kaustas <span class=\"part\">{FOLDER}</span>, ainult lugemata kirjad:",
     "INFO_NO_UNREAD_MESSAGES": "Lugemata kirju ei ole.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Lugemata kirju ei leidunud.",
@@ -1544,10 +1562,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Show starred messages from",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "Inbox only",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "All folders",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "Luba kasutajatel muuta e-posti ekraani paigutust",
     "LABEL_LAYOUT": "Paigutus",
     "LABEL_DEFAULT_LAYOUT": "Vaikepaigutus",
     "LABEL_VERT_SPLIT_LAYOUT": "Vertikaalne",
     "LABEL_HORIZ_SPLIT_LAYOUT": "Horisontaalne",
+    "LABEL_SEPARATED_LAYOUT": "Separated",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "Kasutajad lisatakse automaatselt.",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "Kui uus kasutaja logib sisse parooli ja kasutajatunnusega, mis vastavad olemasolevale e-postiserveri kontole, luuakse see kasutaja andmebaasis automaatselt.<br />Kui see säte on välja lülitatud, peab administrator kõik domeenid ja kasutajad ise käsitsi lisama.",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "Kasutajatel on lubatud lisada väliseid e-postikontosid.",
@@ -1637,7 +1657,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "You have successfully unsubscribed from these messages.",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "An error occurred while unsubscribing from the message.",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "A message will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages.",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "A message with subject <b style=\"word-break: break-word;\">{SUBJECT}</b> will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages."
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "A message with subject <b style=\"word-break: break-word;\">{SUBJECT}</b> will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages.",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "Märkus: SMTP-seadeid ignoreeritakse, kui \"Kasuta määratud mandaati\" on lubatud."
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "... ZIP-faili"
@@ -1851,6 +1872,8 @@
     "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Keys with no email address in their names",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, public)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, private)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}, avalik)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}, privaatne)",
     "ERROR_IMPORT_NO_KEY_FOUND": "No OpenPGP keys found for import.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "OpenPGP key was successfully imported.|OpenPGP keys was successfully imported.",
     "ERROR_IMPORT_KEY": "An error occurred when importing OpenPGP key.",
@@ -1948,7 +1971,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "Isiklik",
-    "INFO_NOTFOUND": "Seda objekti ei ole olemas või see ei ole ligipääsetav."
+    "INFO_NOTFOUND": "Seda objekti ei ole olemas või see ei ole ligipääsetav.",
+    "LABEL_TRASH_STORAGE": "Prügikast",
+    "LABEL_FAVORITES_STORAGE": "Lemmikud"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "Te ei läbinud reCAPTCHA kontrolli korrektselt.",
@@ -2006,7 +2031,9 @@
     "INFO_REGION": "For AWS S3, specify region value. For other S3-compatible services, for instance DigitalOcean Spaces, set to \"us-east-1\".",
     "BUTTON_TEST_CONNECTION": "Test connection",
     "REPORT_CONNECT_SUCCESSFUL": "Connected successfully.",
-    "ERROR_CONNECT_FAILED": "Failed to connect."
+    "ERROR_CONNECT_FAILED": "Failed to connect.",
+    "LABEL_TRASH_STORAGE": "Trash",
+    "LABEL_FAVORITES_STORAGE": "Favorite"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Security",
@@ -2166,7 +2193,8 @@
     "ACTION_VERIFY_PASSWORD": "Verify password",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Verifying...",
     "HINT_ABOUT_CONFIRMATION": "Accessing Two Factor Verification settings requires confirmation of your account password",
-    "ERROR_WRONG_PASSWORD": "Wrong password.",
+    "ERROR_SECRET_GENERATION_FAILED": "Can't generate the Secret",
+    "ERROR_WRONG_PASSWORD": "Wrong password",
     "ACTION_CONFIGURE": "Configure",
     "ACTION_REFUSE_CONFIGURE": "No, Thanks",
     "HINT_ABOUT_TWOFACTORAUTH_USE": "You can use a mobile application like Google Authenticator to scan the QR code below. Alternatively, you can enter your secret key there. Mobile app will then be able to generate one-time codes you'll need to additionaly enter during the login procedure.",

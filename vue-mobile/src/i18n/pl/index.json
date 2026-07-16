@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "This user is administrator of tenant",
     "LABEL_ITS_ME": "It's me!",
     "LABEL_ITS_ADMIN": "Admin",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "Default",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "AdminPanel",
     "ACTION_CREATE_IN_PROGRESS": "Creating...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQL password",
     "LABEL_DN_NAME": "Database name",
     "LABEL_DB_HOST": "Host",
+    "BUTTON_DB_TEST_CONNECTION": "Test connection",
     "BUTTON_DB_CREATE_TABLES": "Create/Update tables",
     "BUTTON_DB_CREATING_TABLES": "Creating/Updating tables...",
     "BUTTON_DB_UPDATE_TABLES": "Update tables",
     "INFO_AUTHTOKEN_DB_STORED": "AuthToken is stored in database, so you may need to relogin after changing database settings.",
-    "BUTTON_TEST_CONNECTION": "Test connection",
-    "REPORT_CONNECT_SUCCESSFUL": "Connected successfully.",
-    "ERROR_CONNECT_FAILED": "Failed to connect!",
     "LABEL_LICENSING_SETTINGS_TAB": "Licensing",
     "LABEL_LICENSING_HINT": "Allows you to enter the license key for the product and displays the current details on the license.",
     "LABEL_LICENSING_KEY": "License key",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "New password",
     "LABEL_SECURITY_CONFIRM_PASS": "Confirm new password",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "Separate log file for this user",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "Connected successfully.",
+    "ERROR_DB_CONNECT_FAILED": "Failed to connect.",
     "HINT_DB_CREATE_TABLES": "To create tables click the button below. Please test database connection first.",
     "HEADING_DB_SETTINGS": "Database settings",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "Tables created/updated successfully.",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "Please enter administrator password on System&#8594;AdminAccount tab. Administrator account is not secure without a password.",
     "ERROR_DB_ACCESS": "Please configure access to the database on System&#8594;Database Settings tab.",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "The database settings need to be saved before tables can be created. Save database settings?",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "Please check that 'data/encryption_key.php' file exists and not empty.",
+    "ERROR_SALT_EMPTY": "Please check that 'data/encryption_key.php' file exists and not empty.",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "Please make sure files in data directory are protected from accessing over the web. That's ensured by .htaccess and data/.htaccess files. Additional webserver reconfiguration may be needed.",
     "INFO_SEARCH_RESULT": "Search results for \"{SEARCH}\":",
     "INFO_NO_ENTITIES_USER": "There are no users.",
@@ -156,7 +155,6 @@
     "LABEL_GROUPS_NO_OPTIONS": "No groups",
     "INFO_TEAM_GROUP_IN_SYSTEM": "This group is auto-generated and contains all users in the system. The group can't be edited or deleted.",
     "INFO_TEAM_GROUP_IN_TENANT": "This group is auto-generated and contains all users in the tenant. The group can't be edited or deleted.",
-    "LABEL_USER_NOTE": "Note",
     "LABEL_USER_CREATED": "Created At",
     "LABEL_USER_LAST_LOGIN": "Last login",
     "LABEL_USER_NEVER_LOGIN": "Never"
@@ -182,7 +180,8 @@
     "EVENT_BEGIN": "zaczyna się o: ",
     "EMAIL_EXPLANATION": "Ta wiadomość została wysłana na Twoje konto {EMAIL} ponieważ ustawiłeś powiadomienie o wydarzeniu w kalendarzu: {CALENDAR_NAME}",
     "TASKS_DEFAULT_NAME": "My tasks",
-    "ERROR_NO_CALENDAR": "You do not have such a calendar. It may have been deleted."
+    "ERROR_NO_CALENDAR": "You do not have such a calendar. It may have been deleted.",
+    "ERROR_INVALID_SUBSCRIBED_ICS": "iCal URL is not valid"
   },
   "CALENDARMEETINGSPLUGIN": {
     "LOCATION": "Location",
@@ -220,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "Nie możesz pozostawić pustego tematu.",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "Usunąć wszystkich uczestników?",
     "ERROR_EMAIL_BLANK": "Proszę wprowadzić adres email",
+    "ERROR_EMAIL_INVALID": "Nieprawidłowy adres e-mail",
     "LABEL_HOURS_PLURAL": "{COUNT} godzina|{COUNT} godzin",
     "LABEL_DAYS_PLURAL": "{COUNT} dzień|{COUNT} dni",
     "LABEL_WEEKS_PLURAL": "{COUNT} tydzień|{COUNT} tygodni",
@@ -311,6 +311,8 @@
     "LABEL_ICS_LINK": "Link do .ics",
     "LABEL_WEB_ACCESS": "Utwórz publiczny link sieciowy do tego kalendarza",
     "LABEL_WEB_LINK": "Link sieciowy",
+    "ACTION_CREATE_LINK": "Create link",
+    "ACTION_REMOVE_LINK": "Remove link",
     "INFO_OLD_VERSION_INVITATION": "Musi być nowa wersja zaproszenia w Twojej skrzynce pocztowej. Ta jest już nieważna, ponieważ spotkanie zostało uaktualnione od momentu, gdy je otrzymano.",
     "ACTION_ADD_ICAL": "Dodaj do kalendarza",
     "REPORT_EVENT_SAVED": "Twoje wydarzenie zostało zapisane.",
@@ -364,6 +366,10 @@
     "LABEL_CURRENT_PASSWORD": "Obecne hasło",
     "LABEL_NEW_PASSWORD": "Nowe hasło",
     "LABEL_CONFIRM_NEW_PASSWORD": "Potwierdź nowe hasło"
+  },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "You did not complete the Cloudflare Turnstile verification properly.",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Cloudflare Turnstile unknown error."
   },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "Wszystkie",
@@ -630,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "Potwierdź hasło",
     "ERROR_UNKNOWN": "Nieznany błąd.",
     "ACTION_CANCEL": "Anuluj",
+    "ACTION_BACK": "Wstecz",
     "ERROR_UPLOAD_FILE": "Błąd podczas przesyłania pliku",
     "LABEL_UPLOADING_PERCENT": "uploading {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "N P W Ś C P S",
@@ -846,13 +853,18 @@
     "INFO_ITEMS_CUTTED": "Items have been cut. Choose a destination folder and click Paste button to move them.",
     "INFO_ITEMS_COPIED": "Items have been copied. Choose a destination folder and click Paste button to insert them."
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "Magazyny"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Pliki",
     "ACTION_SHOW_FILES": "Pliki",
     "LABEL_SETTINGS_TAB": "Pliki",
     "HEADING_SETTINGS_TAB": "Widok tabelaryczny",
     "LABEL_ALLOW_FILES": "Wyświetl pliki w postaci tabeli",
-    "LABEL_ENABLE_PREVIEW_PANE": "Włącz podgląd plików"
+    "LABEL_ENABLE_PREVIEW_PANE": "Włącz podgląd plików",
+    "ACTION_USE_GRID_VIEW": "Siatka",
+    "ACTION_USE_LIST_VIEW": "Lista"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "Pliki",
@@ -904,6 +916,7 @@
     "ACTION_CREATE_SHORTCUT": "Utwórz skrót do zewnętrznego dokumentu",
     "ACTION_SEND_FILES": "Prześlij pliki",
     "ACTION_RENAME": "Zmień nazwę",
+    "ACTION_COPY_MOVE": "Kopiuj/Przenieś",
     "ACTION_CREATE_PUBLIC_LINK": "Utwórz publiczny odnośnik",
     "ERROR_DELETE_PUBLIC_LINK": "Could not delete shareable link.",
     "ERROR_CREATE_PUBLIC_LINK": "Could not create shareable link.",
@@ -914,13 +927,10 @@
     "LABEL_ENABLE_CORPORATE": "Włącz przestrzeń służbową",
     "LABEL_USER_SPACE_LIMIT": "Limit danych użytkownika",
     "LABEL_CORPORATE_SPACE_LIMIT": "Limit danych służbowych",
+    "ERROR_FAVORITE_NOT_SET": "Nie można dodać elementu do ulubionych.",
     "ERROR_FILE_RENAME": "Zmiana nazwy pliku się nie powiodła.",
     "ERROR_FILES_MOVE_PLURAL": "Przenoszenie pliku się nie powiodło.|Przenoszenie plików się nie powiodło.",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "Nie można przenieść pliku ze względu na ograniczenie pojemności.|Nie można przenieść plików ze względu na ograniczenie pojemności.",
-    "MOBILE_DAVSYNC_APPS_TITLE": "File Storage apps",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "Określ URL poniżej.",
-    "SERVICES_FILES_APPSYNC_SERVER": "Serwer",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "Użyj poświadczeń, których używasz do logowania się do tego interfejsu sieciowego.",
     "CONFIRM_DELETE_FILES_PLURAL": "Trwale usunąć wybrany plik?|Trwale usunąć wybrane pliki?",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "Trwale usunąć wybrany katalog?|Trwale usunąć wybrane katalogi?",
     "CONFIRM_DELETE_ITEMS_PLURAL": "Trwale usunąć wybrany element?|Trwale usunąć wybrane elementy?",
@@ -934,7 +944,10 @@
     "HEADING_HISTORY_POPUP": "Public link activity history",
     "CURRENT_FOLDER_STATS": "Files: {FILES_OVERAL} ({SIZE_OVERAL}), Folders: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Selected files: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "Read, compose, send, and permanently delete all your email from Gmail"
@@ -1040,7 +1053,7 @@
     "LABEL_TYPE_TRIAL": "Trial",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": ", expires in {DAYS} day.|, expires in {DAYS} days.",
     "LABEL_TYPE_EXPIRED": ", expired.",
-    "LABEL_TYPE_OUTDATED_INFO": "This license is outdated, please contact Afterlogic to upgrade your license key.",
+    "LABEL_TYPE_OUTDATED_INFO": "This license is outdated, please contact the system vendor to upgrade your license key.",
     "ERROR_LICENSE_KEY_MISSING": "Product license key is missing. Please provide a valid key before configuring the system or adding new users.",
     "INFO_LICENSE_KEY_CHANGED": "Press OK to reload admin interface and apply the new license data."
   },
@@ -1128,7 +1141,8 @@
     "ACTION_BACK": "Wstecz",
     "LABEL_REMEMBER_ME": "Zaloguj mnie automatycznie",
     "HEADING_SELECT_LANGUAGE": "{SITENAME} in your language",
-    "HEADING_DEFAULT_SITENAME": "Interface"
+    "HEADING_DEFAULT_SITENAME": "Interface",
+    "LABEL_USERNAME": "Username"
   },
   "MAILMASTERPASSWORD": {
     "LABEL_SETTINGS_TAB": "Master Password",
@@ -1141,7 +1155,8 @@
     "HEADING_UNIFIED_FOLDERS": "Unified folders",
     "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Are you sure you want to delete all messages in folder Spam?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Are you sure you want to delete all messages in folder Trash?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Are you sure you want to delete all messages in folder Trash?",
+    "ERROR_DOMAIN_NOT_FOUND": "Mail server not found for this email domain."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Enter your note here",
@@ -1324,7 +1339,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Search results for <span class=\"part\">{SEARCH}</span> in <span class=\"part\">All unified accounts</span>:",
     "INFO_UNREAD_MESSAGES": "Masz nieprzeczytane wiadomości w katalogu <span class=\"part\">{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Masz nieprzeczytane wiadomości",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Wyniki wyszukiwanie dla <span class=\"part\">{SEARCH}</span> w katalogu <span class=\"part\">{FOLDER}</span>, tylko nieprzeczytane wiadomości:",
     "INFO_NO_UNREAD_MESSAGES": "Nie masz żadnych nieprzeczytanych wiadomości.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Nie masz żadnych nieprzeczytanych wiadomości.",
@@ -1548,10 +1562,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Show starred messages from",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "Inbox only",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "All folders",
-    "LABEL_LAYOUT": "Layout",
-    "LABEL_DEFAULT_LAYOUT": "Default Layout",
-    "LABEL_VERT_SPLIT_LAYOUT": "Vertical split",
-    "LABEL_HORIZ_SPLIT_LAYOUT": "Horizontal split",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "Zezwól użytkownikom na zmianę układu ekranu poczty",
+    "LABEL_LAYOUT": "Układ",
+    "LABEL_DEFAULT_LAYOUT": "Domyślny układ",
+    "LABEL_VERT_SPLIT_LAYOUT": "Podział pionowy",
+    "LABEL_HORIZ_SPLIT_LAYOUT": "Podział poziomy",
+    "LABEL_SEPARATED_LAYOUT": "Oddzielony",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "Allow auto-provisioning of new users",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "If a new user logs in with the credentials which denote a valid email account on your mail server, auto-create this user in the database.<br />If this setting is off, the admin must explicitly add all domains and users.",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "Allow users to add external mailboxes",
@@ -1641,7 +1657,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "You have successfully unsubscribed from these messages.",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "An error occurred while unsubscribing from the message.",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "A message will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages.",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "A message with subject <b style=\"word-break: break-word;\">{SUBJECT}</b> will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages."
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "A message with subject <b style=\"word-break: break-word;\">{SUBJECT}</b> will be sent to <b style=\"word-break: break-word;\">{RECIPIENT}</b> in order to unsubscribe from these messages.",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "Uwaga: ustawienia SMTP są ignorowane, gdy opcja \"Użyj określonych poświadczeń\" jest włączona."
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "...plik archiwum zip"
@@ -1855,6 +1872,8 @@
     "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Keys with no email address in their names",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, publiczny)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, prywatny)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}, publiczny)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}, prywatny)",
     "ERROR_IMPORT_NO_KEY_FOUND": "Nie znaleziono kluczy OpenPGP w celu importu.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "Klucz OpenPGP został prawidłowo zaimportowany.|Klucze OpenPGP zostały pomyślnie zaimportowane.",
     "ERROR_IMPORT_KEY": "Wystąpił błąd podczas importowania klucza OpenPGP.",
@@ -1952,7 +1971,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "Osobiste",
-    "INFO_NOTFOUND": "Element nie istnieje lub nie można uzyskać do niego dostępu."
+    "INFO_NOTFOUND": "Element nie istnieje lub nie można uzyskać do niego dostępu.",
+    "LABEL_TRASH_STORAGE": "Kosz",
+    "LABEL_FAVORITES_STORAGE": "Ulubione"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "You did not complete the reCAPTCHA verification properly.",
@@ -2010,7 +2031,9 @@
     "INFO_REGION": "For AWS S3, specify region value. For other S3-compatible services, for instance DigitalOcean Spaces, set to \"us-east-1\".",
     "BUTTON_TEST_CONNECTION": "Test connection",
     "REPORT_CONNECT_SUCCESSFUL": "Connected successfully.",
-    "ERROR_CONNECT_FAILED": "Failed to connect."
+    "ERROR_CONNECT_FAILED": "Failed to connect.",
+    "LABEL_TRASH_STORAGE": "Trash",
+    "LABEL_FAVORITES_STORAGE": "Favorite"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Security",
@@ -2170,7 +2193,8 @@
     "ACTION_VERIFY_PASSWORD": "Verify password",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Verifying...",
     "HINT_ABOUT_CONFIRMATION": "Accessing Two Factor Verification settings requires confirmation of your account password",
-    "ERROR_WRONG_PASSWORD": "Wrong password.",
+    "ERROR_SECRET_GENERATION_FAILED": "Can't generate the Secret",
+    "ERROR_WRONG_PASSWORD": "Wrong password",
     "ACTION_CONFIGURE": "Configure",
     "ACTION_REFUSE_CONFIGURE": "No, Thanks",
     "HINT_ABOUT_TWOFACTORAUTH_USE": "You can use a mobile application like Google Authenticator to scan the QR code below. Alternatively, you can enter your secret key there. Mobile app will then be able to generate one-time codes you'll need to additionaly enter during the login procedure.",

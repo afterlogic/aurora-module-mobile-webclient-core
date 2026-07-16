@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "Deze gebruiker is een beheerder of een klant",
     "LABEL_ITS_ME": "Ik ben het!",
     "LABEL_ITS_ADMIN": "Beheerder",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "Standaaard",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "Beheerderspaneel",
     "ACTION_CREATE_IN_PROGRESS": "In de maak...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQL paswoord",
     "LABEL_DN_NAME": "Database naam",
     "LABEL_DB_HOST": "Database Host",
+    "BUTTON_DB_TEST_CONNECTION": "Test verbinding",
     "BUTTON_DB_CREATE_TABLES": "Maak/Update tabellen",
     "BUTTON_DB_CREATING_TABLES": "Maak/Update tabellen",
     "BUTTON_DB_UPDATE_TABLES": "Update tabellen",
     "INFO_AUTHTOKEN_DB_STORED": "AuthToken is opgeslagen in de database, het kan zijn dat u opnieuw moet inloggen nadat u de database-instellingen hebt gewijzigd.",
-    "BUTTON_TEST_CONNECTION": "Verbinding testen",
-    "REPORT_CONNECT_SUCCESSFUL": "Succesvol verbonden.",
-    "ERROR_CONNECT_FAILED": "Verbinding mislukt!",
     "LABEL_LICENSING_SETTINGS_TAB": "Licenties",
     "LABEL_LICENSING_HINT": "Hiermee kunt u de licentiesleutel invoeren en de huidige gegevens over de licentie weergeven.",
     "LABEL_LICENSING_KEY": "Licentie sleutel",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "Nieuw paswoord",
     "LABEL_SECURITY_CONFIRM_PASS": "Bevestig nieuw paswoord",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "Apart logbestand voor deze gebruiker",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "Verbinding succesvol",
+    "ERROR_DB_CONNECT_FAILED": "Verbindingsfout",
     "HINT_DB_CREATE_TABLES": "Klik op de knop hieronder om tabellen aan te maken. Test eerst de databaseverbinding.",
     "HEADING_DB_SETTINGS": "Database instellingen",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "Tabellen aanmaak/updated gelukt.",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "Voer beheerderswachtwoord in op het tabblad System&#8594;AdminAccount. Beheerdersaccount is niet veilig zonder wachtwoord.",
     "ERROR_DB_ACCESS": "Configureer de toegang tot de database op het tabblad Systeem&#8594;Database-instellingen.",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "De database-instellingen moeten worden opgeslagen voordat tabellen kunnen worden aangemaakt. Database instellingen opslaan?",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "Controleer of het bestand 'data/encryption_key.php' bestaat en niet leeg is.",
+    "ERROR_SALT_EMPTY": "Controleer of het bestand 'data/encryption_key.php' bestaat en niet leeg is.",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "Zorg ervoor dat bestanden in de gegevensmap beschermd zijn tegen toegang via het web. Dat wordt verzekerd door .htaccess en data/.htaccess bestanden. Extra webserver herconfiguratie kan nodig zijn.",
     "INFO_SEARCH_RESULT": "Zoekresultaten voor \"{SEARCH}\":",
     "INFO_NO_ENTITIES_USER": "Er zijn geen gebruikers",
@@ -156,7 +155,6 @@
     "LABEL_GROUPS_NO_OPTIONS": "Geen groepen",
     "INFO_TEAM_GROUP_IN_SYSTEM": "Deze groep wordt automatisch gegenereerd en bevat alle gebruikers in het systeem. De groep kan niet worden bewerkt of verwijderd.",
     "INFO_TEAM_GROUP_IN_TENANT": "Deze groep wordt automatisch gegenereerd en bevat alle gebruikers in de Tenant. De groep kan niet worden bewerkt of verwijderd.",
-    "LABEL_USER_NOTE": "Notitie",
     "LABEL_USER_CREATED": "Aangemaakt op",
     "LABEL_USER_LAST_LOGIN": "Laatst ingelogd",
     "LABEL_USER_NEVER_LOGIN": "Nooit"
@@ -182,7 +180,8 @@
     "EVENT_BEGIN": "Begint op: ",
     "EMAIL_EXPLANATION": "Dit bericht is naar uw account {EMAIL} verzonden omdat u koos om verwittigd te worden in uw agenda: {CALENDAR_NAME}",
     "TASKS_DEFAULT_NAME": "Mijn taken",
-    "ERROR_NO_CALENDAR": "Zo'n kalender heb je niet. Het is mogelijk verwijderd."
+    "ERROR_NO_CALENDAR": "Zo'n kalender heb je niet. Het is mogelijk verwijderd.",
+    "ERROR_INVALID_SUBSCRIBED_ICS": "iCal URL is not valid"
   },
   "CALENDARMEETINGSPLUGIN": {
     "LOCATION": "Locatie",
@@ -220,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "U kunt het onderwerp niet leeg laten.",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "Alle aanwezigen verwijderen?",
     "ERROR_EMAIL_BLANK": "Vul uw e-mailadres in",
+    "ERROR_EMAIL_INVALID": "Ongeldig e-mailadres",
     "LABEL_HOURS_PLURAL": "{COUNT} uur|{COUNT} uur",
     "LABEL_DAYS_PLURAL": "{COUNT} dag|{COUNT} dagen",
     "LABEL_WEEKS_PLURAL": "{COUNT} week|{COUNT} weken",
@@ -311,6 +311,8 @@
     "LABEL_ICS_LINK": "Link naar .ics",
     "LABEL_WEB_ACCESS": "Maak publieke weblink naar deze kalender",
     "LABEL_WEB_LINK": "Web link",
+    "ACTION_CREATE_LINK": "Create link",
+    "ACTION_REMOVE_LINK": "Remove link",
     "INFO_OLD_VERSION_INVITATION": "Er moet een nieuwere versie van deze uitnodiging in je mailbox zitten. Deze is niet langer geldig omdat de vergadering is bijgewerkt sinds je deze hebt ontvangen.",
     "ACTION_ADD_ICAL": "Toevoegen aan kalender",
     "REPORT_EVENT_SAVED": "Gebeurtenis is opgeslagen.",
@@ -364,6 +366,10 @@
     "LABEL_CURRENT_PASSWORD": "Huidig wachtwoord",
     "LABEL_NEW_PASSWORD": "Nieuw wachtwoord",
     "LABEL_CONFIRM_NEW_PASSWORD": "Bevestig nieuw wachtwoord"
+  },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "U heeft de Cloudflare Turnstile verificatie niet goed uitgevoerd.",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Cloudflare Turnstile onbekende fout."
   },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "Allemaal",
@@ -542,6 +548,7 @@
     "ERROR_TENANT_ALREADY_EXISTS": "Onderdeel met opgegeven naam bestaat al",
     "BLOCKED_USER_MESSAGE_ERROR": "Uw account is geblokkeerd wegens {N} mislukte inlogpogingen. Na {M} minuten kunt u weer proberen.",
     "ERROR_GROUP_ALREADY_EXISTS": "Groep met opgegeven naam bestaat al",
+    "LABEL_ALL_USERS_GROUP": "Team",
     "BLOCKED_USER_IP_REPUTATION_MESSAGE_ERROR": "Uw account is geblokkeerd vanwege de slechte reputatie van het IP-adres waarmee u verbinding maakt."
   },
   "COREMOBILEWEBCLIENT": {
@@ -629,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "Bevestig wachtwoord",
     "ERROR_UNKNOWN": "Onbekende fout.",
     "ACTION_CANCEL": "Annuleren",
+    "ACTION_BACK": "Terug",
     "ERROR_UPLOAD_FILE": "Fout bij uploaden van bestand",
     "LABEL_UPLOADING_PERCENT": "uploaden {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "Z M D W D V Z",
@@ -776,7 +784,6 @@
     "LABEL_CPANEL_PORT": "cPaneel poort",
     "LABEL_CPANEL_USER": "cPaneel gebruiker",
     "LABEL_CPANEL_PASS": "cPaneel wachtwoord",
-    "LABEL_CPANEL_ALLOW_DOMAIN_OVERRIDE": "Domeinoverschrijvingen toestaan",
     "LABEL_SETTINGS_TAB_ALIASES": "Aliassen",
     "HEADING_SETTINGS_TAB_ALIASES": "Aliases",
     "LABEL_ALIAS": "Alias naam",
@@ -794,6 +801,7 @@
     "ERROR_CREATE_ALIAS": "Kan geen alias maken, e-mailaccount met deze naam bestaat al.",
     "ERROR_ALIAS_ALREADY_EXISTS": "Fout. Alias bestaat al.",
     "ERROR_EMAIL_MATCHES_ALIAS": "Fout. E-mail komt overeen met bestaande alias.",
+    "LABEL_CPANEL_ALLOW_DOMAIN_OVERRIDE": "Domeinoverschrijvingen toestaan",
     "HINT_CHECK_SCRIPT": "Let op! Het script voor pushmeldingen is niet geconfigureerd!\";"
   },
   "DROPBOX": {
@@ -836,7 +844,9 @@
     "INFO_NOTFOUND": "Het item bestaat niet of kan niet worden geopend.",
     "INFO_NOTPERMITTED": "Bediening is niet toegestaan.",
     "ERROR_ITEM_ALREADY_EXISTS": "Het item met dezelfde naam bestaat al.",
-    "ERROR_CANNOT_DELETE_SHARED_ITEM": "Bestanden en mappen die met u zijn gedeeld, zijn niet verwijderd."
+    "ERROR_CANNOT_DELETE_SHARED_ITEM": "Bestanden en mappen die met u zijn gedeeld, zijn niet verwijderd.",
+    "ERROR_CANNOT_COPY_OR_MOVE_ITEM_TO_ITSELF": "Cannot copy or move a file or directory to itself",
+    "ERROR_NOT_POSSIBLE_TO_MOVE_SHARED_FILE_OR_DIR_TO_CORPORATE_STORAGE": "You cannot move a shared file or directory to Corporate storage. Only the copy action is allowed."
   },
   "FILESCUTCOPYPASTEWEBCLIENTPLUGIN": {
     "ACTION_CUT": "Knip",
@@ -845,13 +855,18 @@
     "INFO_ITEMS_CUTTED": "Items zijn geknipt. Kies een bestemmingsmap en klik op de knop Plakken om ze te verplaatsen.",
     "INFO_ITEMS_COPIED": "Items zijn gekopieerd. Kies een bestemmingsmap en klik op de knop Plakken om ze in te voegen."
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "Opslag"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Bestanden",
     "ACTION_SHOW_FILES": "Bestanden",
     "LABEL_SETTINGS_TAB": "Bestanden",
     "HEADING_SETTINGS_TAB": "Bestanden Tabelweergave",
     "LABEL_ALLOW_FILES": "Tabelweergave voor bestandslijst inschakelen",
-    "LABEL_ENABLE_PREVIEW_PANE": "Schakel het voorbeeldvenster in"
+    "LABEL_ENABLE_PREVIEW_PANE": "Schakel het voorbeeldvenster in",
+    "ACTION_USE_GRID_VIEW": "Rasterweergave",
+    "ACTION_USE_LIST_VIEW": "Lijstweergave"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "Bestanden",
@@ -903,6 +918,7 @@
     "ACTION_CREATE_SHORTCUT": "Maak snelkoppeling naar extern document",
     "ACTION_SEND_FILES": "Verstuur bestanden",
     "ACTION_RENAME": "Hernoem",
+    "ACTION_COPY_MOVE": "Kopiëren/Verplaatsen",
     "ACTION_CREATE_PUBLIC_LINK": "Maak een publiek link",
     "ERROR_DELETE_PUBLIC_LINK": "Could not delete shareable link.",
     "ERROR_CREATE_PUBLIC_LINK": "Could not create shareable link.",
@@ -913,13 +929,10 @@
     "LABEL_ENABLE_CORPORATE": "Bedrijfsopslag ruimte",
     "LABEL_USER_SPACE_LIMIT": "Gebruikers bestandsgrootte limit",
     "LABEL_CORPORATE_SPACE_LIMIT": "Bedrijfs bestandsgrootte limit",
+    "ERROR_FAVORITE_NOT_SET": "Kan het item niet aan favorieten toevoegen.",
     "ERROR_FILE_RENAME": "Bestand hernoemen is mislukt.",
     "ERROR_FILES_MOVE_PLURAL": "Bestanden verplaatsen is mislukt.",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "Kan bestand niet verplaatsen wegens plaatsgebrek.",
-    "MOBILE_DAVSYNC_APPS_TITLE": "Bestandsopslag apps",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "Geef de onderstaande URL op in deze apps.",
-    "SERVICES_FILES_APPSYNC_SERVER": "Server",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "Gebruik uw gebruikelijke inloggegevens die u gebruikt om in te loggen op deze webinterface.",
     "CONFIRM_DELETE_FILES_PLURAL": "Geselecteerde bestand permanent verwijderen?",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "Verwijder geselecteerde mappen permanent?",
     "CONFIRM_DELETE_ITEMS_PLURAL": "Geselecteerde items permanent verwijderen?",
@@ -933,7 +946,10 @@
     "HEADING_HISTORY_POPUP": "Openbare link activiteit geschiedenis",
     "CURRENT_FOLDER_STATS": "Files: {FILES_OVERAL} ({SIZE_OVERAL}), Folders: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Selected files: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Selected folders: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "Lees, stel op, versturen en permanent al je email uit Gmail verwijderen."
@@ -1039,7 +1055,7 @@
     "LABEL_TYPE_TRIAL": "Proces",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": ", Verloopt in {DAYS} dag.|, Verloopt in {DAYS} dag.",
     "LABEL_TYPE_EXPIRED": ", niet meer geldig.",
-    "LABEL_TYPE_OUTDATED_INFO": "Deze licentie is verouderd, neem contact op met Afterlogic om uw licentiesleutel te upgraden.",
+    "LABEL_TYPE_OUTDATED_INFO": "Deze licentie is verouderd, neem contact op met de systeemleverancier om uw licentiesleutel te upgraden.",
     "ERROR_LICENSE_KEY_MISSING": "Productlicentiesleutel ontbreekt. Geef een geldige sleutel op voordat u het systeem configureert of nieuwe gebruikers toevoegt.",
     "INFO_LICENSE_KEY_CHANGED": "Druk op OK om de beheerders interface opnieuw te laden en de nieuwe licentiegegevens toe te passen."
   },
@@ -1127,7 +1143,8 @@
     "ACTION_BACK": "Terug",
     "LABEL_REMEMBER_ME": "Automatisch inloggen",
     "HEADING_SELECT_LANGUAGE": "{SITENAME} in jouw taal",
-    "HEADING_DEFAULT_SITENAME": "Interface"
+    "HEADING_DEFAULT_SITENAME": "Interface",
+    "LABEL_USERNAME": "Username"
   },
   "MAILMASTERPASSWORD": {
     "LABEL_SETTINGS_TAB": "Meester Wachtwoord",
@@ -1138,8 +1155,10 @@
     "HEADING_ACCOUNTS": "Accounts",
     "HEADING_FOLDERS": "Mappen",
     "HEADING_UNIFIED_FOLDERS": "Uniforme mappen",
+    "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Weet u zeker dat u alle berichten in de map Spam wilt verwijderen?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Weet u zeker dat u alle berichten in de map Prullenbak wilt verwijderen?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Weet u zeker dat u alle berichten in de map Prullenbak wilt verwijderen?",
+    "ERROR_DOMAIN_NOT_FOUND": "Mail server not found for this email domain."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Voer hier uw notitie in",
@@ -1322,7 +1341,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Messages from <span class=\"part\">All folders</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Zoekresultaten voor <span class='part'>{SEARCH}</span> in <span class='part'> Alle verenigde accounts</span>:",
     "INFO_UNREAD_MESSAGES": "Ongelezen berichten in map <span class='part'>{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Ongelezen berichten",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Zoekresultaten voor <span class='part'>{SEARCH}</span> in map <span class='part'>{FOLDER}</span>, alleen ongelezen berichten:",
     "INFO_NO_UNREAD_MESSAGES": "U heeft geen ongelezen berichten.",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Geen ongelezen berichten gevonden.",
@@ -1546,10 +1564,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Laat gemarkeerde berichten zien van",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "Alleen in inbox",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "Alle folders",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "Gebruikers toestaan het e-mailschermindeling te wijzigen",
     "LABEL_LAYOUT": "Layout",
     "LABEL_DEFAULT_LAYOUT": "Standaard Layout",
     "LABEL_VERT_SPLIT_LAYOUT": "Verticale splitsing",
     "LABEL_HORIZ_SPLIT_LAYOUT": "Horizontale splitsing",
+    "LABEL_SEPARATED_LAYOUT": "Gescheiden layout",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "Automatische registratie van nieuwe gebruikers toestaan",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "Als een nieuwe gebruiker inlogt met de inloggegevens die duiden op een geldig e-mailaccount op uw mailserver, maak deze gebruiker dan automatisch aan in de database.<br /> Als deze instelling is uitgeschakeld, moet de beheerder expliciet alle domeinen en gebruikers toevoegen.",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "Gebruikers toestaan externe mailboxen toe te voegen",
@@ -1639,7 +1659,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "Je bent succesvol uitgeschreven.",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "Error bij het uitschrijven.",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "Een bericht wordt met een link om uit te schrijven wordt verstuurd naar <b style=\"word-break: break-word;\">{RECIPIENT}</b>.",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Een bericht met Onderwerp <b style=\"word-break: break-word;\">{SUBJECT}</b> wordt gestuurd naar <b style=\"word-break: break-word;\">{RECIPIENT}</b>."
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Een bericht met Onderwerp <b style=\"word-break: break-word;\">{SUBJECT}</b> wordt gestuurd naar <b style=\"word-break: break-word;\">{RECIPIENT}</b>.",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "Opmerking: SMTP-instellingen worden genegeerd wanneer \"Opgegeven referenties gebruiken\" is ingeschakeld."
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "...zip bestand"
@@ -1844,14 +1865,17 @@
     "REPORT_MESSAGE_SIGNED_SUCCSESSFULLY": "Bericht is succesvol ondertekend.",
     "REPORT_KEY_SUCCESSFULLY_GENERATED": "OpenPGP sleutel is succesvol gegenereerd.",
     "INFO_TEXT_CONTAINS_NO_KEYS_TO_IMPORT": "De tekst bevat geen sleutels die geïmporteerd kunnen worden.",
-    "INFO_TEXT_CONTAINS_KEYS_FOR_IMPORT": "De tekst bevat de volgende sleutels die beschikbaar zijn voor import",
+    "INFO_TEXT_CONTAINS_EXTERNAL_KEYS_FOR_IMPORT": "External keys (will be stored in Personal contacts)",
+    "INFO_TEXT_CONTAINS_OWN_KEYS_FOR_IMPORT": "Your own keys (will be stored on device only)",
     "INFO_TEXT_CONTAINS_KEYS_ALREADY_IN_SYSTEM": "Sleutels die al in het systeem zitten, worden niet geïmporteerd",
     "INFO_TEXT_CONTAINS_KEYS_EXTERNAL_PRIVATE": "Externe privésleutels worden niet ondersteund en worden niet geïmporteerd",
-    "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Sleutels zonder email adressen in de naam",
     "INFO_TEXT_CONTAINS_PUBLIC_KEYS_WITH_EMAIL": "De volgende sleutel wordt toegevoegd aan dit contact.",
     "INFO_TEXT_CONTAINS_NOT_PUBLIC_KEYS_OR_WITHOUT_EMAIL": "Alleen de publieke sleutel met {EMAIL} is toegestaan. De volgende sleutels worden niet op het contact opgeslagen.",
+    "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Sleutels zonder email adressen in de naam",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, publiek)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, persoonlijk)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}, publiek)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}, persoonlijk)",
     "ERROR_IMPORT_NO_KEY_FOUND": "Geen OpenPGP sleutels gevonden om te importeren.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "OpenPGP sleutel is geïmporteerd |. OpenPGP sleutels zijn geïmporteerd.",
     "ERROR_IMPORT_KEY": "Er is een fout opgetreden bij het importeren van OpenPGP-sleutel.",
@@ -1935,7 +1959,8 @@
     "ERROR_ADDED_KEY_NOT_PUBLIC": "De toegevoegde sleutel is niet publiek",
     "LABEL_ENABLE_OPENPGP": "OpenPGP inschakelen in Mail",
     "LABEL_REMEMBER_PASSPHRASE": "Onthoud het wachtwoord van de OpenPGP-sleutel totdat u uitlogt of dit tabblad in de browser sluit.",
-    "INFO_REMEMBER_PASSPHRASE": "Indien niet aangevinkt, zal het systeem elke keer dat het nodig is, uw OpenPGP-sleutelwachtwoord vragen."
+    "INFO_REMEMBER_PASSPHRASE": "Indien niet aangevinkt, zal het systeem elke keer dat het nodig is, uw OpenPGP-sleutelwachtwoord vragen.",
+    "INFO_TEXT_CONTAINS_KEYS_FOR_IMPORT": "De tekst bevat de volgende sleutels die beschikbaar zijn voor import"
   },
   "OUTLOOKSYNCWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Outlook Synchronisatie",
@@ -1949,7 +1974,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "Persoonlijk",
-    "INFO_NOTFOUND": "Het item bestaat niet of kan niet worden geopend."
+    "INFO_NOTFOUND": "Het item bestaat niet of kan niet worden geopend.",
+    "LABEL_TRASH_STORAGE": "Prullenbak",
+    "LABEL_FAVORITES_STORAGE": "Favoriet"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "U heeft de reCAPTCHA verificatie niet goed uitgevoerd.",
@@ -2007,7 +2034,9 @@
     "INFO_REGION": "Geef voor AWS S3 de regio waarde op. Stel voor DigitalOcean Spaces in op \"us-east-1\".",
     "BUTTON_TEST_CONNECTION": "Test verbinding",
     "REPORT_CONNECT_SUCCESSFUL": "Succesvol verbonden.",
-    "ERROR_CONNECT_FAILED": "Kon niet verbinden."
+    "ERROR_CONNECT_FAILED": "Kon niet verbinden.",
+    "LABEL_TRASH_STORAGE": "Prullenbak",
+    "LABEL_FAVORITES_STORAGE": "Favoriet"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Security",
@@ -2167,6 +2196,7 @@
     "ACTION_VERIFY_PASSWORD": "Verifieer wachtwoord",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Verifiëren...",
     "HINT_ABOUT_CONFIRMATION": "Toegang tot de twee-factor verificatie-instellingen vereist bevestiging van uw account wachtwoord",
+    "ERROR_SECRET_GENERATION_FAILED": "Kan het geheim niet genereren",
     "ERROR_WRONG_PASSWORD": "Fout paswoord",
     "ACTION_CONFIGURE": "Configureer",
     "ACTION_REFUSE_CONFIGURE": "Nee, bedankt",

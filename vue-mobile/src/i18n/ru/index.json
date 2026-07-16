@@ -52,7 +52,6 @@
     "LABEL_USER_IS_TENANT_ADMIN": "Права администратора тенанта",
     "LABEL_ITS_ME": "Это я!",
     "LABEL_ITS_ADMIN": "Админ",
-    "LABEL_DISABLED": "Disabled",
     "LABEL_DEFAULT": "Базовый",
     "HEADING_TENANT_ADMINPANEL_SETTINGS_TABNAME": "Админпанель",
     "ACTION_CREATE_IN_PROGRESS": "Создание...",
@@ -82,13 +81,11 @@
     "LABEL_DB_PASSWORD": "SQL пароль",
     "LABEL_DN_NAME": "Имя базы данных",
     "LABEL_DB_HOST": "Сервер",
+    "BUTTON_DB_TEST_CONNECTION": "Проверка подключения",
     "BUTTON_DB_CREATE_TABLES": "Создать/обновить таблицы",
     "BUTTON_DB_CREATING_TABLES": "Создание/обновление таблиц...",
     "BUTTON_DB_UPDATE_TABLES": "Обновить таблицы",
     "INFO_AUTHTOKEN_DB_STORED": "Токен авторизации хранится в БД, поэтому после изменения настроек может потребоваться повторный вход.",
-    "BUTTON_TEST_CONNECTION": "Проверить соединение",
-    "REPORT_CONNECT_SUCCESSFUL": "Соединение успешно.",
-    "ERROR_CONNECT_FAILED": "Не удалось подключиться!",
     "LABEL_LICENSING_SETTINGS_TAB": "Лицензирование",
     "LABEL_LICENSING_HINT": "Позволяет указать лицензионный ключ продукта и отображает детали лицензии.",
     "LABEL_LICENSING_KEY": "Лицензионный ключ",
@@ -100,6 +97,8 @@
     "LABEL_SECURITY_NEW_PASS": "Новый пароль",
     "LABEL_SECURITY_CONFIRM_PASS": "Повторите новый пароль",
     "LABEL_LOGGING_SEPARATE_LOG_FOR_USER": "Отдельные логи для этого пользователя",
+    "REPORT_DB_CONNECT_SUCCESSFUL": "Подключение успешно.",
+    "ERROR_DB_CONNECT_FAILED": "Подключиться не удалось.",
     "HINT_DB_CREATE_TABLES": "Нажмите кнопку ниже для создания таблиц. Предварительно, выполните проверку подключения.",
     "HEADING_DB_SETTINGS": "Настройки базы данных",
     "REPORT_CREATE_TABLES_SUCCESSFUL": "Таблицы созданы/обновлены успешно.",
@@ -110,7 +109,7 @@
     "ERROR_ADMIN_EMPTY_PASSWORD": "Задайте пароль администратора на вкладке Система - Администратор. Без пароля, вход администратора не защищен.",
     "ERROR_DB_ACCESS": "Настройте доступ к базе данных на вкладке Система - Настройки базы данных.",
     "CONFIRM_SAVE_CHANGES_BEFORE_CREATE_TABLES": "Перед созданием таблиц, необходимо сохранить настройки базы данных. Сохранить?",
-    "ERROR_ENCRYPTION_KEY_EMPTY": "Проверьте, что файл 'data/encryption_key.php' существует и не пуст.",
+    "ERROR_SALT_EMPTY": "Проверьте, что файл 'data/encryption_key.php' существует и не пуст.",
     "ERROR_DATA_FOLDER_ACCESSIBLE_FROM_WEB": "Убедитесь, что файлы в каталоге data защищены от веб-доступа. Файлы .htaccess и data/.htaccess обеспечивают это. Может потребоваться дополнительная настройка веб-сервера.",
     "INFO_SEARCH_RESULT": "Результаты поиска \"{SEARCH}\":",
     "INFO_NO_ENTITIES_USER": "Нет пользователей.",
@@ -156,7 +155,6 @@
     "LABEL_GROUPS_NO_OPTIONS": "Нет групп",
     "INFO_TEAM_GROUP_IN_SYSTEM": "Это автоматическая группа, содержащая всех пользователей системы, ее нельзя удалить или изменить.",
     "INFO_TEAM_GROUP_IN_TENANT": "Это автоматическая группа, содержащая всех пользователей тенанта, ее нельзя удалить или изменить.",
-    "LABEL_USER_NOTE": "Примечание",
     "LABEL_USER_CREATED": "Создан",
     "LABEL_USER_LAST_LOGIN": "Последний вход",
     "LABEL_USER_NEVER_LOGIN": "Никогда"
@@ -221,6 +219,7 @@
     "ERROR_SUBJECT_BLANK": "Тема обязательная для заполнения.",
     "CONFIRM_REMOVE_ALL_ATTENDEES": "Удалить всех участников?",
     "ERROR_EMAIL_BLANK": "Введите адрес электропочты",
+    "ERROR_EMAIL_INVALID": "Неверный адрес электронной почты",
     "LABEL_HOURS_PLURAL": "{COUNT} час|{COUNT} часа|{COUNT} часов",
     "LABEL_DAYS_PLURAL": "{COUNT} день|{COUNT} дня|{COUNT} дней",
     "LABEL_WEEKS_PLURAL": "{COUNT} неделя|{COUNT} недели|{COUNT} недель",
@@ -312,6 +311,8 @@
     "LABEL_ICS_LINK": "Ссылка на .ics",
     "LABEL_WEB_ACCESS": "Получить публичную ссылку на календарь",
     "LABEL_WEB_LINK": "Ссылка",
+    "ACTION_CREATE_LINK": "Создать ссылку",
+    "ACTION_REMOVE_LINK": "Удалить ссылку",
     "INFO_OLD_VERSION_INVITATION": "Сведения о собрании были обновлены после того, как получено это приглашение. Вам должно было прийти новое приглашение.",
     "ACTION_ADD_ICAL": "Добавить в календарь",
     "REPORT_EVENT_SAVED": "Событие успешно сохранено.",
@@ -366,6 +367,10 @@
     "LABEL_NEW_PASSWORD": "Новый пароль",
     "LABEL_CONFIRM_NEW_PASSWORD": "Повтор нового пароля"
   },
+  "CLOUDFLARETURNSTILEWEBCLIENTPLUGIN": {
+    "ERROR_CLOUDFARE_TURNSTILE_VERIFICATION_DID_NOT_COMPLETE": "Вы не прошли проверку Cloudflare Turnstile должным образом.",
+    "ERROR_UNKNOWN_CLOUDFARE_TURNSTILE_ERROR": "Неизвестная ошибка Cloudflare Turnstile."
+  },
   "CONTACTS": {
     "LABEL_STORAGE_ALL": "Все",
     "LABEL_STORAGE_PERSONAL": "Личные",
@@ -374,9 +379,18 @@
     "LABEL_STORAGE_TEAM": "Коллеги"
   },
   "CONTACTSMOBILEWEBCLIENT": {
+    "HEADING_ADD_CONTACT": "Add contact",
+    "HEADING_VIEW_GROUP": "View group",
+    "HEADING_EDIT_GROUP": "Edit group",
+    "HEADING_ADD_GROUP": "Add group",
+    "LABEL_EMPTY_CONTACTS": "No contacts found.",
+    "LABEL_PERSONAL_ADDRESS": "Personal address",
+    "LABEL_STORAGES": "Address books",
+    "LABEL_NO_PRIMARY_INFORMATION": "Not specified yet",
     "LABEL_STORAGE_PERSONAL": "Личные",
     "LABEL_STORAGE_SHARED": "Доступные всем",
-    "LABEL_STORAGE_TEAM": "Коллеги"
+    "LABEL_STORAGE_TEAM": "Коллеги",
+    "CONFIRM_DELETE_GROUP": "Are you sure you want to delete this group?"
   },
   "CONTACTSWEBCLIENT": {
     "ACTION_SHOW_CONTACTS": "Контакты",
@@ -622,6 +636,7 @@
     "LABEL_CONFIRM_PASSWORD": "Подтверждение пароля",
     "ERROR_UNKNOWN": "Неизвестная ошибка.",
     "ACTION_CANCEL": "Отмена",
+    "ACTION_BACK": "Назад",
     "ERROR_UPLOAD_FILE": "Ошибка загрузки файла.",
     "LABEL_UPLOADING_PERCENT": "загружено {PERCENT}%",
     "LIST_DAY_NAMES_MIN": "В П В С Ч П С В",
@@ -838,13 +853,18 @@
     "INFO_ITEMS_CUTTED": "Объекты были вырезаны. Выберите папку назначения и нажмите кнопку «Вставить», чтобы переместить их.",
     "INFO_ITEMS_COPIED": "Объекты были скопированы. Выберите папку назначения и нажмите кнопку «Вставить», чтобы вставить их."
   },
+  "FILESMOBILEWEBCLIENT": {
+    "LABEL_STORAGES": "Хранилища"
+  },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Файлы",
     "ACTION_SHOW_FILES": "Файлы",
     "LABEL_SETTINGS_TAB": "Файлы",
     "HEADING_SETTINGS_TAB": "Табличный вид",
     "LABEL_ALLOW_FILES": "Включить табличный вид для списка файлов",
-    "LABEL_ENABLE_PREVIEW_PANE": "Включить  панель предварительного просмотра"
+    "LABEL_ENABLE_PREVIEW_PANE": "Включить  панель предварительного просмотра",
+    "ACTION_USE_GRID_VIEW": "Сетка",
+    "ACTION_USE_LIST_VIEW": "Список"
   },
   "FILESWEBCLIENT": {
     "ACTION_SHOW_FILES": "Файлы",
@@ -896,6 +916,7 @@
     "ACTION_CREATE_SHORTCUT": "Создать ярлык",
     "ACTION_SEND_FILES": "Отправка файлов",
     "ACTION_RENAME": "Переименовать",
+    "ACTION_COPY_MOVE": "Копировать/Переместить",
     "ACTION_CREATE_PUBLIC_LINK": "Создать публичную ссылку",
     "ERROR_DELETE_PUBLIC_LINK": "Не удалось удалить ссылку для общего доступа.",
     "ERROR_CREATE_PUBLIC_LINK": "Не удалось создать ссылку для общего доступа.",
@@ -906,13 +927,10 @@
     "LABEL_ENABLE_CORPORATE": "Включить корпоративное хранилище",
     "LABEL_USER_SPACE_LIMIT": "Ограничение пространства пользователя",
     "LABEL_CORPORATE_SPACE_LIMIT": "Ограничение пространства корпоративных файлов",
+    "ERROR_FAVORITE_NOT_SET": "Не удалось добавить элемент в избранное.",
     "ERROR_FILE_RENAME": "Не удалось переименовать файл.",
     "ERROR_FILES_MOVE_PLURAL": "Не удалось переместить файл. | Не удалось переместить файлы.",
     "ERROR_CANT_MOVE_FILES_QUOTA_PLURAL": "Невозможно переместить файл из-за ограниченного пространства. | Невозможно переместить файлы из-за ограниченного пространства.",
-    "MOBILE_DAVSYNC_APPS_TITLE": "Приложения для хранения файлов",
-    "SERVICES_FILES_ALL_APPSYNC_HINT_SPECIFY": "Укажите URL-адрес ниже в этих приложениях.",
-    "SERVICES_FILES_APPSYNC_SERVER": "Сервер",
-    "SERVICES_FILES_APPSYNC_HINT_CREDENTIALS": "Используйте свои общие учетные данные, которые вы используете для входа в этот веб-интерфейс.",
     "CONFIRM_DELETE_FILES_PLURAL": "Удалить выбранный файл навсегда?|Удалить выбранные файлы навсегда?",
     "CONFIRM_DELETE_FOLDERS_PLURAL": "Удалить выбранную папку навсегда?|Удалить выбранные папки навсегда?",
     "CONFIRM_DELETE_ITEMS_PLURAL": "Удалить выбранный объект навсегда?|Удалить выбранные объекты навсегда?",
@@ -926,7 +944,10 @@
     "HEADING_HISTORY_POPUP": "История активности публичной ссылки",
     "CURRENT_FOLDER_STATS": "Файлы: {FILES_OVERAL} ({SIZE_OVERAL}), Папки: {FOLDERS_OVERAL}",
     "CURRENT_FOLDER_STATS_SELECTED_FILES": "Выбрано файлов: {FILES_SELECTED} ({SIZE_SELECTED})",
-    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Выбрано папок: {FOLDERS_SELECTED}"
+    "CURRENT_FOLDER_STATS_SELECTED_FOLDERS": "Выбрано папок: {FOLDERS_SELECTED}",
+    "CONFIRM_SOME_ITEMS_SHARED_WITH_OTHERS": "Please note that some of the selected items are shared with others and after moving to the trash these files will no longer be shared. Move selected item(s) to trash?",
+    "CONFIRM_RESTORE_ITEMS_PLURAL": "Are you sure to restore selected item(s)?",
+    "ACTION_RESTORE": "Restore"
   },
   "GMAILCONNECTOR": {
     "SCOPE_MAIL": "Читать, создавать, отправлять и удалять почту в Gmail"
@@ -1032,7 +1053,7 @@
     "LABEL_TYPE_TRIAL": "Пробный",
     "LABEL_TYPE_EXPIRES_IN_PLURAL": ", истекает через {DAYS} день.|, истекает через {DAYS} дня.|, истекает через {DAYS} дней.",
     "LABEL_TYPE_EXPIRED": ", истекший.",
-    "LABEL_TYPE_OUTDATED_INFO": "Лицензия устарела, обратитесь в Afterlogic для продления.",
+    "LABEL_TYPE_OUTDATED_INFO": "Лицензия устарела, обратитесь к поставщику системы для продления.",
     "ERROR_LICENSE_KEY_MISSING": "Лицензионный ключ продукта отсутствует. Пожалуйста, предоставьте действующий ключ перед настройкой системы или добавлением новых пользователей.",
     "INFO_LICENSE_KEY_CHANGED": "Нажмите OK, чтобы перезагрузить интерфейс администратора и применить новые данные лицензии."
   },
@@ -1132,9 +1153,10 @@
     "HEADING_ACCOUNTS": "Аккаунты",
     "HEADING_FOLDERS": "Папки",
     "HEADING_UNIFIED_FOLDERS": "Единые папки",
-    "INFO_UNREAD_MESSAGES": "Непрочитанные сообщения",
+    "LABEL_EMPTY_FOLDER": "The folder is empty",
     "CONFIRM_EMPTY_SPAM_FOLDER": "Вы уверены, что хотите удалить все сообщения в папке Спам?",
-    "CONFIRM_EMPTY_TRASH_FOLDER": "Вы уверены, что хотите удалить все сообщения в папке Корзина?"
+    "CONFIRM_EMPTY_TRASH_FOLDER": "Вы уверены, что хотите удалить все сообщения в папке Корзина?",
+    "ERROR_DOMAIN_NOT_FOUND": "Почтовый сервер для этого домена не найден."
   },
   "MAILNOTESPLUGIN": {
     "PLACEHOLDER_EMPTY_NOTE": "Введите примечание здесь",
@@ -1276,7 +1298,6 @@
     "CONFIRM_MESSAGES_DELETE_NO_TRASH_FOLDER": "Папка Корзина не назначена. Удалить навсегда?",
     "ERROR_MESSAGE_SAVING": "Произошла ошибка при сохранении сообщения.",
     "REPORT_MESSAGE_SAVED": "Ваше сообщение сохранено.",
-    "WARNING_EMPTY_DRAFT": "Нельзя сохранить пустой черновик. Укажите тему, получателя или текст письма.",
     "ERROR_TEMPLATE_SAVING": "Произошла ошибка при сохранении шаблона сообщения.",
     "REPORT_TEMPLATE_SAVED": "Шаблон сообщения успешно сохранён.",
     "ERROR_MESSAGE_SENDING": "Произошла ошибка при отправке сообщения.",
@@ -1318,7 +1339,6 @@
     "INFO_MESSAGES_FROM_ALL_FOLDERS": "Сообщения из <span class=\"part\">Всех папок</span>:",
     "INFO_SEARCH_UNIFIED_ALL_FOLDERS_RESULT": "Результаты поиска <span class=\"part\">{SEARCH}</span> во <span class=\"part\">Всех объединенных аккаунтах</span>:",
     "INFO_UNREAD_MESSAGES": "Непрочитанные сообщения в папке <span class=\"part\">{FOLDER}</span>:",
-    "MOBILE_INFO_UNREAD_MESSAGES": "Непрочитанные сообщения:",
     "INFO_UNREAD_MESSAGES_SEARCH_RESULT": "Результаты поиска <span class=\"part\">{SEARCH}</span> в папке <span class=\"part\">{FOLDER}</span>, только непрочитанные сообщения:",
     "INFO_NO_UNREAD_MESSAGES": "У вас нет непрочитанных сообщений",
     "INFO_NO_UNREAD_MESSAGES_FOUND": "Не найдено ни одного непрочитанного сообщения.",
@@ -1542,10 +1562,12 @@
     "LABEL_STARRED_MESSAGES_SOURCE": "Показать отмеченные письма",
     "LABEL_STARRED_MESSAGES_SOURCE_INBOX": "только во Входящих",
     "LABEL_STARRED_MESSAGES_SOURCE_ALL_FOLDERS": "во всех папках",
+    "LABEL_ALLOW_CHANGE_LAYOUT": "Разрешить пользователям изменять раскладку почтового экрана",
     "LABEL_LAYOUT": "Макет",
     "LABEL_DEFAULT_LAYOUT": "Макет по умолчанию",
     "LABEL_VERT_SPLIT_LAYOUT": "Вертикальное разделение",
     "LABEL_HORIZ_SPLIT_LAYOUT": "Горизонтальное разделение",
+    "LABEL_SEPARATED_LAYOUT": "Раздельно",
     "LABEL_ALLOW_AUTO_PROVISIONING_NEW_USERS": "Разрешить автоматическое создание новых пользователей",
     "LABEL_HINT_ALLOW_AUTO_PROVISIONING_NEW_USERS_HTML": "Если новый пользователь входит в систему с учетными данными, которые обозначают действующую учетную запись электронной почты на вашем почтовом сервере, этот пользователь будет автоматически создан в базе данных.<br />Если этот параметр выключен, администратор должен явно добавить все домены и пользователей.",
     "LABEL_ALLOW_USERS_ADD_MAILBOXES": "Разрешить пользователям добавлять внешние почтовые ящики",
@@ -1635,7 +1657,8 @@
     "REPORT_UNSUBSCRIBE_MESSAGE_SUCCESS": "Вы успешно отписались от этих сообщений.",
     "ERROR_UNSUBSCRIBE_MESSAGE_FAIL": "Произошла ошибка при попытке отписаться от сообщения.",
     "CONFIRM_UNSUBSCRIBE_WITH_EMAIL": "Будет отправлено сообщение по адресу <b style=\"word-break: break-word;\">{RECIPIENT}</b> чтобы отписаться от этих сообщений.",
-    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Будет отправлено сообщение с темой <b style=\"word-break: break-word;\">{SUBJECT}</b> по адресу <b style=\"word-break: break-word;\">{RECIPIENT}</b> чтобы отписаться от этих сообщений."
+    "CONFIRM_UNSUBSCRIBE_WITH_EMAIL_AND_SUBJECT": "Будет отправлено сообщение с темой <b style=\"word-break: break-word;\">{SUBJECT}</b> по адресу <b style=\"word-break: break-word;\">{RECIPIENT}</b> чтобы отписаться от этих сообщений.",
+    "LABEL_ALTERNATIVE_SMTP_DISCLAIMER": "Примечание: SMTP-параметры игнорируются при включении \"Использовать указанные учетные данные\"."
   },
   "MAILZIPWEBCLIENTPLUGIN": {
     "ACTION_DOWNLOAD_ATTACHMENTS_ZIP": "...как архив"
@@ -1849,6 +1872,8 @@
     "INFO_TEXT_CONTAINS_KEYS_WITH_NO_EMAIL": "Ключи, в именах которых нет адреса электронной почты",
     "INFO_PUBLIC_KEY_LENGTH": "({LENGTH}-bit, публичный)",
     "INFO_PRIVATE_KEY_LENGTH": "({LENGTH}-bit, приватный)",
+    "INFO_PUBLIC_KEY_ECC_LENGTH": "({CURVE}, публичный)",
+    "INFO_PRIVATE_KEY_ECC_LENGTH": "({CURVE}, приватный)",
     "ERROR_IMPORT_NO_KEY_FOUND": "Не найдено ни одного OpenPGP ключа для импортирования.",
     "REPORT_KEY_SUCCESSFULLY_IMPORTED_PLURAL": "OpenPGP ключ был успешно импортирован.|OpenPGP ключи были успешно импортированы.",
     "ERROR_IMPORT_KEY": "Произошла ошибка при попытке импортировать OpenPGP ключ.",
@@ -1946,7 +1971,9 @@
   },
   "PERSONALFILES": {
     "LABEL_STORAGE": "Личные файлы",
-    "INFO_NOTFOUND": " Элемент не существует или недоступен."
+    "INFO_NOTFOUND": " Элемент не существует или недоступен.",
+    "LABEL_TRASH_STORAGE": "Корзина",
+    "LABEL_FAVORITES_STORAGE": "Избранное"
   },
   "RECAPTCHAWEBCLIENTPLUGIN": {
     "ERROR_RECAPTCHA_VERIFICATION_DID_NOT_COMPLETE": "Вы не прошли проверку reCAPTCHA должным образом.",
@@ -2004,7 +2031,9 @@
     "INFO_REGION": "Для AWS S3, укажите регион. Для других S3-совместимых сервисов, например DigitalOcean Spaces, укажите \"us-east-1\".",
     "BUTTON_TEST_CONNECTION": "Проверка подключения",
     "REPORT_CONNECT_SUCCESSFUL": "Подключение успешно.",
-    "ERROR_CONNECT_FAILED": "Подключиться не удалось."
+    "ERROR_CONNECT_FAILED": "Подключиться не удалось.",
+    "LABEL_TRASH_STORAGE": "Корзина",
+    "LABEL_FAVORITES_STORAGE": "Избранное"
   },
   "SECURITYSETTINGSWEBCLIENT": {
     "LABEL_SETTINGS_TAB": "Безопасность",
@@ -2063,6 +2092,8 @@
     "ACTION_YES": "Да",
     "ACTION_NO": "Нет",
     "CONFIRM_SAVE_SHARES_WITHOUT_LAST_EMAIL": "Коллега с адресом <b>{EMAIL}</b> не добавлен в список. Продолжить без добавления?",
+    "CANNOT_SHARE_DIRECTORY_IN_ECRYPTED_STORAGE": "It is not possible to share a directory in encrypted storage.",
+    "INCORRECT_FILE_NAME": "Can't share the file, please try renaming it.",
     "WARNING_SHARES_CHANGED_BY_OTHER_USER": "Ошибка при обновлении информации о доступе, другой пользователь внес изменения. Информация будет отображена с учетом последних изменений."
   },
   "STANDARDLOGINFORMMOBILEWEBCLIENT": {
@@ -2156,11 +2187,13 @@
     "LABEL_SETTINGS_TAB": "Двухфакторная аутентификация",
     "HEADING_SETTINGS_TAB": "Двухфакторная аутентификация",
     "ACTION_BACK": "Назад",
+    "ACTION_BACK_TO_LOGIN": "Back to login",
     "ACTION_ENABLE_TWOFACTORAUTH": "Включить",
     "HINT_ABOUT_TWOFACTORAUTH": "Вы можете усилить защиту вашей учетной записи путем включения двухфакторной аутентификации.",
     "ACTION_VERIFY_PASSWORD": "Проверка пароля",
     "ACTION_VERIFY_PASSWORD_IN_PROGRESS": "Проверка...",
     "HINT_ABOUT_CONFIRMATION": "Доступ к настройкам двухфакторной аутентификации требует проверки пароля вашей учетной записи",
+    "ERROR_SECRET_GENERATION_FAILED": "Не удалось создать секретный ключ",
     "ERROR_WRONG_PASSWORD": "Неправильный пароль.",
     "ACTION_CONFIGURE": "Настроить",
     "ACTION_REFUSE_CONFIGURE": "Нет, спасибо",
