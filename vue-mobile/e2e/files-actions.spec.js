@@ -262,7 +262,7 @@ test.describe('Mobile files actions', () => {
     const folderCount = await page.getByTestId('files-folder').count()
     test.skip(
       folderCount === 0,
-      'Need at least one folder as move destination (create-folder E2E is blocked by AppInput bug)'
+      'Need at least one folder as move destination'
     )
 
     const uniqueName = `e2e-move-${Date.now()}.txt`

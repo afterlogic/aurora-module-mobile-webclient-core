@@ -82,5 +82,4 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 
 Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
 
-1. **Files — create folder:** `AppInput` in `CreateFolderDialog` does not update parent `v-model` (Vue 3). `creates a folder via FAB` fails.
-2. **Contacts — blank GroupView right after create:** `CreateGroup` saves the name, but the immediate `group-view` often has empty `currentGroup`. `creates and deletes a group` fails on name in `contacts-group-view`.
+1. **Contacts — blank GroupView right after create:** `CreateGroup` saves the name, but the immediate `group-view` often has empty `currentGroup`. `creates and deletes a group` fails on name in `contacts-group-view`.
