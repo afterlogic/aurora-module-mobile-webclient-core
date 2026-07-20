@@ -16,9 +16,11 @@ nvm use 22                    # if you use nvm
 yarn -v                       # expect 1.22.x
 yarn test:e2e:install-browsers
 yarn build-production         # after changing Vue files (data-test-id, etc.)
-yarn test:e2e
+yarn test:e2e_local           # Playwright only; HTML in playwright-report/ (local)
+yarn test:e2e                 # Playwright + email-report stub after run
 yarn test:e2e:report          # open HTML report in the browser
 ```
+
 
 In the console you will see steps like `→ Open mobile login page`.
 In the HTML report: timeline of steps, screenshots on failure, and a **Trace** button to replay the browser session.
