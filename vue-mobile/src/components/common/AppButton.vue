@@ -1,5 +1,6 @@
 <template>
   <q-btn
+    v-bind="$attrs"
     class="q-py-xs full-width app-button"
     :size="size"
     :disable="disabled"
@@ -17,6 +18,7 @@
 <script>
 export default {
   name: 'AppButton',
+  inheritAttrs: false,
   props: {
     label: { type: String, default: '' },
     size: { type: String, default: 'lg' },

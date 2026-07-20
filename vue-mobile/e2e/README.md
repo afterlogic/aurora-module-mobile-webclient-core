@@ -1,0 +1,84 @@
+# Mobile E2E (Playwright)
+
+## Preconditions
+
+1. Local Aurora is running (MAMP or equivalent).
+2. Document Root points at the project root.
+3. Mobile UI opens in a browser: `http://localhost:8888/?mobile-version`
+
+## Run
+
+Use **Yarn classic (1.x)** and preferably **Node 18 or 22** (not Node 24).
+Yarn Berry (4.x) rewrites `yarn.lock` and breaks `quasar build` (`Unknown keyword formatMinimum`).
+
+```bash
+nvm use 22                    # if you use nvm
+yarn -v                       # expect 1.22.x
+yarn test:e2e:install-browsers
+yarn build-production         # after changing Vue files (data-test-id, etc.)
+yarn test:e2e
+yarn test:e2e:report          # open HTML report in the browser
+```
+
+In the console you will see steps like `→ Open mobile login page`.
+In the HTML report: timeline of steps, screenshots on failure, and a **Trace** button to replay the browser session.
+
+Flaky mitigation (already in config/helpers):
+- 1 automatic retry
+- clean session before login
+- wait for Turnstile token (again before submit)
+- wait for footer `nav-mail` after login
+- shared list-ready waits (items / empty / spinner gone)
+- compose recipient: `.first()` option + wait for dialog close
+
+UI Mode (watch tests live):
+
+```bash
+yarn test:e2e:ui
+```
+
+## Credentials (login test)
+
+```bash
+cp .env.e2e.example .env.e2e
+# edit E2E_LOGIN and E2E_PASSWORD
+```
+
+`.env.e2e` is gitignored. Playwright loads it automatically.
+
+## Custom URL
+
+```bash
+PLAYWRIGHT_BASE_URL=http://localhost:8888/?mobile-version npm run test:e2e
+```
+
+If MAMP is not running, the test fails with a connection error — start the server and retry.
+
+After changing Vue files used by mobile, rebuild mobile assets before re-running E2E.
+
+## Tests
+
+| Spec | What it checks |
+|------|----------------|
+| `login-page.spec.js` | Login form is visible |
+| `login.spec.js` | Full login (Turnstile + credentials) |
+| `mail.spec.js` | Inbox → open first message → back to list |
+| `mail-actions.spec.js` | Message UI: details, star, reply/reply-all/forward open, search header |
+| `mail-folders.spec.js` | Drawer → Inbox / Sent / Trash / Spam |
+| `mail-mutations.spec.js` | Headers, move, spam / not spam, delete, send reply/forward, advanced search |
+| `mail-attachments.spec.js` | Compose + attach file → send → open in Sent → attachment list |
+| `compose.spec.js` | Compose + send to `E2E_COMPOSE_TO` (or self) |
+| `compose-draft.spec.js` | Save draft → reopen; send opened draft → Sent; discard unsaved on back |
+| `contacts.spec.js` | Contacts → open card → back to list |
+| `contacts-actions.spec.js` | Drawer/storages switch, search, create/edit/delete contact, group CRUD, compose from email, share/unshare, find in mail |
+| `files.spec.js` | Files → open file/folder → back |
+| `files-actions.spec.js` | Drawer, search, upload+delete, rename, public link, move, create folder |
+| `settings.spec.js` | Settings menu (+ first tab) → logout → login form |
+| `settings-actions.spec.js` | Every settings tab open/back; OpenPGP (+ My keys); Paranoid Encryption; Add account form (if visible) |
+
+## Known product bugs (E2E does not fix these; scenarios fail)
+
+Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
+
+1. **Files — create folder:** `AppInput` in `CreateFolderDialog` does not update parent `v-model` (Vue 3). `creates a folder via FAB` fails.
+2. **Contacts — blank GroupView right after create:** `CreateGroup` saves the name, but the immediate `group-view` often has empty `currentGroup`. `creates and deletes a group` fails on name in `contacts-group-view`.

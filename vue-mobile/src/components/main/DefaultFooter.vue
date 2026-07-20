@@ -1,7 +1,12 @@
 <template>
   <q-footer elevated class="bg-white">
     <q-toolbar class="flex justify-between" style="height: 60px">
-      <MenuButton v-for="buttonData in footerButtons" :key="buttonData.pagePath" :url="buttonData.pagePath">
+      <MenuButton
+        v-for="buttonData in footerButtons"
+        :key="buttonData.pagePath"
+        :url="buttonData.pagePath"
+        :data-test-id="`nav-${buttonData.pageName}`"
+      >
         <component :is="buttonData.iconComponent" :color="buttonData.highlightPaths.indexOf(currentPath) !== -1 ? '#469CF8' : '#B6B5B5'"></component>
       </MenuButton>
     </q-toolbar>

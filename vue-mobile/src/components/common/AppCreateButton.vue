@@ -1,6 +1,10 @@
 <template>
   <!-- <div class="app-create-button" @click="showDialog" :class="{'rotate': rotate}"> -->
-  <div class="app-create-button" :class="{'rotate': rotate}">
+  <div
+    v-bind="$attrs"
+    class="app-create-button"
+    :class="{'rotate': rotate}"
+  >
     <slot>
       <PlusIcon color="#fff" />
     </slot>
@@ -13,6 +17,7 @@ import PlusIcon from 'components/common/icons/Plus1Icon'
 
 export default {
   name: 'AppCreateButton',
+  inheritAttrs: false,
   components: {
     PlusIcon,
   },

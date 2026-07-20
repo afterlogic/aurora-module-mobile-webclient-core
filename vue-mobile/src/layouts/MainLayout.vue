@@ -5,7 +5,7 @@
   <MainDrawer>
     <slot name="drawer" />
   </MainDrawer>
-  <q-page-container class="full-height">
+  <q-page-container class="full-height" data-test-id="app-shell">
     <q-page :style-fn="pageStyles">
       <slot />
     </q-page>

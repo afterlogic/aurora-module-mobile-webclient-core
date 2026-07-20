@@ -1,5 +1,13 @@
 <template>
-  <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" elevated @hide="onHide">
+  <q-drawer
+    data-test-id="mail-drawer"
+    v-model="leftDrawerOpen"
+    side="left"
+    overlay
+    behavior="mobile"
+    elevated
+    @hide="onHide"
+  >
     <q-scroll-area class="fit" :thumb-style="{ width: '5px' }">
       <slot />
     </q-scroll-area>
