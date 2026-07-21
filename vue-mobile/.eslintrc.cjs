@@ -15,6 +15,25 @@ module.exports = {
     'vue/setup-compiler-macros': true
   },
 
+  overrides: [
+    {
+      files: ['test/unit/**/*.{js,mjs}', 'vitest.config.mjs'],
+      env: {
+        node: true,
+      },
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        vi: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+      },
+    },
+  ],
+
   // Rules order is important, please avoid shuffling them
   extends: [
     // Base ESLint recommended rules

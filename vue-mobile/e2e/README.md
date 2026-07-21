@@ -1,5 +1,7 @@
 # Mobile E2E (Playwright)
 
+Unit / component tests (Vitest, no server): see [`../test/unit/README.md`](../test/unit/README.md).
+
 ## Preconditions
 
 1. Local Aurora is running (MAMP or equivalent).
@@ -82,4 +84,4 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 
 Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
 
-1. **Contacts — blank GroupView right after create:** `CreateGroup` saves the name, but the immediate `group-view` often has empty `currentGroup`. `creates and deletes a group` fails on name in `contacts-group-view`.
+_(None currently.)_
