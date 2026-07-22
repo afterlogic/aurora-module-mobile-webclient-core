@@ -82,6 +82,7 @@ async function deleteOpenedContact(page, fullName) {
 }
 
 async function longPressContactItem(page, item) {
+  await item.scrollIntoViewIfNeeded()
   const box = await item.boundingBox()
   if (!box) {
     throw new Error('contacts item has no bounding box for long-press')
