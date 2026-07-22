@@ -93,4 +93,5 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 
 Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
 
-_(None currently listed — Contacts Send shows "Coming soon" stub.)_
+- **Contacts multi-select (long-press)** — `contacts-select-actions.spec.js`: after long-press on a contact in Personal list, `contacts-select-header` never appears. Likely hold→click race: `v-touch-hold` selects the item, then the synthetic click toggles `isSelected` off (`ContactItem.listItemClick` in select mode); `SelectHeader` only shows when `selectedContacts.length > 0`. Worse on a long Personal list (`q-virtual-scroll` + leftover E2E contacts). Same helper works more often on a short group list.
+- **OpenPGP Generate dialog close (flaky)** — `settings-auth.spec.js`: X / Escape sometimes leave `settings-openpgp-generate-dialog` open (`AppDialog` + `persistent`). Retry usually passes.

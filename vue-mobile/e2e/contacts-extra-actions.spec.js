@@ -78,8 +78,6 @@ test.describe('Mobile contacts team and send', () => {
       const send = page.getByTestId('contacts-menu-send')
       test.skip((await send.count()) === 0, 'Send action not in contact menu')
       await clickReady(send)
-      // Product currently stubs Send with "Coming soon" toast (SendDialog unused).
-      // Expect a real send dialog OR compose — fail if only stub toast forever.
       const notification = page.locator('.q-notification').first()
       await expect
         .poll(
@@ -107,10 +105,9 @@ test.describe('Mobile contacts team and send', () => {
       } else {
         const text = (await notification.innerText()).trim()
         console.log(`  → Notification: ${text}`)
-        await attachScreenshot(page, 'contacts-send-stub')
-        // Product stub in contact-actions.js: notification.showReport('Comming soon')
-        // Keep assertion strict so suite stays red until SendDialog is wired.
+        await attachScreenshot(page, 'contacts-send-unexpected')
         expect(text.toLowerCase()).not.toMatch(/comm?ing\s*soon/)
+        throw new Error(`Expected compose after Send, got notification: ${text}`)
       }
     })
 
