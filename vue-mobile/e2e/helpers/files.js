@@ -80,6 +80,47 @@ async function deleteOpenedFile(page, name) {
   ).toHaveCount(0, { timeout: 60000 })
 }
 
+async function longPressFilesItem(page, item) {
+  const box = await item.boundingBox()
+  if (!box) {
+    throw new Error('files item has no bounding box for long-press')
+  }
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+  await page.mouse.down()
+  await page.waitForTimeout(750)
+  await page.mouse.up()
+}
+
+async function navigateToStorageRoot(page) {
+  if (await page.getByTestId('files-view').isVisible().catch(() => false)) {
+    await clickReady(page.getByTestId('files-view-back'))
+    await waitForFilesList(page)
+  }
+  for (let i = 0; i < 10; i++) {
+    const back = page.getByTestId('files-path-back')
+    if (!(await back.isVisible().catch(() => false))) break
+    await clickReady(back)
+    await waitForFilesList(page)
+  }
+}
+
+async function openPersonalStorage(page) {
+  await navigateToStorageRoot(page)
+  await clickReady(page.getByTestId('files-folder-menu'))
+  await expect(page.getByTestId('mail-drawer')).toBeVisible({ timeout: 15000 })
+  const personal = page
+    .locator(
+      '[data-test-id="files-storage-item"][data-storage-type="personal"]'
+    )
+    .first()
+  if ((await personal.count()) > 0) {
+    await clickReady(personal)
+  } else {
+    await clickReady(page.getByTestId('files-storage-item').first())
+  }
+  await waitForFilesList(page)
+}
+
 module.exports = {
   listReadyOptions,
   openFiles,
@@ -87,6 +128,9 @@ module.exports = {
   uploadFileViaFab,
   openFileByName,
   deleteOpenedFile,
+  longPressFilesItem,
+  navigateToStorageRoot,
+  openPersonalStorage,
   waitForListReady,
   clickReady,
   step,

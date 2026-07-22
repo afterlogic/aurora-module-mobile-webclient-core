@@ -66,22 +66,31 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 |------|----------------|
 | `login-page.spec.js` | Login form is visible |
 | `login.spec.js` | Full login (Turnstile + credentials) |
+| `auth-actions.spec.js` | Invalid password; forgot-password → back; logout→re-login; password visibility toggle |
 | `mail.spec.js` | Inbox → open first message → back to list |
 | `mail-actions.spec.js` | Message UI: details, star, reply/reply-all/forward open, search header |
 | `mail-folders.spec.js` | Drawer → Inbox / Sent / Trash / Spam |
 | `mail-mutations.spec.js` | Headers, move, spam / not spam, delete, send reply/forward, advanced search |
+| `mail-list-actions.spec.js` | Unseen filter + clear; Starred; multi-select bulk delete; empty Trash |
 | `mail-attachments.spec.js` | Compose + attach file → send → open in Sent → attachment list |
 | `compose.spec.js` | Compose + send to `E2E_COMPOSE_TO` (or self) |
 | `compose-draft.spec.js` | Save draft → reopen; send opened draft → Sent; discard unsaved on back |
+| `compose-cc-bcc.spec.js` | Show CC/BCC, fill recipients, discard without sending |
+| `mail-forward-resend.spec.js` | Forward as Attachment → compose; Resend → compose (when available) |
 | `contacts.spec.js` | Contacts → open card → back to list |
 | `contacts-actions.spec.js` | Drawer/storages switch, search, create/edit/delete contact, group CRUD, compose from email, share/unshare, find in mail |
+| `contacts-select-actions.spec.js` | Multi-select bulk delete; multi-select compose; assign/remove from group; rename group |
+| `contacts-extra-actions.spec.js` | Team storage browse; Send from contact menu |
 | `files.spec.js` | Files → open file/folder → back |
 | `files-actions.spec.js` | Drawer, search, upload+delete, rename, public link, move, create folder |
+| `files-select-actions.spec.js` | Copy into folder (original remains); multi-select bulk delete; share with teammates dialog; leave share via item menu |
+| `files-extra-actions.spec.js` | Multi-select copy into folder; file download; rename folder via item menu |
 | `settings.spec.js` | Settings menu (+ first tab) → logout → login form |
 | `settings-actions.spec.js` | Every settings tab open/back; OpenPGP (+ My keys); Paranoid Encryption; Add account form (if visible) |
+| `settings-auth.spec.js` | OpenPGP external keys + generate dialog (cancel); OpenPGP toggle+save; Paranoid controls visible |
 
 ## Known product bugs (E2E does not fix these; scenarios fail)
 
 Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
 
-_(None currently.)_
+_(None currently listed — Contacts Remove from group leaves select mode / list stale: `ContactsMobileWebclient/.../SelectHeader.vue` `removeFromGroup`. Contacts Send shows "Coming soon" stub.)_

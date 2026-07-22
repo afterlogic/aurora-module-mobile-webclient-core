@@ -81,6 +81,52 @@ async function deleteOpenedContact(page, fullName) {
   ).toHaveCount(0, { timeout: 30000 })
 }
 
+async function longPressContactItem(page, item) {
+  const box = await item.boundingBox()
+  if (!box) {
+    throw new Error('contacts item has no bounding box for long-press')
+  }
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+  await page.mouse.down()
+  await page.waitForTimeout(750)
+  await page.mouse.up()
+}
+
+async function createGroupViaFab(page, groupName) {
+  await clickReady(page.getByTestId('contacts-create-fab'))
+  await expect(page.getByTestId('contacts-create-group')).toBeVisible({
+    timeout: 15000,
+  })
+  await clickReady(page.getByTestId('contacts-create-group'))
+  await expect(page.getByTestId('contacts-group-edit')).toBeVisible({
+    timeout: 30000,
+  })
+  await fillContactsField(page, 'contacts-group-edit-name', groupName)
+  await clickReady(page.getByTestId('contacts-group-edit-save'))
+  await expect(page.getByTestId('contacts-group-view')).toBeVisible({
+    timeout: 45000,
+  })
+  await expect(page.getByTestId('contacts-group-view')).toContainText(
+    groupName,
+    { timeout: 15000 }
+  )
+}
+
+async function openGroupFromDrawer(page, groupName) {
+  await clickReady(page.getByTestId('contacts-folder-menu'))
+  await expect(page.getByTestId('mail-drawer')).toBeVisible({ timeout: 15000 })
+  const group = page
+    .getByTestId('contacts-group-item')
+    .filter({ hasText: groupName })
+    .first()
+  await expect(group).toBeVisible({ timeout: 15000 })
+  await clickReady(group)
+  await expect(page.getByTestId('contacts-list')).toBeVisible({
+    timeout: 30000,
+  })
+  await waitForListReady(page, listReadyOptions)
+}
+
 module.exports = {
   listReadyOptions,
   openContacts,
@@ -88,6 +134,9 @@ module.exports = {
   createContactViaFab,
   openContactByName,
   deleteOpenedContact,
+  longPressContactItem,
+  createGroupViaFab,
+  openGroupFromDrawer,
   waitForListReady,
   clickReady,
   step,

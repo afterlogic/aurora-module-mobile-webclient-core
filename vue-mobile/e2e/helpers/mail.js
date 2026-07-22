@@ -84,10 +84,16 @@ async function readComposeSubject(page) {
 async function closeComposeWithoutSending(page) {
   await step('Close compose without sending', async () => {
     await clickReady(page.getByTestId('mail-compose-back'))
-    // Dirty compose may ask to discard changes.
-    const discardOk = page.getByRole('button', { name: /^OK$/i })
-    if (await discardOk.isVisible().catch(() => false)) {
-      await discardOk.click()
+    const discardDialog = page.getByTestId('mail-compose-discard-dialog')
+    if (await discardDialog.isVisible().catch(() => false)) {
+      await clickReady(page.getByTestId('mail-compose-discard-ok'))
+      await expect(discardDialog).toBeHidden({ timeout: 15000 })
+    } else {
+      // Fallback for older discard UI.
+      const discardOk = page.getByRole('button', { name: /^OK$/i })
+      if (await discardOk.isVisible().catch(() => false)) {
+        await discardOk.click()
+      }
     }
     await expect(page.getByTestId('mail-compose')).toBeHidden({
       timeout: 30000,
@@ -123,17 +129,17 @@ async function openFolderByType(page, folderType) {
   return name
 }
 
-async function fillComposeRecipient(page, email) {
-  const toField = page.getByTestId('mail-compose-to')
-  await toField.locator('.q-field__control, .q-field__native').first().click()
-  const toInput = toField.locator('input').first()
-  await toInput.fill(email, { force: true })
+async function fillComposeRecipient(page, email, fieldTestId = 'mail-compose-to') {
+  const field = page.getByTestId(fieldTestId)
+  await field.locator('.q-field__control, .q-field__native').first().click()
+  const input = field.locator('input').first()
+  await input.fill(email, { force: true })
 
   const option = page.getByRole('option', { name: email }).first()
   await expect(option).toBeVisible({ timeout: 15000 })
   await option.click()
 
-  await expect(toField.locator('.recipients-input__chip')).toBeVisible({
+  await expect(field.locator('.recipients-input__chip').first()).toBeVisible({
     timeout: 15000,
   })
   await expect(page.getByRole('dialog')).toBeHidden({ timeout: 10000 }).catch(
@@ -148,6 +154,33 @@ async function sendCompose(page) {
   })
 }
 
+async function openFolderByName(page, folderName) {
+  await openMailDrawer(page)
+  const folder = page
+    .locator(
+      `[data-test-id="mail-folder-item"][data-folder-name="${folderName}"]`
+    )
+    .first()
+  await expect(folder).toBeVisible({ timeout: 15000 })
+  await clickReady(folder)
+  await expect(page.getByTestId('mail-message-list')).toBeVisible({
+    timeout: 30000,
+  })
+  await waitForListReady(page, listReadyOptions)
+  return folderName
+}
+
+async function longPressMessageItem(page, item) {
+  const box = await item.boundingBox()
+  if (!box) {
+    throw new Error('mail-message-item has no bounding box for long-press')
+  }
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+  await page.mouse.down()
+  await page.waitForTimeout(750)
+  await page.mouse.up()
+}
+
 module.exports = {
   FOLDER_TYPES,
   waitForInboxList,
@@ -157,6 +190,11 @@ module.exports = {
   closeComposeWithoutSending,
   openMailDrawer,
   openFolderByType,
+  openFolderByName,
+  longPressMessageItem,
   fillComposeRecipient,
   sendCompose,
+  waitForListReady,
+  listReadyOptions,
+  clickReady,
 }
