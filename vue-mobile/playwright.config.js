@@ -56,10 +56,39 @@ module.exports = defineConfig({
   },
   projects: [
     {
-      name: 'Mobile Chrome',
+      name: 'iPhone SE',
+      use: {
+        ...devices['iPhone SE'],
+        browserName: 'chromium',
+      },
+    },
+    {
+      name: 'iPhone 13',
       use: {
         ...devices['iPhone 13'],
-        defaultBrowserType: 'chromium',
+        browserName: 'chromium',
+      },
+    },
+    {
+      name: 'Pixel 7',
+      use: {
+        ...devices['Pixel 7'],
+        browserName: 'chromium',
+      },
+    },
+    // Playwright WebKit (Safari engine) — not real Mobile Safari, but catches WebKit-only issues.
+    {
+      name: 'iPhone SE WebKit',
+      use: {
+        ...devices['iPhone SE'],
+        browserName: 'webkit',
+      },
+    },
+    {
+      name: 'iPhone 13 WebKit',
+      use: {
+        ...devices['iPhone 13'],
+        browserName: 'webkit',
       },
     },
   ],

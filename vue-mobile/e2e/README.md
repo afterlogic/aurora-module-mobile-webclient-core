@@ -18,11 +18,36 @@ nvm use 22                    # if you use nvm
 yarn -v                       # expect 1.22.x
 yarn test:e2e:install-browsers
 yarn build-production         # after changing Vue files (data-test-id, etc.)
-yarn test:e2e_local           # Playwright only; HTML in playwright-report/ (local)
-yarn test:e2e                 # Playwright + email-report stub after run
+yarn test:e2e_local           # full device matrix (see below); HTML in playwright-report/
+yarn test:e2e_local:iphone    # fast loop: iPhone 13 Chromium only
+yarn test:e2e_local:webkit    # iPhone SE + iPhone 13 on Playwright WebKit
+yarn test:e2e                 # Playwright + email-report stub after run (full matrix)
 yarn test:e2e:report          # open HTML report in the browser
 ```
 
+### Device matrix
+
+Chromium and WebKit emulation (viewport / UA / touch):
+
+| Project | Engine | Device preset | Viewport |
+|---------|--------|---------------|----------|
+| `iPhone SE` | Chromium | `iPhone SE` | 320×568 |
+| `iPhone 13` | Chromium | `iPhone 13` | 390×664 (baseline) |
+| `Pixel 7` | Chromium | `Pixel 7` | 412×839 |
+| `iPhone SE WebKit` | WebKit | `iPhone SE` | 320×568 |
+| `iPhone 13 WebKit` | WebKit | `iPhone 13` | 390×664 |
+
+WebKit here is **Playwright’s Safari engine** (desktop WebKit + mobile viewport), not real Mobile Safari on a device/simulator.
+
+Full matrix ≈ 5× suite time with `workers: 1`. Single device / single file:
+
+```bash
+yarn test:e2e_local:iphone
+yarn test:e2e_local:webkit
+yarn test:e2e_local -- --project="Pixel 7"
+yarn test:e2e_local -- --project="iPhone 13 WebKit"
+yarn test:e2e_local -- contacts-select-actions.spec.js --project="iPhone SE"
+```
 
 In the console you will see steps like `→ Open mobile login page`.
 In the HTML report: timeline of steps, screenshots on failure, and a **Trace** button to replay the browser session.
