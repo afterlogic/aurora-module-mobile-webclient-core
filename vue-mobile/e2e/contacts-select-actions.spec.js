@@ -224,9 +224,6 @@ test.describe('Mobile contacts select and groups', () => {
         page.getByTestId('contacts-select-remove-from-group')
       ).toBeVisible({ timeout: 10000 })
       await clickReady(page.getByTestId('contacts-select-remove-from-group'))
-      // Product expectation: leave select mode and drop contact from group list.
-      // Known bug if this fails: SelectHeader.removeFromGroup only calls API
-      // (asyncGetContacts commented out; no resetSelectedItems / list update).
       await expect(page.getByTestId('contacts-select-header')).toBeHidden({
         timeout: 45000,
       })

@@ -93,4 +93,4 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 
 Do not work around these in tests — keep the happy-path assertion so the suite stays red until the product is fixed.
 
-_(None currently listed — Contacts Remove from group leaves select mode / list stale: `ContactsMobileWebclient/.../SelectHeader.vue` `removeFromGroup`. Contacts Send shows "Coming soon" stub.)_
+_(None currently listed — Contacts Send shows "Coming soon" stub.)_
