@@ -1,31 +1,45 @@
 const fse = require('fs-extra')
+const path = require('path')
 
-const removeDir = function (path) {
-  if (fse.existsSync(path)) {
-    const files = fse.readdirSync(path)
+const removeDir = function (dirPath) {
+  if (fse.existsSync(dirPath)) {
+    const files = fse.readdirSync(dirPath)
 
     if (files.length > 0) {
       files.forEach(function (filename) {
-        if (fse.statSync(path + '/' + filename).isDirectory()) {
-          removeDir(path + '/' + filename)
+        if (fse.statSync(dirPath + '/' + filename).isDirectory()) {
+          removeDir(dirPath + '/' + filename)
         } else {
-          fse.unlinkSync(path + '/' + filename)
+          fse.unlinkSync(dirPath + '/' + filename)
         }
       })
-      fse.rmdirSync(path)
+      fse.rmdirSync(dirPath)
     } else {
-      fse.rmdirSync(path)
+      fse.rmdirSync(dirPath)
     }
   } else {
     console.log('Directory path not found.')
   }
 }
 
+/**
+ * Quasar emits absolute "/static/vue-mobile/..." URLs. When the SPA HTML is
+ * served from ?mobile-version under a subdirectory install, those resolve
+ * from the site root and 404. Strip the leading slash so paths stay relative
+ * to the current document URL.
+ */
+function toRelativeStaticPaths (content) {
+  return content
+    .replace(/\/\.\/static\/vue-mobile\//g, 'static/vue-mobile/')
+    .replace(/\/static\/vue-mobile\//g, 'static/vue-mobile/')
+}
+
 require('./prepare-files')
 
 console.log('Start building the app...')
 const execSync = require('child_process').execSync
-execSync('quasar build')
+const quasarBin = path.join(__dirname, '../node_modules/.bin/quasar')
+execSync(`"${quasarBin}" build`, { stdio: 'inherit', env: process.env })
 
 const srcDir = './dist/spa'
 if (fse.existsSync(srcDir)) {
@@ -42,12 +56,31 @@ if (fse.existsSync(srcDir)) {
 
   console.log('Start to prepare index.html...')
   let indexContent = fse.readFileSync(destDir + 'index.html', 'utf8')
-  indexContent = indexContent.replace(/<base href="[^"]*">/g, '')
+  // Drop Quasar <base> tags: document URL is ?mobile-version (install root).
+  indexContent = indexContent.replace(/<base\b[^>]*>/gi, '')
+  indexContent = toRelativeStaticPaths(indexContent)
+  // Favicons are emitted as root-relative "icons/..." — prefix for install subdir.
   indexContent = indexContent.replace(
-    /<head>/,
-    '<head><base href="/static/vue-mobile/">'
+    /\b(href=)(?!static\/)(icons\/|favicon\.ico)/g,
+    '$1static/vue-mobile/$2'
   )
   fse.writeFileSync(destDir + 'index.html', indexContent)
+
+  console.log('Rewriting absolute static paths in JS bundles...')
+  const jsDir = destDir + 'js'
+  if (fse.existsSync(jsDir)) {
+    fse.readdirSync(jsDir).forEach((filename) => {
+      if (!filename.endsWith('.js')) {
+        return
+      }
+      const filePath = jsDir + '/' + filename
+      const original = fse.readFileSync(filePath, 'utf8')
+      const updated = toRelativeStaticPaths(original)
+      if (updated !== original) {
+        fse.writeFileSync(filePath, updated)
+      }
+    })
+  }
 
   console.log('Everything is ready now')
 } else {

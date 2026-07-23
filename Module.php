@@ -60,7 +60,59 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
     {
         \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
         $sResult = \file_get_contents('./static/vue-mobile/index.html');
+        if ($sResult === false) {
+            return '';
+        }
+
+        // Link previews (Telegram etc.) read title/description from this HTML.
+        // Prefer Branding ProductName, then Core SiteName — same fallback as the login UI.
+        $sPreviewName = $this->getLinkPreviewName();
+        $sPreviewNameEsc = \htmlspecialchars($sPreviewName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        $sResult = \preg_replace('/<title>.*?<\/title>/s', '<title>' . $sPreviewNameEsc . '</title>', $sResult, 1) ?? $sResult;
+        $sResult = \preg_replace(
+            '/<meta\b[^>]*\bname=(["\']?)description\1[^>]*>/i',
+            '<meta name="description" content="' . $sPreviewNameEsc . '">',
+            $sResult,
+            1
+        ) ?? $sResult;
+
+        if (\stripos($sResult, 'og:title') === false) {
+            $sResult = \preg_replace(
+                '/<\/title>/i',
+                '</title><meta property="og:title" content="' . $sPreviewNameEsc . '">'
+                    . '<meta property="og:description" content="' . $sPreviewNameEsc . '">',
+                $sResult,
+                1
+            ) ?? $sResult;
+        }
+
         return $sResult;
+    }
+
+    /**
+     * Name used in link-preview meta tags for the mobile SPA entry.
+     */
+    protected function getLinkPreviewName()
+    {
+        try {
+            if (\Aurora\System\Api::GetModuleManager()->ModuleExists('BrandingWebclient')) {
+                $aBranding = \Aurora\Modules\BrandingWebclient\Module::Decorator()->GetSettings();
+                if (\is_array($aBranding) && !empty($aBranding['ProductName'])) {
+                    return (string) $aBranding['ProductName'];
+                }
+            }
+            if (\Aurora\System\Api::GetModuleManager()->ModuleExists('Core')) {
+                $oCoreSettings = \Aurora\Modules\Core\Module::getInstance()->oModuleSettings;
+                if ($oCoreSettings && !empty($oCoreSettings->SiteName)) {
+                    return (string) $oCoreSettings->SiteName;
+                }
+            }
+        } catch (\Throwable $oException) {
+            // Fall through to default.
+        }
+
+        return 'Aurora';
     }
 
     public function GetSettings()

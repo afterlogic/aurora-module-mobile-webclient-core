@@ -53,7 +53,12 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
+      // Quasar normalizes this to an absolute "/static/vue-mobile/" in the
+      // build output; build-production.js rewrites it to a relative path so
+      // assets resolve under the app install directory (?mobile-version).
       publicPath: ctx.dev ? '/' : '/static/vue-mobile/',
+      // App document URL is the install root (?mobile-version), not /static/vue-mobile/
+      vueRouterBase: '/',
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },
