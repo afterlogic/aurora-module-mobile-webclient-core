@@ -26,6 +26,8 @@ const errorsCodes = {
   CanNotUploadFileLimit: 815,
   DataTransferFailed: 1100,
   NotDisplayedError: 1155,
+  /** Mail: IMAP/SMTP login rejected (wrong password, etc.) */
+  CannotLoginCredentialsIncorrect: 4002,
 }
 
 const errorsUtils = {
@@ -51,9 +53,9 @@ const errorsUtils = {
     }
 
     if (types.isNonEmptyString(errorText)) {
-      const responseError = textUtils.encodeHtml(responseData.ErrorMessage || '')
-      if (types.isNonEmptyString(responseError)) {
-        errorText += ' (' + responseError + ')'
+      const responseErrorDetail = this._getSafeErrorMessageDetail(errorCode, responseData.ErrorMessage)
+      if (types.isNonEmptyString(responseErrorDetail)) {
+        errorText += ' (' + textUtils.encodeHtml(responseErrorDetail) + ')'
       }
 
       errorText = this._addSubscriptionsErrors(responseData, errorText)
@@ -62,6 +64,46 @@ const errorsUtils = {
     }
 
     return errorText
+  },
+
+  /**
+   * Returns a user-facing ErrorMessage fragment, or empty string when the
+   * backend detail is only technical (IMAP/SMTP protocol text, AuthError tag).
+   * Raw technical text is logged instead of shown in toasts.
+   */
+  _getSafeErrorMessageDetail(errorCode, errorMessage) {
+    if (!types.isNonEmptyString(errorMessage)) {
+      return ''
+    }
+
+    // Core AuthError message is typically the literal "AuthError" — not useful in UI.
+    if (errorCode === errorsCodes.AuthError) {
+      console.warn('[API]', errorCode, errorMessage)
+      return ''
+    }
+
+    let detail = errorMessage
+    // Mail 4002 often prefixes with "{accountId}:" (empty id → ":TAG1 NO …").
+    if (errorCode === errorsCodes.CannotLoginCredentialsIncorrect) {
+      const colonIndex = detail.indexOf(':')
+      if (colonIndex !== -1) {
+        const prefix = detail.slice(0, colonIndex)
+        if (prefix === '' || /^\d+$/.test(prefix)) {
+          detail = detail.slice(colonIndex + 1).trim()
+        }
+      }
+    }
+
+    if (!types.isNonEmptyString(detail) || this._isTechnicalServerDetail(detail)) {
+      console.warn('[API]', errorCode, errorMessage)
+      return ''
+    }
+
+    return detail
+  },
+
+  _isTechnicalServerDetail(message) {
+    return /AUTHENTICATIONFAILED|\bTAG\d+\b|\bNO\s*\(|^\*\s/i.test(message)
   },
 
   _getModuleErrorByCode(moduleName, errorCode) {
@@ -113,6 +155,9 @@ const errorsUtils = {
         return ''
       case errorsCodes.SystemNotConfigured:
         return i18n.global.tc('COREWEBCLIENT.ERROR_SYSTEM_NOT_CONFIGURED')
+      case errorsCodes.CannotLoginCredentialsIncorrect:
+        // Fallback when Mail module_errors are not loaded yet.
+        return i18n.global.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')
       default:
         return defaultErrorText || i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN')
     }

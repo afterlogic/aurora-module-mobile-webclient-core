@@ -12,10 +12,10 @@ import notification from 'src/utils/notification'
 
 function rejectWithError(reject, responseData, defaultErrorText, silentError) {
   const errorText = errors.getTextFromResponse(responseData, defaultErrorText)
-  if (!silentError) {
+  if (!silentError && errorText) {
     notification.showError(errorText)
   }
-  reject(new Error(errorText))
+  reject(new Error(errorText || 'Request failed'))
 }
 
 export default {
