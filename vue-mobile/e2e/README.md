@@ -2,6 +2,19 @@
 
 Unit / component tests (Vitest, no server): see [`../test/unit/README.md`](../test/unit/README.md).
 
+**Layout:** this package (`CoreMobileWebclient/vue-mobile`) is the **runner**
+(config, shared helpers, browsers, `.env.e2e`). Scenarios live in modules:
+
+```text
+modules/<MobileWebclient>/vue-mobile/test/e2e/*.spec.js
+modules/<MobileWebclient>/vue-mobile/test/e2e/helpers/   # domain helpers
+modules/CoreMobileWebclient/vue-mobile/e2e/helpers/     # login, ready, paths
+modules/CoreMobileWebclient/vue-mobile/e2e/fixtures/
+```
+
+`playwright.config.js` discovers every `modules/*/vue-mobile/test/e2e` with
+`*.spec.js` and builds projects `ModuleName · <device>`.
+
 ## Preconditions
 
 1. Local Aurora is running (MAMP or equivalent).
@@ -14,57 +27,66 @@ Use **Yarn classic (1.x)** and preferably **Node 18 or 22** (not Node 24).
 Yarn Berry (4.x) rewrites `yarn.lock` and breaks `quasar build` (`Unknown keyword formatMinimum`).
 
 ```bash
+cd modules/CoreMobileWebclient/vue-mobile
 nvm use 22                    # if you use nvm
 yarn -v                       # expect 1.22.x
 yarn test:e2e:install-browsers
 yarn build-production         # after changing Vue files (data-test-id, etc.)
-yarn test:e2e_local           # full device matrix (see below); HTML in playwright-report/
-yarn test:e2e_local:iphone    # fast loop: iPhone 13 Chromium only
-yarn test:e2e_local:webkit    # iPhone SE + iPhone 13 on Playwright WebKit
-yarn test:e2e                 # Playwright + email-report stub after run (full matrix)
-yarn test:e2e:report          # open HTML report in the browser
+yarn test:e2e_local           # full device × module matrix
+yarn test:e2e_local:iphone    # all modules · iPhone 13 Chromium
+yarn test:e2e_local:webkit    # all modules · iPhone SE/13 WebKit
+yarn test:e2e                 # Playwright + email-report stub after run
+yarn test:e2e:report
 ```
 
 ### Device matrix
 
-Chromium and WebKit emulation (viewport / UA / touch):
-
-| Project | Engine | Device preset | Viewport |
-|---------|--------|---------------|----------|
+| Project suffix | Engine | Device preset | Viewport |
+|----------------|--------|---------------|----------|
 | `iPhone SE` | Chromium | `iPhone SE` | 320×568 |
 | `iPhone 13` | Chromium | `iPhone 13` | 390×664 (baseline) |
 | `Pixel 7` | Chromium | `Pixel 7` | 412×839 |
 | `iPhone SE WebKit` | WebKit | `iPhone SE` | 320×568 |
 | `iPhone 13 WebKit` | WebKit | `iPhone 13` | 390×664 |
 
-WebKit here is **Playwright’s Safari engine** (desktop WebKit + mobile viewport), not real Mobile Safari on a device/simulator.
-
-Full matrix ≈ 5× suite time with `workers: 1`. Single device / single file:
+Filter examples:
 
 ```bash
-yarn test:e2e_local:iphone
-yarn test:e2e_local:webkit
-yarn test:e2e_local -- --project="Pixel 7"
-yarn test:e2e_local -- --project="iPhone 13 WebKit"
-yarn test:e2e_local -- contacts-select-actions.spec.js --project="iPhone SE"
+yarn test:e2e_local -- --project="MailMobileWebclient · iPhone 13"
+yarn test:e2e_local -- --project="*iPhone 13"
+yarn test:e2e_local -- --project="ContactsMobileWebclient*"
+yarn test:e2e_local -- contacts-select-actions.spec.js --project="*iPhone SE"
 ```
 
-In the console you will see steps like `→ Open mobile login page`.
-In the HTML report: timeline of steps, screenshots on failure, and a **Trace** button to replay the browser session.
+In the console: steps like `→ Open mobile login page`.
+HTML report: timeline, screenshots on failure, **Trace** replay.
 
-Flaky mitigation (already in config/helpers):
+Flaky mitigation (config/helpers):
 - 1 automatic retry
 - clean session before login
-- wait for Turnstile token (again before submit)
+- wait for Turnstile token
 - wait for footer `nav-mail` after login
-- shared list-ready waits (items / empty / spinner gone)
+- shared list-ready waits
 - compose recipient: `.first()` option + wait for dialog close
-
-UI Mode (watch tests live):
 
 ```bash
 yarn test:e2e:ui
 ```
+
+## Adding a module suite
+
+1. Create `modules/YourMobileWebclient/vue-mobile/test/e2e/` with `*.spec.js`.
+2. Import shared helpers:
+
+```js
+const path = require('path')
+const { sharedHelper, moduleHelper, fixturePath } = require(
+  path.join(process.env.AURORA_MOBILE_E2E_ROOT, 'e2e/helpers/paths')
+)
+const { loginAsTestUser } = sharedHelper('login')
+```
+
+3. Re-run — discovery picks it up (no config edit).
 
 ## Credentials (login test)
 
@@ -78,14 +100,22 @@ cp .env.e2e.example .env.e2e
 ## Custom URL
 
 ```bash
-PLAYWRIGHT_BASE_URL=http://localhost:8888/?mobile-version npm run test:e2e
+PLAYWRIGHT_BASE_URL=http://localhost:8888/?mobile-version yarn test:e2e_local
 ```
 
 If MAMP is not running, the test fails with a connection error — start the server and retry.
 
 After changing Vue files used by mobile, rebuild mobile assets before re-running E2E.
 
-## Tests
+## Tests by module
+
+| Module | Specs |
+|--------|--------|
+| `StandardLoginFormMobileWebclient` | `login-page`, `login`, `auth-actions` |
+| `MailMobileWebclient` | `mail*`, `compose*` |
+| `ContactsMobileWebclient` | `contacts*` |
+| `FilesMobileWebclient` | `files*` |
+| `SettingsMobileWebclient` | `settings*` |
 
 | Spec | What it checks |
 |------|----------------|
