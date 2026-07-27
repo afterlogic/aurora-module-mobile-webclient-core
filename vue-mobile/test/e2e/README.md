@@ -1,6 +1,6 @@
 # Mobile E2E (Playwright)
 
-Unit / component tests (Vitest, no server): see [`../test/unit/README.md`](../test/unit/README.md).
+Unit / component tests (Vitest, no server): see [`../unit/README.md`](../unit/README.md).
 
 **Layout:** this package (`CoreMobileWebclient/vue-mobile`) is the **runner**
 (config, shared helpers, browsers, `.env.e2e`). Scenarios live in modules:
@@ -8,12 +8,14 @@ Unit / component tests (Vitest, no server): see [`../test/unit/README.md`](../te
 ```text
 modules/<MobileWebclient>/vue-mobile/test/e2e/*.spec.js
 modules/<MobileWebclient>/vue-mobile/test/e2e/helpers/   # domain helpers
-modules/CoreMobileWebclient/vue-mobile/e2e/helpers/     # login, ready, paths
-modules/CoreMobileWebclient/vue-mobile/e2e/fixtures/
+modules/CoreMobileWebclient/vue-mobile/test/e2e/helpers/  # login, ready, paths
+modules/CoreMobileWebclient/vue-mobile/test/e2e/fixtures/
+modules/CoreMobileWebclient/vue-mobile/test/e2e/scripts/
 ```
 
-`playwright.config.js` discovers every `modules/*/vue-mobile/test/e2e` with
+`playwright.config.js` discovers every `modules/<Name>/vue-mobile/test/e2e` with
 `*.spec.js` and builds projects `ModuleName · <device>`.
+Core's `test/e2e` has no `*.spec.js` at the top level (shared runner assets only).
 
 ## Preconditions
 
@@ -81,7 +83,7 @@ yarn test:e2e:ui
 ```js
 const path = require('path')
 const { sharedHelper, moduleHelper, fixturePath } = require(
-  path.join(process.env.AURORA_MOBILE_E2E_ROOT, 'e2e/helpers/paths')
+  path.join(process.env.AURORA_MOBILE_E2E_ROOT, 'test/e2e/helpers/paths')
 )
 const { loginAsTestUser } = sharedHelper('login')
 ```

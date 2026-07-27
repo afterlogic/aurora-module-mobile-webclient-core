@@ -13,7 +13,7 @@
     "test:unit:watch": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:unit:coverage": "vitest run --coverage",
-    "test:e2e": "NODE_PATH=./node_modules node e2e/scripts/run-with-email-report.js",
+    "test:e2e": "NODE_PATH=./node_modules node test/e2e/scripts/run-with-email-report.js",
     "test:e2e_local": "NODE_PATH=./node_modules playwright test",
     "test:e2e_local:iphone": "NODE_PATH=./node_modules playwright test --project=\"*iPhone 13\"",
     "test:e2e_local:webkit": "NODE_PATH=./node_modules playwright test --project=\"*iPhone SE WebKit\" --project=\"*iPhone 13 WebKit\"",

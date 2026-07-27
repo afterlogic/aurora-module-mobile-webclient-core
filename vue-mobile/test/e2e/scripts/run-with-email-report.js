@@ -2,7 +2,7 @@ const { spawnSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
-const vueMobileRoot = path.join(__dirname, '../..')
+const vueMobileRoot = path.join(__dirname, '../../..')
 const defaultHtmlReport = path.join(vueMobileRoot, 'playwright-report', 'index.html')
 
 /**
