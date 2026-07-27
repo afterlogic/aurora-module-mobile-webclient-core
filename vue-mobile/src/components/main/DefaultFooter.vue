@@ -28,7 +28,7 @@ export default {
   },
 
   setup() {
-    let footerButtons = shallowRef(null)
+    let footerButtons = shallowRef([])
     modulesManager.getPageFooterButtons().then(footerButtonsValue => {
       footerButtons.value = footerButtonsValue
       triggerRef(footerButtons)
