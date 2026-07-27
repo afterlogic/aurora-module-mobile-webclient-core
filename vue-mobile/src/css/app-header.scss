@@ -7,7 +7,9 @@
     &__right {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
         flex-wrap: nowrap;
+        gap: 0;
     }
 
     &__title {
