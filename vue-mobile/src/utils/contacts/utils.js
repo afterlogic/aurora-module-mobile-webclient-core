@@ -6,6 +6,9 @@ export const getContactsSelectOptions = (contacts, selectContacts) => {
   if (!Array.isArray(contacts)) {
     return filteredContacts
   }
+  if (!Array.isArray(selectContacts)) {
+    return filteredContacts
+  }
   const coreStore = useCoreStore()
   const currentUserEmail = coreStore.userPublicId
   contacts.forEach((contact) => {
