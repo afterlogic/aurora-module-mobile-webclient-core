@@ -1,6 +1,7 @@
 <template>
   <q-btn
     v-bind="$attrs"
+    :class="buttonClass"
     :icon="showIconProp ? icon : undefined"
     :label="isIconVariant ? undefined : label"
     :color="buttonColor"
@@ -76,8 +77,23 @@ export default {
         return this.size
       }
 
-      return this.isIconVariant ? undefined : '12px'
+      return this.isIconVariant ? undefined : '14px'
+    },
+
+    buttonClass() {
+      return this.isIconVariant
+        ? 'app-header-button app-header-button--icon'
+        : 'app-header-button app-header-button--text'
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.app-header-button--text {
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 28px;
+  padding: 0 4px;
+}
+</style>

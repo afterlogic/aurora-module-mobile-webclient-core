@@ -29,6 +29,8 @@ describe('AppHeaderButton', () => {
     expect(button.props('color')).toBe('primary')
     expect(button.props('noCaps')).toBe(true)
     expect(button.props('round')).toBe(false)
+    expect(button.props('size')).toBe('14px')
+    expect(button.classes()).toContain('app-header-button--text')
   })
 
   it('forwards attrs such as data-test-id', () => {
