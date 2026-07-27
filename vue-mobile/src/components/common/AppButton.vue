@@ -10,7 +10,7 @@
     rounded
     color="primary"
     :label="label"
-    :ripple="false"
+    :ripple="ripple"
     :loading="loading"
   />
 </template>
@@ -24,6 +24,7 @@ export default {
     size: { type: String, default: 'lg' },
     disabled: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
+    ripple: { type: [Boolean, Object], default: true },
   },
 }
 </script>
@@ -32,5 +33,9 @@ export default {
 .app-button {
   height: 3rem;
   font-size: 0.875rem !important;
+
+  &:active:not(.disabled) {
+    opacity: 0.85;
+  }
 }
 </style>
