@@ -13,14 +13,7 @@
       debounce="400"
     />
   </div>
-  <div v-if="isWaitingContacts" class="flex items-center justify-center">
-    <q-circular-progress
-      indeterminate
-      size="40px"
-      color="primary"
-      class="q-mx-md q-my-xl"
-    />
-  </div>
+  <AppListLoader v-if="isWaitingContacts" />
   <div class="scroll full-width q-mt-lg" style="max-height: 400px;">
     <div v-if="!isWaitingContacts">
       <AppContactItem
@@ -36,12 +29,14 @@
 
 <script>
 import AppContactItem from "components/common/AppContactItem";
+import AppListLoader from "components/common/AppListLoader";
 import _ from 'lodash'
 
 export default {
   name: "AppSelectRecipient",
   components: {
-    AppContactItem
+    AppContactItem,
+    AppListLoader,
   },
   props: {
     onGetContacts: { type: Function, required: true },
