@@ -1,7 +1,6 @@
 // @ts-check
 const fs = require('fs')
 const path = require('path')
-const { defineConfig, devices } = require('@playwright/test')
 
 /** CoreMobileWebclient/vue-mobile — runner package root */
 const mobileE2eRoot = __dirname
@@ -11,7 +10,8 @@ const auroraRoot = path.join(__dirname, '..', '..', '..')
 process.env.AURORA_MOBILE_E2E_ROOT = mobileE2eRoot
 process.env.AURORA_ROOT = auroraRoot
 
-const runnerNodeModules = path.join(mobileE2eRoot, 'node_modules')
+// Resolve @playwright/test from Aurora install-root node_modules.
+const runnerNodeModules = path.join(auroraRoot, 'node_modules')
 const prevNodePath = process.env.NODE_PATH || ''
 if (!prevNodePath.split(path.delimiter).includes(runnerNodeModules)) {
   process.env.NODE_PATH = prevNodePath
@@ -20,6 +20,8 @@ if (!prevNodePath.split(path.delimiter).includes(runnerNodeModules)) {
   // eslint-disable-next-line no-underscore-dangle
   require('module').Module._initPaths()
 }
+
+const { defineConfig, devices } = require('@playwright/test')
 
 function loadEnvE2e() {
   const envPath = path.join(mobileE2eRoot, '.env.e2e')
@@ -117,12 +119,28 @@ if (projects.length === 0) {
 }
 
 /**
- * Mobile E2E against a locally running Aurora instance (MAMP / PHP).
+ * Mobile E2E against a running Aurora instance (MAMP / PHP / staging).
  * Specs live in modules/<Name>/vue-mobile/test/e2e/; this package is the runner.
- * Override URL: PLAYWRIGHT_BASE_URL=http://localhost:8888/?mobile-version
+ * Override URL: PLAYWRIGHT_BASE_URL=https://staging.example/subdir/?mobile-version
+ *
+ * Trailing slash before `?` is required for subdirectory installs. Helpers use
+ * page.goto('') (baseURL itself); goto('/') would hit the host root.
  */
-const baseURL =
+function normalizeBaseUrl(url) {
+  try {
+    const u = new URL(url)
+    if (!u.pathname.endsWith('/')) {
+      u.pathname += '/'
+    }
+    return u.href
+  } catch {
+    return url.endsWith('/') ? url : `${url}/`
+  }
+}
+
+const baseURL = normalizeBaseUrl(
   process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:8888/?mobile-version'
+)
 
 module.exports = defineConfig({
   fullyParallel: false,

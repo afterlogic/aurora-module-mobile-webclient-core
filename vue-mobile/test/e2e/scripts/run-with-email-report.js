@@ -61,15 +61,31 @@ function sendTestReportEmail(reportHtmlPath) {
 }
 
 function runPlaywright(extraArgs) {
-  const result = spawnSync(
-    process.platform === 'win32' ? 'npx.cmd' : 'npx',
-    ['playwright', 'test', ...extraArgs],
-    {
-      cwd: vueMobileRoot,
-      stdio: 'inherit',
-      env: process.env,
-    }
+  const auroraRoot = path.join(vueMobileRoot, '..', '..', '..')
+  const nodeModules = path.join(auroraRoot, 'node_modules')
+  const playwrightBin = path.join(
+    nodeModules,
+    '.bin',
+    process.platform === 'win32' ? 'playwright.cmd' : 'playwright'
   )
+
+  if (!fs.existsSync(playwrightBin)) {
+    throw new Error(
+      `Playwright not found at ${path.join(nodeModules, '@playwright/test')}. ` +
+        'From Aurora install root run: npm install'
+    )
+  }
+
+  const env = { ...process.env }
+  env.NODE_PATH = env.NODE_PATH
+    ? `${nodeModules}${path.delimiter}${env.NODE_PATH}`
+    : nodeModules
+
+  const result = spawnSync(playwrightBin, ['test', ...extraArgs], {
+    cwd: vueMobileRoot,
+    stdio: 'inherit',
+    env,
+  })
 
   if (result.error) {
     throw result.error

@@ -3,9 +3,11 @@
 Unit / component tests (Vitest, no server): see [`../unit/README.md`](../unit/README.md).
 
 **Layout:** this package (`CoreMobileWebclient/vue-mobile`) is the **runner**
-(config, shared helpers, browsers, `.env.e2e`). Scenarios live in modules:
+(config, shared helpers, `.env.e2e`). **`@playwright/test` lives in the Aurora
+install-root** `package.json` / `node_modules`. Scenarios live in modules:
 
 ```text
+<install-root>/package.json                  ← @playwright/test + yarn test:e2e-mobile*
 modules/<MobileWebclient>/vue-mobile/test/e2e/*.spec.js
 modules/<MobileWebclient>/vue-mobile/test/e2e/helpers/   # domain helpers
 modules/CoreMobileWebclient/vue-mobile/test/e2e/helpers/  # login, ready, paths
@@ -22,16 +24,21 @@ Core's `test/e2e` has no `*.spec.js` at the top level (shared runner assets only
 1. Local Aurora is running (MAMP or equivalent).
 2. Document Root points at the project root.
 3. Mobile UI opens in a browser: `http://localhost:8888/?mobile-version`
+4. Install-root deps installed: `npm install` (provides Playwright).
 
 ## Run
 
-Use **Yarn classic (1.x)** and preferably **Node 18 or 22** (not Node 24).
+Use **Yarn classic (1.x)** for Quasar/build scripts and preferably **Node 18 or 22** (not Node 24).
 Yarn Berry (4.x) rewrites `yarn.lock` and breaks `quasar build` (`Unknown keyword formatMinimum`).
 
 ```bash
+# from install root (preferred for Playwright)
+npm install
+yarn test:e2e-mobile:install-browsers
+
+# or from vue-mobile (wrappers → root Playwright)
 cd modules/CoreMobileWebclient/vue-mobile
 nvm use 22                    # if you use nvm
-yarn -v                       # expect 1.22.x
 yarn test:e2e:install-browsers
 yarn build-production         # after changing Vue files (data-test-id, etc.)
 yarn test:e2e_local           # full device × module matrix
