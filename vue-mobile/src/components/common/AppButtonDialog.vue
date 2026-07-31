@@ -5,7 +5,7 @@
     size="14px"
     flat
     color="primary"
-    :disable="saving"
+    :disable="saving || disabled"
     @click="action"
     label="Create shareable link"
   />
@@ -16,6 +16,7 @@ export default {
   name: 'ButtonDialog',
   props: {
     saving: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
     action: { type: Function, default: null },
   },
 }
