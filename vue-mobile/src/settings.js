@@ -2,6 +2,7 @@ import VueCookies from 'vue-cookies'
 import _ from 'lodash'
 
 import { i18n, loadLanguageAsync } from 'boot/i18n'
+import enums from 'src/enums'
 import types from 'src/utils/types'
 // import store from 'src/stores'
 
@@ -12,6 +13,7 @@ class Settings {
   constructor(appData) {
     const coreData = types.pObject(appData.Core)
     this.shortLanguage = this._getShortLanguage(coreData)
+    this.language = types.pString(coreData.Language)
     this.cookiePath = types.pString(coreData.CookiePath)
     this.cookieSecure = types.pBool(coreData.CookieSecure)
     this.siteName = types.pString(coreData.SiteName)
@@ -41,6 +43,36 @@ class Settings {
 
 let settings = null
 
+/**
+ * Persist profile language for the next anonymous login (backend Api::GetLanguage).
+ * Desktop login form writes the same cookie when the user picks a language there.
+ */
+function persistLoginLanguageCookie(appData) {
+  if (!settings || _.isEmpty(settings.language)) {
+    return
+  }
+
+  const UserRoles = enums.getUserRoles()
+  const user = types.pObject(appData.User)
+  if (_.isEmpty(user) || _.isEmpty(UserRoles)) {
+    return
+  }
+
+  const role = types.pEnum(user.Role, UserRoles, UserRoles.Anonymous)
+  if (role === UserRoles.Anonymous) {
+    return
+  }
+
+  VueCookies.set(
+    'aurora-lang-on-login',
+    settings.language,
+    60 * 60 * 24 * 30,
+    settings.cookiePath || '/',
+    '',
+    settings.cookieSecure
+  )
+}
+
 export default {
   init: async (appData) => {
     settings = new Settings(appData)
@@ -57,6 +89,8 @@ export default {
     if (process.env.NODE_ENV !== 'development') {
       VueCookies.config('', settings.cookiePath, '', settings.cookieSecure)
     }
+
+    persistLoginLanguageCookie(appData)
   },
 
   getSetting(settingName) {

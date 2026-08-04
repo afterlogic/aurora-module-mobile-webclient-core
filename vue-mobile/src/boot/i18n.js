@@ -13,13 +13,13 @@ export const i18n = createI18n({
 })
 
 function setI18nLanguage(lang) {
-  i18n.locale = lang
+  i18n.global.locale = lang
   document.querySelector('html').setAttribute('lang', lang)
   return lang
 }
 
 export function loadLanguageAsync(lang) {
-  if (i18n.locale === lang) {
+  if (i18n.global.locale === lang) {
     return Promise.resolve(setI18nLanguage(lang))
   }
 
