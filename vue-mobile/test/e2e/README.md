@@ -146,7 +146,7 @@ After changing Vue files used by mobile, rebuild mobile assets before re-running
 | `contacts-select-actions.spec.js` | Multi-select bulk delete; multi-select compose; assign/remove from group; rename group |
 | `contacts-extra-actions.spec.js` | Team storage browse; Send from contact menu |
 | `files.spec.js` | Files → open file/folder → back |
-| `files-actions.spec.js` | Drawer, search, upload+delete, rename, public link, move, create folder |
+| `files-actions.spec.js` | Drawer, search, upload+delete, rename, public link, move, create folder, create folder from move header |
 | `files-select-actions.spec.js` | Copy into folder (original remains); multi-select bulk delete; share with teammates dialog; leave share via item menu |
 | `files-extra-actions.spec.js` | Multi-select copy into folder; file download; rename folder via item menu |
 | `settings.spec.js` | Settings menu (+ first tab) → logout → login form |
