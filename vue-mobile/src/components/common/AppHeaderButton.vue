@@ -90,6 +90,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.app-header-button--icon {
+  min-height: 32px;
+  min-width: 32px;
+  padding: 0;
+
+  :deep(.q-btn__content) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .app-header-button--text {
   font-size: 14px;
   font-weight: 500;

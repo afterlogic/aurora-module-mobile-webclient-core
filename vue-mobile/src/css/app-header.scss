@@ -9,8 +9,7 @@
         justify-content: flex-end;
         align-items: center;
         flex-wrap: nowrap;
-        gap: 0;
-        padding-right: 16px;
+        gap: 8px;
     }
 
     &__title {
@@ -47,6 +46,18 @@
     }
 }
 
-.dropdown-more .q-btn-dropdown__arrow {
-    display: none;
+.dropdown-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .q-btn {
+        padding: 0;
+        min-height: 32px;
+        min-width: 32px;
+    }
+
+    .q-btn-dropdown__arrow {
+        display: none;
+    }
 }
