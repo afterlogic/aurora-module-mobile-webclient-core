@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "项目已被复制，请选择一个目标文件夹，然后单击粘贴按钮以插入它们。"
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "存储"
+    "LABEL_STORAGES": "存储",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "网盘",

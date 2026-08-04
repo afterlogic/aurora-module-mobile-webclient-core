@@ -856,7 +856,9 @@
     "INFO_ITEMS_COPIED": "Items zijn gekopieerd. Kies een bestemmingsmap en klik op de knop Plakken om ze in te voegen."
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "Opslag"
+    "LABEL_STORAGES": "Opslag",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Bestanden",

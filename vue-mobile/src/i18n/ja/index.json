@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "選択したファイル/フォルダをコピーしました。貼り付け先に移動後に「貼り付け」ボタンでファイルがコピーされます。"
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "ストレージ"
+    "LABEL_STORAGES": "ストレージ",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "ファイル",

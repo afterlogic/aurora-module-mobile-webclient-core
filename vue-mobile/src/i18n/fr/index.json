@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "Les articles ont été copiés. Choisissez un dossier de destination et cliquez sur le bouton Coller pour les insérer."
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "Stockages"
+    "LABEL_STORAGES": "Stockages",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Fichiers",

@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "Items have been copied. Choose a destination folder and click Paste button to insert them."
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "Lager"
+    "LABEL_STORAGES": "Lager",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Files",

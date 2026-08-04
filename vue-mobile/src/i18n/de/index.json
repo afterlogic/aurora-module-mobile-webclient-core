@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "Objekte wurden kopiert. Wählen Sie einen Zielordner und drücken Sie den Button Einfügen, um sie dort zu einzufügen."
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "Speicher"
+    "LABEL_STORAGES": "Speicher",
+    "ACTION_EMPTY_TRASH": "Empty Trash",
+    "CONFIRM_EMPTY_TRASH": "Are you sure you want to permanently delete all items in Trash?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Dateien",

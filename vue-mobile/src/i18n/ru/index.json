@@ -854,7 +854,9 @@
     "INFO_ITEMS_COPIED": "Объекты были скопированы. Выберите папку назначения и нажмите кнопку «Вставить», чтобы вставить их."
   },
   "FILESMOBILEWEBCLIENT": {
-    "LABEL_STORAGES": "Хранилища"
+    "LABEL_STORAGES": "Хранилища",
+    "ACTION_EMPTY_TRASH": "Очистить корзину",
+    "CONFIRM_EMPTY_TRASH": "Вы уверены, что хотите безвозвратно удалить все объекты в Корзине?"
   },
   "FILESTABLEVIEWWEBCLIENTPLUGIN": {
     "HEADING_BROWSER_TAB": "Файлы",
