@@ -54,15 +54,22 @@ function ensureHtmlReport(reportPath) {
  * Stub: later will send the HTML report by email.
  * @param {string} reportHtmlPath
  */
-function sendTestReportEmail(reportHtmlPath) {
-  console.log(
-    `[e2e-notify] stub: would send email with report file: ${reportHtmlPath}`
-  )
+function sendTestReportEmail(reportHtmlPath, exitCode) {
+  const phpScript = path.join(__dirname, 'send-e2e-report.php') // adjust path
+  const status = exitCode === 0 ? 'passed' : 'failed'
+  const result = spawnSync('php', [phpScript, reportHtmlPath, `--status=${status}`], {
+    stdio: 'inherit',
+  })
+  if (result.status !== 0) {
+    console.warn('[e2e-notify] failed to send report email')
+  }
 }
 
 function runPlaywright(extraArgs) {
-  const auroraRoot = path.join(vueMobileRoot, '..', '..', '..')
-  const nodeModules = path.join(auroraRoot, 'node_modules')
+  const playwrightPkgJson = require.resolve('playwright/package.json', {
+    paths: [vueMobileRoot],
+  })
+  const nodeModules = path.join(path.dirname(playwrightPkgJson), '..')
   const playwrightBin = path.join(
     nodeModules,
     '.bin',
@@ -102,7 +109,7 @@ function main() {
     const reportPath =
       process.env.E2E_REPORT_PATH || defaultHtmlReport
     const htmlPath = ensureHtmlReport(reportPath)
-    sendTestReportEmail(htmlPath)
+    sendTestReportEmail(htmlPath, exitCode)
   } catch (err) {
     console.warn(`[e2e-notify] skipped email stub: ${err.message}`)
   }
