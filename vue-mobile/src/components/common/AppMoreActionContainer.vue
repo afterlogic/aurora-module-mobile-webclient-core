@@ -1,6 +1,6 @@
 <template>
   <q-item clickable v-close-popup>
-    <AppActionIconContainer>
+    <AppActionIconContainer class="q-mr-md">
       <slot />
     </AppActionIconContainer>
     <q-item-section>
