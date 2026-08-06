@@ -75,23 +75,27 @@ function discoverModuleE2eDirs() {
 
 const browsers = [
   {
-    name: 'iPhone SE',
+    name: 'iPhoneSE',
     use: { ...devices['iPhone SE'], browserName: 'chromium' },
   },
   {
-    name: 'iPhone 13',
+    name: 'iPhone13',
     use: { ...devices['iPhone 13'], browserName: 'chromium' },
   },
   {
-    name: 'Pixel 7',
+    name: 'Pixel7',
     use: { ...devices['Pixel 7'], browserName: 'chromium' },
   },
   {
-    name: 'iPhone SE WebKit',
+    name: 'Pixel7Firefox',
+    use: { ...devices['Pixel 7'], browserName: 'firefox' },
+  },
+  {
+    name: 'iPhoneSEWebKit',
     use: { ...devices['iPhone SE'], browserName: 'webkit' },
   },
   {
-    name: 'iPhone 13 WebKit',
+    name: 'iPhone13WebKit',
     use: { ...devices['iPhone 13'], browserName: 'webkit' },
   },
 ]
@@ -103,7 +107,7 @@ const projects = []
 for (const browser of browsers) {
   for (const { moduleName, testDir } of moduleDirs) {
     projects.push({
-      name: `${moduleName} · ${browser.name}`,
+      name: `${moduleName}-${browser.name}`,
       testDir,
       testMatch: '*.spec.js',
       use: { ...browser.use },

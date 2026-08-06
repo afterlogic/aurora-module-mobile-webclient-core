@@ -16,7 +16,7 @@ modules/CoreMobileWebclient/vue-mobile/test/e2e/scripts/
 ```
 
 `playwright.config.js` discovers every `modules/<Name>/vue-mobile/test/e2e` with
-`*.spec.js` and builds projects `ModuleName · <device>`.
+`*.spec.js` and builds projects `ModuleName-<device>` (single-token names, no spaces).
 Core's `test/e2e` has no `*.spec.js` at the top level (shared runner assets only).
 
 ## Preconditions
@@ -42,29 +42,32 @@ nvm use 22                    # if you use nvm
 yarn test:e2e:install-browsers
 yarn build-production         # after changing Vue files (data-test-id, etc.)
 yarn test:e2e_local           # full device × module matrix
-yarn test:e2e_local:iphone    # all modules · iPhone 13 Chromium
-yarn test:e2e_local:webkit    # all modules · iPhone SE/13 WebKit
+yarn test:e2e_local:iphone    # all modules · iPhone13 Chromium
+yarn test:e2e_local:webkit    # all modules · iPhoneSEWebKit / iPhone13WebKit
+yarn test:e2e_local:firefox   # all modules · Pixel7Firefox (Gecko, Android profile)
 yarn test:e2e                 # Playwright + email-report stub after run
 yarn test:e2e:report
 ```
 
 ### Device matrix
 
-| Project suffix | Engine | Device preset | Viewport |
-|----------------|--------|---------------|----------|
-| `iPhone SE` | Chromium | `iPhone SE` | 320×568 |
-| `iPhone 13` | Chromium | `iPhone 13` | 390×664 (baseline) |
-| `Pixel 7` | Chromium | `Pixel 7` | 412×839 |
-| `iPhone SE WebKit` | WebKit | `iPhone SE` | 320×568 |
-| `iPhone 13 WebKit` | WebKit | `iPhone 13` | 390×664 |
+| Project suffix | Engine | Playwright device preset | Viewport |
+|----------------|--------|--------------------------|----------|
+| `iPhoneSE` | Chromium | `iPhone SE` | 320×568 |
+| `iPhone13` | Chromium | `iPhone 13` | 390×664 (baseline) |
+| `Pixel7` | Chromium | `Pixel 7` | 412×839 |
+| `Pixel7Firefox` | Firefox (Gecko) | `Pixel 7` | 412×839 |
+| `iPhoneSEWebKit` | WebKit | `iPhone SE` | 320×568 |
+| `iPhone13WebKit` | WebKit | `iPhone 13` | 390×664 |
 
-Filter examples:
+Filter examples (each `--project` value is one token — no spaces; quote `*` for zsh):
 
 ```bash
-yarn test:e2e_local -- --project="MailMobileWebclient · iPhone 13"
-yarn test:e2e_local -- --project="*iPhone 13"
-yarn test:e2e_local -- --project="ContactsMobileWebclient*"
-yarn test:e2e_local -- contacts-select-actions.spec.js --project="*iPhone SE"
+yarn test:e2e_local -- --project=MailMobileWebclient-iPhone13
+yarn test:e2e_local -- --project='*iPhone13'
+yarn test:e2e_local -- --project=ContactsMobileWebclient*
+yarn test:e2e_local -- --project='*Pixel7Firefox'
+yarn test:e2e_local -- contacts-select-actions.spec.js --project='*iPhoneSE'
 ```
 
 In the console: steps like `→ Open mobile login page`.
