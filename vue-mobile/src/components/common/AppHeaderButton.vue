@@ -12,6 +12,7 @@
     :size="buttonSize"
     :loading="loading"
     :disable="disable"
+    @click="$emit('click', $event)"
   >
     <slot />
   </q-btn>
@@ -22,6 +23,8 @@ export default {
   name: 'AppHeaderButton',
 
   inheritAttrs: false,
+
+  emits: ['click'],
 
   props: {
     variant: {
