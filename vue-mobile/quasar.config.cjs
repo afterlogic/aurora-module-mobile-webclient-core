@@ -13,9 +13,12 @@ const path = require('path')
 
 
 const { configure } = require('quasar/wrappers');
-const env = require('./env.js')
 
 module.exports = configure(function (ctx) {
+  // Only needed for the dev server API proxy target; not required for
+  // production builds, so it's loaded lazily and only when ctx.dev is true.
+  const env = ctx.dev ? require('./env.js') : {}
+
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
     supportTS: false,
