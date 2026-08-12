@@ -33,12 +33,15 @@ async function waitForTurnstileToken(page) {
 }
 
 /**
- * Fresh anonymous session, then login with E2E_LOGIN / E2E_PASSWORD.
+ * Fresh anonymous session, then login.
+ * @param {{ login?: string, password?: string }} [credentials]
+ *   Defaults to E2E_LOGIN / E2E_PASSWORD. Pass overrides for multi-user flows
+ *   (e.g. E2E_LOGIN_SECONDARY).
  * Leaves the app on the post-login shell with footer nav visible.
  */
-async function loginAsTestUser(page) {
-  const login = process.env.E2E_LOGIN
-  const password = process.env.E2E_PASSWORD
+async function loginAsUser(page, credentials = {}) {
+  const login = credentials.login || process.env.E2E_LOGIN
+  const password = credentials.password || process.env.E2E_PASSWORD
   if (!login || !password) {
     throw new Error('Set E2E_LOGIN and E2E_PASSWORD in .env.e2e')
   }
@@ -90,10 +93,16 @@ async function loginAsTestUser(page) {
   })
 }
 
+/** Login with E2E_LOGIN / E2E_PASSWORD. */
+async function loginAsTestUser(page) {
+  return loginAsUser(page)
+}
+
 module.exports = {
   step,
   attachScreenshot,
   fieldControl,
   waitForTurnstileToken,
+  loginAsUser,
   loginAsTestUser,
 }
