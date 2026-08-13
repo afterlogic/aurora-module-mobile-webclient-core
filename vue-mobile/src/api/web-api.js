@@ -55,6 +55,7 @@ export default {
         data: querystring.stringify(postData),
         headers,
         signal,
+        withCredentials: true,
       })
         .then((response) => {
           const isOkResponse = response?.status === 200 && !!response?.data
@@ -113,6 +114,7 @@ export default {
         url: url,
         headers: headers,
         responseType: 'blob',
+        withCredentials: true,
         cancelToken: new CancelToken(function (c) {
           setFileProperty('cancelToken', c)
         }),

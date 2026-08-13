@@ -64,7 +64,8 @@ export default route(function (/* { store, ssrContext } */) {
     core.init().then(
       async () => {
         if (!routesAdded) {
-          modulesManager.getAllPages().forEach(page => {
+          const pages = modulesManager.getAllPages()
+          pages.forEach(page => {
             const routeData = { name: page.pageName, path: page.pagePath, component: page.pageComponent, strict: page.pageStrict }
             if (page.pageChildren) {
               routeData.children = page.pageChildren
@@ -84,7 +85,6 @@ export default route(function (/* { store, ssrContext } */) {
         next()
       },
       (error) => {
-        console.error('core.init reject', error)
         next('/')
       }
     )
