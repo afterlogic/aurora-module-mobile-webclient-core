@@ -48,4 +48,22 @@ yarn test:unit
 
 Pipeline, when to write tests, and CI: see [test/unit/README.md](test/unit/README.md).
 
-E2E (Playwright): see [e2e/README.md](e2e/README.md).
+### E2E tests (Playwright)
+
+From this package:
+
+```bash
+yarn test:e2e:ui -- --setup "MailMobileWebclient iPhone13"
+yarn test:e2e_local:iphone
+yarn build-production   # after Vue / data-test-id changes
+```
+
+From the Aurora install root (preferred for Playwright):
+
+```bash
+yarn test:e2e-mobile
+yarn test:e2e-mobile:ui
+yarn test:e2e-mobile -- --setup "MailMobileWebclient iPhone13"
+```
+
+Full docs: [test/e2e/README.md](test/e2e/README.md) and install-root [README-e2e-mobile.md](../../../README-e2e-mobile.md).
