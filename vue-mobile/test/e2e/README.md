@@ -5,7 +5,7 @@ Automated tests for the **mobile** Quasar/Vue UI (`?mobile-version`). Selectors 
 This package (`CoreMobileWebclient/vue-mobile`) is the **runner** (config, shared helpers, `.env.e2e`,
 SPA build). **`@playwright/test` lives in the Aurora install-root** `package.json` / `node_modules`.
 
-Install-root entry (same run/UI/filter stories, short paths for `yarn test:e2e-mobile*`):
+Install-root entry (same run/UI/filter stories, short paths for `npm run test:e2e-mobile*`):
 [`README-e2e-mobile.md`](../../../../../README-e2e-mobile.md) at the Aurora install root.
 
 Unit / component tests (Vitest, no server): see [`../unit/README.md`](../unit/README.md).
@@ -25,18 +25,18 @@ cp modules/CoreMobileWebclient/vue-mobile/.env.e2e.example \
    modules/CoreMobileWebclient/vue-mobile/.env.e2e
 # fill E2E_LOGIN / E2E_PASSWORD
 nvm use 22
-yarn test:e2e-mobile:install-browsers
-cd modules/CoreMobileWebclient/vue-mobile && yarn build-production && cd -
+npm run test:e2e-mobile:install-browsers
+cd modules/CoreMobileWebclient/vue-mobile && npm run build-production && cd -
 # Aurora must answer http://localhost:8888/?mobile-version
-yarn test:e2e-mobile:ui
+npm run test:e2e-mobile:ui
 ```
 
 Or from this directory (`modules/CoreMobileWebclient/vue-mobile`):
 
 ```bash
-yarn test:e2e:install-browsers
-yarn build-production
-yarn test:e2e:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
+npm run test:e2e:install-browsers
+npm run build-production
+npm run test:e2e:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
 ```
 
 ---
@@ -44,7 +44,7 @@ yarn test:e2e:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
 ## Layout
 
 ```text
-<install-root>/package.json                  ← @playwright/test + yarn test:e2e-mobile*
+<install-root>/package.json                  ← @playwright/test + npm run test:e2e-mobile*
 <install-root>/README-e2e-mobile.md          ← install-root docs (this suite)
 modules/CoreMobileWebclient/vue-mobile/      ← Quasar app + Playwright runner (cwd for config)
 modules/CoreMobileWebclient/vue-mobile/.env.e2e
@@ -58,7 +58,7 @@ dev/run-mobile-e2e-tests.sh
 
 | Piece | Responsibility |
 |-------|----------------|
-| Install-root `package.json` | `@playwright/test` and `yarn test:e2e-mobile*` |
+| Install-root `package.json` | `@playwright/test` and `npm run test:e2e-mobile*` |
 | This package’s scripts | Thin wrappers → install-root Playwright binary |
 | `playwright.config.js` | Spec discovery, devices, baseURL, workers, retries |
 | `test/e2e/helpers/` | Shared login / ready / paths (`AURORA_MOBILE_E2E_ROOT`) |
@@ -77,9 +77,8 @@ This package’s `test/e2e` has **no** top-level `*.spec.js` (shared runner asse
 2. Document Root points at the Aurora install root.
 3. Mobile UI opens in a browser: `http://localhost:8888/?mobile-version`.
 4. Install-root deps: `npm install` (provides Playwright).
-5. **Yarn classic (1.x)** and **Node 18 or 22** (not Node 24). Yarn Berry rewrites `yarn.lock` and
-   breaks `quasar build` (`Unknown keyword formatMinimum`).
-6. After changing Vue / `data-test-id`, run `yarn build-production` so `static/vue-mobile/` updates.
+5. **Node 18 or 22** (not Node 24) and **npm**.
+6. After changing Vue / `data-test-id`, run `npm run build-production` so `static/vue-mobile/` updates.
 
 ---
 
@@ -96,10 +95,10 @@ npm install
 
 ```bash
 # from install root
-yarn test:e2e-mobile:install-browsers
+npm run test:e2e-mobile:install-browsers
 
 # or from this directory
-yarn test:e2e:install-browsers
+npm run test:e2e:install-browsers
 ```
 
 ### 3. Create `.env.e2e`
@@ -122,14 +121,14 @@ cp .env.e2e.example .env.e2e
 | `E2E_LOGIN` | yes | Test user |
 | `E2E_PASSWORD` | yes | Test password |
 | `E2E_COMPOSE_TO` | no | Compose recipient (default = `E2E_LOGIN`) |
-| `SKIP_YARN_INSTALL` | no | For `dev/run-mobile-e2e-tests.sh`: skip yarn install |
+| `SKIP_NPM_INSTALL` | no | For `dev/run-mobile-e2e-tests.sh`: skip `npm ci` |
 
-Optional `MAIL_*` / `E2E_MAIL_*` / `WEB_INSTALL_URL`: email-report wrapper (`yarn test:e2e` here).
+Optional `MAIL_*` / `E2E_MAIL_*` / `WEB_INSTALL_URL`: email-report wrapper (`npm run test:e2e` here).
 
 ### Custom / subdirectory URL
 
 ```bash
-PLAYWRIGHT_BASE_URL=https://example.com/aurora/?mobile-version yarn test:e2e
+PLAYWRIGHT_BASE_URL=https://example.com/aurora/?mobile-version npm run test:e2e
 ```
 
 Keep a trailing slash **before** `?` on subdirectory installs.
@@ -143,10 +142,10 @@ If MAMP is not running, the suite fails with a connection error — start the se
 ### From the install root (preferred)
 
 ```bash
-yarn test:e2e-mobile
-yarn test:e2e-mobile:ui
-yarn test:e2e-mobile:report
-yarn test:e2e-mobile:install-browsers
+npm run test:e2e-mobile
+npm run test:e2e-mobile:ui
+npm run test:e2e-mobile:report
+npm run test:e2e-mobile:install-browsers
 
 ./dev/run-mobile-e2e-tests.sh
 ./dev/run-mobile-e2e-tests.sh -- --setup "* iPhone13"
@@ -156,23 +155,23 @@ yarn test:e2e-mobile:install-browsers
 ### From this directory (`vue-mobile`)
 
 ```bash
-yarn test:e2e           # full device × module matrix
-yarn test:e2e:iphone    # all modules · iPhone13 Chromium
-yarn test:e2e:webkit    # iPhoneSEWebKit + iPhone13WebKit
-yarn test:e2e:firefox   # Pixel7Firefox
-yarn test:e2e:ui              # UI Mode
-yarn test:e2e:report
-yarn test:e2e                 # Playwright + email-report stub after run
+npm run test:e2e           # full device × module matrix
+npm run test:e2e:iphone    # all modules · iPhone13 Chromium
+npm run test:e2e:webkit    # iPhoneSEWebKit + iPhone13WebKit
+npm run test:e2e:firefox   # Pixel7Firefox
+npm run test:e2e:ui              # UI Mode
+npm run test:e2e:report
+npm run test:e2e                 # Playwright + email-report stub after run
 ```
 
-Extra args with Yarn classic need `--`:
+Extra args after the npm script name need `--`:
 
 ```bash
-yarn test:e2e -- --setup "MailMobileWebclient iPhone13"
-yarn test:e2e:ui -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
+npm run test:e2e -- --setup "MailMobileWebclient iPhone13"
+npm run test:e2e:ui -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
 ```
 
-### UI Mode (`yarn test:e2e:ui` / `yarn test:e2e-mobile:ui`)
+### UI Mode (`npm run test:e2e:ui` / `npm run test:e2e-mobile:ui`)
 
 Opens Playwright’s interactive runner (pick tests, watch steps / DOM / network).
 **It does not start tests by itself** — select a test (or use filters) and click ▶.
@@ -181,18 +180,18 @@ Prefer a narrow `--setup` so the list is not the full matrix:
 
 ```bash
 # install root
-yarn test:e2e-mobile:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
-yarn test:e2e-mobile:ui -- --setup "MailMobileWebclient iPhone13" compose.spec.js
+npm run test:e2e-mobile:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
+npm run test:e2e-mobile:ui -- --setup "MailMobileWebclient iPhone13" compose.spec.js
 
 # this directory
-yarn test:e2e:ui -- --setup "* iPhone13"
+npm run test:e2e:ui -- --setup "* iPhone13"
 ```
 
 If a run fails immediately with “Executable doesn't exist” / “Please run … playwright install”,
 install browsers for **this** `@playwright/test` from the **install root**:
 
 ```bash
-yarn test:e2e-mobile:install-browsers
+npm run test:e2e-mobile:install-browsers
 ```
 
 Do **not** rely on a bare `npx playwright install` from another directory.
@@ -209,11 +208,11 @@ Playwright `--project=Module-Device`).
 - Anything after `--setup "…"` goes to Playwright (file name, `--grep`, `--list`, …).
 
 ```bash
-yarn test:e2e -- --setup "MailMobileWebclient iPhone13"
-yarn test:e2e -- --setup "* iPhone13"
-yarn test:e2e -- --setup "MailMobileWebclient,ContactsMobileWebclient iPhone13,Pixel7"
-yarn test:e2e -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
-yarn test:e2e -- --setup "* iPhone13" --list
+npm run test:e2e -- --setup "MailMobileWebclient iPhone13"
+npm run test:e2e -- --setup "* iPhone13"
+npm run test:e2e -- --setup "MailMobileWebclient,ContactsMobileWebclient iPhone13,Pixel7"
+npm run test:e2e -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
+npm run test:e2e -- --setup "* iPhone13" --list
 ```
 
 Without `--setup`, the full matrix runs.
@@ -274,10 +273,10 @@ const { loginAsTestUser } = sharedHelper('login')
 
 ```bash
 # install root
-yarn test:e2e-mobile:report
+npm run test:e2e-mobile:report
 
 # this directory
-yarn test:e2e:report
+npm run test:e2e:report
 ```
 
 Report directory: `modules/CoreMobileWebclient/vue-mobile/playwright-report/`.
@@ -288,7 +287,7 @@ Report directory: `modules/CoreMobileWebclient/vue-mobile/playwright-report/`.
 
 1. Deploy `static/vue-mobile/` and `data-test-id` hooks.
 2. Fill `.env.e2e` with staging `PLAYWRIGHT_BASE_URL` + credentials.
-3. From install root: `yarn test:e2e-mobile:install-browsers` then `yarn test:e2e-mobile` / `:ui`.
+3. From install root: `npm run test:e2e-mobile:install-browsers` then `npm run test:e2e-mobile` / `:ui`.
 
 ---
 
@@ -296,15 +295,15 @@ Report directory: `modules/CoreMobileWebclient/vue-mobile/playwright-report/`.
 
 | Where | Command | What it does |
 |-------|---------|--------------|
-| Install root | `yarn test:e2e-mobile` | Full matrix |
-| Install root | `yarn test:e2e-mobile:ui` | **UI Mode** |
-| Install root | `yarn test:e2e-mobile:iphone` | All modules · iPhone13 |
-| Install root | `yarn test:e2e-mobile:report` | HTML report |
-| Install root | `yarn test:e2e-mobile:install-browsers` | Browsers |
+| Install root | `npm run test:e2e-mobile` | Full matrix |
+| Install root | `npm run test:e2e-mobile:ui` | **UI Mode** |
+| Install root | `npm run test:e2e-mobile:iphone` | All modules · iPhone13 |
+| Install root | `npm run test:e2e-mobile:report` | HTML report |
+| Install root | `npm run test:e2e-mobile:install-browsers` | Browsers |
 | Install root | `./dev/run-mobile-e2e-tests.sh [-- --setup "…"]` | Scan + run |
-| This directory | `yarn test:e2e` / `:iphone` / `:webkit` / `:firefox` | Headless |
-| This directory | `yarn test:e2e:ui` | **UI Mode** |
-| This directory | `yarn build-production` | Refresh `static/vue-mobile/` |
+| This directory | `npm run test:e2e` / `:iphone` / `:webkit` / `:firefox` | Headless |
+| This directory | `npm run test:e2e:ui` | **UI Mode** |
+| This directory | `npm run build-production` | Refresh `static/vue-mobile/` |
 
 ---
 
@@ -312,7 +311,7 @@ Report directory: `modules/CoreMobileWebclient/vue-mobile/playwright-report/`.
 
 | | Desktop | Mobile |
 |-|---------|--------|
-| Scripts | `yarn test:e2e-desktop*` | `yarn test:e2e-mobile*` |
+| Scripts | `npm run test:e2e-desktop*` | `npm run test:e2e-mobile*` |
 | Flag | `--setup "Module Chrome"` | `--setup "Module iPhone13"` |
 | Second token | Browser: `Chrome` / `Firefox` / `Safari` | Device: `iPhone13` / `Pixel7` / … |
 | Internal projects | `Module · Browser` | `Module-Device` |

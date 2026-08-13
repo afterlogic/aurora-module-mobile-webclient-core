@@ -9,7 +9,7 @@ set -uo pipefail
 
 E2E_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$E2E_DIR/../../.." && pwd)"
-SKIP_YARN_INSTALL="${SKIP_YARN_INSTALL:-0}"
+SKIP_NPM_INSTALL="${SKIP_NPM_INSTALL:-0}"
 
 echo "Scanning modules for vue-mobile/test/e2e/*.spec.js ..."
 echo ""
@@ -36,12 +36,12 @@ if [ "$found" -eq 0 ]; then
     exit 1
 fi
 
-if [ "$SKIP_YARN_INSTALL" != "1" ] && [ ! -d "$E2E_DIR/node_modules" ]; then
-    (cd "$E2E_DIR" && yarn install --frozen-lockfile) || exit 1
+if [ "$SKIP_NPM_INSTALL" != "1" ] && [ ! -d "$E2E_DIR/node_modules" ]; then
+    (cd "$E2E_DIR" && npm ci) || exit 1
 fi
 
 cd "$E2E_DIR"
 if [ "${1:-}" = "--" ]; then
     shift
 fi
-yarn test:e2e "$@"
+npm run test:e2e -- "$@"

@@ -8,7 +8,7 @@ Fast tests without a browser and without a running Aurora instance. They complem
 |--|--|--|
 | What it covers | Utilities, pure logic, isolated Vue components | Real browser flows against a live backend |
 | Speed | Seconds | Minutes |
-| Needs server / build | No | Yes (MAMP + `yarn build-production`) |
+| Needs server / build | No | Yes (MAMP + `npm run build-production`) |
 | Where to run | Locally + CI on every PR | Locally / dedicated environment (not in lightweight PR CI) |
 
 The goal at this stage is the **pipeline**: write tests → run locally → run automatically in CI. Not maximum coverage.
@@ -35,18 +35,18 @@ Names: `*.spec.js` next to the area (`utils/`, `components/`). Same aliases as i
 
 ## Running locally
 
-Yarn classic **1.x**, Node **18 or 22** (same as E2E).
+**npm**, Node **18 or 22** (same as E2E).
 
 ```bash
 cd modules/CoreMobileWebclient/vue-mobile
-yarn                          # once / after lockfile updates
-yarn test:unit                # single run
-yarn test:unit:watch          # watch while developing
-yarn test:unit:ui             # Vitest UI in the browser
-yarn test:unit:coverage       # coverage report (optional)
+npm install                   # once / after lockfile updates
+npm run test:unit                # single run
+npm run test:unit:watch          # watch while developing
+npm run test:unit:ui             # Vitest UI in the browser
+npm run test:unit:coverage       # coverage report (optional)
 ```
 
-`yarn test` currently also runs the unit suite (fast default for CI/local checks).
+`npm run test:unit` is the default local/CI check.
 
 Aurora server, `.env.e2e`, and `build-production` are **not** required.
 
@@ -54,15 +54,15 @@ Aurora server, `.env.e2e`, and `build-production` are **not** required.
 
 Each mobile module is a separate git repository. Tests live **in the same module** as the code.
 
-1. **Locally in the module** — `yarn test:unit` / `test:unit:watch`.
+1. **Locally in the module** — `npm run test:unit` / `test:unit:watch`.
 2. **Pre-commit (module)** — with `core.hooksPath=.githooks/` the hook:
-   - if `vue-mobile/test/unit` exists **and** the index has changes under `vue-mobile/` → `yarn test:unit`;
+   - if `vue-mobile/test/unit` exists **and** the index has changes under `vue-mobile/` → `npm run test:unit`;
    - otherwise the unit step is skipped (PHP-only commits stay fast).
    Enable: `git config --local core.hooksPath .githooks/`  
    or for every module in an install: `./dev/batch.sh git config --local core.hooksPath .githooks/`  
    Patch Vitest into hooks across modules: `./dev/patch-module-precommit-unit.sh`.
 3. **All modules in an install** — `./dev/run-mobile-unit-tests.sh` (CI/CD on a full tree with `modules/`).
-4. **GitHub Actions (sub-repo)** — `CoreMobileWebclient/.github/workflows/unit.yml` (`vue-mobile/**` → `yarn test:unit`).
+4. **GitHub Actions (sub-repo)** — `CoreMobileWebclient/.github/workflows/unit.yml` (`vue-mobile/**` → `npm run test:unit`).
 5. **External / staging server** — not needed for Vitest (only for E2E).
 
 ## Starter specs
