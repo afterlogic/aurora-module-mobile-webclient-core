@@ -3,3 +3,5 @@
 .vscode
 vue-mobile/env.js
 vue-mobile/src/stores/index-all.js
+vue-mobile/src/modules.js
+vue-mobile/src/i18n/**
