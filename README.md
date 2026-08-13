@@ -48,7 +48,7 @@ Or from this module’s Quasar package:
 ```bash
 cd vue-mobile
 yarn test:e2e:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
-yarn test:e2e_local:iphone
+yarn test:e2e:iphone
 ```
 
 Full docs (install root + runner, synced):

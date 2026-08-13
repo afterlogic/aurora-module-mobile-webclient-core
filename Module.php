@@ -18,16 +18,17 @@ namespace Aurora\Modules\CoreMobileWebclient;
  */
 class Module extends \Aurora\System\Module\AbstractLicensedModule
 {
-	public function init() {
-		\Aurora\System\Router::getInstance()->registerArray(
-			self::GetName(),
-			[
-				'mobile-version' => [$this, 'EntryMobileVersion'],
-			]
-		);
+    public function init()
+    {
+        \Aurora\System\Router::getInstance()->registerArray(
+            self::GetName(),
+            [
+                'mobile-version' => [$this, 'EntryMobileVersion'],
+            ]
+        );
 
-		$this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
-	}
+        $this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
+    }
 
     /**
      * @return Module

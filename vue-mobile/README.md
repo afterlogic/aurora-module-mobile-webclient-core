@@ -54,7 +54,7 @@ From this package:
 
 ```bash
 yarn test:e2e:ui -- --setup "MailMobileWebclient iPhone13"
-yarn test:e2e_local:iphone
+yarn test:e2e:iphone
 yarn build-production   # after Vue / data-test-id changes
 ```
 

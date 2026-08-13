@@ -44,4 +44,4 @@ cd "$E2E_DIR"
 if [ "${1:-}" = "--" ]; then
     shift
 fi
-yarn test:e2e_local "$@"
+yarn test:e2e "$@"

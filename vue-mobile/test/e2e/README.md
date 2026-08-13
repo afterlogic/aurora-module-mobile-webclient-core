@@ -129,7 +129,7 @@ Optional `MAIL_*` / `E2E_MAIL_*` / `WEB_INSTALL_URL`: email-report wrapper (`yar
 ### Custom / subdirectory URL
 
 ```bash
-PLAYWRIGHT_BASE_URL=https://example.com/aurora/?mobile-version yarn test:e2e_local
+PLAYWRIGHT_BASE_URL=https://example.com/aurora/?mobile-version yarn test:e2e
 ```
 
 Keep a trailing slash **before** `?` on subdirectory installs.
@@ -156,10 +156,10 @@ yarn test:e2e-mobile:install-browsers
 ### From this directory (`vue-mobile`)
 
 ```bash
-yarn test:e2e_local           # full device × module matrix
-yarn test:e2e_local:iphone    # all modules · iPhone13 Chromium
-yarn test:e2e_local:webkit    # iPhoneSEWebKit + iPhone13WebKit
-yarn test:e2e_local:firefox   # Pixel7Firefox
+yarn test:e2e           # full device × module matrix
+yarn test:e2e:iphone    # all modules · iPhone13 Chromium
+yarn test:e2e:webkit    # iPhoneSEWebKit + iPhone13WebKit
+yarn test:e2e:firefox   # Pixel7Firefox
 yarn test:e2e:ui              # UI Mode
 yarn test:e2e:report
 yarn test:e2e                 # Playwright + email-report stub after run
@@ -168,7 +168,7 @@ yarn test:e2e                 # Playwright + email-report stub after run
 Extra args with Yarn classic need `--`:
 
 ```bash
-yarn test:e2e_local -- --setup "MailMobileWebclient iPhone13"
+yarn test:e2e -- --setup "MailMobileWebclient iPhone13"
 yarn test:e2e:ui -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
 ```
 
@@ -209,11 +209,11 @@ Playwright `--project=Module-Device`).
 - Anything after `--setup "…"` goes to Playwright (file name, `--grep`, `--list`, …).
 
 ```bash
-yarn test:e2e_local -- --setup "MailMobileWebclient iPhone13"
-yarn test:e2e_local -- --setup "* iPhone13"
-yarn test:e2e_local -- --setup "MailMobileWebclient,ContactsMobileWebclient iPhone13,Pixel7"
-yarn test:e2e_local -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
-yarn test:e2e_local -- --setup "* iPhone13" --list
+yarn test:e2e -- --setup "MailMobileWebclient iPhone13"
+yarn test:e2e -- --setup "* iPhone13"
+yarn test:e2e -- --setup "MailMobileWebclient,ContactsMobileWebclient iPhone13,Pixel7"
+yarn test:e2e -- --setup "MailMobileWebclient iPhone13" mail-mutations.spec.js
+yarn test:e2e -- --setup "* iPhone13" --list
 ```
 
 Without `--setup`, the full matrix runs.
@@ -302,7 +302,7 @@ Report directory: `modules/CoreMobileWebclient/vue-mobile/playwright-report/`.
 | Install root | `yarn test:e2e-mobile:report` | HTML report |
 | Install root | `yarn test:e2e-mobile:install-browsers` | Browsers |
 | Install root | `./dev/run-mobile-e2e-tests.sh [-- --setup "…"]` | Scan + run |
-| This directory | `yarn test:e2e_local` / `:iphone` / `:webkit` / `:firefox` | Headless |
+| This directory | `yarn test:e2e` / `:iphone` / `:webkit` / `:firefox` | Headless |
 | This directory | `yarn test:e2e:ui` | **UI Mode** |
 | This directory | `yarn build-production` | Refresh `static/vue-mobile/` |
 
