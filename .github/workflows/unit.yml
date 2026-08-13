@@ -27,14 +27,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: yarn
-          cache-dependency-path: vue-mobile/yarn.lock
-
-      - name: Enable Yarn classic
-        run: corepack enable && corepack prepare yarn@1.22.22 --activate
+          cache: npm
+          cache-dependency-path: vue-mobile/package-lock.json
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Run unit tests
-        run: yarn test:unit
+        run: npm run test:unit
