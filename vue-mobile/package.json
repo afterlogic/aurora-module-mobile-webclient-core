@@ -8,6 +8,7 @@
     "dev": "node build-scripts/prepare-files.js && quasar dev",
     "prepare-files": "node build-scripts/prepare-files.js",
     "build-production": "node build-scripts/build-production.js",
+    "build-production-debug": "node build-scripts/build-production.js --debug",
     
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",

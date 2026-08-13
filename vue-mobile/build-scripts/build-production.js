@@ -39,7 +39,8 @@ require('./prepare-files')
 console.log('Start building the app...')
 const execSync = require('child_process').execSync
 const quasarBin = path.join(__dirname, '../node_modules/.bin/quasar')
-execSync(`"${quasarBin}" build`, { stdio: 'inherit', env: process.env })
+const extraArgs = process.argv.slice(2).join(' ')
+execSync(`"${quasarBin}" build ${extraArgs}`, { stdio: 'inherit', env: process.env })
 
 const srcDir = './dist/spa'
 if (fse.existsSync(srcDir)) {
