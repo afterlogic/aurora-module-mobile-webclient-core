@@ -65,6 +65,9 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },
+      // `quasar build --debug` already disables minification; source maps are
+      // opt-in separately (default is dev-only), so enable them for debug too.
+      sourceMap: ctx.dev || ctx.debug,
       // transpile: false,
       // publicPath: '/',
 
