@@ -1,31 +1,31 @@
 {
-  "name": "aurora",
-  "version": "0.0.1",
+  "name": "aurora-corporate-mobile-ui",
+  "version": "1.0.0",
   "description": "Aurora",
-  "productName": "Aurora",
   "author": "Vasil Sokolov <vasil@afterlogic.com>",
   "private": true,
   "scripts": {
+    "dev": "node build-scripts/prepare-files.js && quasar dev",
+    "prepare-files": "node build-scripts/prepare-files.js",
+    "build-production": "node build-scripts/build-production.js",
+    
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "vitest run",
+
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:unit:coverage": "vitest run --coverage",
-    "test:e2e": "node test/e2e/scripts/run-with-email-report.js",
-    "test:e2e_local": "node test/e2e/scripts/playwright-cli.js test",
-    "test:e2e_local:iphone": "node test/e2e/scripts/playwright-cli.js test --project=\"*iPhone13\"",
-    "test:e2e_local:webkit": "node test/e2e/scripts/playwright-cli.js test --project=\"*iPhoneSEWebKit\" --project=\"*iPhone13WebKit\"",
-    "test:e2e_local:firefox": "node test/e2e/scripts/playwright-cli.js test --project=\"*Pixel7Firefox\"",
+    
+    "test:e2e": "node test/e2e/scripts/playwright-cli.js test",
+    "test:e2e:email": "node test/e2e/scripts/run-with-email-report.js",
     "test:e2e:ui": "node test/e2e/scripts/playwright-cli.js test --ui",
     "test:e2e:report": "node test/e2e/scripts/playwright-cli.js show-report",
     "test:e2e:install-browsers": "node test/e2e/scripts/playwright-cli.js install chromium firefox webkit",
-    "dev": "quasar dev",
-    "build": "quasar build",
-    "prepare-langs": "node build-scripts/prepare-langs.js",
-    "prepare-files": "node build-scripts/prepare-files.js",
-    "build-production": "node build-scripts/build-production.js"
+
+    "test:e2e:iphone": "node test/e2e/scripts/playwright-cli.js test --project=\"*iPhone13\"",
+    "test:e2e:webkit": "node test/e2e/scripts/playwright-cli.js test --project=\"*iPhoneSEWebKit\" --project=\"*iPhone13WebKit\"",
+    "test:e2e:firefox": "node test/e2e/scripts/playwright-cli.js test --project=\"*Pixel7Firefox\""
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
