@@ -2,7 +2,8 @@
 # Discover modules/*/vue-mobile/test/e2e and run mobile Playwright suite.
 # Usage (from this directory or install root via path):
 #   ./run-e2e.sh
-#   ./run-e2e.sh -- --project='*iPhone13'
+#   ./run-e2e.sh -- --setup "* iPhone13"
+#   ./run-e2e.sh -- --ui --setup "MailMobileWebclient iPhone13"
 
 set -uo pipefail
 
