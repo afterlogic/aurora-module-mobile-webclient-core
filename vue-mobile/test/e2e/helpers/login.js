@@ -51,7 +51,8 @@ async function loginAsUser(page, credentials = {}) {
     // cover PHP session. Avoid page.evaluate() here — ?mobile-version redirects
     // race and destroy the execution context.
     await page.context().clearCookies()
-    await page.goto('/', { waitUntil: 'domcontentloaded' })
+    // '' = baseURL as-is. '/' drops /aurora-dev/?mobile-version and hits host root.
+    await page.goto('', { waitUntil: 'domcontentloaded' })
     await page.getByTestId('login-email').waitFor({
       state: 'visible',
       timeout: 30000,
