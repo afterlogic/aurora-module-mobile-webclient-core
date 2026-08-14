@@ -54,15 +54,7 @@ class Settings extends \Aurora\System\Module\Settings
                 "bool",
                 null,
                 "If true, the module is used in desktop version of the interface",
-            ),
-            "RequireInMobile" => new SettingsProperty(
-                [
-                    "CoreWebclient"
-                ],
-                "array",
-                null,
-                "List of other modules required by this module",
-            ),
+            )
         ];
     }
 }
