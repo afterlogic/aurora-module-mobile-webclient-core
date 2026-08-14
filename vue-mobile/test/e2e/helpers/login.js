@@ -19,7 +19,83 @@ function fieldControl(page, testId) {
   )
 }
 
-async function waitForTurnstileToken(page) {
+const TURNSTILE_MODULE = 'CloudflareTurnstileWebclientPlugin'
+
+/** Mirrors next/src/commons/utils/parseApiResponse.ts (tolerates a non-JSON prefix). */
+function parseApiResponseText(text) {
+  const trimmed = text.trim()
+  try {
+    return JSON.parse(trimmed)
+  } catch {
+    const start = trimmed.indexOf('{')
+    const end = trimmed.lastIndexOf('}')
+    if (start === -1 || end === -1 || end <= start) {
+      return null
+    }
+    try {
+      return JSON.parse(trimmed.slice(start, end + 1))
+    } catch {
+      return null
+    }
+  }
+}
+
+/**
+ * Arm a listener for the bootstrap `Core/GetAppData` response *before*
+ * navigating. src/core.js fires this request immediately on app mount
+ * (requestAppData()) — arming after goto() can miss it.
+ * Resolves to null on timeout.
+ */
+function armAppDataResponse(page) {
+  return page
+    .waitForResponse(
+      (res) =>
+        res.request().method() === 'POST' &&
+        (res.request().postData() || '').includes('Method=GetAppData'),
+      { timeout: 20000 }
+    )
+    .then((res) => res.text())
+    .then(parseApiResponseText)
+    .catch(() => null)
+}
+
+/** Mobile never inlines app data — read it from the GetAppData API response. */
+async function isTurnstileModuleActive(appDataResponsePromise) {
+  const appData = appDataResponsePromise ? await appDataResponsePromise : null
+  const modules = appData?.Result?.Core?.AvailableClientModules
+  return Array.isArray(modules) && modules.includes(TURNSTILE_MODULE)
+}
+
+/**
+ * Wait for a Cloudflare Turnstile token, but only when the backend reports
+ * the plugin as active — otherwise the widget will never load and there is
+ * nothing to wait for.
+ * Script loads async — first detect widget/API, then wait for token.
+ */
+async function waitForTurnstileToken(page, appDataResponsePromise) {
+  if (!(await isTurnstileModuleActive(appDataResponsePromise))) {
+    return
+  }
+
+  // Give the Turnstile script a short window to appear.
+  const appeared = await page
+    .waitForFunction(
+      () => {
+        if (typeof window.turnstile !== 'undefined') return true
+        return !!document.querySelector(
+          '.cf-turnstile, .turnstile-place-cover, iframe[src*="challenges.cloudflare.com"]'
+        )
+      },
+      undefined,
+      { timeout: 8000 }
+    )
+    .then(() => true)
+    .catch(() => false)
+
+  if (!appeared) {
+    return
+  }
+
   await page.waitForFunction(
     () => {
       try {
@@ -28,6 +104,7 @@ async function waitForTurnstileToken(page) {
         return false
       }
     },
+    undefined,
     { timeout: 45000 }
   )
 }
@@ -46,6 +123,10 @@ async function loginAsUser(page, credentials = {}) {
     throw new Error('Set E2E_LOGIN and E2E_PASSWORD in .env.e2e')
   }
 
+  // Must be armed before the first goto() — core.js fires GetAppData
+  // immediately on bootstrap, so listening starts before it can fire.
+  const appDataResponsePromise = armAppDataResponse(page)
+
   await step('Open mobile login page (clean session)', async () => {
     // Fresh BrowserContext per test already isolates storage; cookies alone
     // cover PHP session. Avoid page.evaluate() here — ?mobile-version redirects
@@ -60,15 +141,15 @@ async function loginAsUser(page, credentials = {}) {
     await attachScreenshot(page, 'login-form')
   })
 
-  await step('Wait for Cloudflare Turnstile token', async () => {
-    await waitForTurnstileToken(page)
+  await step('Wait for Turnstile token (if present)', async () => {
+    await waitForTurnstileToken(page, appDataResponsePromise)
   })
 
   await step(`Fill credentials (${login})`, async () => {
     await fieldControl(page, 'login-email').fill(login)
     await fieldControl(page, 'login-password').fill(password)
     // Token can expire while typing on slow runs — refresh wait before submit.
-    await waitForTurnstileToken(page)
+    await waitForTurnstileToken(page, appDataResponsePromise)
   })
 
   await step('Submit login form', async () => {
