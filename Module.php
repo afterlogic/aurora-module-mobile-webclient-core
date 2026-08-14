@@ -60,7 +60,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
     public function EntryMobileVersion()
     {
         \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
-        $sResult = \file_get_contents('./static/vue-mobile/index.html');
+        $sResult = \file_get_contents(\AU_APP_ROOT_PATH . 'static/vue-mobile/index.html');
         if ($sResult === false) {
             return '';
         }
