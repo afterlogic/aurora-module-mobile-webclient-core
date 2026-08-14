@@ -15,7 +15,6 @@ use Aurora\System\SettingsProperty;
  * @property array $ThemeList
  * @property bool $IncludeInMobile
  * @property bool $IncludeInDesktop
- * @property array $RequireInMobile
  */
 
 class Settings extends \Aurora\System\Module\Settings
@@ -54,15 +53,7 @@ class Settings extends \Aurora\System\Module\Settings
                 "bool",
                 null,
                 "If true, the module is used in desktop version of the interface",
-            ),
-            "RequireInMobile" => new SettingsProperty(
-                [
-                    "CoreWebclient"
-                ],
-                "array",
-                null,
-                "List of other modules required by this module",
-            ),
+            )
         ];
     }
 }
