@@ -214,6 +214,6 @@ export default {
   },
 
   isAuthError(errorCode) {
-    return errorCode === errorsCodes.AuthError
+    return errorCode === errorsCodes.AuthError || errorCode === errorsCodes.InvalidToken
   },
 }
