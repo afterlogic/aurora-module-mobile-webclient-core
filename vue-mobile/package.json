@@ -9,21 +9,17 @@
     "prepare-files": "node build-scripts/prepare-files.js",
     "build-production": "node build-scripts/build-production.js",
     "build-production-debug": "node build-scripts/build-production.js --debug",
-    
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
-
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:unit:coverage": "vitest run --coverage",
-    
     "test:e2e": "node test/e2e/scripts/playwright-cli.js test",
     "test:e2e:email": "node test/e2e/scripts/run-with-email-report.js",
     "test:e2e:ui": "node test/e2e/scripts/playwright-cli.js test --ui",
     "test:e2e:report": "node test/e2e/scripts/playwright-cli.js show-report",
     "test:e2e:install-browsers": "node test/e2e/scripts/playwright-cli.js install chromium firefox webkit",
-
     "test:e2e:iphone": "node test/e2e/scripts/playwright-cli.js test --setup \"* iPhone13\"",
     "test:e2e:webkit": "node test/e2e/scripts/playwright-cli.js test --setup \"* iPhoneSEWebKit,iPhone13WebKit\"",
     "test:e2e:firefox": "node test/e2e/scripts/playwright-cli.js test --setup \"* Pixel7Firefox\""
@@ -41,7 +37,7 @@
     "quasar": "^2.6.0",
     "querystring": "^0.2.1",
     "tiny-emitter": "^2.1.0",
-    "vue": "^3.0.0",
+    "vue": "^3.5.41",
     "vue-cookies": "^1.8.3",
     "vue-demi": "^0.14.10",
     "vue-i18n": "^9.0.0",
