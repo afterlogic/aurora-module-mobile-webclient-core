@@ -66,32 +66,13 @@ function sendTestReportEmail(reportHtmlPath, exitCode) {
 }
 
 function runPlaywright(extraArgs) {
-  const playwrightPkgJson = require.resolve('playwright/package.json', {
-    paths: [vueMobileRoot],
-  })
-  const nodeModules = path.join(path.dirname(playwrightPkgJson), '..')
-  const playwrightBin = path.join(
-    nodeModules,
-    '.bin',
-    process.platform === 'win32' ? 'playwright.cmd' : 'playwright'
-  )
+  // Delegate to playwright-cli.js (not the raw Playwright binary) so --setup
+  // is translated into --project=Module-Device the same way as test:e2e / test:e2e:ui.
+  const cliScript = path.join(__dirname, 'playwright-cli.js')
 
-  if (!fs.existsSync(playwrightBin)) {
-    throw new Error(
-      `Playwright not found at ${path.join(nodeModules, '@playwright/test')}. ` +
-        'From Aurora install root run: npm install'
-    )
-  }
-
-  const env = { ...process.env }
-  env.NODE_PATH = env.NODE_PATH
-    ? `${nodeModules}${path.delimiter}${env.NODE_PATH}`
-    : nodeModules
-
-  const result = spawnSync(playwrightBin, ['test', ...extraArgs], {
+  const result = spawnSync(process.execPath, [cliScript, 'test', ...extraArgs], {
     cwd: vueMobileRoot,
     stdio: 'inherit',
-    env,
   })
 
   if (result.error) {
