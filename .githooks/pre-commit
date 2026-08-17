@@ -48,12 +48,12 @@ if [ -n "$SFILES" ]; then
         echo ""
         echo "Running CS Fixer..."
 
-        eval "php $CSFIXER fix ./ --rules=@PER --dry-run --using-cache=no"
+        php $CSFIXER fix --rules=@PER --dry-run --using-cache=no $FILES
 
         if [ $? != 0 ]
         then
             echo "Fix formatting issues before commit."
-            echo "Run: 'php $CSFIXER fix ./ --rules=@PER --using-cache=no'"
+            echo "Run: 'php $CSFIXER fix --rules=@PER --using-cache=no$FILES'"
             exit 1
         fi
     fi
