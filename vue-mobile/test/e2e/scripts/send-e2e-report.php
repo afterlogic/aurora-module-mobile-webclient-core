@@ -6,10 +6,18 @@
  * PHP 7.x compatible (no constructor property promotion, no str_starts_with/str_contains).
  *
  * Usage:
- *   php send-e2e-report.php [path-to-html-report] [--status=passed|failed] [--to=a@x.com,b@y.com] [--subject="..."]
+ *   php send-e2e-report.php [path-to-html-report] [--status=passed|failed] [--to=a@x.com,b@y.com]
+ *       [--subject="..."] [--screenshots=path1.png,path2.png]
  *
  * If the report path is omitted, no attachment/report link is sent — instead a plain
- * test email goes out to confirm the mail delivery channel itself is working.
+ * test email goes out to confirm the mail delivery channel is working.
+ *
+ * The report's containing directory (index.html + its data/ subfolder with screenshots and
+ * traces) is zipped and attached as a whole — attaching index.html alone would leave the
+ * screenshots behind, since Playwright stores them as separate sibling files. Requires the
+ * `zip` PHP extension; falls back to attaching the bare index.html if it's unavailable.
+ * --screenshots additionally attaches failure screenshots directly as images, so they're
+ * visible in the email without unzipping anything.
  *
  * Settings file: `.env.e2e`, resolved 3 directories above this script (i.e. next
  * to the project root — adjust the `dirname($scriptDir, 3)` call in main() if your
@@ -73,7 +81,7 @@ function envOrFail(string $key): string
 function parseArgs(array $argv): array
 {
     $positional = [];
-    $options = ['status' => null, 'to' => null, 'subject' => null];
+    $options = ['status' => null, 'to' => null, 'subject' => null, 'screenshots' => null];
 
     foreach (array_slice($argv, 1) as $arg) {
         if (startsWith($arg, '--status=')) {
@@ -82,12 +90,44 @@ function parseArgs(array $argv): array
             $options['to'] = substr($arg, 5);
         } elseif (startsWith($arg, '--subject=')) {
             $options['subject'] = substr($arg, 10);
+        } elseif (startsWith($arg, '--screenshots=')) {
+            $options['screenshots'] = substr($arg, 14);
         } else {
             $positional[] = $arg;
         }
     }
 
     return [$positional[0] ?? null, $options];
+}
+
+/**
+ * Zips an entire directory (e.g. the Playwright HTML report, with its `data/` attachments)
+ * so screenshots/traces travel with the report instead of being left behind as an orphaned
+ * index.html. Returns null if ext-zip isn't available or zipping fails — caller falls back
+ * to attaching the bare file.
+ */
+function zipDirectory(string $dir): ?string
+{
+    if (!class_exists('ZipArchive')) {
+        return null;
+    }
+
+    $zipPath = tempnam(sys_get_temp_dir(), 'e2e-report-') . '.zip';
+    $zip = new ZipArchive();
+    if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+        return null;
+    }
+
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS)
+    );
+    foreach ($files as $file) {
+        $localName = str_replace('\\', '/', substr($file->getPathname(), strlen($dir) + 1));
+        $zip->addFile($file->getPathname(), $localName);
+    }
+    $zip->close();
+
+    return $zipPath;
 }
 
 /** Minimal RFC 5321 SMTP client: connect, EHLO, optional STARTTLS, AUTH LOGIN, MAIL/RCPT/DATA. */
@@ -238,19 +278,22 @@ final class SmtpClient
     }
 }
 
+/**
+ * @param array<int, array{path: string, name?: string}> $attachments
+ */
 function buildMimeMessage(
     string $from,
     string $fromName,
     array $to,
     string $subject,
     string $bodyText,
-    ?string $attachmentPath = null
+    array $attachments = []
 ): string {
     $date = date('r');
     $messageId = '<' . bin2hex(random_bytes(16)) . '@' . (gethostname() ?: 'localhost') . '>';
 
-    // No attachment (mail-channel test): a plain single-part message, no MIME multipart needed.
-    if ($attachmentPath === null) {
+    // No attachments (mail-channel test): a plain single-part message, no MIME multipart needed.
+    if (empty($attachments)) {
         $headers = [
             'From' => sprintf('%s <%s>', encodeHeaderWord($fromName), $from),
             'To' => implode(', ', $to),
@@ -297,16 +340,18 @@ function buildMimeMessage(
     $lines[] = '';
     $lines[] = chunk_split(base64_encode($bodyText));
 
-    // Attachment part: the report file, whatever it actually is.
-    $attachmentName = basename($attachmentPath);
-    $attachmentType = detectMimeType($attachmentPath);
-    $attachmentData = chunk_split(base64_encode(file_get_contents($attachmentPath)));
-    $lines[] = "--$boundary";
-    $lines[] = "Content-Type: $attachmentType; name=\"$attachmentName\"";
-    $lines[] = 'Content-Transfer-Encoding: base64';
-    $lines[] = "Content-Disposition: attachment; filename=\"$attachmentName\"";
-    $lines[] = '';
-    $lines[] = $attachmentData;
+    foreach ($attachments as $attachment) {
+        $attachmentPath = $attachment['path'];
+        $attachmentName = $attachment['name'] ?? basename($attachmentPath);
+        $attachmentType = detectMimeType($attachmentPath);
+        $attachmentData = chunk_split(base64_encode(file_get_contents($attachmentPath)));
+        $lines[] = "--$boundary";
+        $lines[] = "Content-Type: $attachmentType; name=\"$attachmentName\"";
+        $lines[] = 'Content-Transfer-Encoding: base64';
+        $lines[] = "Content-Disposition: attachment; filename=\"$attachmentName\"";
+        $lines[] = '';
+        $lines[] = $attachmentData;
+    }
     $lines[] = "--$boundary--";
 
     return implode("\r\n", $lines);
@@ -404,13 +449,25 @@ function main(): void
     }
     $to = array_values(array_filter(array_map('trim', explode(',', $toRaw))));
 
+    $screenshotPaths = [];
+    if ($options['screenshots']) {
+        foreach (explode(',', $options['screenshots']) as $shot) {
+            $shot = trim($shot);
+            if ($shot !== '' && is_file($shot)) {
+                $screenshotPaths[] = $shot;
+            }
+        }
+    }
+
+    $zipPath = null;
+
     if ($isChannelTest) {
-        $subject = $options['subject'] ?? 'E2E mail channel test';
+        $subject = $options['subject'] ?? 'Mobile E2E mail channel test';
         $bodyText = "This is a test email confirming the E2E report mail delivery channel is working.\n";
-        $attachmentPath = null;
+        $attachments = [];
     } else {
         $status = $options['status'] ?? getenv('E2E_REPORT_STATUS') ?: null;
-        $defaultSubject = getenv('E2E_MAIL_SUBJECT') ?: 'E2E test report';
+        $defaultSubject = getenv('E2E_MAIL_SUBJECT') ?: 'Mobile E2E test report';
         $subject = $options['subject'] ?? $defaultSubject;
         if ($status !== null) {
             $subject = '[' . strtoupper($status) . '] ' . $subject;
@@ -422,12 +479,34 @@ function main(): void
             ? 'All tests passed successfully.'
             : ($status === 'failed' ? 'Test failed!' : 'Test passed.');
 
-        $bodyText = $statusText . "\n\nFollow the link for more details: " . $reportUrl . "\n";
-        $attachmentPath = $reportPath;
+        $attachments = [];
+
+        // The bare index.html can't show screenshots/traces on its own — they live in a
+        // sibling data/ folder — so zip the whole report directory and attach that instead.
+        $zipPath = zipDirectory(dirname($reportPath));
+        if ($zipPath !== null) {
+            $attachments[] = ['path' => $zipPath, 'name' => 'playwright-report.zip'];
+            $reportNote = "Full interactive report attached as a zip: unzip it and open index.html "
+                . "(or run `npx playwright show-report <unzipped-folder>` for trace replay).\n";
+        } else {
+            $attachments[] = ['path' => $reportPath, 'name' => basename($reportPath)];
+            $reportNote = "Note: could not zip the report folder (ext-zip missing?) — attached bare "
+                . "index.html, screenshots won't display without their data/ folder.\n";
+        }
+
+        foreach ($screenshotPaths as $index => $shotPath) {
+            $attachments[] = ['path' => $shotPath, 'name' => 'failure-' . ($index + 1) . '-' . basename($shotPath)];
+        }
+
+        $bodyText = $statusText . "\n\nFollow the link for more details: " . $reportUrl . "\n\n" . $reportNote;
+        if (!empty($screenshotPaths)) {
+            $bodyText .= count($screenshotPaths) . " failure screenshot(s) attached separately.\n";
+        }
     }
 
+    $exitCode = 0;
     try {
-        $message = buildMimeMessage($fromAddress, $fromName, $to, $subject, $bodyText, $attachmentPath);
+        $message = buildMimeMessage($fromAddress, $fromName, $to, $subject, $bodyText, $attachments);
 
         $client = new SmtpClient($host, $port, $encryption);
         $client->send($username, $password, $fromAddress, $to, $message);
@@ -437,7 +516,15 @@ function main(): void
             : "[send-e2e-report] Sent report to: " . implode(', ', $to) . "\n";
     } catch (Throwable $e) {
         fwrite(STDERR, '[send-e2e-report] Failed to send email: ' . $e->getMessage() . "\n");
-        exit(1);
+        $exitCode = 1;
+    } finally {
+        if ($zipPath !== null && is_file($zipPath)) {
+            @unlink($zipPath);
+        }
+    }
+
+    if ($exitCode !== 0) {
+        exit($exitCode);
     }
 }
 

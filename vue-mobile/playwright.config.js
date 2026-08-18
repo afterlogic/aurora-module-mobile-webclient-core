@@ -164,7 +164,7 @@ module.exports = defineConfig({
     testIdAttribute: 'data-test-id',
     actionTimeout: 20000,
     navigationTimeout: 45000,
-    trace: process.env.CI ? 'on-first-retry' : 'on',
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
   projects,

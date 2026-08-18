@@ -51,13 +51,46 @@ function ensureHtmlReport(reportPath) {
 }
 
 /**
- * Stub: later will send the HTML report by email.
+ * Screenshots for failed tests live at test-results/<test-dir>/*.png (Playwright's
+ * `screenshot: 'only-on-failure'` only writes them for tests that actually failed).
+ * @param {string} testResultsDir
+ * @returns {string[]}
+ */
+function findFailureScreenshots(testResultsDir) {
+  if (!fs.existsSync(testResultsDir)) {
+    return []
+  }
+
+  const found = []
+  for (const entry of fs.readdirSync(testResultsDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) {
+      continue
+    }
+    const dir = path.join(testResultsDir, entry.name)
+    for (const file of fs.readdirSync(dir)) {
+      if (file.toLowerCase().endsWith('.png')) {
+        found.push(path.join(dir, file))
+      }
+    }
+  }
+  return found
+}
+
+/**
+ * Sends the HTML report by email via the PHP mailer.
  * @param {string} reportHtmlPath
  */
 function sendTestReportEmail(reportHtmlPath, exitCode) {
   const phpScript = path.join(__dirname, 'send-e2e-report.php') // adjust path
   const status = exitCode === 0 ? 'passed' : 'failed'
-  const result = spawnSync('php', [phpScript, reportHtmlPath, `--status=${status}`], {
+  const args = [phpScript, reportHtmlPath, `--status=${status}`]
+
+  const screenshots = findFailureScreenshots(path.join(vueMobileRoot, 'test-results'))
+  if (screenshots.length > 0) {
+    args.push(`--screenshots=${screenshots.join(',')}`)
+  }
+
+  const result = spawnSync('php', args, {
     stdio: 'inherit',
   })
   if (result.status !== 0) {
