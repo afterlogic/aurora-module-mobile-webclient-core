@@ -158,6 +158,7 @@ module.exports = defineConfig({
   reporter: [
     ['list', { printSteps: true }],
     ['html', { open: 'never', outputFolder: 'playwright-report' }],
+    ['json', { outputFile: 'playwright-report/results.json' }],
   ],
   use: {
     baseURL,
