@@ -80,7 +80,47 @@ async function clickReady(locator, options = {}) {
   await locator.click(options.clickOptions || {})
 }
 
+/**
+ * Click an item inside the left drawer (q-scroll-area).
+ * Plain clickReady fails: Quasar keeps closed-drawer nodes in the DOM, so
+ * Playwright can resolve an item while it is off-screen / not actionable,
+ * then retries close the overlay. Scroll the nested container and force-click
+ * only after the item is in the viewport.
+ */
+async function clickDrawerItem(page, item) {
+  const drawer = page.getByTestId('mail-drawer')
+  await expect(drawer).toBeVisible({ timeout: 15000 })
+
+  await expect
+    .poll(
+      async () => {
+        await item.evaluate((el) => {
+          const area = el.closest('.q-scrollarea')
+          const container =
+            area?.querySelector('.q-scrollarea__container') ||
+            el.closest('.q-scrollarea__container') ||
+            el.closest('.scroll')
+          if (container) {
+            const er = el.getBoundingClientRect()
+            const cr = container.getBoundingClientRect()
+            container.scrollTop +=
+              er.top - cr.top - cr.height / 2 + er.height / 2
+          } else {
+            el.scrollIntoView({ block: 'center', inline: 'nearest' })
+          }
+        })
+        return item.isVisible()
+      },
+      { timeout: 15000, intervals: [100, 200, 400] }
+    )
+    .toBeTruthy()
+
+  await expect(item).toBeInViewport({ timeout: 10000 })
+  await item.click({ force: true })
+}
+
 module.exports = {
   waitForListReady,
   clickReady,
+  clickDrawerItem,
 }
