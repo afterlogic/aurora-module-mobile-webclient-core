@@ -110,6 +110,53 @@ async function waitForTurnstileToken(page, appDataResponsePromise) {
 }
 
 /**
+ * Standard form uses login-email; MailLoginForm uses login-username (+ optional domain).
+ */
+async function resolveLoginFieldTestId(page) {
+  const username = page.getByTestId('login-username')
+  if (await username.isVisible().catch(() => false)) {
+    return 'login-username'
+  }
+  return 'login-email'
+}
+
+/**
+ * For MailLoginFormMobileWebclient: fill local-part and pick domain from a full email.
+ * For Standard form: fill the email as-is.
+ */
+async function fillLoginCredentials(page, loginFieldTestId, login) {
+  if (loginFieldTestId !== 'login-username') {
+    await fieldControl(page, loginFieldTestId).fill(login)
+    return
+  }
+
+  let localPart = login
+  let emailDomain = ''
+  const atIndex = login.lastIndexOf('@')
+  if (atIndex > 0) {
+    localPart = login.slice(0, atIndex)
+    emailDomain = login.slice(atIndex + 1)
+  }
+
+  await fieldControl(page, 'login-username').fill(localPart)
+
+  const domainSelect = page.getByTestId('login-domain')
+  if (emailDomain && (await domainSelect.isVisible().catch(() => false))) {
+    await domainSelect.click()
+    const option = page.getByRole('option', { name: emailDomain, exact: true })
+    if (await option.isVisible().catch(() => false)) {
+      await option.click()
+    } else {
+      // Quasar may render options as list items without role=option in some themes.
+      const item = page.locator('.q-menu .q-item', { hasText: emailDomain }).first()
+      if (await item.isVisible().catch(() => false)) {
+        await item.click()
+      }
+    }
+  }
+}
+
+/**
  * Fresh anonymous session, then login.
  * @param {{ login?: string, password?: string }} [credentials]
  *   Defaults to E2E_LOGIN / E2E_PASSWORD. Pass overrides for multi-user flows
@@ -126,6 +173,7 @@ async function loginAsUser(page, credentials = {}) {
   // Must be armed before the first goto() — core.js fires GetAppData
   // immediately on bootstrap, so listening starts before it can fire.
   const appDataResponsePromise = armAppDataResponse(page)
+  let loginFieldTestId = 'login-email'
 
   await step('Open mobile login page (clean session)', async () => {
     // Fresh BrowserContext per test already isolates storage; cookies alone
@@ -134,10 +182,14 @@ async function loginAsUser(page, credentials = {}) {
     await page.context().clearCookies()
     // '' = baseURL as-is. '/' drops /aurora-dev/?mobile-version and hits host root.
     await page.goto('', { waitUntil: 'domcontentloaded' })
-    await page.getByTestId('login-email').waitFor({
-      state: 'visible',
-      timeout: 30000,
-    })
+    await page
+      .locator('[data-test-id="login-email"], [data-test-id="login-username"]')
+      .first()
+      .waitFor({
+        state: 'visible',
+        timeout: 30000,
+      })
+    loginFieldTestId = await resolveLoginFieldTestId(page)
     await attachScreenshot(page, 'login-form')
   })
 
@@ -146,7 +198,7 @@ async function loginAsUser(page, credentials = {}) {
   })
 
   await step(`Fill credentials (${login})`, async () => {
-    await fieldControl(page, 'login-email').fill(login)
+    await fillLoginCredentials(page, loginFieldTestId, login)
     await fieldControl(page, 'login-password').fill(password)
     // Token can expire while typing on slow runs — refresh wait before submit.
     await waitForTurnstileToken(page, appDataResponsePromise)
@@ -164,7 +216,7 @@ async function loginAsUser(page, credentials = {}) {
       state: 'visible',
       timeout: 45000,
     })
-    await expect(page.getByTestId('login-email')).not.toBeVisible({
+    await expect(page.getByTestId(loginFieldTestId)).not.toBeVisible({
       timeout: 15000,
     })
     // Footer nav is a stronger "fully booted" signal than app-shell alone.
@@ -185,6 +237,8 @@ module.exports = {
   attachScreenshot,
   fieldControl,
   waitForTurnstileToken,
+  resolveLoginFieldTestId,
+  fillLoginCredentials,
   loginAsUser,
   loginAsTestUser,
 }
