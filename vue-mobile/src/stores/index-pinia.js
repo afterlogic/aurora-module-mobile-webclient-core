@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-import VueCookies from 'vue-cookies'
 import _ from 'lodash'
 
 import core from 'src/core'
@@ -15,8 +14,10 @@ export const useCoreStore = defineStore('CoreStore', {
     locale: 'en',
   }),
   actions: {
-    setAuthToken: async (authToken) => {
-      VueCookies.set('AuthToken', authToken)
+    // The server has already put the AuthToken into an httpOnly cookie by this point
+    // (it does so for any `X-Client: webclient` response that carries a token), so there's
+    // nothing to store here — just reload AppData so the app picks up the authenticated user.
+    setAuthToken: async () => {
       await core.requestAppData()
     },
 
@@ -28,8 +29,9 @@ export const useCoreStore = defineStore('CoreStore', {
       }
     },
 
+    // The Core/Logout response clears the httpOnly AuthToken cookie server-side
+    // (CoreWebclient onAfterRunEntry), so there's nothing to remove here.
     logout: async () => {
-      VueCookies.remove('AuthToken')
       await core.requestAppData()
     },
 

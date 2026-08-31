@@ -36,17 +36,15 @@ export default {
         postData.Parameters = JSON.stringify(parameters)
       }
 
-      // The AuthToken needs to be read from the cookie (not from store) to always match the cookies sent to the server.
-      // If a user is also logged in the browser, then his AppData will be received and the login screen will be displayed,
-      // because the user is not a superadmin.
-      const authToken = VueCookies.get('AuthToken')
+      // The AuthToken lives in an httpOnly cookie that the server sets and reads on its own
+      // (see CoreWebclient onAfterRunEntry). The client never touches it: `X-Client: webclient`
+      // is what tells the server to move the token into that cookie, and `withCredentials`
+      // makes the browser send it back on every request.
       const deviceId = VueCookies.get('DeviceId')
       const headers = {
+        'X-Client': 'webclient',
         'X-DeviceId': deviceId,
         'X-MobileApp': '1',
-      }
-      if (authToken) {
-        headers.Authorization = 'Bearer ' + authToken
       }
 
       axios({
@@ -102,12 +100,9 @@ export default {
     return new Promise((resolve, reject) => {
       const CancelToken = axios.CancelToken
       let url = getApiHost() + '/' + downloadUrl
-      let authToken = VueCookies.get('AuthToken')
       let headers = {
         'Content-Type': 'multipart/form-data',
-      }
-      if (authToken) {
-        headers['Authorization'] = 'Bearer ' + authToken
+        'X-Client': 'webclient',
       }
       axios({
         method: 'get',
