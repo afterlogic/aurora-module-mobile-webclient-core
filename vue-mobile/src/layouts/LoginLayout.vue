@@ -9,11 +9,11 @@
       <p class="q-mt-lg ellipsis-3-lines login-page__text__heading">
         {{ heading }}
       </p>
-      <p class="q-mt-lg text-grey-5 text-uppercase text-center">
+      <p v-if="subheading" class="q-mt-lg text-grey-5 text-uppercase text-center">
         {{ subheading }}
       </p>
     </div>
-    <div class="content-between full-width full-height flex column justify-between">
+    <div class="content-between login-content full-width flex column justify-between">
       <slot />
     </div>
   </div>
@@ -60,8 +60,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// Fill the space under the header for short forms (so `justify-between` keeps the
+// button at the bottom), but grow past it for tall ones and let the page scroll.
+.login-content {
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+}
 .login-page {
-  flex-wrap: inherit;
+  // html/body have overflow:hidden, so the login screen itself is the scroll
+  // container: the whole page (header + form) scrolls when a step — e.g. the
+  // mandatory 2FA setup — is taller than the viewport. The post-login app uses
+  // MainLayout, not this one, so it keeps its inner-only scrolling.
+  overflow-y: auto;
+  // `flex-wrap: nowrap` undoes Quasar's `.flex` default; with wrap, tall content
+  // spills into a second column instead of extending the page.
+  flex-wrap: nowrap;
 
   &__back-icon {
     margin-left: -5.5rem;
