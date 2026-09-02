@@ -21,6 +21,15 @@ function fieldControl(page, testId) {
 
 const TURNSTILE_MODULE = 'CloudflareTurnstileWebclientPlugin'
 
+/**
+ * Last `GetAppData` response promise armed for a given page. Lets a bare
+ * `waitForTurnstileToken(page)` call still tell whether the Turnstile plugin
+ * is active — the desktop helper reads that from the inlined
+ * `window.auroraAppData`; mobile never inlines it, so we reuse the response
+ * armed for the most recent navigation instead.
+ */
+const appDataPromiseByPage = new WeakMap()
+
 /** Mirrors next/src/commons/utils/parseApiResponse.ts (tolerates a non-JSON prefix). */
 function parseApiResponseText(text) {
   const trimmed = text.trim()
@@ -47,7 +56,7 @@ function parseApiResponseText(text) {
  * Resolves to null on timeout.
  */
 function armAppDataResponse(page) {
-  return page
+  const promise = page
     .waitForResponse(
       (res) =>
         res.request().method() === 'POST' &&
@@ -57,13 +66,41 @@ function armAppDataResponse(page) {
     .then((res) => res.text())
     .then(parseApiResponseText)
     .catch(() => null)
+  // Remember it so a later bare waitForTurnstileToken(page) can reuse it.
+  appDataPromiseByPage.set(page, promise)
+  return promise
 }
 
-/** Mobile never inlines app data — read it from the GetAppData API response. */
-async function isTurnstileModuleActive(appDataResponsePromise) {
-  const appData = appDataResponsePromise ? await appDataResponsePromise : null
-  const modules = appData?.Result?.Core?.AvailableClientModules
-  return Array.isArray(modules) && modules.includes(TURNSTILE_MODULE)
+/**
+ * Turnstile is in play only when the plugin is both available *and* switched
+ * on in its own config: ShowTurnstile === true with a non-empty SiteKey
+ * (mirrors next/src/features/login/utils/captchaTokens.ts isTurnstileRequired).
+ * `appData` is the unwrapped payload (the `Result` object of GetAppData).
+ */
+function isTurnstileEnabledIn(appData) {
+  const modules = appData?.Core?.AvailableClientModules
+  if (!Array.isArray(modules) || !modules.includes(TURNSTILE_MODULE)) {
+    return false
+  }
+  const config = appData?.[TURNSTILE_MODULE]
+  return (
+    config?.ShowTurnstile === true &&
+    typeof config?.SiteKey === 'string' &&
+    config.SiteKey !== ''
+  )
+}
+
+/**
+ * Mobile never inlines app data — read it from the GetAppData API response.
+ * Falls back to the response armed for this page's most recent navigation
+ * (see armAppDataResponse) so callers that pass nothing still get a real
+ * answer; when nothing was armed we cannot tell, so report "inactive" and
+ * skip the wait — same as the desktop helper does without window.auroraAppData.
+ */
+async function isTurnstileModuleActive(page, appDataResponsePromise) {
+  const source = appDataResponsePromise || appDataPromiseByPage.get(page) || null
+  const appData = source ? await source : null
+  return isTurnstileEnabledIn(appData?.Result)
 }
 
 /**
@@ -73,7 +110,7 @@ async function isTurnstileModuleActive(appDataResponsePromise) {
  * Script loads async — first detect widget/API, then wait for token.
  */
 async function waitForTurnstileToken(page, appDataResponsePromise) {
-  if (!(await isTurnstileModuleActive(appDataResponsePromise))) {
+  if (!(await isTurnstileModuleActive(page, appDataResponsePromise))) {
     return
   }
 
@@ -236,6 +273,7 @@ module.exports = {
   step,
   attachScreenshot,
   fieldControl,
+  armAppDataResponse,
   waitForTurnstileToken,
   resolveLoginFieldTestId,
   fillLoginCredentials,
