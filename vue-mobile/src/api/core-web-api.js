@@ -10,7 +10,6 @@ export default {
       parameters: {},
     })
       .then(result => result)
-      .catch(error => false)
   },
 
   login: async (parameters) => {

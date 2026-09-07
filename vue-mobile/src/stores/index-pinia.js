@@ -22,17 +22,24 @@ export const useCoreStore = defineStore('CoreStore', {
     },
 
     parseAppData (appData) {
-      if (!_.isEmpty(appData.User)) {
-        const UserRoles = enums.getUserRoles()
-        this.userPublicId = types.pString(appData.User.PublicId)
-        this.userRole = types.pEnum(appData.User.Role, UserRoles, UserRoles.Anonymous)
-      }
+      const UserRoles = enums.getUserRoles()
+      const anonymousRole = UserRoles.Anonymous ?? null
+      const user = types.pObject(appData?.User)
+      const hasUser = !_.isEmpty(user)
+
+      this.user = hasUser ? user : null
+      this.userPublicId = hasUser ? types.pString(user.PublicId) : null
+      this.userRole = hasUser ? types.pEnum(user.Role, UserRoles, anonymousRole) : anonymousRole
     },
 
     // The Core/Logout response clears the httpOnly AuthToken cookie server-side
-    // (CoreWebclient onAfterRunEntry), so there's nothing to remove here.
-    logout: async () => {
-      await core.requestAppData()
+    // (CoreWebclient onAfterRunEntry). Do not reload AppData here: if the server
+    // rejected the token, doing so can recursively re-trigger GetAppData -> Logout.
+    logout () {
+      const UserRoles = enums.getUserRoles()
+      this.user = null
+      this.userPublicId = null
+      this.userRole = UserRoles.Anonymous ?? null
     },
 
     setLocale (locale) { this.locale = locale }

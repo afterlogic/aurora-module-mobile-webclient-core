@@ -15,8 +15,11 @@ import notification from 'src/utils/notification'
 
 import modulesManager from 'src/modules-manager'
 
+const MAX_CONSECUTIVE_GET_APP_DATA_FAILURES = 10
+
 const core = {
   appData: null,
+  consecutiveGetAppDataFailures: 0,
 
   setAppData (appData) {
     return new Promise(async (resolve, reject) => {
@@ -41,14 +44,27 @@ const core = {
 
   async requestAppData() {
     return new Promise(async (resolve, reject) => {
-      const appData = await coreWebApi.getAppData()
-      if (_.isObject(appData)) {
-        this.setAppData(appData).then(() => {
-          resolve()
-        }, reject)
-      } else {
+      try {
+        const appData = await coreWebApi.getAppData()
+        if (_.isObject(appData)) {
+          this.consecutiveGetAppDataFailures = 0
+          this.setAppData(appData).then(() => {
+            resolve()
+          }, reject)
+          return
+        }
+
         notification.showError(i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN'))
         reject(new Error('Failed to load application data'))
+      } catch (error) {
+        this.consecutiveGetAppDataFailures += 1
+
+        if (this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES) {
+          reject(new Error('GetAppData failed 10 times in a row'))
+          return
+        }
+
+        reject(error)
       }
     })
   },
