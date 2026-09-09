@@ -15,7 +15,11 @@ function rejectWithError(reject, responseData, defaultErrorText, silentError) {
   if (!silentError && errorText) {
     notification.showError(errorText)
   }
-  reject(new Error(errorText || 'Request failed'))
+  const error = new Error(errorText || 'Request failed')
+  if (_.isObject(responseData) && responseData.ErrorCode !== undefined) {
+    error.errorCode = responseData.ErrorCode
+  }
+  reject(error)
 }
 
 export default {

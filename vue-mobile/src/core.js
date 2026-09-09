@@ -16,10 +16,30 @@ import notification from 'src/utils/notification'
 import modulesManager from 'src/modules-manager'
 
 const MAX_CONSECUTIVE_GET_APP_DATA_FAILURES = 10
+/** Failures older than this window do not count as "consecutive". */
+const GET_APP_DATA_FAILURE_WINDOW_MS = 30000
 
 const core = {
   appData: null,
   consecutiveGetAppDataFailures: 0,
+  lastGetAppDataFailureAt: null,
+
+  resetGetAppDataFailures () {
+    this.consecutiveGetAppDataFailures = 0
+    this.lastGetAppDataFailureAt = null
+  },
+
+  registerGetAppDataFailure () {
+    const now = Date.now()
+    if (
+      this.lastGetAppDataFailureAt !== null &&
+      now - this.lastGetAppDataFailureAt > GET_APP_DATA_FAILURE_WINDOW_MS
+    ) {
+      this.consecutiveGetAppDataFailures = 0
+    }
+    this.consecutiveGetAppDataFailures += 1
+    this.lastGetAppDataFailureAt = now
+  },
 
   setAppData (appData) {
     return new Promise(async (resolve, reject) => {
@@ -42,22 +62,35 @@ const core = {
     })
   },
 
-  async requestAppData() {
+  async requestAppData ({ isAnonymousRetry = false } = {}) {
     return new Promise(async (resolve, reject) => {
       try {
         const appData = await coreWebApi.getAppData()
         if (_.isObject(appData)) {
-          this.consecutiveGetAppDataFailures = 0
+          this.resetGetAppDataFailures()
           this.setAppData(appData).then(() => {
             resolve()
           }, reject)
           return
         }
 
+        this.registerGetAppDataFailure()
         notification.showError(i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN'))
+        if (this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES) {
+          reject(new Error('GetAppData failed 10 times in a row'))
+          return
+        }
         reject(new Error('Failed to load application data'))
       } catch (error) {
-        this.consecutiveGetAppDataFailures += 1
+        // InvalidToken/AuthError: interceptor already logged out and the server cleared
+        // the AuthToken cookie. Retry once so anonymous AppData loads and the UI can
+        // navigate to the login screen instead of leaving init() rejected.
+        if (!isAnonymousRetry && errors.isAuthError(error?.errorCode)) {
+          this.requestAppData({ isAnonymousRetry: true }).then(resolve, reject)
+          return
+        }
+
+        this.registerGetAppDataFailure()
 
         if (this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES) {
           reject(new Error('GetAppData failed 10 times in a row'))
@@ -81,8 +114,8 @@ export default {
       }
     })
   },
-  async requestAppData() {
-    await core.requestAppData()
+  async requestAppData(options) {
+    await core.requestAppData(options)
   },
   addCookies() {
     const uuid = DeviceUUID.DeviceUUID().get()
