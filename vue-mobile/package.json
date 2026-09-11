@@ -59,7 +59,7 @@
     "prettier": "^2.5.1",
     "sass": "^1.101.3",
     "vite": "^6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "browserslist": [
     "last 10 Chrome versions",
