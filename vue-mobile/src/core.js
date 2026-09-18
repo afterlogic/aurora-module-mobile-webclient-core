@@ -118,7 +118,9 @@ export default {
     await core.requestAppData(options)
   },
   addCookies() {
-    const uuid = DeviceUUID.DeviceUUID().get()
-    VueCookies.set('DeviceId', uuid)
+    if (!VueCookies.get('DeviceId')) {
+      const uuid = DeviceUUID.DeviceUUID().get()
+      VueCookies.set('DeviceId', uuid)
+    }
   },
 }
