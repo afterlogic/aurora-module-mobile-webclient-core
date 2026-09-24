@@ -35,26 +35,14 @@ Full install (every module that has `vue-mobile/test/unit`):
 ## E2E tests (Playwright)
 
 Runner lives in `vue-mobile/` (config, helpers, `.env.e2e`). Specs live in each
-`modules/*/vue-mobile/test/e2e/`. Prefer launching from the **Aurora install root**:
+`modules/*/vue-mobile/test/e2e/`. Run them from the **Aurora install root** with the
+interactive launcher from CoreWebclient (pick the **Mobile** suite):
 
 ```bash
-npm run test:e2e-mobile              # full matrix
-npm run test:e2e-mobile:ui           # Playwright UI Mode
-npm run test:e2e-mobile -- --setup "MailMobileWebclient iPhone13"
+npm run test:e2e:tui
 ```
 
-Or from this module’s Quasar package:
-
-```bash
-cd vue-mobile
-npm run test:e2e:ui -- --setup "StandardLoginFormMobileWebclient iPhone13"
-npm run test:e2e:iphone
-```
-
-Full docs: [`vue-mobile/test/e2e/README.md`](vue-mobile/test/e2e/README.md).
-
-Mobile uses `--setup "<modules> <devices>"` (like desktop). Second token is a **device**
-(`iPhone13`), not a desktop browser name.
+Setup and details: [`vue-mobile/test/e2e/README.md`](vue-mobile/test/e2e/README.md).
 
 # License
 This module is licensed under Afterlogic Software License.

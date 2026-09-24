@@ -10,7 +10,7 @@ SPA build). **`@playwright/test` lives in the Aurora install-root** `package.jso
 ## Layout
 
 ```text
-<install-root>/package.json                  ← @playwright/test + npm run test:e2e-mobile*
+<install-root>/package.json                  ← npm run test:e2e:tui (launcher from CoreWebclient); npm install provides @playwright/test
 modules/CoreMobileWebclient/vue-mobile/      ← Quasar app + Playwright runner (cwd for config)
 modules/CoreMobileWebclient/vue-mobile/.env.e2e
 modules/CoreMobileWebclient/vue-mobile/test/e2e/helpers/   # login, ready, paths
@@ -22,7 +22,7 @@ modules/<MobileWebclient>/vue-mobile/test/e2e/helpers/     # domain helpers
 
 | Piece | Responsibility |
 |-------|----------------|
-| Install-root `package.json` | `@playwright/test` and `npm run test:e2e-mobile*` |
+| Install-root `package.json` | `npm run test:e2e:tui` — interactive launcher for desktop and mobile suites |
 | This package’s scripts | Thin wrappers → install-root Playwright binary |
 | `playwright.config.js` | Spec discovery, devices, baseURL, workers, retries |
 | `test/e2e/helpers/` | Shared login / ready / paths (`AURORA_MOBILE_E2E_ROOT`) |
@@ -56,9 +56,6 @@ npm install
 ### 2. Download Playwright browsers
 
 ```bash
-# from install root
-npm run test:e2e-mobile:install-browsers
-
 # from this directory
 npm run test:e2e:install-browsers
 
@@ -116,6 +113,20 @@ Keep a trailing slash **before** `?` on subdirectory installs.
 
 ## Run
 
+From the Aurora install root, the interactive launcher (pick the **Mobile** suite, the installation,
+modules, devices and mode — run / run + email report / Playwright UI):
+
+```bash
+npm run test:e2e:tui
+```
+
+The Mobile suite is shown as unavailable until this runner, `.env.e2e` with `E2E_LOGIN` /
+`E2E_PASSWORD`, Playwright and its browsers are in place. The installation URL defaults to
+`PLAYWRIGHT_BASE_URL`; a URL typed there gets `?mobile-version` appended when missing.
+Details: [CoreWebclient/test/e2e/README.md](../../../../CoreWebclient/test/e2e/README.md#interactive-launcher-npm-run-teste2etui).
+
+Commands from this directory:
+
 ```bash
 npm run test:e2e           # full device × module matrix
 npm run test:e2e:ui        # UI Mode
@@ -146,10 +157,11 @@ npm run test:e2e:ui -- --setup "* iPhone13"
 ```
 
 If a run fails immediately with “Executable doesn't exist” / “Please run … playwright install”,
-install browsers for **this** `@playwright/test` from the **install root**:
+install browsers for **this** `@playwright/test` (the launcher marks such devices as not installed):
 
 ```bash
-npm run test:e2e-mobile:install-browsers
+# cwd = modules/CoreMobileWebclient/vue-mobile
+npm run test:e2e:install-browsers
 ```
 
 Do **not** rely on a bare `npx playwright install` from another directory.

@@ -44,20 +44,12 @@ Pipeline, when to write tests, and CI: see [test/unit/README.md](test/unit/READM
 
 ### E2E tests (Playwright)
 
-From this package:
+From the Aurora install root, pick the **Mobile** suite in the launcher:
 
 ```bash
-npm run test:e2e:ui -- --setup "MailMobileWebclient iPhone13"
-npm run test:e2e:iphone
-npm run build-production   # after Vue / data-test-id changes
+npm run test:e2e:tui
 ```
 
-From the Aurora install root (preferred for Playwright):
+After Vue / `data-test-id` changes run `npm run build-production` here first.
 
-```bash
-npm run test:e2e-mobile
-npm run test:e2e-mobile:ui
-npm run test:e2e-mobile -- --setup "MailMobileWebclient iPhone13"
-```
-
-Full docs: [test/e2e/README.md](test/e2e/README.md).
+Setup and details: [test/e2e/README.md](test/e2e/README.md).

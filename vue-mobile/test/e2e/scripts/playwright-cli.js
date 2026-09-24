@@ -25,11 +25,9 @@ const path = require('path')
 const vueMobileRoot = path.join(__dirname, '..', '..', '..')
 const auroraRoot = path.join(vueMobileRoot, '..', '..', '..')
 const nodeModules = path.join(auroraRoot, 'node_modules')
-const playwrightBin = path.join(
-  nodeModules,
-  '.bin',
-  process.platform === 'win32' ? 'playwright.cmd' : 'playwright'
-)
+// Run the CLI script with node rather than the .bin shim: on Windows the
+// playwright.cmd shim needs a shell, which splits arguments with spaces.
+const playwrightCli = path.join(nodeModules, '@playwright', 'test', 'cli.js')
 
 const DEVICES = [
   'iPhoneSE',
@@ -241,7 +239,7 @@ function buildPlaywrightArgs(argv) {
 }
 
 function main() {
-  if (!fs.existsSync(playwrightBin)) {
+  if (!fs.existsSync(playwrightCli)) {
     console.error(
       `Playwright not found at ${path.join(nodeModules, '@playwright/test')}`
     )
@@ -262,11 +260,10 @@ function main() {
     ? `${nodeModules}${path.delimiter}${env.NODE_PATH}`
     : nodeModules
 
-  const result = spawnSync(playwrightBin, playwrightArgs, {
+  const result = spawnSync(process.execPath, [playwrightCli, ...playwrightArgs], {
     cwd: vueMobileRoot,
     env,
     stdio: 'inherit',
-    shell: process.platform === 'win32',
   })
 
   if (result.error) {
