@@ -16,6 +16,8 @@ const errorsCodes = {
   UserAlreadyExists: 111,
   SystemNotConfigured: 112,
   LicenseLimit: 115,
+  /** The server doesn't know this device (e.g. the DeviceId cookie was changed): all requests are rejected */
+  UntrustedDevice: 117,
   CanNotChangePassword: 502,
   AccountOldPasswordNotCorrect: 1020,
   AccountAlreadyExists: 704,
@@ -125,6 +127,8 @@ const errorsUtils = {
     switch (errorCode) {
       case errorsCodes.AuthError:
         return i18n.global.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')
+      case errorsCodes.UntrustedDevice:
+        return i18n.global.tc('COREWEBCLIENT.ERROR_UNTRUSTED_DEVICE')
       case errorsCodes.DataBaseError:
         return i18n.global.tc('COREWEBCLIENT.ERROR_DATABASE')
       case errorsCodes.LicenseProblem:
@@ -214,6 +218,10 @@ export default {
   },
 
   isAuthError(errorCode) {
-    return errorCode === errorsCodes.AuthError || errorCode === errorsCodes.InvalidToken
+    return (
+      errorCode === errorsCodes.AuthError ||
+      errorCode === errorsCodes.InvalidToken ||
+      errorCode === errorsCodes.UntrustedDevice
+    )
   },
 }

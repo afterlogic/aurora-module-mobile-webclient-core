@@ -116,6 +116,33 @@ describe('core.requestAppData', () => {
     expect(store.userRole).toBe(0)
   })
 
+  it('retries once after UntrustedDevice (117) so anonymous AppData can open login', async () => {
+    await resetFailureCounter()
+    getAppData
+      .mockRejectedValueOnce(authError(117))
+      .mockResolvedValueOnce({})
+
+    await core.requestAppData()
+
+    expect(getAppData).toHaveBeenCalledTimes(2)
+    const store = useCoreStore()
+    expect(store.user).toBe(null)
+    expect(store.userRole).toBe(0)
+  })
+
+  it('reports too many failures after 10 in a row, so the router can stop redirecting', async () => {
+    await resetFailureCounter()
+    getAppData.mockRejectedValue(new Error('boom'))
+
+    expect(core.hasTooManyGetAppDataFailures()).toBe(false)
+    for (let i = 0; i < 9; i++) {
+      await expect(core.requestAppData()).rejects.toThrow('boom')
+      expect(core.hasTooManyGetAppDataFailures()).toBe(false)
+    }
+    await expect(core.requestAppData()).rejects.toThrow('GetAppData failed 10 times in a row')
+    expect(core.hasTooManyGetAppDataFailures()).toBe(true)
+  })
+
   it('does not retry non-auth GetAppData failures', async () => {
     await resetFailureCounter()
     const networkError = new Error('network down')

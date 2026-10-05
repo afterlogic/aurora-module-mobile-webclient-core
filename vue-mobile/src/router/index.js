@@ -85,6 +85,12 @@ export default route(function (/* { store, ssrContext } */) {
         next()
       },
       (error) => {
+        // Every redirect starts core.init() again. Don't go round in circles (and don't flood
+        // the server with requests) when the application data can't be loaded.
+        if (core.hasTooManyGetAppDataFailures()) {
+          next(false)
+          return
+        }
         next('/')
       }
     )

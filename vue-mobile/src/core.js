@@ -29,6 +29,11 @@ const core = {
     this.lastGetAppDataFailureAt = null
   },
 
+  /** True when GetAppData keeps failing: there is no point in asking for it again. */
+  hasTooManyGetAppDataFailures () {
+    return this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES
+  },
+
   registerGetAppDataFailure () {
     const now = Date.now()
     if (
@@ -76,7 +81,7 @@ const core = {
 
         this.registerGetAppDataFailure()
         notification.showError(i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN'))
-        if (this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES) {
+        if (this.hasTooManyGetAppDataFailures()) {
           reject(new Error('GetAppData failed 10 times in a row'))
           return
         }
@@ -92,7 +97,7 @@ const core = {
 
         this.registerGetAppDataFailure()
 
-        if (this.consecutiveGetAppDataFailures >= MAX_CONSECUTIVE_GET_APP_DATA_FAILURES) {
+        if (this.hasTooManyGetAppDataFailures()) {
           reject(new Error('GetAppData failed 10 times in a row'))
           return
         }
@@ -116,6 +121,9 @@ export default {
   },
   async requestAppData(options) {
     await core.requestAppData(options)
+  },
+  hasTooManyGetAppDataFailures() {
+    return core.hasTooManyGetAppDataFailures()
   },
   addCookies() {
     if (!VueCookies.get('DeviceId')) {

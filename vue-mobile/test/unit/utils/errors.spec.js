@@ -80,3 +80,18 @@ describe('errors.getTextFromResponse', () => {
     expect(text).toBe('Fallback error (Something went wrong on the server)')
   })
 })
+
+describe('errors for an untrusted device', () => {
+  it('treats UntrustedDevice (117) like InvalidToken and AuthError, so the session is ended', () => {
+    expect(errors.isAuthError(101)).toBe(true)
+    expect(errors.isAuthError(102)).toBe(true)
+    expect(errors.isAuthError(117)).toBe(true)
+    expect(errors.isAuthError(108)).toBe(false)
+  })
+
+  it('shows the session ended text for UntrustedDevice instead of Unknown error', () => {
+    const text = errors.getTextFromResponse({ Module: '', ErrorCode: 117 })
+
+    expect(text).toBe('COREWEBCLIENT.ERROR_UNTRUSTED_DEVICE')
+  })
+})
