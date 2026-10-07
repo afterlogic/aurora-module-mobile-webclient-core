@@ -197,7 +197,8 @@ async function fillLoginCredentials(page, loginFieldTestId, login) {
  * Fresh anonymous session, then login.
  * @param {{ login?: string, password?: string }} [credentials]
  *   Defaults to E2E_LOGIN / E2E_PASSWORD. Pass overrides for multi-user flows
- *   (e.g. E2E_LOGIN_SECONDARY).
+ *   (e.g. E2E_LOGIN_SECONDARY). `loginPath` is appended to baseURL (default '' =
+ *   the default route); e.g. '#/mail-login' for the non-default Mail login page.
  * Leaves the app on the post-login shell with footer nav visible.
  */
 async function loginAsUser(page, credentials = {}) {
@@ -218,7 +219,7 @@ async function loginAsUser(page, credentials = {}) {
     // race and destroy the execution context.
     await page.context().clearCookies()
     // '' = baseURL as-is. '/' drops /aurora-dev/?mobile-version and hits host root.
-    await page.goto('', { waitUntil: 'domcontentloaded' })
+    await page.goto(credentials.loginPath || '', { waitUntil: 'domcontentloaded' })
     await page
       .locator('[data-test-id="login-email"], [data-test-id="login-username"]')
       .first()
@@ -264,9 +265,9 @@ async function loginAsUser(page, credentials = {}) {
   })
 }
 
-/** Login with E2E_LOGIN / E2E_PASSWORD. */
-async function loginAsTestUser(page) {
-  return loginAsUser(page)
+/** Login with E2E_LOGIN / E2E_PASSWORD (options: see loginAsUser). */
+async function loginAsTestUser(page, options = {}) {
+  return loginAsUser(page, options)
 }
 
 module.exports = {
