@@ -52,6 +52,8 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
     public function EntryMobileVersion()
     {
         \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
+        // AU_APP_ROOT_PATH is defined at runtime in system/Api.php, which PhpStan does not scan.
+        /** @phpstan-ignore-next-line */
         $sResult = \file_get_contents(\AU_APP_ROOT_PATH . 'static/vue-mobile/index.html');
         if ($sResult === false) {
             return '';
