@@ -35,7 +35,7 @@ export default defineConfig({
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     alias: {
       // Prefer ESM build; CJS prod breaks under Vitest/jsdom.
-      quasar: path.resolve(root, 'node_modules/quasar/dist/quasar.esm.js'),
+      quasar: path.resolve(root, 'node_modules/quasar/dist/quasar.client.js'),
       src: path.resolve(root, 'src'),
       app: root,
       components: path.resolve(root, 'src/components'),

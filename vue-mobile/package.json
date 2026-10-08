@@ -75,5 +75,9 @@
   "engines": {
     "node": ">= 12.22.1",
     "npm": ">= 6.13.4"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.1.2",
+    "tmp": "^0.2.7"
   }
 }
