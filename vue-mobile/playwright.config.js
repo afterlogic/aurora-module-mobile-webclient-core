@@ -162,6 +162,7 @@ module.exports = defineConfig({
   ],
   use: {
     baseURL,
+    ignoreHTTPSErrors: process.env.E2E_IGNORE_HTTPS_ERRORS === '1',
     testIdAttribute: 'data-test-id',
     actionTimeout: 20000,
     navigationTimeout: 45000,
