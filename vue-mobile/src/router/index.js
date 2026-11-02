@@ -4,6 +4,7 @@ import routes from './routes'
 
 import core from 'src/core'
 import modulesManager from 'src/modules-manager'
+import { chunkReloadUrl } from 'src/utils/document-url'
 
 /*
  * If not building with SSR mode, you can
@@ -23,10 +24,15 @@ export default route(function (/* { store, ssrContext } */) {
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
-    // Leave this as is and make changes in quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
-    history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
+    // Hash mode must follow the document URL (?/mobile-version, or a subdirectory
+    // install). A fixed base of "/" drops that query when a <base> tag is present
+    // and the next reload is no longer the mobile entry.
+    // History mode still uses quasar.conf.js -> build -> vueRouterBase.
+    history: createHistory(
+      process.env.MODE === 'ssr' || process.env.VUE_ROUTER_MODE !== 'history'
+        ? undefined
+        : process.env.VUE_ROUTER_BASE
+    )
   })
 
   // Reload once when a stale bundle fails to load a lazy chunk after deploy.
@@ -44,19 +50,20 @@ export default route(function (/* { store, ssrContext } */) {
       return
     }
 
-    const targetPath = (to && to.fullPath) || window.location.pathname + window.location.hash
-    const reloadKey = 'chunkReloadPath'
+    // fullPath is the Vue route (/mail/...), not a document on the server.
+    const targetUrl = chunkReloadUrl(window.location, to && to.fullPath)
+    const reloadKey = 'chunkReloadUrl'
 
-    if (sessionStorage.getItem(reloadKey) === targetPath) {
+    if (sessionStorage.getItem(reloadKey) === targetUrl) {
       return
     }
 
-    sessionStorage.setItem(reloadKey, targetPath)
-    window.location.assign(targetPath)
+    sessionStorage.setItem(reloadKey, targetUrl)
+    window.location.replace(targetUrl)
   })
 
   Router.afterEach(() => {
-    sessionStorage.removeItem('chunkReloadPath')
+    sessionStorage.removeItem('chunkReloadUrl')
   })
 
   let routesAdded = false

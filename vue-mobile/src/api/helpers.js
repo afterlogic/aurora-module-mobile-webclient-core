@@ -1,4 +1,5 @@
 import types from 'src/utils/types'
+import { installPathname } from 'src/utils/document-url'
 
 export function getApiHost() {
   let apiHost = process.env.API
@@ -12,7 +13,7 @@ export function getApiHost() {
     if (pathname.includes('/static/vue-mobile')) {
       apiHost = appOrigin + '/'
     } else {
-      apiHost = appOrigin + pathname
+      apiHost = appOrigin + installPathname(pathname, window.location.search)
     }
   }
   if (

@@ -60,8 +60,9 @@ module.exports = configure(function (ctx) {
       // build output; build-production.js rewrites it to a relative path so
       // assets resolve under the app install directory (?mobile-version).
       publicPath: ctx.dev ? '/' : '/static/vue-mobile/',
-      // App document URL is the install root (?mobile-version), not /static/vue-mobile/
-      vueRouterBase: '/',
+      // Hash history base is the document URL (see src/router/index.js).
+      // Do not set vueRouterBase to "/": a <base> tag would then replace
+      // ?/mobile-version, and the next load would no longer be the mobile entry.
       env: {
         API: ctx.dev ? env.API_ENDPOINT : '',
       },
