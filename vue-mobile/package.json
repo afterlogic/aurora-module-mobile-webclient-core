@@ -40,7 +40,7 @@
     "vue": "^3.5.41",
     "vue-cookies": "^1.8.3",
     "vue-demi": "^0.14.10",
-    "vue-i18n": "^9.0.0",
+    "vue-i18n": "^11.4.14",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
