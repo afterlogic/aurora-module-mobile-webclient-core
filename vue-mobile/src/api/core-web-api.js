@@ -44,8 +44,7 @@ export default {
     return webApi.sendRequest({
       moduleName: 'Core',
       methodName: 'SetMobile',
-      parameters: { Mobile: !!mobile },
-      silentError: true,
+      parameters: { Mobile: mobile },
     })
   },
 }

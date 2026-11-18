@@ -27,6 +27,7 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
             ]
         );
 
+        $this->denyMethodsCallByWebApi(['RenderMobileVersion']);
         $this->subscribeEvent('Core::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
     }
 
@@ -51,12 +52,26 @@ class Module extends \Aurora\System\Module\AbstractLicensedModule
      */
     public function EntryMobileVersion()
     {
+        \Aurora\System\Managers\Integrator::getInstance()->setMobile(true);
+        \header('Cache-Control: private, no-store');
+        \header('Location: ./', true, 302);
+        return '';
+    }
+
+    /**
+     * @ignore
+     */
+    public function RenderMobileVersion()
+    {
         \Aurora\Modules\CoreWebclient\Module::Decorator()->SetHtmlOutputHeaders();
         // AU_APP_ROOT_PATH is defined at runtime in system/Api.php (see ignoreErrors in phpstan.neon).
-        $sResult = \file_get_contents(\AU_APP_ROOT_PATH . 'static/vue-mobile/index.html');
+        $sResult = @\file_get_contents(\AU_APP_ROOT_PATH . 'static/vue-mobile/index.html');
         if ($sResult === false) {
             return '';
         }
+
+        $sInstallPath = \htmlspecialchars(\Aurora\System\Api::getCookiePath(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $sResult = \str_ireplace('</head>', '<meta name="aurora-install-path" content="' . $sInstallPath . '"></head>', $sResult);
 
         // Link previews (Telegram etc.) read title/description from this HTML.
         // Prefer Branding ProductName, then Core SiteName — same fallback as the login UI.

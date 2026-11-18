@@ -8,9 +8,12 @@ export function getApiHost() {
       window.location.origin ||
       window.location.protocol + '//' + window.location.host
     const pathname = window.location.pathname || '/'
+    const installPath = document.querySelector('meta[name="aurora-install-path"]')?.content
 
     // The SPA may be opened from /static/vue-mobile/, but API always lives at the app root.
-    if (pathname.includes('/static/vue-mobile')) {
+    if (installPath) {
+      apiHost = appOrigin + installPath
+    } else if (pathname.includes('/static/vue-mobile')) {
       apiHost = appOrigin + '/'
     } else {
       apiHost = appOrigin + installPathname(pathname, window.location.search)

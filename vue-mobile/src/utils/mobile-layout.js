@@ -4,16 +4,26 @@ import { getApiHost } from 'src/api/helpers'
 export function getDesktopUrl () {
   const host = getApiHost()
   if (host) {
-    return host.replace(/\/$/, '')
+    return host
   }
 
-  return window.location.pathname.replace(/\/$/, '') || '/'
+  return window.location.pathname || '/'
 }
 
-export async function switchToDesktopVersion () {
+async function changeLayoutPreference (mobile) {
   try {
-    await coreWebApi.setMobile(false)
-  } finally {
-    window.location.assign(getDesktopUrl())
+    await coreWebApi.setMobile(mobile)
+  } catch {
+    // The API already displayed the error. Keep the current page available for retry.
+    return
   }
+  window.location.assign(getDesktopUrl())
+}
+
+export function switchToDesktopVersion () {
+  return changeLayoutPreference(false)
+}
+
+export function useAutomaticLayout () {
+  return changeLayoutPreference('auto')
 }

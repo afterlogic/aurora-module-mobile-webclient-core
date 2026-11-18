@@ -1,5 +1,20 @@
 import { describe, expect, it } from 'vitest'
+import { getApiHost } from 'src/api/helpers'
 import { chunkReloadUrl, installPathname } from 'src/utils/document-url'
+
+describe('getApiHost', () => {
+  it('keeps a server-provided install path that is also a Vue section name', () => {
+    const installPath = document.createElement('meta')
+    installPath.name = 'aurora-install-path'
+    installPath.content = '/mail/'
+    document.head.append(installPath)
+    try {
+      expect(getApiHost()).toBe(window.location.origin + '/mail/')
+    } finally {
+      installPath.remove()
+    }
+  })
+})
 
 describe('installPathname', () => {
   it('keeps the install path while the mobile entry query is present', () => {

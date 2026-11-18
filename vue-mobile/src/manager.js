@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 import eventBus from 'src/event-bus'
 import settings from 'src/settings'
-import { switchToDesktopVersion } from 'src/utils/mobile-layout'
+import { switchToDesktopVersion, useAutomaticLayout } from 'src/utils/mobile-layout'
 
 const _getSettingsPreLogoutItems = (params) => {
   if (!_.isArray(params.preLogoutItems)) {
@@ -13,9 +13,11 @@ const _getSettingsPreLogoutItems = (params) => {
     {
       labelLangConst: 'COREWEBCLIENT.ACTION_SHOW_FULL_VERSION',
       getIconComponent: () => import('./components/icons/FullVersionIcon'),
-      onClick: () => {
-        switchToDesktopVersion()
-      },
+      onClick: switchToDesktopVersion,
+    },
+    {
+      labelLangConst: 'COREWEBCLIENT.ACTION_SELECT_LAYOUT_AUTOMATICALLY',
+      onClick: useAutomaticLayout,
     },
   ])
 }
