@@ -30,6 +30,7 @@ const errorsCodes = {
   NotDisplayedError: 1155,
   /** Mail: IMAP/SMTP login rejected (wrong password, etc.) */
   CannotLoginCredentialsIncorrect: 4002,
+  DomainIsNotAllowedForLoggingIn: 4017,
 }
 
 const errorsUtils = {
@@ -126,6 +127,8 @@ const errorsUtils = {
   _getCoreErrorByCode(errorCode, defaultErrorText) {
     switch (errorCode) {
       case errorsCodes.AuthError:
+      case errorsCodes.CannotLoginCredentialsIncorrect:
+      case errorsCodes.DomainIsNotAllowedForLoggingIn:
         return i18n.global.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')
       case errorsCodes.UntrustedDevice:
         return i18n.global.tc('COREWEBCLIENT.ERROR_UNTRUSTED_DEVICE')
@@ -159,9 +162,6 @@ const errorsUtils = {
         return ''
       case errorsCodes.SystemNotConfigured:
         return i18n.global.tc('COREWEBCLIENT.ERROR_SYSTEM_NOT_CONFIGURED')
-      case errorsCodes.CannotLoginCredentialsIncorrect:
-        // Fallback when Mail module_errors are not loaded yet.
-        return i18n.global.tc('COREWEBCLIENT.ERROR_PASS_INCORRECT')
       default:
         return defaultErrorText || i18n.global.tc('COREWEBCLIENT.ERROR_UNKNOWN')
     }

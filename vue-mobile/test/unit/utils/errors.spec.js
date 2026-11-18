@@ -67,6 +67,17 @@ describe('errors.getTextFromResponse', () => {
     expect(text).not.toContain('AuthError')
   })
 
+  it('shows credentials text when the standard login form rejects the email domain', () => {
+    const text = errors.getTextFromResponse({
+      AuthenticatedUserId: false,
+      SubscriptionsResult: null,
+      Module: 'StandardLoginFormWebclient',
+      ErrorCode: 4017,
+    })
+
+    expect(text).toBe('COREWEBCLIENT.ERROR_PASS_INCORRECT')
+  })
+
   it('still appends non-technical ErrorMessage for other codes', () => {
     const text = errors.getTextFromResponse(
       {
